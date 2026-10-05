@@ -1,0 +1,152 @@
+<!--TITLE: INEMA Agent Runtime — faça qualquer IA usar qualquer ferramenta | INEMA.CLUB -->
+  <!-- HERO -->
+  <header class="bg-gradient-to-br from-emerald-900/20 via-dark-800 to-dark-900 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:grid lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:items-center">
+      <div>
+        <span class="inline-block px-3 py-1 bg-primary/10 text-primary border border-primary/30 text-xs font-semibold rounded-full mb-5">CURSO GRATUITO · 4 TRILHAS · 16 MÓDULOS</span>
+        <h1 class="text-4xl sm:text-5xl font-bold mb-5 leading-tight">INEMA Agent Runtime<br><span class="text-primary">faça qualquer IA usar qualquer ferramenta</span></h1>
+        <p class="text-lg text-neutral-300 max-w-xl mb-8">Aprenda a usar o kit que faz o Claude Code e o Codex descobrirem, conectarem e usarem as ferramentas que você já tem — pela via mais estável que existir, com regras claras do que podem fazer sozinhos. Tudo pela assinatura, sem API paga.</p>
+        <div class="flex flex-col sm:flex-row justify-start gap-3">
+          <a href="curso/trilha1/index.html" class="inline-flex items-center justify-start px-6 py-3 bg-primary text-black rounded-lg font-semibold hover:bg-yellow-300 transition-colors">Começar pela Trilha 1 →</a>
+          <a id="continuar" href="#" class="hidden items-center justify-start px-6 py-3 bg-dark-700 text-neutral-100 rounded-lg font-semibold hover:bg-dark-600 transition-colors">↻ Continuar de onde parei</a>
+          <button type="button" data-inema-journey-open class="inline-flex items-center justify-start px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">◷ Minha jornada</button>
+        </div>
+        <div data-inema-meter="curso" class="mt-8 max-w-md" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do curso">
+          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 96</span><span data-inema-meter-pct>0%</span></div>
+          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+        </div>
+      </div>
+      <div class="mt-10 lg:mt-0 rounded-2xl border border-primary/30 bg-dark-900/40 p-3 overflow-hidden">
+        <svg viewBox="0 0 460 340" class="w-full h-auto" role="img" aria-label="No centro, a pasta runtime do kit. À esquerda, dois agentes, Claude Code e Codex, leem as mesmas regras. À direita, quatro ferramentas ligadas por pontes: Codex por CLI, a agenda e o ERP por uma ponte MCP, e um site pelo navegador. Embaixo, a política: prepara e pede.">
+          <defs>
+            <pattern id="lp-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#FACC15" opacity="0.10"/></pattern>
+            <filter id="lp-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="0" y="0" width="460" height="340" fill="url(#lp-grid)"/>
+          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+            <rect x="20" y="90" width="110" height="44" rx="12" fill="#0e2018" stroke="#34d399" stroke-width="2"/><text x="75" y="117" fill="#a7f3d0">Claude Code</text>
+            <rect x="20" y="190" width="110" height="44" rx="12" fill="#0e2018" stroke="#34d399" stroke-width="2"/><text x="75" y="217" fill="#a7f3d0">Codex</text>
+            <line x1="130" y1="112" x2="175" y2="150" stroke="#34d399" stroke-width="2"/>
+            <line x1="130" y1="212" x2="175" y2="180" stroke="#34d399" stroke-width="2"/>
+            <g filter="url(#lp-glow)"><rect x="175" y="125" width="110" height="80" rx="16" fill="#1f1a07" stroke="#FACC15" stroke-width="2"/></g>
+            <text x="230" y="160" fill="#FACC15" font-weight="600" font-size="14">runtime/</text>
+            <text x="230" y="180" fill="#fde68a" font-size="11">regras + pontes</text>
+            <line class="wf-flow" x1="285" y1="140" x2="330" y2="62" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="40" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="60" fill="#bae6fd">⌨ CLI · Codex</text>
+            <line class="wf-flow" x1="285" y1="155" x2="330" y2="122" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="105" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="125" fill="#bae6fd">📅 agenda · MCP</text>
+            <line class="wf-flow" x1="285" y1="175" x2="330" y2="185" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="170" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="190" fill="#bae6fd">🧾 ERP · MCP</text>
+            <line class="wf-flow" x1="285" y1="195" x2="330" y2="248" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="235" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="255" fill="#bae6fd">🌐 site · navegador</text>
+            <rect x="120" y="280" width="220" height="34" rx="10" fill="#2a1d06" stroke="#fbbf24" stroke-width="1.8"/><text x="230" y="302" fill="#fde68a">🚦 política: prepara e pede</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    <!-- A IDEIA -->
+    <section class="mb-16">
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-4">A ideia que atravessa o curso</h2>
+        <p class="text-xl text-neutral-100 mb-4">Engenharia reversa <strong class="text-emerald-400">não é produto, é técnica de descoberta.</strong></p>
+        <p class="text-neutral-300 mb-4">Vídeos sobre "mods" do Claude Code mostraram o Claude usando o Codex e várias sessões trabalhando em paralelo, quase tudo por engenharia reversa. A ideia é ótima; o caminho quebra na próxima atualização. Hoje quase tudo aquilo tem via oficial: <code>codex exec</code>, <code>claude --bg</code> e <code>claude agents</code>, plugins oficiais do Claude Code.</p>
+        <p class="text-neutral-300">Regra do kit: suba a escada e use sempre a via mais estável que existir — <strong>API → MCP → CLI → SDK → uso do computador → ponte local → engenharia reversa (só laboratório)</strong>.</p>
+      </div>
+    </section>
+
+    <!-- PARA QUEM -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Para quem é</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-3">🩺</div>
+          <h3 class="font-semibold text-lg mb-2">Clara, 47 — dona de clínica</h3>
+          <p class="text-neutral-300 text-sm">A agenda é uma planilha. Ela quer que o agente diga os horários livres da Dra. Ana e do Dr. Bruno sem ninguém abrir o arquivo — e sem o agente marcar nada sozinho.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-3">🧾</div>
+          <h3 class="font-semibold text-lg mb-2">Sônia, 51 — contadora</h3>
+          <p class="text-neutral-300 text-sm">O ERP do cliente não tem API, só exporta CSV. Ela quer o total de vendas por cliente conferido, sem montar planilha à mão todo mês.</p>
+        </div>
+      </div>
+      <p class="text-neutral-400 text-sm mt-4">Se você já usa um chat de IA, ouviu falar em Claude Code e Codex e quer que eles trabalhem com os sistemas do seu dia a dia, este curso é para você. Não precisa ser programador: cada termo técnico é explicado na primeira vez que aparece, e cada comando vem com o que você deve ver na tela.</p>
+    </section>
+
+    <!-- TRILHAS -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">As 4 trilhas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <a href="curso/trilha1/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full">TRILHA 1</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">🧭 Descobrir</h3>
+          <p class="text-neutral-400 text-sm mb-4">Por que engenharia reversa não é produto, instalar o kit, rodar o diagnóstico, a escada das vias e o mapa de capacidades.</p>
+          <div data-inema-meter="trilha:1" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 1"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+        <a href="curso/trilha2/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">TRILHA 2</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">🔌 Conectar</h3>
+          <p class="text-neutral-400 text-sm mb-4">Claude usa o Codex, sua primeira ponte MCP, a ponte do seu sistema sem API e o navegador com política.</p>
+          <div data-inema-meter="trilha:2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 2"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+        <a href="curso/trilha3/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full">TRILHA 3</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-purple-400 transition-colors">⚙️ Rotear e executar</h3>
+          <p class="text-neutral-400 text-sm mb-4">Modelo certo para cada tarefa, time de três papéis, time em segundo plano e agente longo que só termina com prova.</p>
+          <div data-inema-meter="trilha:3" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 3"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+        <a href="curso/trilha4/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full">TRILHA 4</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition-colors">🛡️ Governar e aprender</h3>
+          <p class="text-neutral-400 text-sm mb-4">Política de autonomia N0–N4, o agente propõe e você aprova, guarda e painel, laboratório e projeto final.</p>
+          <div data-inema-meter="trilha:4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 4"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PROJETO FINAL -->
+    <section class="mb-16">
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-8">
+        <h2 class="text-2xl font-bold mb-4 text-primary">🏁 Projeto final: sua ponte e seu time</h2>
+        <p class="text-neutral-300 mb-4">Você escolhe um sistema do seu trabalho que não tem API, preenche o <code>CAPACIDADES.md</code>, escolhe a via mais alta possível, constrói a ponte, roda um time de três papéis com política "pede antes" e entrega a saída do <code>verificar.mjs</code> com todos os critérios OK, mais uma lição que você mesmo aprovou.</p>
+        <p class="text-neutral-400 text-sm">O entregável é a pasta <code>runtime/</code> preenchida, não um vídeo nem uma apresentação. Detalhes no módulo 4.4.</p>
+      </div>
+    </section>
+
+    <!-- KIT E PRE-REQUISITOS -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">O que você precisa</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-2">🧰</div>
+          <h3 class="font-semibold mb-2">O kit</h3>
+          <p class="text-neutral-300 text-sm mb-3">Aberto (licença MIT): <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a>. Você clona no módulo 1.2.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-2">💻</div>
+          <h3 class="font-semibold mb-2">Na sua máquina</h3>
+          <p class="text-neutral-300 text-sm">Node 18 ou mais novo e o Claude Code e/ou o Codex logados pela assinatura. Linux ou Mac; no Windows, use o WSL.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-2">📚</div>
+          <h3 class="font-semibold mb-2">Antes, se puder</h3>
+          <p class="text-neutral-300 text-sm">Os cursos <a href="https://inematds.github.io/agenticos/" target="_blank" class="text-sky-400 hover:text-sky-300">Agentic OS</a> (o conceito de sistema operacional de agentes) e <a href="https://inematds.github.io/curso-7pa/" target="_blank" class="text-sky-400 hover:text-sky-300">7 Princípios da gestão de agentes</a> (autonomia N0–N4). Ajudam, mas não são obrigatórios.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO ESTUDAR -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Como estudar aqui</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">●</div><div class="font-semibold mb-1">Marque como lido</div><p class="text-xs text-neutral-400">Cada tópico tem um botão. O progresso aparece aqui, na trilha e no módulo.</p></div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">?</div><div class="font-semibold mb-1">Marque dúvidas</div><p class="text-xs text-neutral-400">"Tenho dúvida" guarda o tópico para você revisar depois.</p></div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">🖍️</div><div class="font-semibold mb-1">Grife e anote</div><p class="text-xs text-neutral-400">Selecione um trecho do texto para grifar ou escrever uma nota.</p></div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">◷</div><div class="font-semibold mb-1">Minha jornada</div><p class="text-xs text-neutral-400">Progresso, dúvidas e notas num lugar só. Exporte em arquivo para não perder.</p></div>
+      </div>
+      <p class="text-neutral-500 text-xs mt-4">Tudo fica salvo só no seu navegador. Nada é enviado para servidor nenhum.</p>
+    </section>
+  </main>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="agrt">
+  <title>Modelo certo, cota rende | INEMA Agent Runtime</title>
+  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
+
+  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+  <script type="application/json" data-inema-manifest>
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-1.5 sm:space-x-3">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🔌</span>
+            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+          </a>
+          <span class="text-neutral-600 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
+        </div>
+        <div class="flex items-center sm:space-x-1">
+          <a href="../trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+          </a>
+          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
+            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
+          </button>
+          <div class="relative">
+            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
+              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+            </button>
+            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
+              <div class="inema-segment" aria-label="Tema">
+                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
+                <button type="button" data-inema-set-theme="claro">Claro</button>
+                <button type="button" data-inema-set-theme="sepia">Sépia</button>
+                <button type="button" data-inema-set-theme="foco">Foco</button>
+                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
+              </div>
+              <div class="inema-segment" aria-label="Fonte">
+                <button type="button" data-inema-set-font="inter">Inter</button>
+                <button type="button" data-inema-set-font="system">Sistema</button>
+                <button type="button" data-inema-set-font="leitura">Leitura</button>
+              </div>
+              <div class="inema-segment" aria-label="Tamanho do texto">
+                <button type="button" data-inema-set-fontscale="100">A</button>
+                <button type="button" data-inema-set-fontscale="112">A+</button>
+                <button type="button" data-inema-set-fontscale="125">A++</button>
+              </div>
+              <div class="inema-segment" aria-label="Largura da linha">
+                <button type="button" data-inema-set-linewidth="60">Estreito</button>
+                <button type="button" data-inema-set-linewidth="68">Médio</button>
+                <button type="button" data-inema-set-linewidth="75">Largo</button>
+              </div>
+              <div class="inema-segment" aria-label="Entrelinha">
+                <button type="button" data-inema-set-leading="1.45">Compacto</button>
+                <button type="button" data-inema-set-leading="1.7">Confortável</button>
+              </div>
+            </div>
+          </div>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
+      <span class="text-purple-400">Módulo 3.1</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-1" data-inema-track="3">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎚️ Modelo certo, cota rende</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Usar sempre o modelo mais forte é como mandar o diretor da empresa conferir carimbo. Funciona, mas acaba com a cota. O <code>ROTEAMENTO.md</code> do kit diz qual modelo chamar para cada tipo de tarefa.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Base</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Fundamento</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:3-1" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 3.1">
+        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+  <main id="conteudo" class="min-w-0" data-inema-module="3-1" data-inema-track="3">
+
+    <!-- ===================== TOPICO 1 ===================== -->
+    <section id="topico-1" data-inema-topic="modulo-3-1#topico-1" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold flex-1">Entenda por que cota não é dólar</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-1-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">O kit roda pela <strong class="text-purple-400">assinatura</strong> do Claude Code e do Codex. Você paga o plano do mês e ponto. Não chega fatura por chamada.</p>
+      <p data-inema-block="m3-1-t1-p2" class="text-neutral-300 mb-4 leading-relaxed">Mas a assinatura tem um limite de uso por período: a <strong class="text-purple-400">cota</strong>. Cada pedido ao agente gasta um pedaço dela. Quando acaba, você espera o período virar.</p>
+      <p data-inema-block="m3-1-t1-p3" class="text-neutral-300 mb-6 leading-relaxed">A primeira linha do <code>runtime/ROTEAMENTO.md</code> resume o módulo: "Não use sempre o modelo mais forte. Cada chamada consome a cota da sua assinatura."</p>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três palavras deste módulo</h3>
+        <ul class="space-y-2 text-neutral-300 text-sm">
+          <li><strong>Cota</strong> — o limite de uso da sua assinatura num período. Não é dinheiro: é quanto você ainda pode pedir antes de ter de esperar.</li>
+          <li><strong>Modelo</strong> — a "cabeça" da IA que responde. O Claude Code tem vários (<code>opus</code>, <code>sonnet</code>, <code>haiku</code>…), o Codex também. Os mais fortes pensam melhor e gastam mais cota.</li>
+          <li><strong>Equivalente de API</strong> — quanto a mesma tarefa custaria se fosse cobrada por uso na API. Serve de régua para comparar, mesmo que você não pague isso.</li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 230" class="w-full h-auto" role="img" aria-label="Barra da cota da assinatura sendo consumida por pedidos. Pedidos ao modelo menor ocupam blocos curtos; pedidos ao modelo mais forte ocupam blocos longos. No fim da barra, o aviso: cota acabou, espere o período virar.">
+          <defs>
+            <pattern id="m31-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
+            <filter id="m31-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="0" y="0" width="800" height="230" fill="url(#m31-grid)"/>
+          <text x="40" y="45" fill="#e9d5ff" font-family="Inter,sans-serif" font-weight="600" font-size="14">Cota do período (a sua assinatura)</text>
+          <g filter="url(#m31-glow)"><rect x="40" y="62" width="720" height="56" rx="12" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
+          <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+            <rect class="wf-a" x="48" y="70" width="40" height="40" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="68" y="94" fill="#bae6fd">m</text>
+            <rect class="wf-a" x="94" y="70" width="40" height="40" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="114" y="94" fill="#bae6fd">m</text>
+            <rect x="140" y="70" width="90" height="40" rx="6" fill="#1e1233" stroke="#c084fc" stroke-width="1.5"/><text x="185" y="94" fill="#e9d5ff">executor</text>
+            <rect x="236" y="70" width="40" height="40" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="256" y="94" fill="#bae6fd">m</text>
+            <rect x="282" y="70" width="250" height="40" rx="6" fill="#2a0f0f" stroke="#f87171" stroke-width="1.5"/><text x="407" y="94" fill="#fca5a5">super para uma tarefa simples</text>
+            <rect x="538" y="70" width="214" height="40" rx="6" fill="#2a0f0f" stroke="#f87171" stroke-width="1.5"/><text x="645" y="94" fill="#fca5a5">super de novo…</text>
+          </g>
+          <text x="40" y="150" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">m = modelo menor: bloco curto · executor: bloco médio · super: bloco longo</text>
+          <rect x="460" y="168" width="300" height="40" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="1.8"/>
+          <text x="610" y="193" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="12">cota acabou: espere o período virar</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a barra roxa é a cota. Os blocos azuis curtos são pedidos ao modelo menor; os vermelhos longos são o modelo mais forte usado sem necessidade. Duas chamadas desnecessárias ao topo comem mais que várias tarefas certas. Os tamanhos são ilustrativos, não medidas.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+          <h3 class="font-semibold text-purple-400 mb-3">✓ Cota (o que você tem)</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ Vem com a assinatura que você já paga</li>
+            <li>✓ Acaba, mas volta no período seguinte</li>
+            <li>✓ Rende mais quando cada tarefa usa o modelo certo</li>
+            <li>✓ É o que o kit inteiro usa</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ Dólar de API (o que você não precisa)</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ Conta separada, cobrada por uso</li>
+            <li>✗ Não volta: o que gastou, pagou</li>
+            <li>✗ Nenhuma receita do kit depende dela</li>
+            <li>✗ No curso aparece só como régua de comparação</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Um número real para ter noção</h3>
+        <p class="text-neutral-300 text-sm">O CHANGELOG do kit registra que o time de três papéis (módulo 3.2), criando um arquivo de uma frase, gastou o equivalente a <strong>~US$ 0,73 de API</strong>. Na assinatura isso é cota, não cobrança. Mas mostra que até uma tarefa minúscula tem peso quando chama modelos grandes.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-purple-400">Assinatura</div><p class="text-xs text-neutral-400 mt-1">plano mensal</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⏳</div><div class="text-sm font-semibold text-purple-400">Cota</div><p class="text-xs text-neutral-400 mt-1">limite por período</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📏</div><div class="text-sm font-semibold text-purple-400">Equivalente</div><p class="text-xs text-neutral-400 mt-1">régua, não fatura</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">Roteamento</div><p class="text-xs text-neutral-400 mt-1">modelo por tarefa</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 2 ===================== -->
+    <section id="topico-2" data-inema-topic="modulo-3-1#topico-2" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold flex-1">Leia os quatro níveis de modelo</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-1-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">O kit não fala em nomes de modelo soltos. Fala em <strong class="text-purple-400">nível de modelo</strong>: super, topo, executor e menor. Cada nível diz <em>quando</em> usar e aponta o modelo no Claude Code, no Codex e no seu computador.</p>
+      <p data-inema-block="m3-1-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">Esta é a tabela do <code>runtime/ROTEAMENTO.md</code>, copiada do kit:</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Nível</th><th class="px-4 py-3 font-semibold">Quando</th><th class="px-4 py-3 font-semibold">Claude Code</th><th class="px-4 py-3 font-semibold">Codex</th><th class="px-4 py-3 font-semibold">Local (grátis, Ollama)</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">super</td><td class="px-4 py-3 text-neutral-300">raro: problema difícil, decisão grande</td><td class="px-4 py-3 text-neutral-300"><code>fable</code> · esforço alto</td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-astra</code> · high</td><td class="px-4 py-3 text-neutral-300">—</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">topo</td><td class="px-4 py-3 text-neutral-300">planejar, decidir, revisar o difícil</td><td class="px-4 py-3 text-neutral-300"><code>opus</code> · médio</td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-astra</code> · medium</td><td class="px-4 py-3 text-neutral-300"><code>qwen3.8:27b</code></td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300">fazer o trabalho do dia a dia</td><td class="px-4 py-3 text-neutral-300"><code>opus</code> · baixo / <code>sonnet</code></td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-sol</code> · low</td><td class="px-4 py-3 text-neutral-300"><code>qwen3.8:27b</code></td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">menor</td><td class="px-4 py-3 text-neutral-300">triagem, formatar, checar</td><td class="px-4 py-3 text-neutral-300"><code>haiku</code> / <code>sonnet</code></td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-luna</code></td><td class="px-4 py-3 text-neutral-300"><code>llama3.2</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a coluna "Quando" é a que você usa no dia a dia. As três da direita só dizem qual nome digitar em cada ferramenta. Note que <code>gpt-6-luna</code>, o padrão da ponte do módulo 2.1, é o nível menor.</p>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? "Esforço" e "Local"</h3>
+        <p class="text-neutral-300 text-sm"><strong>Esforço</strong> é quanto o modelo pensa antes de responder (baixo, médio, alto). O mesmo modelo com esforço alto pensa mais e gasta mais cota. <strong>Local</strong> é um modelo que roda no seu próprio computador pelo Ollama: não gasta cota nenhuma, mas depende da sua máquina aguentar. O doctor mostra se você tem Ollama (linha <code>ollama</code>, marcada como opcional).</p>
+      </div>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 250" class="w-full h-auto" role="img" aria-label="Escada de quatro níveis de modelo. Embaixo, o menor, para triagem, formatar e checar, é o degrau mais largo e mais usado. Acima, o executor, para o trabalho do dia a dia. Depois o topo, para planejar e revisar o difícil. No alto, o super, degrau estreito, para casos raros.">
+          <defs>
+            <pattern id="m31b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
+            <filter id="m31b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="0" y="0" width="800" height="250" fill="url(#m31b-grid)"/>
+          <g font-family="Inter,sans-serif" font-size="12">
+            <rect x="320" y="20" width="160" height="42" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
+            <text x="400" y="38" text-anchor="middle" fill="#fca5a5" font-weight="600">super</text><text x="400" y="54" text-anchor="middle" fill="#fca5a5" font-size="10">raro</text>
+            <rect x="250" y="72" width="300" height="42" rx="10" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
+            <text x="400" y="90" text-anchor="middle" fill="#e5e7eb" font-weight="600">topo</text><text x="400" y="106" text-anchor="middle" fill="#9ca3af" font-size="10">planejar, decidir, revisar o difícil</text>
+            <rect class="wf-a" x="170" y="124" width="460" height="42" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="400" y="142" text-anchor="middle" fill="#bae6fd" font-weight="600">executor</text><text x="400" y="158" text-anchor="middle" fill="#7dd3fc" font-size="10">o trabalho do dia a dia</text>
+            <g filter="url(#m31b-glow)"><rect x="80" y="176" width="640" height="48" rx="12" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
+            <text x="400" y="197" text-anchor="middle" fill="#c084fc" font-weight="600" font-size="14">menor</text><text x="400" y="214" text-anchor="middle" fill="#e9d5ff" font-size="11">triagem, formatar, checar — comece aqui</text>
+          </g>
+          <text x="740" y="40" text-anchor="end" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">mais cota por chamada ↑</text>
+          <text x="740" y="240" text-anchor="end" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">mais usado ↓</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a largura do degrau é quanto ele deve aparecer no seu dia. O menor (roxo, com brilho) é a base larga. O super, vermelho e estreito, é exceção: se ele aparece toda hora, algo está errado no roteamento.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔺</div><div class="text-sm font-semibold text-purple-400">super</div><p class="text-xs text-neutral-400 mt-1">decisão grande</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧠</div><div class="text-sm font-semibold text-purple-400">topo</div><p class="text-xs text-neutral-400 mt-1">planejar e revisar</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-purple-400">executor</div><p class="text-xs text-neutral-400 mt-1">fazer</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-purple-400">menor</div><p class="text-xs text-neutral-400 mt-1">triar e checar</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 3 ===================== -->
+    <section id="topico-3" data-inema-topic="modulo-3-1#topico-3" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold flex-1">Comece pelo menor que resolve</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-1-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">Regra 1 do roteamento: <strong class="text-purple-400">"Comece no menor que resolve; suba só se errar."</strong> O <code>AGENTS.md</code> do kit repete isso para os dois agentes: "use o menor modelo que resolve".</p>
+      <p data-inema-block="m3-1-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">Na prática, você sobe um degrau por vez, e só com motivo: o menor errou, deixou passar algo ou não deu conta do tamanho.</p>
+
+      <div class="space-y-5 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Menor: formatar e checar</h4><p class="text-neutral-300 text-sm">Clara quer a lista de horários livres em formato de mensagem. Isso é formatar: nível menor.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Errou? Executor</h4><p class="text-neutral-300 text-sm">Sônia pede o total por cliente do CSV do ERP. Se o menor somar errado, sobe para o executor. A conta certa ela confere à mão (módulo 2.3).</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Decisão? Topo</h4><p class="text-neutral-300 text-sm">"Como ligo o ERP sem API ao agente?" é planejar e decidir. Aí o topo se paga.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Super: só se o topo travar</h4><p class="text-neutral-300 text-sm">Problema difícil de verdade, decisão grande. Raro, como diz a tabela.</p></div>
+        </div>
+      </div>
+
+      <p data-inema-block="m3-1-t3-p3" class="text-neutral-300 mb-6 leading-relaxed">A ponte do Codex já nasce assim: sem você dizer nada, ela usa <code>gpt-6-luna</code>, o nível menor. Para subir, você troca a variável <code>CODEX_MODELO</code> só naquela chamada.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: chamar o Codex no nível menor e saber como subir um degrau</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit (ponte do módulo 2.1, já com <code>chmod +x</code>):</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/pontes/codex-exec.sh "Responda apenas PONG"</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.1.0:</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">PONG</pre>
+          <p class="text-sm text-neutral-400 mt-4 mb-3">Para subir ao nível executor do Codex só nesta chamada, ponha a variável na frente:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">CODEX_MODELO=gpt-6-sol runtime/pontes/codex-exec.sh "Responda apenas PONG"</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> a primeira chamada devolve <code>PONG</code> usando o padrão <code>gpt-6-luna</code>. A variável vale só para a linha em que aparece; a próxima chamada volta ao menor.</div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Suba com motivo escrito</h3>
+        <p class="text-neutral-300 text-sm">Quando subir de nível, anote por quê numa linha ("menor somou errado o total da Padaria Lua"). Depois de algumas semanas, essas linhas mostram quais tarefas merecem nascer num nível acima.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⬇️</div><div class="text-sm font-semibold text-purple-400">Comece embaixo</div><p class="text-xs text-neutral-400 mt-1">regra 1</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⬆️</div><div class="text-sm font-semibold text-purple-400">Suba se errar</div><p class="text-xs text-neutral-400 mt-1">um degrau por vez</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌙</div><div class="text-sm font-semibold text-purple-400">gpt-6-luna</div><p class="text-xs text-neutral-400 mt-1">padrão da ponte</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔧</div><div class="text-sm font-semibold text-purple-400">CODEX_MODELO</div><p class="text-xs text-neutral-400 mt-1">troca por chamada</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 4 ===================== -->
+    <section id="topico-4" data-inema-topic="modulo-3-1#topico-4" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold flex-1">Peça revisão a outro modelo</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-1-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">Regra 3: <strong class="text-purple-400">"Revisão por outro modelo (ex.: Claude faz, Codex revisa — receita R1) pega erros que o mesmo modelo não vê."</strong></p>
+      <p data-inema-block="m3-1-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">É a mesma lógica de pedir a um colega para reler o seu texto. Quem escreveu tende a ler o que quis escrever, não o que está lá. Um modelo de outra empresa tem outros pontos cegos.</p>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 220" class="w-full h-auto" role="img" aria-label="Fluxo de revisão cruzada. O Claude faz o trabalho e manda pela ponte codex-exec ao Codex, que revisa em modo só leitura. A revisão volta ao Claude, que compara com a opinião dele e entrega a você uma resposta combinada.">
+          <defs>
+            <pattern id="m31c-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
+            <filter id="m31c-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m31c-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+            <marker id="m31c-arrow-p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="220" fill="url(#m31c-grid)"/>
+          <g filter="url(#m31c-glow)"><rect x="40" y="70" width="170" height="70" rx="14" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
+          <text x="125" y="100" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">Claude faz</text>
+          <text x="125" y="120" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="11">o trabalho</text>
+          <line class="wf-flow" x1="212" y1="95" x2="318" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#m31c-arrow)"/>
+          <text x="265" y="82" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10">codex-exec.sh</text>
+          <rect class="wf-a" x="322" y="70" width="170" height="70" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="407" y="100" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-weight="600" font-size="14">Codex revisa</text>
+          <text x="407" y="120" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">só leitura (N4)</text>
+          <path d="M407,142 C 407,190 125,190 125,145" fill="none" stroke="#c084fc" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m31c-arrow-p)"/>
+          <text x="266" y="200" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="11">a revisão volta</text>
+          <line x1="494" y1="105" x2="590" y2="105" stroke="#c084fc" stroke-width="2" marker-end="url(#m31c-arrow-p)"/>
+          <rect x="595" y="70" width="170" height="70" rx="14" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
+          <text x="680" y="100" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13">você recebe</text>
+          <text x="680" y="120" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">as duas opiniões</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a seta azul é a ponte do módulo 2.1 levando o pedido ao Codex. A curva roxa tracejada é a revisão voltando. O Codex só lê: quem decide o que fica é o Claude, e no fim você.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: segunda opinião de outro modelo sem sair do Claude</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole (prompt da receita R1):</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use runtime/pontes/codex-exec.sh para pedir ao Codex uma revisão do arquivo README.md: o que está confuso para um iniciante? Depois compare com a sua opinião.</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o Claude pede para rodar a ponte, mostra o que o Codex respondeu e depois separa onde os dois concordam e onde discordam.</div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+          <h3 class="font-semibold text-purple-400 mb-3">✓ Revisão por outro modelo</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ Pontos cegos diferentes se cancelam</li>
+            <li>✓ O revisor pode ser de nível menor</li>
+            <li>✓ Discordância vira pergunta para você</li>
+            <li>✓ Já vem pronta na ponte do kit</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ O mesmo modelo revisando a si</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ Tende a concordar com o que acabou de fazer</li>
+            <li>✗ Repete o mesmo erro de leitura</li>
+            <li>✗ Dá falsa sensação de "conferido"</li>
+            <li>✗ Gasta cota sem acrescentar olhar novo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-purple-400">Outro olhar</div><p class="text-xs text-neutral-400 mt-1">regra 3</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤝</div><div class="text-sm font-semibold text-purple-400">Receita R1</div><p class="text-xs text-neutral-400 mt-1">Claude faz, Codex revisa</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-purple-400">Só leitura</div><p class="text-xs text-neutral-400 mt-1">padrão da ponte</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-purple-400">Você decide</div><p class="text-xs text-neutral-400 mt-1">nas discordâncias</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 5 ===================== -->
+    <section id="topico-5" data-inema-topic="modulo-3-1#topico-5" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold flex-1">Monte time só quando compensa</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-1-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">Regra 2: <strong class="text-purple-400">"Time de agentes só quando o trabalho é maior que o custo de montar o time."</strong> Um time (módulo 3.2) chama vários modelos, e cada um lê a tarefa e o projeto do zero.</p>
+      <p data-inema-block="m3-1-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">O exemplo do próprio kit mostra o peso: o time criou um arquivo de uma frase e gastou o equivalente a ~US$ 0,73 de API. Foi ótimo como teste. Para escrever uma frase no dia a dia, um agente só bastaria.</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Tarefa</th><th class="px-4 py-3 font-semibold">Um agente basta?</th><th class="px-4 py-3 font-semibold">Time compensa?</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Formatar os horários livres da Clara</td><td class="px-4 py-3 text-neutral-300">Sim, nível menor</td><td class="px-4 py-3 text-neutral-300">Não</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Responder uma dúvida sobre a POLITICA</td><td class="px-4 py-3 text-neutral-300">Sim</td><td class="px-4 py-3 text-neutral-300">Não</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Resumo mensal do ERP da Sônia, com totais conferidos</td><td class="px-4 py-3 text-neutral-300">Arriscado: ninguém confere</td><td class="px-4 py-3 text-neutral-300">Sim: planejar, fazer e conferir</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Montar a ponte do sistema de um cliente</td><td class="px-4 py-3 text-neutral-300">Arriscado</td><td class="px-4 py-3 text-neutral-300">Sim</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> o time compensa quando errar sai caro e alguém precisa conferir. Se a tarefa cabe numa frase e o erro é visível na hora, um agente só resolve.</p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Agente dentro de agente pesa mais do que parece</h3>
+        <p class="text-neutral-300 text-sm">Regra 4, copiada do kit: "Chamada de agente dentro de agente carrega as instruções e ferramentas do projeto. Para pontes simples, use uma pasta enxuta ou o modo <code>--bare</code> do Claude." Ou seja: cada chamada interna relê as regras da pasta. Numa pasta cheia, isso multiplica o gasto.</p>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Pergunta de bolso</h3>
+        <p class="text-neutral-300 text-sm">Antes de montar time, pergunte: "se o agente errar isso, eu percebo na hora?". Se percebe, vá de um agente só. Se não percebe, o revisor do time vale a cota.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👤</div><div class="text-sm font-semibold text-purple-400">Um agente</div><p class="text-xs text-neutral-400 mt-1">tarefa curta</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👥</div><div class="text-sm font-semibold text-purple-400">Time</div><p class="text-xs text-neutral-400 mt-1">trabalho maior que o custo</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-purple-400">Pasta enxuta</div><p class="text-xs text-neutral-400 mt-1">menos para reler</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-purple-400">~US$ 0,73</div><p class="text-xs text-neutral-400 mt-1">equivalente da R2</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 6 ===================== -->
+    <section id="topico-6" data-inema-topic="modulo-3-1#topico-6" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold flex-1">Mantenha a tabela atualizada</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-1-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">A última linha do <code>ROTEAMENTO.md</code> avisa: "Os nomes dos modelos mudam. Confira com <code>claude --help</code> e <code>codex --help</code> e atualize esta tabela."</p>
+      <p data-inema-block="m3-1-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">Os <strong class="text-purple-400">níveis</strong> ficam. O que muda é o nome dentro de cada célula. Por isso as receitas falam em "nível menor", e não num nome fixo.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: ver quais modelos as suas ferramentas aceitam hoje</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, um comando por vez:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude --help
+codex --help</pre>
+          <p class="text-sm text-neutral-400 mt-4 mb-3">Ou deixe o agente comparar. Abra <code>claude</code> na pasta do kit e cole:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Rode claude --help e codex --help, compare com a tabela de runtime/ROTEAMENTO.md e me diga quais nomes de modelo mudaram. Não edite o arquivo: proponha a mudança numa linha da tabela Aprendizado da runtime/POLITICA.md.</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> na ajuda, procure a opção de modelo (a que escolhe o modelo da chamada). Se o agente propôs algo, a linha aparece na tabela Aprendizado com status "proposto", e o <code>ROTEAMENTO.md</code> continua igual até você aprovar.</div>
+      </div>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Ciclo de manutenção da tabela. Primeiro, conferir com claude --help e codex --help. Depois, o agente propõe a troca de nome na tabela Aprendizado. Você aprova. Só então o ROTEAMENTO.md é atualizado. Os níveis continuam os mesmos.">
+          <defs>
+            <pattern id="m31d-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
+            <filter id="m31d-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m31d-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="200" fill="url(#m31d-grid)"/>
+          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+            <rect class="wf-a" x="30" y="60" width="160" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="110" y="86" fill="#bae6fd" font-weight="600">1 · conferir</text><text x="110" y="104" fill="#7dd3fc" font-size="10">--help das duas CLIs</text>
+            <rect class="wf-a" x="225" y="60" width="160" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="305" y="86" fill="#bae6fd" font-weight="600">2 · propor</text><text x="305" y="104" fill="#7dd3fc" font-size="10">linha no Aprendizado</text>
+            <g filter="url(#m31d-glow)"><rect x="420" y="60" width="160" height="60" rx="12" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g><text x="500" y="86" fill="#c084fc" font-weight="600">3 · você aprova</text><text x="500" y="104" fill="#e9d5ff" font-size="10">sim ou não</text>
+            <rect x="615" y="60" width="160" height="60" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/><text x="695" y="86" fill="#e5e7eb" font-weight="600">4 · atualizar</text><text x="695" y="104" fill="#9ca3af" font-size="10">ROTEAMENTO.md</text>
+          </g>
+          <g stroke="#38bdf8" stroke-width="2">
+            <line class="wf-flow" x1="192" y1="90" x2="221" y2="90" marker-end="url(#m31d-arrow)"/>
+            <line class="wf-flow" x1="387" y1="90" x2="416" y2="90" marker-end="url(#m31d-arrow)"/>
+            <line class="wf-flow" x1="582" y1="90" x2="611" y2="90" marker-end="url(#m31d-arrow)"/>
+          </g>
+          <text x="400" y="160" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">os quatro níveis não mudam; só o nome dentro de cada célula</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a caixa roxa com brilho é você. O agente confere e propõe, mas não mexe sozinho no arquivo de regras. É o "propõe → aprova → incorpora" da <code>POLITICA.md</code>, que você vê a fundo no módulo 4.2.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-1#q1">
+        <p class="font-medium mb-4">Teste rápido (opcional): a Sônia quer só formatar em tabela o total por cliente que já conferiu. Que nível usar?</p>
+        <div class="space-y-2">
+          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Super, porque é dado de cliente e tem de sair perfeito.</button>
+          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Um time de três papéis, para garantir.</button>
+          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Menor: formatar é exatamente a tarefa dele; sobe só se errar.</button>
+        </div>
+        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">❓</div><div class="text-sm font-semibold text-purple-400">--help</div><p class="text-xs text-neutral-400 mt-1">fonte do nome atual</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-purple-400">Nível fixo</div><p class="text-xs text-neutral-400 mt-1">nome muda</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📝</div><div class="text-sm font-semibold text-purple-400">Aprendizado</div><p class="text-xs text-neutral-400 mt-1">agente propõe</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">Você aprova</div><p class="text-xs text-neutral-400 mt-1">e só então muda</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== RESUMO ===================== -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Cota não é dólar</strong><span class="text-neutral-400"> — é o limite da assinatura, e cada chamada gasta um pedaço.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Quatro níveis</strong><span class="text-neutral-400"> — super, topo, executor e menor, com o nome em cada ferramenta.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Comece pelo menor</strong><span class="text-neutral-400"> — e suba com <code>CODEX_MODELO</code> só se errar.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Revisão por outro modelo</strong><span class="text-neutral-400"> — Claude faz, Codex revisa.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Time só quando compensa</strong><span class="text-neutral-400"> — e a tabela se confere com <code>--help</code>.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+          <p class="text-neutral-300">3.2 — Time de três papéis</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
+          <a href="modulo-3-2.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Módulo 3.2 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="hidden lg:block">
+    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
+      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
+      <ol class="space-y-2 text-sm">
+        <li><a href="#topico-1" class="text-neutral-400 hover:text-purple-400">1. Cota × dólar</a></li>
+        <li><a href="#topico-2" class="text-neutral-400 hover:text-purple-400">2. Os quatro níveis</a></li>
+        <li><a href="#topico-3" class="text-neutral-400 hover:text-purple-400">3. Comece pelo menor</a></li>
+        <li><a href="#topico-4" class="text-neutral-400 hover:text-purple-400">4. Revisão cruzada</a></li>
+        <li><a href="#topico-5" class="text-neutral-400 hover:text-purple-400">5. Quando montar time</a></li>
+        <li><a href="#topico-6" class="text-neutral-400 hover:text-purple-400">6. Tabela atualizada</a></li>
+      </ol>
+    </nav>
+  </aside>
+  </div>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
+      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-3-1#q1', { answer: 2, explain: {
+          '0': 'Não. O super é para problema difícil e decisão grande. Formatar uma tabela já conferida não é isso, e gastaria cota à toa.',
+          '1': 'Não. Time só compensa quando o trabalho é maior que o custo de montá-lo. Aqui o resultado aparece na hora e a Sônia confere de olho.',
+          '2': 'Isso. Formatar e checar é o nível menor. Se ele errar, sobe um degrau.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

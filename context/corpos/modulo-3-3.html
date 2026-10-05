@@ -1,0 +1,469 @@
+<!--TITLE: Time em segundo plano -->
+  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
+      <span class="text-purple-400">Módulo 3.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-3" data-inema-track="3">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧵 Time em segundo plano</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Várias sessões do Claude trabalhando ao mesmo tempo, cada uma com nome, papel e modelo, e você acompanhando de um lugar só. É a versão oficial do que vídeos de mods chamavam de "Threads", e roda pela receita R4 do kit.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Médio</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:3-3" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 3.3">
+        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+  <main id="conteudo" class="min-w-0" data-inema-module="3-3" data-inema-track="3">
+
+    <!-- ===================== TOPICO 1 ===================== -->
+    <section id="topico-1" data-inema-topic="modulo-3-3#topico-1" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold flex-1">Entenda a versão oficial das sessões paralelas</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-3-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">Nos vídeos de mods, várias sessões do Claude trabalhavam juntas, com um painel mostrando quem estava ativo e quem tinha travado. Era feito por engenharia reversa e quebrava a cada atualização.</p>
+      <p data-inema-block="m3-3-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">Hoje o próprio Claude Code faz isso pela via oficial: <code>claude --bg</code> solta uma sessão que trabalha sozinha, sem prender o seu terminal. Por baixo, o Claude lista essas sessões com <code>claude agents</code>. O kit embrulha a leitura dessa lista num script curto, o <code>observar.mjs</code>.</p>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três palavras deste módulo</h3>
+        <ul class="space-y-2 text-neutral-300 text-sm">
+          <li><strong>Sessão</strong> — uma conversa do Claude Code com memória própria. Cada vez que você abre <code>claude</code>, nasce uma sessão.</li>
+          <li><strong>Segundo plano</strong> — a sessão roda sem tela na sua frente. Você solta, volta para o terminal e confere depois, como deixar a máquina de lavar trabalhando.</li>
+          <li><strong>id</strong> — o código curto, como <code>d6816239</code>, que identifica a sessão. Você usa o id para ler, entrar ou parar.</li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 270" class="w-full h-auto" role="img" aria-label="Você, no terminal, solta duas sessões em segundo plano: revisor, só lendo em modo plano, e executor, com o modelo sonnet. As duas trabalham ao mesmo tempo e gravam em arquivo. O observar lê a lista das duas e mostra numa tabela.">
+          <defs>
+            <pattern id="m33-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
+            <filter id="m33-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m33-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker>
+            <marker id="m33-arrow-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="270" fill="url(#m33-grid)"/>
+          <g filter="url(#m33-glow)"><rect x="30" y="100" width="150" height="70" rx="14" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
+          <text x="105" y="131" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">você</text>
+          <text x="105" y="151" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="11">claude --bg</text>
+          <path d="M182,120 C 230,70 260,60 300,60" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#m33-arrow)"/>
+          <path d="M182,150 C 230,200 260,210 300,210" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#m33-arrow)"/>
+          <rect class="wf-a" x="305" y="30" width="200" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="405" y="56" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">🔍 revisor</text>
+          <text x="405" y="75" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">modo plano · só lê</text>
+          <rect class="wf-a" x="305" y="180" width="200" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="405" y="206" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">🛠️ executor</text>
+          <text x="405" y="225" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">sonnet · cria resumo.md</text>
+          <line class="wf-flow" x1="507" y1="60" x2="600" y2="120" stroke="#38bdf8" stroke-width="2" marker-end="url(#m33-arrow-c)"/>
+          <line class="wf-flow" x1="507" y1="210" x2="600" y2="150" stroke="#38bdf8" stroke-width="2" marker-end="url(#m33-arrow-c)"/>
+          <rect x="605" y="100" width="165" height="70" rx="14" fill="#1e1233" stroke="#c084fc" stroke-width="2"/>
+          <text x="687" y="131" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="13">observar.mjs</text>
+          <text x="687" y="151" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="11">tabela: id · nome · estado</text>
+          <text x="405" y="140" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">ao mesmo tempo</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as setas roxas são os comandos que você dá. As caixas azuis são as sessões trabalhando sozinhas, lado a lado. O <code>observar.mjs</code> só olha: ele não para nem altera nenhuma sessão.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+          <h3 class="font-semibold text-purple-400 mb-3">✓ Via oficial (R4)</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ Comando documentado: <code>claude --bg</code></li>
+            <li>✓ Cada sessão com nome, modelo e modo próprios</li>
+            <li>✓ Segue a mesma POLITICA do kit</li>
+            <li>✓ Continua funcionando quando o Claude atualiza</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ O "Threads" dos vídeos</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ Fio improvisado por dentro do aplicativo</li>
+            <li>✗ Some na próxima atualização</li>
+            <li>✗ Ninguém garante o que ele pode fazer</li>
+            <li>✗ Só quem montou sabe consertar</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">claude --bg</div><p class="text-xs text-neutral-400 mt-1">solta a sessão</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-purple-400">--name</div><p class="text-xs text-neutral-400 mt-1">o papel de cada uma</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-purple-400">observar</div><p class="text-xs text-neutral-400 mt-1">um lugar só</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">Cota</div><p class="text-xs text-neutral-400 mt-1">cada sessão consome</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 2 ===================== -->
+    <section id="topico-2" data-inema-topic="modulo-3-3#topico-2" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold flex-1">Marque a pasta como confiável</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-3-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">Uma sessão em segundo plano trabalha sem você olhando. Por isso o Claude só aceita soltá-la numa pasta que você já disse que confia. É um passo único por pasta.</p>
+      <p data-inema-block="m3-3-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">Sem esse passo, o <code>--bg</code> responde <code>Workspace not trusted</code> e não faz nada. A receita R4 começa exatamente por aqui.</p>
+
+      <div class="space-y-5 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Abra o Claude na pasta do kit</h4><p class="text-neutral-300 text-sm">No terminal, dentro da pasta, digite <code>claude</code>. Na primeira vez numa pasta nova aparece um aviso de confiança.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Repare na opção já selecionada</h4><p class="text-neutral-300 text-sm">O aviso abre com <strong>"No, exit"</strong> marcado. Se você apertar Enter direto, o Claude fecha e a pasta continua sem confiança.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Mude para "Yes, I trust this folder"</h4><p class="text-neutral-300 text-sm">Mude a seleção para <strong>"Yes, I trust this folder"</strong> e aperte Enter. Pronto: a pasta fica marcada.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Saia e volte ao terminal</h4><p class="text-neutral-300 text-sm">Pode fechar a sessão. A marca fica guardada, e as sessões em segundo plano já podem nascer nesta pasta.</p></div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: marcar a pasta do kit como confiável</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">No aviso que aparece:</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">"No, exit"                       ← vem selecionado: NÃO aperte Enter aqui
+"Yes, I trust this folder"       ← escolha esta</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o Claude abre normalmente na pasta. Se ele fechou logo depois do aviso, você confirmou o "No, exit": abra de novo e troque a opção.</div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Confie só em pasta que você conhece</h3>
+        <p class="text-neutral-300 text-sm">Confiar numa pasta deixa o Claude ler as instruções e mods que estão nela. Marque a pasta do kit e as suas pastas de trabalho. Pasta baixada de terceiro: leia antes (módulo 4.3 fala disso).</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-purple-400">Uma vez</div><p class="text-xs text-neutral-400 mt-1">por pasta</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚪</div><div class="text-sm font-semibold text-purple-400">No, exit</div><p class="text-xs text-neutral-400 mt-1">vem marcado</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">Yes, I trust</div><p class="text-xs text-neutral-400 mt-1">a escolha certa</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⛔</div><div class="text-sm font-semibold text-purple-400">not trusted</div><p class="text-xs text-neutral-400 mt-1">o erro se esquecer</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 3 ===================== -->
+    <section id="topico-3" data-inema-topic="modulo-3-3#topico-3" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold flex-1">Solte as sessões em segundo plano</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-3-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">A receita R4 solta duas sessões. Um <strong class="text-purple-400">revisor</strong> que só lê e responde uma pergunta sobre a POLITICA. E um <strong class="text-purple-400">executor</strong>, num modelo mais leve, que cria um arquivo.</p>
+      <p data-inema-block="m3-3-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">Cada linha devolve o terminal na hora. As duas sessões seguem trabalhando sozinhas, ao mesmo tempo.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: soltar um revisor e um executor em segundo plano</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit (já marcada como confiável), uma linha de cada vez:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude --bg --permission-mode plan --name revisor "Leia runtime/POLITICA.md e responda em uma linha qual é o teto de 'Enviar'."
+claude --bg --model sonnet --name executor "Crie resumo.md com 3 linhas sobre o que é este kit."</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.2.0:</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">sessão listada como background … done; respondeu "N2" lendo a POLITICA</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> rode o observar (tópico 4). As duas sessões aparecem com o tipo <code>background</code>. A resposta certa do revisor é N2, que é o teto de "Enviar" na tabela da POLITICA.</div>
+      </div>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Pedaço do comando</th><th class="px-4 py-3 font-semibold">O que faz</th><th class="px-4 py-3 font-semibold">Por que aqui</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>--bg</code></td><td class="px-4 py-3 text-neutral-300">solta a sessão em segundo plano</td><td class="px-4 py-3 text-neutral-300">o terminal fica livre na hora</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>--permission-mode plan</code></td><td class="px-4 py-3 text-neutral-300">a sessão só lê e planeja, não altera nada</td><td class="px-4 py-3 text-neutral-300">o revisor não precisa mexer em arquivo</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>--model sonnet</code></td><td class="px-4 py-3 text-neutral-300">escolhe um modelo mais leve</td><td class="px-4 py-3 text-neutral-300">três linhas de resumo não pedem o topo</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>--name</code></td><td class="px-4 py-3 text-neutral-300">dá nome à sessão</td><td class="px-4 py-3 text-neutral-300">é o nome que aparece na tabela do observar</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> o modo e o modelo seguem as regras do <code>ROTEAMENTO.md</code> e da <code>POLITICA.md</code> que você viu no módulo 3.1. Quem só lê, roda em modo plano. Quem faz pouco, roda no menor que resolve.</p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⛔</span> Não junte <code>-p</code> com <code>--bg</code></h3>
+        <p class="text-neutral-300 text-sm">O <code>-p</code> (que você usou na R2) responde e sai. O <code>--bg</code> solta e deixa rodando. Os dois juntos o Claude recusa, com a mensagem <code>--bg and --print conflict</code>. Isso foi aprendido na prova da versão 0.2.0 do kit.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔍</div><div class="text-sm font-semibold text-purple-400">revisor</div><p class="text-xs text-neutral-400 mt-1">modo plano</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-purple-400">executor</div><p class="text-xs text-neutral-400 mt-1">sonnet, cria arquivo</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚦</div><div class="text-sm font-semibold text-purple-400">N2</div><p class="text-xs text-neutral-400 mt-1">a resposta certa</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚡</div><div class="text-sm font-semibold text-purple-400">Sem -p</div><p class="text-xs text-neutral-400 mt-1">conflita com --bg</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 4 ===================== -->
+    <section id="topico-4" data-inema-topic="modulo-3-3#topico-4" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold flex-1">Acompanhe com o observar</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-3-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">O <code>runtime/scripts/observar.mjs</code> mostra numa tabela as sessões em segundo plano desta pasta. Ele só lê a lista que o Claude devolve em <code>claude agents --json</code>. Não para nem altera sessão nenhuma.</p>
+      <p data-inema-block="m3-3-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">Rode quantas vezes quiser: não chama modelo e não gasta cota.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: ver o time em segundo plano num lugar só</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/scripts/observar.mjs</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux). Na prova do kit a sessão se chamava <code>r4-revisor</code>; com <code>--name revisor</code>, a sua aparece como <code>revisor</code>:</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">id        tipo        nome        estado  iniciada há
+d6816239  background  r4-revisor  done    7 min
+
+ver saída: claude logs &lt;id&gt; · entrar: claude attach &lt;id&gt; · parar: claude stop &lt;id&gt;</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> aparece uma linha por sessão, com <code>tipo</code> = <code>background</code> e o nome que você deu. Para ver as sessões de todas as pastas, rode <code>node runtime/scripts/observar.mjs --todas</code>.</div>
+      </div>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 230" class="w-full h-auto" role="img" aria-label="Os cinco estados de uma sessão na coluna estado do observar. Working, trabalhando. Idle, parada esperando. Done, terminou. Blocked, travada esperando você. Failed, deu erro. Blocked e failed estão em vermelho porque pedem a sua ação.">
+          <defs>
+            <pattern id="m33b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
+            <filter id="m33b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m33b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="230" fill="url(#m33b-grid)"/>
+          <g font-family="Inter,sans-serif" text-anchor="middle">
+            <rect class="wf-a" x="40" y="40" width="150" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="115" y="66" fill="#bae6fd" font-size="14" font-weight="600">working</text><text x="115" y="85" fill="#7dd3fc" font-size="11">trabalhando</text>
+            <line class="wf-flow" x1="192" y1="70" x2="290" y2="70" stroke="#38bdf8" stroke-width="2" marker-end="url(#m33b-arrow)"/>
+            <rect x="295" y="40" width="150" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="370" y="66" fill="#bae6fd" font-size="14" font-weight="600">idle</text><text x="370" y="85" fill="#7dd3fc" font-size="11">parada, esperando</text>
+            <line class="wf-flow" x1="447" y1="70" x2="545" y2="70" stroke="#38bdf8" stroke-width="2" marker-end="url(#m33b-arrow)"/>
+            <g filter="url(#m33b-glow)"><rect x="550" y="40" width="200" height="60" rx="12" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
+            <text x="650" y="66" fill="#c084fc" font-size="14" font-weight="600">done</text><text x="650" y="85" fill="#e9d5ff" font-size="11">terminou: leia o resultado</text>
+            <rect x="140" y="150" width="200" height="56" rx="12" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
+            <text x="240" y="174" fill="#fca5a5" font-size="14" font-weight="600">blocked</text><text x="240" y="192" fill="#fca5a5" font-size="11">travada: precisa de você</text>
+            <rect x="460" y="150" width="200" height="56" rx="12" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
+            <text x="560" y="174" fill="#fca5a5" font-size="14" font-weight="600">failed</text><text x="560" y="192" fill="#fca5a5" font-size="11">deu erro: leia o log</text>
+          </g>
+          <line x1="115" y1="102" x2="200" y2="148" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <line x1="115" y1="102" x2="500" y2="148" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> o caminho bom vai da esquerda para a direita até <code>done</code>. As linhas tracejadas vermelhas são os desvios: uma sessão pode travar esperando uma permissão (<code>blocked</code>) ou falhar (<code>failed</code>). Nos dois casos, é com você.</p>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que "blocked" acontece</h3>
+        <p class="text-neutral-300 text-sm">Cada sessão segue a POLITICA. Se o executor precisar de algo com teto N2, como um comando que altera o sistema, ele para e pede. Em segundo plano ninguém vê o pedido na hora: por isso o observar existe.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-purple-400">Só lê</div><p class="text-xs text-neutral-400 mt-1">não para nada</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🆔</div><div class="text-sm font-semibold text-purple-400">id</div><p class="text-xs text-neutral-400 mt-1">código curto</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚥</div><div class="text-sm font-semibold text-purple-400">Estado</div><p class="text-xs text-neutral-400 mt-1">5 valores</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌐</div><div class="text-sm font-semibold text-purple-400">--todas</div><p class="text-xs text-neutral-400 mt-1">todas as pastas</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 5 ===================== -->
+    <section id="topico-5" data-inema-topic="modulo-3-3#topico-5" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold flex-1">Entre, leia e pare uma sessão</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-3-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">O próprio rodapé do observar lembra os três comandos. Todos usam o <strong class="text-purple-400">id</strong> da primeira coluna da tabela, por exemplo <code>d6816239</code>.</p>
+      <p data-inema-block="m3-3-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">Ler é sempre seguro. Entrar serve para destravar uma sessão <code>blocked</code>. Parar é a saída quando ela gasta cota sem chegar a lugar nenhum.</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Comando</th><th class="px-4 py-3 font-semibold">Faz</th><th class="px-4 py-3 font-semibold">Use quando</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>claude logs &lt;id&gt;</code></td><td class="px-4 py-3 text-neutral-300">mostra a tela da sessão</td><td class="px-4 py-3 text-neutral-300">ver a resposta de um <code>done</code> ou o erro de um <code>failed</code></td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>claude attach &lt;id&gt;</code></td><td class="px-4 py-3 text-neutral-300">entra na sessão para conversar</td><td class="px-4 py-3 text-neutral-300">responder o pedido de um <code>blocked</code></td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>claude stop &lt;id&gt;</code></td><td class="px-4 py-3 text-neutral-300">para a sessão</td><td class="px-4 py-3 text-neutral-300">sessão andando em círculo ou pedido errado</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> troque <code>&lt;id&gt;</code> pelo código que o observar mostrou. Sem os sinais de menor e maior.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: ler a resposta do revisor</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, trocando <code>&lt;id&gt;</code> pelo id do revisor na tabela do observar:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude logs &lt;id&gt;</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.2.0:</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">o revisor respondeu "N2" lendo a POLITICA</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> a tela da sessão termina com uma linha citando N2. Confira na tabela "Teto por tipo de ação" do <code>runtime/POLITICA.md</code>: a linha "Enviar" diz N2.</div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+          <h3 class="font-semibold text-purple-400 mb-3">✓ Pare sem medo quando</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ O pedido saiu errado e você quer refazer</li>
+            <li>✓ A sessão repete a mesma tentativa</li>
+            <li>✓ Ela continua <code>working</code> muito além do esperado</li>
+            <li>✓ Você soltou sessões demais de uma vez</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ Não faça</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ Aprovar tudo ao entrar num <code>blocked</code> sem ler o pedido</li>
+            <li>✗ Deixar <code>failed</code> sem abrir o log</li>
+            <li>✗ Parar sessão de outro projeto vista pela opção <code>--todas</code></li>
+            <li>✗ Soltar de novo a mesma tarefa sem parar a anterior</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Prefere botões?</h3>
+        <p class="text-neutral-300 text-sm">O kit traz um mod opcional, o <code>runtime-painel</code>. Dentro do Claude Code, o comando <code>/painel</code> mostra as mesmas sessões com os botões <strong>Atualizar</strong> e <strong>Parar</strong>. Só o seu clique para uma sessão. Você monta isso no módulo 4.3.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-purple-400">logs</div><p class="text-xs text-neutral-400 mt-1">ler a tela</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚪</div><div class="text-sm font-semibold text-purple-400">attach</div><p class="text-xs text-neutral-400 mt-1">entrar e conversar</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✋</div><div class="text-sm font-semibold text-purple-400">stop</div><p class="text-xs text-neutral-400 mt-1">parar a sessão</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖥️</div><div class="text-sm font-semibold text-purple-400">/painel</div><p class="text-xs text-neutral-400 mt-1">a versão com botões</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 6 ===================== -->
+    <section id="topico-6" data-inema-topic="modulo-3-3#topico-6" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold flex-1">Junte os resultados sem estourar a cota</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m3-3-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">Cada sessão grava o resultado em arquivo, como o <code>resumo.md</code> do executor. No fim, uma sessão "chefe" (ou o time da R2) lê esses arquivos e consolida numa resposta só.</p>
+      <p data-inema-block="m3-3-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">O cuidado é a <strong class="text-purple-400">cota</strong>: cada sessão consome a da sua assinatura. A própria R4 avisa: comece pela R2, que roda numa sessão só, e solte sessões paralelas quando o ganho de tempo compensar.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: consolidar e conferir o que o executor fez</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time (planejador, executor, revisor) para ler resumo.md, conferir se ele tem 3 linhas sobre o que é este kit e me dizer APROVADO ou o que falta. Não altere outros arquivos.</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> a resposta termina com <code>APROVADO</code> ou com <code>FALTA:</code> e a lista do que corrigir, que é o formato do revisor em <code>.claude/agents/revisor.md</code>.</div>
+      </div>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Situação</th><th class="px-4 py-3 font-semibold">Use</th><th class="px-4 py-3 font-semibold">Por quê</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Clara quer os horários livres da semana conferidos</td><td class="px-4 py-3 text-neutral-300">R2, uma sessão</td><td class="px-4 py-3 text-neutral-300">tarefa curta: o time cabe numa conversa</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Sônia fecha o mês de vários clientes, cada um com seu CSV</td><td class="px-4 py-3 text-neutral-300">R4, uma sessão por cliente</td><td class="px-4 py-3 text-neutral-300">partes independentes, que andam juntas</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Uma pergunta só sobre a POLITICA</td><td class="px-4 py-3 text-neutral-300">uma sessão no menor modelo</td><td class="px-4 py-3 text-neutral-300">time ali só gasta cota</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> é a regra 2 do <code>ROTEAMENTO.md</code> na prática. Time de agentes só quando o trabalho é maior que o custo de montar o time.</p>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Duas sessões, um arquivo: cuidado</h3>
+        <p class="text-neutral-300 text-sm">Se duas sessões editarem o mesmo arquivo, uma pode desfazer a outra. Dê a cada sessão o seu arquivo de saída. A guarda de colisão do kit pergunta antes desse estrago (módulo 4.3).</p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-3#q1">
+        <p class="font-medium mb-4">Teste rápido (opcional): você rodou <code>claude --bg</code> e recebeu <code>Workspace not trusted</code>. O que fazer?</p>
+        <div class="space-y-2">
+          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Acrescentar <code>-p</code> ao comando.</button>
+          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Abrir <code>claude</code> na pasta e escolher "Yes, I trust this folder" no aviso.</button>
+          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Rodar <code>node runtime/scripts/observar.mjs --todas</code>.</button>
+        </div>
+        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📄</div><div class="text-sm font-semibold text-purple-400">Um arquivo</div><p class="text-xs text-neutral-400 mt-1">por sessão</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👑</div><div class="text-sm font-semibold text-purple-400">Chefe</div><p class="text-xs text-neutral-400 mt-1">consolida no fim</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">R2 primeiro</div><p class="text-xs text-neutral-400 mt-1">uma sessão só</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛡️</div><div class="text-sm font-semibold text-purple-400">Colisão</div><p class="text-xs text-neutral-400 mt-1">a guarda pergunta</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== RESUMO ===================== -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">O "Threads" agora é oficial</strong><span class="text-neutral-400"> — claude --bg solta sessões que trabalham juntas.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Pasta confiável antes de tudo</strong><span class="text-neutral-400"> — troque o "No, exit" por "Yes, I trust this folder".</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Nome, modo e modelo por sessão</strong><span class="text-neutral-400"> — e nunca -p junto com --bg.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">O observar só lê</strong><span class="text-neutral-400"> — logs, attach e stop usam o id da tabela.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Um arquivo por sessão, um chefe no fim</strong><span class="text-neutral-400"> — e R2 primeiro para poupar cota.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+          <p class="text-neutral-300">3.4 — Agente longo com verificação</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
+          <a href="modulo-3-4.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Módulo 3.4 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="hidden lg:block">
+    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
+      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
+      <ol class="space-y-2 text-sm">
+        <li><a href="#topico-1" class="text-neutral-400 hover:text-purple-400">1. Sessões paralelas oficiais</a></li>
+        <li><a href="#topico-2" class="text-neutral-400 hover:text-purple-400">2. Pasta confiável</a></li>
+        <li><a href="#topico-3" class="text-neutral-400 hover:text-purple-400">3. Soltar as sessões</a></li>
+        <li><a href="#topico-4" class="text-neutral-400 hover:text-purple-400">4. O observar</a></li>
+        <li><a href="#topico-5" class="text-neutral-400 hover:text-purple-400">5. logs, attach, stop</a></li>
+        <li><a href="#topico-6" class="text-neutral-400 hover:text-purple-400">6. Juntar e poupar cota</a></li>
+      </ol>
+    </nav>
+  </aside>
+  </div>
+<!--CHECKS-->
+        INEMA.registerCheck('modulo-3-3#q1', { answer: 1, explain: {
+          '0': 'Não. O -p nem combina com o --bg (o Claude recusa com "--bg and --print conflict"). O problema é a confiança da pasta.',
+          '1': 'Isso. O aviso abre com "No, exit" selecionado; troque para "Yes, I trust this folder" uma vez e o --bg passa a funcionar nesta pasta.',
+          '2': 'Não resolve: o observar só lê a lista de sessões. Como a sessão nem nasceu, não há o que listar.'
+        } });

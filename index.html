@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="agrt">
+  <title>INEMA Agent Runtime — faça qualquer IA usar qualquer ferramenta | INEMA.CLUB</title>
+  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
+
+  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/learn.css">
+
+  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+  <script type="application/json" data-inema-manifest>
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-1.5 sm:space-x-3">
+          <a href="index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🔌</span>
+            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+          </a>
+          <span class="text-neutral-600 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
+        </div>
+        <div class="flex items-center sm:space-x-1">
+          <a href="curso/trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+          </a>
+          <a href="curso/trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+          </a>
+          <a href="curso/trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+          </a>
+          <a href="curso/trilha4/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
+            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
+          </button>
+          <div class="relative">
+            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
+              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+            </button>
+            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
+              <div class="inema-segment" aria-label="Tema">
+                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
+                <button type="button" data-inema-set-theme="claro">Claro</button>
+                <button type="button" data-inema-set-theme="sepia">Sépia</button>
+                <button type="button" data-inema-set-theme="foco">Foco</button>
+                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
+              </div>
+              <div class="inema-segment" aria-label="Fonte">
+                <button type="button" data-inema-set-font="inter">Inter</button>
+                <button type="button" data-inema-set-font="system">Sistema</button>
+                <button type="button" data-inema-set-font="leitura">Leitura</button>
+              </div>
+              <div class="inema-segment" aria-label="Tamanho do texto">
+                <button type="button" data-inema-set-fontscale="100">A</button>
+                <button type="button" data-inema-set-fontscale="112">A+</button>
+                <button type="button" data-inema-set-fontscale="125">A++</button>
+              </div>
+              <div class="inema-segment" aria-label="Largura da linha">
+                <button type="button" data-inema-set-linewidth="60">Estreito</button>
+                <button type="button" data-inema-set-linewidth="68">Médio</button>
+                <button type="button" data-inema-set-linewidth="75">Largo</button>
+              </div>
+              <div class="inema-segment" aria-label="Entrelinha">
+                <button type="button" data-inema-set-leading="1.45">Compacto</button>
+                <button type="button" data-inema-set-leading="1.7">Confortável</button>
+              </div>
+            </div>
+          </div>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="bg-gradient-to-br from-emerald-900/20 via-dark-800 to-dark-900 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:grid lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:items-center">
+      <div>
+        <span class="inline-block px-3 py-1 bg-primary/10 text-primary border border-primary/30 text-xs font-semibold rounded-full mb-5">CURSO GRATUITO · 4 TRILHAS · 16 MÓDULOS</span>
+        <h1 class="text-4xl sm:text-5xl font-bold mb-5 leading-tight">INEMA Agent Runtime<br><span class="text-primary">faça qualquer IA usar qualquer ferramenta</span></h1>
+        <p class="text-lg text-neutral-300 max-w-xl mb-8">Aprenda a usar o kit que faz o Claude Code e o Codex descobrirem, conectarem e usarem as ferramentas que você já tem — pela via mais estável que existir, com regras claras do que podem fazer sozinhos. Tudo pela assinatura, sem API paga.</p>
+        <div class="flex flex-col sm:flex-row justify-start gap-3">
+          <a href="curso/trilha1/index.html" class="inline-flex items-center justify-start px-6 py-3 bg-primary text-black rounded-lg font-semibold hover:bg-yellow-300 transition-colors">Começar pela Trilha 1 →</a>
+          <a id="continuar" href="#" class="hidden items-center justify-start px-6 py-3 bg-dark-700 text-neutral-100 rounded-lg font-semibold hover:bg-dark-600 transition-colors">↻ Continuar de onde parei</a>
+          <button type="button" data-inema-journey-open class="inline-flex items-center justify-start px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">◷ Minha jornada</button>
+        </div>
+        <div data-inema-meter="curso" class="mt-8 max-w-md" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do curso">
+          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 96</span><span data-inema-meter-pct>0%</span></div>
+          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+        </div>
+      </div>
+      <div class="mt-10 lg:mt-0 rounded-2xl border border-primary/30 bg-dark-900/40 p-3 overflow-hidden">
+        <svg viewBox="0 0 460 340" class="w-full h-auto" role="img" aria-label="No centro, a pasta runtime do kit. À esquerda, dois agentes, Claude Code e Codex, leem as mesmas regras. À direita, quatro ferramentas ligadas por pontes: Codex por CLI, a agenda e o ERP por uma ponte MCP, e um site pelo navegador. Embaixo, a política: prepara e pede.">
+          <defs>
+            <pattern id="lp-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#FACC15" opacity="0.10"/></pattern>
+            <filter id="lp-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="0" y="0" width="460" height="340" fill="url(#lp-grid)"/>
+          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+            <rect x="20" y="90" width="110" height="44" rx="12" fill="#0e2018" stroke="#34d399" stroke-width="2"/><text x="75" y="117" fill="#a7f3d0">Claude Code</text>
+            <rect x="20" y="190" width="110" height="44" rx="12" fill="#0e2018" stroke="#34d399" stroke-width="2"/><text x="75" y="217" fill="#a7f3d0">Codex</text>
+            <line x1="130" y1="112" x2="175" y2="150" stroke="#34d399" stroke-width="2"/>
+            <line x1="130" y1="212" x2="175" y2="180" stroke="#34d399" stroke-width="2"/>
+            <g filter="url(#lp-glow)"><rect x="175" y="125" width="110" height="80" rx="16" fill="#1f1a07" stroke="#FACC15" stroke-width="2"/></g>
+            <text x="230" y="160" fill="#FACC15" font-weight="600" font-size="14">runtime/</text>
+            <text x="230" y="180" fill="#fde68a" font-size="11">regras + pontes</text>
+            <line class="wf-flow" x1="285" y1="140" x2="330" y2="62" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="40" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="60" fill="#bae6fd">⌨ CLI · Codex</text>
+            <line class="wf-flow" x1="285" y1="155" x2="330" y2="122" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="105" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="125" fill="#bae6fd">📅 agenda · MCP</text>
+            <line class="wf-flow" x1="285" y1="175" x2="330" y2="185" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="170" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="190" fill="#bae6fd">🧾 ERP · MCP</text>
+            <line class="wf-flow" x1="285" y1="195" x2="330" y2="248" stroke="#38bdf8" stroke-width="2"/>
+            <rect class="wf-a" x="320" y="235" width="124" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="382" y="255" fill="#bae6fd">🌐 site · navegador</text>
+            <rect x="120" y="280" width="220" height="34" rx="10" fill="#2a1d06" stroke="#fbbf24" stroke-width="1.8"/><text x="230" y="302" fill="#fde68a">🚦 política: prepara e pede</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    <!-- A IDEIA -->
+    <section class="mb-16">
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-4">A ideia que atravessa o curso</h2>
+        <p class="text-xl text-neutral-100 mb-4">Engenharia reversa <strong class="text-emerald-400">não é produto, é técnica de descoberta.</strong></p>
+        <p class="text-neutral-300 mb-4">Vídeos sobre "mods" do Claude Code mostraram o Claude usando o Codex e várias sessões trabalhando em paralelo, quase tudo por engenharia reversa. A ideia é ótima; o caminho quebra na próxima atualização. Hoje quase tudo aquilo tem via oficial: <code>codex exec</code>, <code>claude --bg</code> e <code>claude agents</code>, plugins oficiais do Claude Code.</p>
+        <p class="text-neutral-300">Regra do kit: suba a escada e use sempre a via mais estável que existir — <strong>API → MCP → CLI → SDK → uso do computador → ponte local → engenharia reversa (só laboratório)</strong>.</p>
+      </div>
+    </section>
+
+    <!-- PARA QUEM -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Para quem é</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-3">🩺</div>
+          <h3 class="font-semibold text-lg mb-2">Clara, 47 — dona de clínica</h3>
+          <p class="text-neutral-300 text-sm">A agenda é uma planilha. Ela quer que o agente diga os horários livres da Dra. Ana e do Dr. Bruno sem ninguém abrir o arquivo — e sem o agente marcar nada sozinho.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-3">🧾</div>
+          <h3 class="font-semibold text-lg mb-2">Sônia, 51 — contadora</h3>
+          <p class="text-neutral-300 text-sm">O ERP do cliente não tem API, só exporta CSV. Ela quer o total de vendas por cliente conferido, sem montar planilha à mão todo mês.</p>
+        </div>
+      </div>
+      <p class="text-neutral-400 text-sm mt-4">Se você já usa um chat de IA, ouviu falar em Claude Code e Codex e quer que eles trabalhem com os sistemas do seu dia a dia, este curso é para você. Não precisa ser programador: cada termo técnico é explicado na primeira vez que aparece, e cada comando vem com o que você deve ver na tela.</p>
+    </section>
+
+    <!-- TRILHAS -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">As 4 trilhas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <a href="curso/trilha1/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full">TRILHA 1</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">🧭 Descobrir</h3>
+          <p class="text-neutral-400 text-sm mb-4">Por que engenharia reversa não é produto, instalar o kit, rodar o diagnóstico, a escada das vias e o mapa de capacidades.</p>
+          <div data-inema-meter="trilha:1" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 1"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+        <a href="curso/trilha2/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">TRILHA 2</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">🔌 Conectar</h3>
+          <p class="text-neutral-400 text-sm mb-4">Claude usa o Codex, sua primeira ponte MCP, a ponte do seu sistema sem API e o navegador com política.</p>
+          <div data-inema-meter="trilha:2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 2"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+        <a href="curso/trilha3/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full">TRILHA 3</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-purple-400 transition-colors">⚙️ Rotear e executar</h3>
+          <p class="text-neutral-400 text-sm mb-4">Modelo certo para cada tarefa, time de três papéis, time em segundo plano e agente longo que só termina com prova.</p>
+          <div data-inema-meter="trilha:3" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 3"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+        <a href="curso/trilha4/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-6 transition-all">
+          <div class="flex items-center justify-between mb-3"><span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full">TRILHA 4</span><span class="text-xs text-neutral-500">4 módulos · ~2h20</span></div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition-colors">🛡️ Governar e aprender</h3>
+          <p class="text-neutral-400 text-sm mb-4">Política de autonomia N0–N4, o agente propõe e você aprova, guarda e painel, laboratório e projeto final.</p>
+          <div data-inema-meter="trilha:4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 4"><div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PROJETO FINAL -->
+    <section class="mb-16">
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-8">
+        <h2 class="text-2xl font-bold mb-4 text-primary">🏁 Projeto final: sua ponte e seu time</h2>
+        <p class="text-neutral-300 mb-4">Você escolhe um sistema do seu trabalho que não tem API, preenche o <code>CAPACIDADES.md</code>, escolhe a via mais alta possível, constrói a ponte, roda um time de três papéis com política "pede antes" e entrega a saída do <code>verificar.mjs</code> com todos os critérios OK, mais uma lição que você mesmo aprovou.</p>
+        <p class="text-neutral-400 text-sm">O entregável é a pasta <code>runtime/</code> preenchida, não um vídeo nem uma apresentação. Detalhes no módulo 4.4.</p>
+      </div>
+    </section>
+
+    <!-- KIT E PRE-REQUISITOS -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">O que você precisa</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-2">🧰</div>
+          <h3 class="font-semibold mb-2">O kit</h3>
+          <p class="text-neutral-300 text-sm mb-3">Aberto (licença MIT): <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a>. Você clona no módulo 1.2.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-2">💻</div>
+          <h3 class="font-semibold mb-2">Na sua máquina</h3>
+          <p class="text-neutral-300 text-sm">Node 18 ou mais novo e o Claude Code e/ou o Codex logados pela assinatura. Linux ou Mac; no Windows, use o WSL.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-2">📚</div>
+          <h3 class="font-semibold mb-2">Antes, se puder</h3>
+          <p class="text-neutral-300 text-sm">Os cursos <a href="https://inematds.github.io/agenticos/" target="_blank" class="text-sky-400 hover:text-sky-300">Agentic OS</a> (o conceito de sistema operacional de agentes) e <a href="https://inematds.github.io/curso-7pa/" target="_blank" class="text-sky-400 hover:text-sky-300">7 Princípios da gestão de agentes</a> (autonomia N0–N4). Ajudam, mas não são obrigatórios.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO ESTUDAR -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Como estudar aqui</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">●</div><div class="font-semibold mb-1">Marque como lido</div><p class="text-xs text-neutral-400">Cada tópico tem um botão. O progresso aparece aqui, na trilha e no módulo.</p></div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">?</div><div class="font-semibold mb-1">Marque dúvidas</div><p class="text-xs text-neutral-400">"Tenho dúvida" guarda o tópico para você revisar depois.</p></div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">🖍️</div><div class="font-semibold mb-1">Grife e anote</div><p class="text-xs text-neutral-400">Selecione um trecho do texto para grifar ou escrever uma nota.</p></div>
+        <div class="bg-dark-800 rounded-xl p-5 border border-dark-600"><div class="text-2xl mb-2">◷</div><div class="font-semibold mb-1">Minha jornada</div><p class="text-xs text-neutral-400">Progresso, dúvidas e notas num lugar só. Exporte em arquivo para não perder.</p></div>
+      </div>
+      <p class="text-neutral-500 text-xs mt-4">Tudo fica salvo só no seu navegador. Nada é enviado para servidor nenhum.</p>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
+      <p class="mt-2"><a href="https://www.inema.club/aprender-inteligencia-artificial/" class="underline">Guia: como aprender inteligência artificial</a> · <a href="https://www.inema.club/cursos/" class="underline">Todos os cursos</a></p>
+      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+  <script>
+    // "Continuar de onde parei": lê o último módulo visitado (gravado pelo learn.js)
+    (function () {
+      try {
+        var meta = JSON.parse(localStorage.getItem('inema.agrt.meta') || '{}');
+        var href = meta && meta.lastModuleHref;
+        var m = href && String(href).match(/curso\/trilha\d+\/modulo-\d+-\d+\.html/);
+        if (!m) return;
+        var anchor = meta.lastTopicAnchor && String(meta.lastTopicAnchor).split('#')[1];
+        var a = document.getElementById('continuar');
+        a.href = m[0] + (anchor ? '#' + anchor : '');
+        a.classList.remove('hidden'); a.classList.add('inline-flex');
+      } catch (e) {}
+    })();
+  </script>
+  <script src="assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

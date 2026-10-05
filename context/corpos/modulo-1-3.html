@@ -1,0 +1,451 @@
+<!--TITLE: A escada das vias -->
+  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a><span>/</span>
+      <span class="text-emerald-400">Módulo 1.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-3" data-inema-track="1">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🪜 A escada das vias</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Sete jeitos de um agente chegar num sistema, do mais firme ao mais frágil. A regra do kit é simples: use a via mais estável que existir, e teste antes de aceitar um "não dá".</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Nível</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Fundamento</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:1-3" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 1.3">
+        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+  <main id="conteudo" class="min-w-0" data-inema-module="1-3" data-inema-track="1">
+
+    <!-- ===================== TOPICO 1 ===================== -->
+    <section id="topico-1" data-inema-topic="modulo-1-3#topico-1" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold flex-1">Suba os sete degraus da escada</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m1-3-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">Uma <strong class="text-emerald-400">via</strong> é o caminho por onde o agente chega num sistema: pedir dados, ler um arquivo, clicar numa tela. O <code>runtime/LEIA-ME.md</code> organiza as vias numa escada de sete <strong>níveis</strong>.</p>
+      <p data-inema-block="m1-3-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">Você começa pelo nível 1 e vai descendo até achar a primeira via que existe e funciona. A frase do kit: <strong>use a mais alta que existir</strong>.</p>
+
+      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? As palavras da escada</h3>
+        <ul class="space-y-2 text-neutral-300 text-sm">
+          <li><strong>API</strong> — a porta oficial que um sistema abre para outros programas pedirem dados. Ex.: "me dê as vendas de outubro".</li>
+          <li><strong>MCP</strong> — um padrão para entregar ferramentas a agentes. Um servidor MCP diz "tenho a ferramenta X" e o agente passa a chamá-la pelo nome.</li>
+          <li><strong>CLI</strong> — programa usado por comandos no terminal, como <code>codex exec</code> ou <code>git</code>.</li>
+          <li><strong>SDK</strong> — uma biblioteca pronta (pacote npm ou pip) que um programador usa para falar com o sistema.</li>
+          <li><strong>Ponte local</strong> — usar o que o sistema deixa no seu computador: uma exportação CSV, uma pasta, um banco SQLite, uma porta local.</li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 300" class="w-full h-auto" role="img" aria-label="Escada de sete degraus descendo da esquerda para a direita. Degraus 1 API, 2 MCP e 3 CLI em verde, estabilidade alta. Degrau 4 SDK em azul, média. Degrau 5 uso do computador em vermelho, baixa. Degrau 6 ponte local em azul, média. Degrau 7 engenharia reversa em vermelho tracejado, só laboratório.">
+          <defs>
+            <pattern id="m13-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/></pattern>
+            <filter id="m13-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="0" y="0" width="800" height="300" fill="url(#m13-grid)"/>
+          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+            <g filter="url(#m13-glow)"><rect x="20" y="20" width="100" height="44" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
+            <text x="70" y="40" fill="#34d399" font-weight="600">1 · API</text><text x="70" y="56" fill="#a7f3d0" font-size="10">alta</text>
+            <rect x="128" y="55" width="100" height="44" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
+            <text x="178" y="75" fill="#34d399" font-weight="600">2 · MCP</text><text x="178" y="91" fill="#a7f3d0" font-size="10">alta</text>
+            <rect x="236" y="90" width="100" height="44" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
+            <text x="286" y="110" fill="#34d399" font-weight="600">3 · CLI</text><text x="286" y="126" fill="#a7f3d0" font-size="10">alta</text>
+            <rect class="wf-a" x="344" y="125" width="100" height="44" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="394" y="145" fill="#bae6fd" font-weight="600">4 · SDK</text><text x="394" y="161" fill="#7dd3fc" font-size="10">média</text>
+            <rect x="452" y="160" width="110" height="44" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
+            <text x="507" y="180" fill="#fca5a5" font-weight="600">5 · computador</text><text x="507" y="196" fill="#fca5a5" font-size="10">baixa</text>
+            <rect class="wf-a" x="570" y="195" width="100" height="44" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="620" y="215" fill="#bae6fd" font-weight="600">6 · ponte local</text><text x="620" y="231" fill="#7dd3fc" font-size="10">média</text>
+            <rect x="678" y="230" width="110" height="44" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="733" y="250" fill="#fca5a5" font-weight="600">7 · eng. reversa</text><text x="733" y="266" fill="#fca5a5" font-size="10">só laboratório</text>
+          </g>
+          <text x="40" y="200" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">comece aqui ↑</text>
+          <text x="40" y="220" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">desça só se o degrau não existir</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> o número é a ordem em que você testa. A cor é a estabilidade: verde é alta, azul é média, vermelho é baixa. Repare que o 6 é azul e o 5 é vermelho: estar mais embaixo não quer dizer ser pior. O tópico 2 explica.</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Nível</th><th class="px-4 py-3 font-semibold">Via</th><th class="px-4 py-3 font-semibold">Exemplo</th><th class="px-4 py-3 font-semibold">Estabilidade</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">1</td><td class="px-4 py-3 text-neutral-300">API oficial</td><td class="px-4 py-3 text-neutral-300">API do ERP</td><td class="px-4 py-3 text-neutral-300">alta</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">2</td><td class="px-4 py-3 text-neutral-300">MCP</td><td class="px-4 py-3 text-neutral-300"><code>claude mcp list</code></td><td class="px-4 py-3 text-neutral-300">alta</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">3</td><td class="px-4 py-3 text-neutral-300">CLI</td><td class="px-4 py-3 text-neutral-300"><code>codex exec</code>, <code>gh</code>, <code>git</code></td><td class="px-4 py-3 text-neutral-300">alta</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">4</td><td class="px-4 py-3 text-neutral-300">SDK / biblioteca</td><td class="px-4 py-3 text-neutral-300">pacote npm/pip</td><td class="px-4 py-3 text-neutral-300">média</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">5</td><td class="px-4 py-3 text-neutral-300">Uso do computador</td><td class="px-4 py-3 text-neutral-300">navegador automatizado, cliques na tela</td><td class="px-4 py-3 text-neutral-300">baixa</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">6</td><td class="px-4 py-3 text-neutral-300">Ponte local</td><td class="px-4 py-3 text-neutral-300">exportação CSV, pasta, banco SQLite, porta local</td><td class="px-4 py-3 text-neutral-300">média</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">7</td><td class="px-4 py-3 text-neutral-300">Engenharia reversa</td><td class="px-4 py-3 text-neutral-300">observar o app rodando para achar a via</td><td class="px-4 py-3 text-neutral-300"><strong>só laboratório</strong>: quebra na próxima atualização</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> é a tabela do <code>runtime/LEIA-ME.md</code>, sem mudar uma palavra. A coluna "Exemplo" mostra o tipo de coisa que mora em cada degrau; você não precisa rodar esses exemplos agora.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛣️</div><div class="text-sm font-semibold text-emerald-400">Via</div><p class="text-xs text-neutral-400 mt-1">caminho até o sistema</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔢</div><div class="text-sm font-semibold text-emerald-400">Nível</div><p class="text-xs text-neutral-400 mt-1">ordem do teste</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔌</div><div class="text-sm font-semibold text-emerald-400">API · MCP · CLI</div><p class="text-xs text-neutral-400 mt-1">os três firmes</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📂</div><div class="text-sm font-semibold text-emerald-400">Ponte local</div><p class="text-xs text-neutral-400 mt-1">arquivo exportado</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 2 ===================== -->
+    <section id="topico-2" data-inema-topic="modulo-1-3#topico-2" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold flex-1">Entenda por que estabilidade manda</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m1-3-t2-p1" class="text-neutral-300 mb-4 leading-relaxed"><strong class="text-emerald-400">Estabilidade</strong> é o quanto a via continua funcionando quando o outro lado muda. Uma API tem contrato: o fabricante avisa antes de mexer. Uma tela de site muda de lugar um botão e o robô que clicava ali se perde.</p>
+      <p data-inema-block="m1-3-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">O README do kit fecha a ideia: o agente usa <strong>sempre a mais estável que existir</strong>. Por isso a ponte local (6, média) ganha do uso do computador (5, baixa) quando as duas existem. A receita R5 diz o mesmo: navegador só quando não existir API, MCP, CLI ou exportação.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+          <h3 class="font-semibold text-emerald-400 mb-3">✓ Via estável</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ Tem contrato: o fabricante mantém</li>
+            <li>✓ Mudança vem com aviso e versão</li>
+            <li>✓ Você configura uma vez e esquece</li>
+            <li>✓ O erro, quando vem, é claro</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ Via frágil</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ Depende de onde está o botão na tela</li>
+            <li>✗ Quebra sem aviso, numa atualização</li>
+            <li>✗ Pede conserto toda semana</li>
+            <li>✗ Às vezes falha em silêncio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> O custo de verdade é a manutenção</h3>
+        <p class="text-neutral-300 text-sm">A via estável às vezes dá mais trabalho no primeiro dia: achar a exportação, configurar a ponte. Mas o que pesa é o mês seguinte. A via que quebra menos é a que custa menos manter.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-emerald-400">Estabilidade</div><p class="text-xs text-neutral-400 mt-1">aguenta mudança?</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-emerald-400">Contrato</div><p class="text-xs text-neutral-400 mt-1">o fabricante mantém</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔧</div><div class="text-sm font-semibold text-emerald-400">Manutenção</div><p class="text-xs text-neutral-400 mt-1">o custo do mês seguinte</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-emerald-400">Frágil</div><p class="text-xs text-neutral-400 mt-1">quebra sem aviso</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 3 ===================== -->
+    <section id="topico-3" data-inema-topic="modulo-1-3#topico-3" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold flex-1">Exija teste antes do "não dá"</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m1-3-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">Agente diz "não dá" cedo demais. Ele não achou documentação e conclui que não existe. O kit tem uma regra contra isso, escrita no <code>LEIA-ME.md</code> e repetida no <code>AGENTS.md</code>.</p>
+      <p data-inema-block="m1-3-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">A regra: antes de concluir que é impossível, o agente <strong class="text-emerald-400">testa cada nível com um comando</strong>. "Não achei" não vale. Vale "rodei isto e veio isto".</p>
+
+      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 A regra, nas palavras do kit</span></div>
+        <div class="p-5">
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Regra: se o agente disser "não dá", peça para ele **testar** cada nível com um comando antes de concluir. Muitas vezes a via existe e só não estava documentada.</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Onde está:</strong> última linha do <code>runtime/LEIA-ME.md</code>. O <code>AGENTS.md</code> manda o agente fazer isso sozinho.</div>
+      </div>
+
+      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 220" class="w-full h-auto" role="img" aria-label="Fluxo de teste por nível. Para cada degrau, o agente roda um comando. Se a via responde, ele para e usa esse degrau. Se não responde, anota a evidência e desce um degrau. Só depois de testar todos pode dizer não dá, com a lista das evidências.">
+          <defs>
+            <pattern id="m13b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/></pattern>
+            <filter id="m13b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m13b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="220" fill="url(#m13b-grid)"/>
+          <rect x="30" y="80" width="150" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="105" y="106" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">degrau N</text>
+          <text x="105" y="124" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">roda 1 comando</text>
+          <line class="wf-flow" x1="182" y1="110" x2="268" y2="110" stroke="#38bdf8" stroke-width="2" marker-end="url(#m13b-arrow)"/>
+          <g filter="url(#m13b-glow)"><rect x="272" y="75" width="180" height="70" rx="14" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
+          <text x="362" y="106" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="13">a via respondeu?</text>
+          <text x="362" y="126" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">saída na tela = evidência</text>
+          <line class="wf-flow" x1="454" y1="95" x2="540" y2="55" stroke="#38bdf8" stroke-width="2"/>
+          <rect class="wf-a" x="542" y="30" width="220" height="50" rx="12" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
+          <text x="652" y="60" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12">sim → para e usa este degrau</text>
+          <line x1="454" y1="125" x2="540" y2="165" stroke="#f87171" stroke-width="2" stroke-dasharray="4 4"/>
+          <rect x="542" y="140" width="220" height="50" rx="12" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
+          <text x="652" y="162" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="12">não → anota e desce para N+1</text>
+          <text x="652" y="180" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="10">"não dá" só depois do último</text>
+          <path d="M542,178 C 300,215 120,205 105,142" fill="none" stroke="#f87171" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.6"/>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> o laço vermelho volta para a esquerda com o degrau seguinte. Cada volta deixa uma evidência anotada. Um "não dá" honesto chega com essa lista; um "não dá" sem lista é palpite.</p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> O "impossível" prematuro custa caro</h3>
+        <p class="text-neutral-300 text-sm">O agente que não achou documentação tende a dizer que o programa não pode ser lido de fora. Muitas vezes, o teste nível por nível revela uma opção de exportar escondida num menu. Se você aceita o primeiro "não dá", parte para a gambiarra sem precisar.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚫</div><div class="text-sm font-semibold text-emerald-400">Impossível cedo</div><p class="text-xs text-neutral-400 mt-1">"não achei" ≠ "não existe"</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-emerald-400">Teste concreto</div><p class="text-xs text-neutral-400 mt-1">um comando por nível</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📎</div><div class="text-sm font-semibold text-emerald-400">Evidência</div><p class="text-xs text-neutral-400 mt-1">a saída na tela</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📘</div><div class="text-sm font-semibold text-emerald-400">AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">a regra já está lá</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 4 ===================== -->
+    <section id="topico-4" data-inema-topic="modulo-1-3#topico-4" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold flex-1">Suba a escada com o ERP da Sônia</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m1-3-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">A Sônia quer o total de vendas por cliente da distribuidora. O ERP é antigo: não tem API. O que ele sabe fazer é <strong class="text-emerald-400">exportar um CSV de vendas</strong>, o <code>runtime/exemplos/erp-vendas.csv</code> do kit.</p>
+      <p data-inema-block="m1-3-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">Veja a escada degrau por degrau. É o caso mais comum em escritório pequeno: sistema antigo que só exporta arquivo.</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Degrau</th><th class="px-4 py-3 font-semibold">Existe para o ERP?</th><th class="px-4 py-3 font-semibold">Decisão</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">1 · API</td><td class="px-4 py-3 text-neutral-300">não: o fabricante não oferece</td><td class="px-4 py-3 text-neutral-300">desce</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">2 · MCP</td><td class="px-4 py-3 text-neutral-300">não há servidor MCP do ERP</td><td class="px-4 py-3 text-neutral-300">desce</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">3 · CLI</td><td class="px-4 py-3 text-neutral-300">não tem comando de terminal</td><td class="px-4 py-3 text-neutral-300">desce</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">4 · SDK</td><td class="px-4 py-3 text-neutral-300">não tem biblioteca</td><td class="px-4 py-3 text-neutral-300">desce</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">5 · computador</td><td class="px-4 py-3 text-neutral-300">daria para clicar nas telas…</td><td class="px-4 py-3 text-neutral-300">existe, mas é baixa: guarda e olha o próximo</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">6 · ponte local</td><td class="px-4 py-3 text-neutral-300">sim: exporta CSV de vendas</td><td class="px-4 py-3 text-neutral-300"><strong>para aqui</strong>: média ganha de baixa</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> no degrau 5 a resposta é "existe", e mesmo assim a escada segue. É a regra do tópico 2: a R5 só aceita navegador quando não há exportação, e aqui há.</p>
+
+      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 220" class="w-full h-auto" role="img" aria-label="Caminho do ERP da Sônia. O ERP exporta erp-vendas.csv. Uma ponte local lê o arquivo e entrega ao agente a ferramenta resumo_vendas, só de leitura. Ao lado, o uso do computador aparece riscado como alternativa frágil.">
+          <defs>
+            <pattern id="m13c-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/></pattern>
+            <filter id="m13c-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m13c-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="220" fill="url(#m13c-grid)"/>
+          <rect x="30" y="60" width="150" height="64" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
+          <text x="105" y="88" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13">🧾 ERP antigo</text>
+          <text x="105" y="107" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">sem API</text>
+          <line class="wf-flow" x1="182" y1="92" x2="248" y2="92" stroke="#38bdf8" stroke-width="2" marker-end="url(#m13c-arrow)"/>
+          <rect class="wf-a" x="252" y="60" width="170" height="64" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="337" y="88" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">erp-vendas.csv</text>
+          <text x="337" y="107" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">exportação</text>
+          <line class="wf-flow" x1="424" y1="92" x2="490" y2="92" stroke="#38bdf8" stroke-width="2" marker-end="url(#m13c-arrow)"/>
+          <g filter="url(#m13c-glow)"><rect x="494" y="50" width="270" height="84" rx="14" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
+          <text x="629" y="80" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="14">ponte local · nível 6</text>
+          <text x="629" y="100" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">ferramenta resumo_vendas</text>
+          <text x="629" y="118" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">só leitura (N4)</text>
+          <rect x="252" y="160" width="250" height="40" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="1.8" stroke-dasharray="5 4"/>
+          <text x="377" y="185" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="12">5 · clicar nas telas do ERP (frágil)</text>
+          <line x1="262" y1="180" x2="492" y2="180" stroke="#f87171" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a linha de cima é o caminho escolhido: o ERP solta o arquivo e a ponte entrega uma ferramenta pronta. A caixa vermelha riscada embaixo é o caminho descartado. Na trilha 2 (receita R3) essa ponte vira uma ferramenta MCP de verdade.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-emerald-400">Exportação</div><p class="text-xs text-neutral-400 mt-1">o que o ERP já faz</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📄</div><div class="text-sm font-semibold text-emerald-400">CSV</div><p class="text-xs text-neutral-400 mt-1">erp-vendas.csv</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-emerald-400">Ponte local</div><p class="text-xs text-neutral-400 mt-1">nível 6, média</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👁️</div><div class="text-sm font-semibold text-emerald-400">Só leitura</div><p class="text-xs text-neutral-400 mt-1">N4: lê sem pedir</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 5 ===================== -->
+    <section id="topico-5" data-inema-topic="modulo-1-3#topico-5" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold flex-1">Suba a escada com a agenda da Clara</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m1-3-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">A agenda da clínica da Clara é uma planilha. Uma planilha não tem API, MCP, CLI nem SDK: ela é um arquivo. Então a escada desce até a <strong class="text-emerald-400">ponte local</strong>, igual à da Sônia. No kit, ela é o <code>runtime/exemplos/agenda.csv</code>, com os horários da Dra. Ana e do Dr. Bruno.</p>
+      <p data-inema-block="m1-3-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">A diferença aparece depois. A Sônia só quer ler. A Clara, um dia, vai querer que o agente <strong>marque</strong> um horário. E a mesma via pode ter políticas diferentes para ler e para alterar.</p>
+
+      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? N2 e N4</h3>
+        <p class="text-neutral-300 text-sm">São níveis de autonomia da <code>runtime/POLITICA.md</code>. <strong>N4</strong>: o agente faz sozinho, sem aviso (serve para ler). <strong>N2</strong>: o agente executa só depois de pedir, a cada vez. A escala completa, de N0 a N4, está no módulo 4.1.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+          <h3 class="font-semibold text-emerald-400 mb-3">✓ Ler a agenda (N4)</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ "Quais horários estão livres no dia 7?"</li>
+            <li>✓ O agente lê o arquivo e responde</li>
+            <li>✓ Nada muda na planilha</li>
+            <li>✓ Pode rodar sem perguntar</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ Alterar a agenda sem pedir</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ Marcar paciente por conta própria</li>
+            <li>✗ Trocar "livre" por "ocupado" sem aviso</li>
+            <li>✗ Um erro vira paciente sem horário</li>
+            <li>✗ Por isso alterar fica em N2: pede antes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 A linha de exemplo da agenda (do CAPACIDADES.md do kit)</span></div>
+        <div class="p-5">
+          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| Agenda da clínica (planilha) | Ponte local (arquivo)   | 6 | ler/escrever agenda.csv         | alterar (N2)    | pendente |</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Repare:</strong> como a linha inclui escrever, a política dela é a mais alta das duas ações: alterar, N2. A receita R3 diz o mesmo: ferramenta que escreve sobe para "alterar" (N2: pede antes).</div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Dica para a Clara</h3>
+        <p class="text-neutral-300 text-sm">Comece só com leitura. Quando confiar nas respostas sobre horários livres, aí sim acrescente a escrita, sempre pedindo antes. É o mesmo arquivo; o que muda é a política.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-emerald-400">agenda.csv</div><p class="text-xs text-neutral-400 mt-1">Dra. Ana e Dr. Bruno</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👁️</div><div class="text-sm font-semibold text-emerald-400">Ler</div><p class="text-xs text-neutral-400 mt-1">N4</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-emerald-400">Alterar</div><p class="text-xs text-neutral-400 mt-1">N2, pede antes</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-emerald-400">Mesma via</div><p class="text-xs text-neutral-400 mt-1">políticas diferentes</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 6 ===================== -->
+    <section id="topico-6" data-inema-topic="modulo-1-3#topico-6" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold flex-1">Suba a escada com o seu sistema</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m1-3-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">Agora é a sua vez. Escolha <strong>um</strong> sistema do seu trabalho: o programa da loja, o portal do fornecedor, a planilha do estoque. Peça ao agente para subir a escada com você, testando cada nível.</p>
+      <p data-inema-block="m1-3-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">O prompt abaixo usa só arquivos do kit. Ele pede o teste por nível e proíbe mexer no sistema: nesta etapa, o agente só descobre.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: descobrir a via mais estável do seu sistema, com evidência</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole (troque o que está entre &lt; &gt;):</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/LEIA-ME.md. Quero conectar o &lt;nome do sistema&gt;, que eu uso para &lt;o que você faz nele&gt;.
+Suba a escada das vias comigo, um nível por vez. Em cada nível, me diga como testar com um comando, mostre o resultado e só então passe ao próximo.
+Não conclua "não dá" sem testar todos. Não altere nada no sistema.
+No fim, me diga qual é a via mais estável que existe e por quê.</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> a resposta final cita um nível da escada e, para cada nível descartado, mostra o que foi testado. Se vier "não dá" sem essa lista, responda: "teste cada nível com um comando, como manda o LEIA-ME".</div>
+      </div>
+
+      <div class="space-y-5 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Um sistema por vez</h4><p class="text-neutral-300 text-sm">Misturar três sistemas num pedido confunde as evidências. Faça um, anote, passe ao próximo.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Responda o que só você sabe</h4><p class="text-neutral-300 text-sm">O agente pode perguntar se há um menu "exportar" ou um site de integrações. Olhe o programa e conte.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Guarde a escolha</h4><p class="text-neutral-300 text-sm">A via que sair daqui vira uma linha do <code>CAPACIDADES.md</code> no próximo módulo, e a base do seu projeto final.</p></div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-1-3#q1">
+        <p class="font-medium mb-4">Teste rápido (opcional): o ERP da Sônia pode ser operado pela tela (nível 5) e também exporta CSV (nível 6). Qual via usar?</p>
+        <div class="space-y-2">
+          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">A tela, porque o nível 5 vem antes do 6.</button>
+          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Engenharia reversa, para achar uma API escondida e usar no dia a dia.</button>
+          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">A exportação CSV, porque é mais estável (média) que a tela (baixa).</button>
+        </div>
+        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎯</div><div class="text-sm font-semibold text-emerald-400">Um sistema</div><p class="text-xs text-neutral-400 mt-1">por pedido</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-emerald-400">Diagnóstico de via</div><p class="text-xs text-neutral-400 mt-1">nível por nível</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📎</div><div class="text-sm font-semibold text-emerald-400">Evidência</div><p class="text-xs text-neutral-400 mt-1">em cada degrau</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">Escolha</div><p class="text-xs text-neutral-400 mt-1">a mais estável</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== RESUMO ===================== -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Sete degraus</strong><span class="text-neutral-400"> — API, MCP, CLI, SDK, computador, ponte local, engenharia reversa.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Estabilidade manda</strong><span class="text-neutral-400"> — a via que quebra menos custa menos manter.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">"Não dá" só com teste</strong><span class="text-neutral-400"> — um comando por nível, com evidência.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Sônia e Clara param no 6</strong><span class="text-neutral-400"> — exportação e planilha viram ponte local.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Ler e alterar são políticas diferentes</strong><span class="text-neutral-400"> — N4 para ler, N2 para alterar.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
+          <p class="text-neutral-300">1.4 — O mapa de capacidades</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
+          <a href="modulo-1-4.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Módulo 1.4 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="hidden lg:block">
+    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
+      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
+      <ol class="space-y-2 text-sm">
+        <li><a href="#topico-1" class="text-neutral-400 hover:text-emerald-400">1. Os sete degraus</a></li>
+        <li><a href="#topico-2" class="text-neutral-400 hover:text-emerald-400">2. Estabilidade</a></li>
+        <li><a href="#topico-3" class="text-neutral-400 hover:text-emerald-400">3. Teste antes do "não"</a></li>
+        <li><a href="#topico-4" class="text-neutral-400 hover:text-emerald-400">4. O ERP da Sônia</a></li>
+        <li><a href="#topico-5" class="text-neutral-400 hover:text-emerald-400">5. A agenda da Clara</a></li>
+        <li><a href="#topico-6" class="text-neutral-400 hover:text-emerald-400">6. O seu sistema</a></li>
+      </ol>
+    </nav>
+  </aside>
+  </div>
+<!--CHECKS-->
+        INEMA.registerCheck('modulo-1-3#q1', { answer: 2, explain: {
+          '0': 'Não. O número é a ordem do teste, não a escolha final. O kit manda usar a mais estável que existir, e a R5 só aceita navegador quando não há exportação.',
+          '1': 'Não. Engenharia reversa é só laboratório: quebra na próxima atualização. E aqui já existe uma via melhor.',
+          '2': 'Isso. A exportação (ponte local, média) é mais estável que operar a tela (baixa). A Sônia para no degrau 6.'
+        } });

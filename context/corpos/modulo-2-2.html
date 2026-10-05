@@ -1,0 +1,476 @@
+<!--TITLE: Sua primeira ponte MCP -->
+  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a><span>/</span>
+      <span class="text-blue-400">Módulo 2.2</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-2" data-inema-track="2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Sua primeira ponte MCP</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">A agenda da Clara e o ERP da Sônia não têm API. Mas exportam arquivo. Neste módulo esse arquivo vira uma ferramenta com nome e regras, que o Claude Code e o Codex chamam do mesmo jeito. É a receita R3 do kit.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">R3</div><div class="text-xs text-neutral-400">Receita</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:2-2" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 2.2">
+        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+  <main id="conteudo" class="min-w-0" data-inema-module="2-2" data-inema-track="2">
+
+    <!-- ===================== TOPICO 1 ===================== -->
+    <section id="topico-1" data-inema-topic="modulo-2-2#topico-1" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold flex-1">Entenda o que é MCP</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m2-2-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">No módulo 2.1 o Claude chamava um script. Funciona, mas o agente precisa saber o nome do arquivo e montar o comando. Com <strong class="text-blue-400">MCP</strong> é diferente: o agente recebe uma lista de ferramentas prontas, cada uma com nome, descrição e campos.</p>
+      <p data-inema-block="m2-2-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">A R3 junta dois degraus da escada. A leitura do arquivo é uma <strong>ponte local</strong> (degrau 6). A forma de entregar ao agente é <strong>MCP</strong> (degrau 2). O resultado: um sistema sem API passa a parecer, para o agente, um sistema com ferramentas oficiais.</p>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Cinco palavras deste módulo</h3>
+        <ul class="space-y-2 text-neutral-300 text-sm">
+          <li><strong>MCP</strong> (Model Context Protocol) — um padrão aberto para ligar ferramentas a agentes de IA. O Claude Code e o Codex falam MCP, então a mesma ponte serve aos dois.</li>
+          <li><strong>Servidor MCP</strong> — o programa que oferece as ferramentas. Aqui ele roda na sua máquina, aberto pelo próprio agente, sem site nem nuvem.</li>
+          <li><strong>Ferramenta</strong> (<em>tool</em>) — uma ação com nome que o agente pode chamar, como <code>listar_horarios_livres</code>.</li>
+          <li><strong>JSON</strong> — texto organizado em pares "nome: valor", entre chaves. É como agente e servidor trocam pedidos e respostas.</li>
+          <li><strong>stdio</strong> — conversa pelo terminal: o agente escreve na entrada do servidor e lê a saída dele. Nenhuma porta de rede é aberta.</li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 260" class="w-full h-auto" role="img" aria-label="Arquitetura da ponte MCP. Claude Code e Codex, à esquerda, falam MCP por stdio com o servidor ponte-modelo, no centro. O servidor lê dois arquivos CSV à direita: agenda.csv da Clara e erp-vendas.csv da Sônia. As setas para os arquivos são só de leitura.">
+          <defs>
+            <pattern id="m22-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#60a5fa" opacity="0.10"/></pattern>
+            <filter id="m22-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m22-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="260" fill="url(#m22-grid)"/>
+          <rect x="30" y="45" width="160" height="60" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
+          <text x="110" y="80" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-weight="600" font-size="13">Claude Code</text>
+          <rect x="30" y="155" width="160" height="60" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
+          <text x="110" y="190" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-weight="600" font-size="13">Codex</text>
+          <line class="wf-flow" x1="192" y1="75" x2="295" y2="115" stroke="#38bdf8" stroke-width="2" marker-end="url(#m22-arrow)"/>
+          <line class="wf-flow" x1="192" y1="185" x2="295" y2="145" stroke="#38bdf8" stroke-width="2" marker-end="url(#m22-arrow)"/>
+          <text x="243" y="135" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">MCP · stdio</text>
+          <g filter="url(#m22-glow)"><rect x="300" y="85" width="200" height="90" rx="14" fill="#0f1b33" stroke="#60a5fa" stroke-width="2"/></g>
+          <text x="400" y="115" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-weight="600" font-size="14">ponte-modelo</text>
+          <text x="400" y="135" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">server.mjs · 2 ferramentas</text>
+          <text x="400" y="153" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">só leitura (N4)</text>
+          <line x1="502" y1="115" x2="595" y2="75" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m22-arrow)"/>
+          <line x1="502" y1="145" x2="595" y2="185" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m22-arrow)"/>
+          <rect class="wf-a" x="600" y="45" width="170" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="685" y="72" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">🩺 agenda.csv</text>
+          <text x="685" y="90" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">clínica da Clara</text>
+          <rect class="wf-a" x="600" y="155" width="170" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+          <text x="685" y="182" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">🧾 erp-vendas.csv</text>
+          <text x="685" y="200" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">ERP do cliente da Sônia</text>
+          <text x="400" y="240" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">uma ponte, dois agentes, nenhuma API</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> à esquerda, quem pede; no meio, a ponte, que conhece as regras; à direita, os arquivos. As setas tracejadas para os arquivos são só de leitura: a ponte nunca grava neles.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+          <h3 class="font-semibold text-red-400 mb-3">✗ CSV solto na pasta</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✗ O agente adivinha colunas a cada pedido</li>
+            <li>✗ Cada conversa pode somar de um jeito</li>
+            <li>✗ Nada impede o agente de editar o arquivo</li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+          <h3 class="font-semibold text-blue-400 mb-3">✓ CSV atrás de uma ferramenta</h3>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>✓ Nome e descrição dizem o que ela faz</li>
+            <li>✓ A conta é sempre a mesma, escrita no código</li>
+            <li>✓ Só leitura por construção</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔌</div><div class="text-sm font-semibold text-blue-400">MCP</div><p class="text-xs text-neutral-400 mt-1">padrão aberto de ferramentas</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖥️</div><div class="text-sm font-semibold text-blue-400">Servidor</div><p class="text-xs text-neutral-400 mt-1">roda na sua máquina</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-blue-400">Ferramenta</div><p class="text-xs text-neutral-400 mt-1">ação com nome</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">↔️</div><div class="text-sm font-semibold text-blue-400">stdio</div><p class="text-xs text-neutral-400 mt-1">sem porta de rede</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 2 ===================== -->
+    <section id="topico-2" data-inema-topic="modulo-2-2#topico-2" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold flex-1">Conheça as duas ferramentas da ponte-modelo</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m2-2-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">O modelo mora em <code>runtime/pontes/mcp-modelo/server.mjs</code>. É um servidor MCP sem dependências: não precisa instalar pacote nenhum, só ter o Node.</p>
+      <p data-inema-block="m2-2-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">Ele traz duas ferramentas de exemplo, uma para cada personagem do curso. A descrição de cada uma é o que o agente lê para decidir quando usá-la.</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Ferramenta</th><th class="px-4 py-3 font-semibold">Lê</th><th class="px-4 py-3 font-semibold">Campos (opcionais)</th><th class="px-4 py-3 font-semibold">Caso</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>listar_horarios_livres</code></td><td class="px-4 py-3 text-neutral-300"><code>agenda.csv</code></td><td class="px-4 py-3 text-neutral-300"><code>data</code> (AAAA-MM-DD) e <code>profissional</code></td><td class="px-4 py-3 text-neutral-300">clínica com agenda em planilha</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>resumo_vendas</code></td><td class="px-4 py-3 text-neutral-300"><code>erp-vendas.csv</code></td><td class="px-4 py-3 text-neutral-300"><code>agrupar_por</code>: <code>cliente</code> ou <code>produto</code></td><td class="px-4 py-3 text-neutral-300">contador(a) com exportação do ERP</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> os campos são opcionais. Sem <code>data</code>, a primeira lista todos os horários livres; sem <code>agrupar_por</code>, a segunda agrupa por cliente.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 A agenda da Clara (conteúdo de runtime/exemplos/agenda.csv)</span></div>
+        <div class="p-5">
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">data,hora,profissional,status,paciente
+2026-10-06,08:00,Dra. Ana,ocupado,Paciente 01
+2026-10-06,09:00,Dra. Ana,livre,
+2026-10-06,10:00,Dra. Ana,livre,
+2026-10-06,14:00,Dr. Bruno,ocupado,Paciente 02
+2026-10-06,15:00,Dr. Bruno,livre,
+2026-10-07,08:00,Dra. Ana,livre,
+2026-10-07,09:00,Dra. Ana,ocupado,Paciente 03
+2026-10-07,16:00,Dr. Bruno,livre,</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Repare:</strong> são cinco linhas <code>livre</code>. Três em 06/10 e duas em 07/10. Você vai reencontrar essas linhas nos próximos tópicos.</div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A descrição é metade da ferramenta</h3>
+        <p class="text-neutral-300 text-sm">O agente não lê o código da ponte; ele lê a descrição. A da primeira diz: "Lista horários livres da agenda da clínica (agenda.csv). Filtros opcionais: data (AAAA-MM-DD) e profissional." Uma descrição clara faz o agente escolher a ferramenta certa sem você mandar.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗓️</div><div class="text-sm font-semibold text-blue-400">listar_horarios_livres</div><p class="text-xs text-neutral-400 mt-1">a agenda da Clara</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📊</div><div class="text-sm font-semibold text-blue-400">resumo_vendas</div><p class="text-xs text-neutral-400 mt-1">o ERP da Sônia</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-blue-400">Descrição</div><p class="text-xs text-neutral-400 mt-1">o que o agente lê</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-blue-400">Sem dependências</div><p class="text-xs text-neutral-400 mt-1">só o Node</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 3 ===================== -->
+    <section id="topico-3" data-inema-topic="modulo-2-2#topico-3" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold flex-1">Teste a ponte sozinha</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m2-2-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">Mesma regra do módulo 2.1: primeiro sem agente. O servidor tem um modo de autoteste, <code>--selftest</code>. Ele lista as ferramentas, chama cada uma com dados de exemplo e imprime o resultado.</p>
+      <p data-inema-block="m2-2-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">Não gasta cota nenhuma: nenhum modelo de IA entra nesse teste. É só o Node lendo os CSVs.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: provar que a ponte lê os dois arquivos</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/pontes/mcp-modelo/server.mjs --selftest</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux):</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">tools: 2 (listar_horarios_livres, resumo_vendas)
+2026-10-06 09:00 · Dra. Ana
+2026-10-06 10:00 · Dra. Ana
+2026-10-06 15:00 · Dr. Bruno
+TOTAL: R$ 856.00</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> aparece <code>tools: 2</code>, os três horários livres de 06/10 e <code>TOTAL: R$ 856.00</code>. É a prova da R3.</div>
+      </div>
+
+      <p data-inema-block="m2-2-t3-p3" class="text-neutral-300 mb-4 leading-relaxed">Os três horários batem com as linhas <code>livre</code> de 06/10 que você viu no tópico anterior. Falta conferir o total da Sônia. O autoteste mostra só a última linha do resumo; a tabela abaixo refaz a conta à mão, linha por linha do <code>erp-vendas.csv</code>.</p>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Cliente</th><th class="px-4 py-3 font-semibold">Linhas do CSV</th><th class="px-4 py-3 font-semibold">Total</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Mercado Sol</td><td class="px-4 py-3 text-neutral-300">10 × 18,50 + 40 × 5,20 = 185 + 208</td><td class="px-4 py-3 text-neutral-300">R$ 393,00</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Padaria Lua</td><td class="px-4 py-3 text-neutral-300">25 × 5,20 + 12 × 18,50 = 130 + 222</td><td class="px-4 py-3 text-neutral-300">R$ 352,00</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Empório Mar</td><td class="px-4 py-3 text-neutral-300">6 × 18,50</td><td class="px-4 py-3 text-neutral-300">R$ 111,00</td></tr>
+            <tr class="bg-dark-700/40"><td class="px-4 py-3 text-blue-400 font-semibold">TOTAL</td><td class="px-4 py-3 text-neutral-300">393 + 352 + 111</td><td class="px-4 py-3 text-blue-400 font-semibold">R$ 856,00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a conta feita à mão chega ao mesmo <code>TOTAL: R$ 856.00</code> da ponte (o ponto no lugar da vírgula é só o formato do programa).</p>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Confira uma vez na mão</h3>
+        <p class="text-neutral-300 text-sm">Na primeira vez que uma ponte mexe com dinheiro, refaça a conta numa calculadora. Depois disso, o autoteste vira o seu alarme: se o total mudar sem o CSV mudar, algo quebrou.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-blue-400">--selftest</div><p class="text-xs text-neutral-400 mt-1">a prova da R3</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">2️⃣</div><div class="text-sm font-semibold text-blue-400">tools: 2</div><p class="text-xs text-neutral-400 mt-1">as duas ferramentas</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-blue-400">R$ 856</div><p class="text-xs text-neutral-400 mt-1">conferido à mão</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-blue-400">Sem cota</div><p class="text-xs text-neutral-400 mt-1">nenhum modelo no teste</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 4 ===================== -->
+    <section id="topico-4" data-inema-topic="modulo-2-2#topico-4" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold flex-1">Conecte a ponte ao Claude Code</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m2-2-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">No kit, essa parte já vem feita. Dois arquivos cuidam dela: o <code>.mcp.json</code>, na raiz, registra a ponte; o <code>.claude/settings.json</code> libera o uso dela.</p>
+      <p data-inema-block="m2-2-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">Quando você abre <code>claude</code> na pasta, ele lê o <code>.mcp.json</code> e liga o servidor sozinho. Você não precisa deixar nada rodando.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <h3 class="font-semibold text-blue-400 mb-3 text-sm">📄 .mcp.json (registra)</h3>
+          <pre class="font-mono text-xs text-neutral-300 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">{
+  "mcpServers": {
+    "ponte-modelo": {
+      "command": "node",
+      "args": ["runtime/pontes/mcp-modelo/server.mjs"]
+    }
+  }
+}</pre>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <h3 class="font-semibold text-blue-400 mb-3 text-sm">📄 .claude/settings.json (libera, trecho)</h3>
+          <pre class="font-mono text-xs text-neutral-300 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">"enabledMcpjsonServers": [
+  "ponte-modelo"
+]</pre>
+          <p class="text-xs text-neutral-400 mt-3">Sem essa linha, o Claude Code pergunta antes de ligar um servidor que veio no projeto.</p>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: ver o Claude Code conectado à ponte</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude mcp list</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux), a linha da ponte:</p>
+          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">ponte-modelo: node runtime/pontes/mcp-modelo/server.mjs - ✔ Connected</pre>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> a linha <code>ponte-modelo</code> termina em <code>✔ Connected</code>. Se aparecer <code>Pending approval</code>, abra <code>claude</code> na pasta uma vez e aprove.</div>
+      </div>
+
+      <div class="space-y-5 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Registrar</h4><p class="text-neutral-300 text-sm"><code>.mcp.json</code> diz o nome da ponte e o comando que a liga.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Liberar</h4><p class="text-neutral-300 text-sm"><code>enabledMcpjsonServers</code> aprova a ponte deste projeto, ou você aprova na primeira abertura.</p></div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Conferir</h4><p class="text-neutral-300 text-sm"><code>claude mcp list</code> mostra <code>✔ Connected</code>. Só então peça algo ao agente.</p></div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Num projeto que não é o kit</h3>
+        <p class="text-neutral-300 text-sm">Fora da pasta do kit não há <code>.mcp.json</code> pronto. O próprio <code>server.mjs</code> traz, num comentário no topo, o comando que registra a ponte: <code>claude mcp add ponte-modelo -- node runtime/pontes/mcp-modelo/server.mjs</code>. Tudo depois do <code>--</code> é o comando que liga o servidor.</p>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 5 ===================== -->
+    <section id="topico-5" data-inema-topic="modulo-2-2#topico-5" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold flex-1">Use a ferramenta pelo agente</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m2-2-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">Agora o agente entra. O comando abaixo usa <code>claude -p</code>: manda um pedido único, sem abrir a tela, e imprime a resposta. Ele pede os horários de 07/10, um dia diferente do autoteste.</p>
+      <p data-inema-block="m2-2-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">Trocar o dia é de propósito. Se o agente responder certo um dia que você não testou, é sinal de que ele chamou a ferramenta, e não repetiu algo que já tinha visto.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: o agente responde usando a ferramenta</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude -p "Use a tool listar_horarios_livres da ponte-modelo e diga os horários livres de 2026-10-07."</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.2.0:</p>
+          <p class="text-sm text-neutral-300 bg-dark-900/60 rounded-lg p-4 border border-dark-600">A resposta traz <strong>08:00 (Dra. Ana)</strong> e <strong>16:00 (Dr. Bruno)</strong>, exatamente as linhas <code>livre</code> de 07/10 no CSV. O texto em volta muda de uma vez para outra; os dois horários, não.</p>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> volte ao <code>agenda.csv</code> do tópico 2 e confira as duas linhas de 2026-10-07 com <code>livre</code>.</div>
+      </div>
+
+      <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+        <svg viewBox="0 0 800 240" class="w-full h-auto" role="img" aria-label="Caminho de uma chamada em quatro passos. 1, o pedido em português chega ao Claude. 2, o Claude chama a ferramenta listar_horarios_livres com data 2026-10-07. 3, a ponte filtra as linhas livres do agenda.csv. 4, volta o texto com 08:00 Dra. Ana e 16:00 Dr. Bruno, e o Claude responde.">
+          <defs>
+            <pattern id="m22b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#60a5fa" opacity="0.10"/></pattern>
+            <filter id="m22b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="m22b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="800" height="240" fill="url(#m22b-grid)"/>
+          <g font-family="Inter,sans-serif" text-anchor="middle">
+            <rect x="20" y="70" width="170" height="80" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
+            <text x="105" y="98" fill="#9ca3af" font-size="11">1 · pedido</text>
+            <text x="105" y="118" fill="#e5e7eb" font-size="12">"horários livres</text>
+            <text x="105" y="135" fill="#e5e7eb" font-size="12">de 2026-10-07"</text>
+            <g filter="url(#m22b-glow)"><rect x="215" y="70" width="180" height="80" rx="12" fill="#0f1b33" stroke="#60a5fa" stroke-width="2"/></g>
+            <text x="305" y="98" fill="#60a5fa" font-size="11" font-weight="600">2 · chamada</text>
+            <text x="305" y="118" fill="#bfdbfe" font-size="11">listar_horarios_livres</text>
+            <text x="305" y="135" fill="#bfdbfe" font-size="11">{ data: 2026-10-07 }</text>
+            <rect class="wf-a" x="420" y="70" width="170" height="80" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="505" y="98" fill="#7dd3fc" font-size="11">3 · ponte lê o CSV</text>
+            <text x="505" y="118" fill="#bae6fd" font-size="12">status = livre</text>
+            <text x="505" y="135" fill="#bae6fd" font-size="12">e data = 07/10</text>
+            <rect class="wf-a" x="615" y="70" width="165" height="80" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
+            <text x="697" y="98" fill="#7dd3fc" font-size="11">4 · resposta</text>
+            <text x="697" y="118" fill="#bae6fd" font-size="12">08:00 Dra. Ana</text>
+            <text x="697" y="135" fill="#bae6fd" font-size="12">16:00 Dr. Bruno</text>
+          </g>
+          <line class="wf-flow" x1="192" y1="110" x2="212" y2="110" stroke="#38bdf8" stroke-width="2" marker-end="url(#m22b-arrow)"/>
+          <line class="wf-flow" x1="397" y1="110" x2="417" y2="110" stroke="#38bdf8" stroke-width="2" marker-end="url(#m22b-arrow)"/>
+          <line class="wf-flow" x1="592" y1="110" x2="612" y2="110" stroke="#38bdf8" stroke-width="2" marker-end="url(#m22b-arrow)"/>
+          <text x="400" y="195" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">o modelo escolhe a ferramenta e o campo; a conta é feita pela ponte, sempre igual</text>
+        </svg>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a caixa com brilho é o único ponto em que a IA decide algo: qual ferramenta chamar e com qual data. O filtro do passo 3 é código, não palpite.</p>
+
+      <p data-inema-block="m2-2-t5-p3" class="text-neutral-300 mb-6 leading-relaxed">A Sônia faz o mesmo com a outra ferramenta. Com <code>claude</code> aberto na pasta do kit, ela pede: "Use a tool resumo_vendas da ponte-modelo agrupando por cliente e me diga quem comprou mais." A resposta tem de bater com a tabela do tópico 3: Mercado Sol na frente, com R$ 393,00.</p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> A ponte só lê, e deve continuar assim</h3>
+        <p class="text-neutral-300 text-sm">As duas ferramentas só leem (N4). Se um dia você criar uma que marca consulta ou grava no ERP, ela sobe para "alterar" na <code>POLITICA.md</code>: N2, pede antes a cada vez. Ferramenta que escreve nunca entra como "sempre permitir".</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-blue-400">claude -p</div><p class="text-xs text-neutral-400 mt-1">pedido sem tela</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-blue-400">07/10</div><p class="text-xs text-neutral-400 mt-1">dia fora do autoteste</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-blue-400">Só leitura</div><p class="text-xs text-neutral-400 mt-1">N4</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-blue-400">Se escrever</div><p class="text-xs text-neutral-400 mt-1">sobe para N2</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== TOPICO 6 ===================== -->
+    <section id="topico-6" data-inema-topic="modulo-2-2#topico-6" class="mb-16">
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold flex-1">Conecte a mesma ponte ao Codex</h2>
+        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+      </div>
+      <p data-inema-block="m2-2-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">O Codex não lê o <code>.mcp.json</code>. Ele tem o próprio registro, feito por um comando. A ponte é a mesma: nenhuma linha do <code>server.mjs</code> muda.</p>
+      <p data-inema-block="m2-2-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">Repare no <code>"$PWD/…"</code>: a receita registra no Codex o caminho completo do servidor, começando da raiz do disco, e não o caminho curto que o <code>.mcp.json</code> usa. Assim o registro não depende de onde o Codex foi aberto.</p>
+
+      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: registrar a ponte-modelo no Codex</span></div>
+        <div class="p-5">
+          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">codex mcp add ponte-modelo -- node "$PWD/runtime/pontes/mcp-modelo/server.mjs"</pre>
+          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado esperado (pela receita):</p>
+          <p class="text-sm text-neutral-300 bg-dark-900/60 rounded-lg p-4 border border-dark-600">A R3 não traz prova própria para este passo. O teste é pedir ao Codex o mesmo que você pediu ao Claude.</p>
+        </div>
+        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> abra <code>codex</code> na pasta do kit e peça: "Use a tool listar_horarios_livres da ponte-modelo e diga os horários livres de 2026-10-07." Tem de voltar 08:00 (Dra. Ana) e 16:00 (Dr. Bruno).</div>
+      </div>
+
+      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold"></th><th class="px-4 py-3 font-semibold">Claude Code</th><th class="px-4 py-3 font-semibold">Codex</th></tr></thead>
+          <tbody class="divide-y divide-dark-600">
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Onde registra</td><td class="px-4 py-3 text-neutral-300"><code>.mcp.json</code> do projeto (já vem no kit)</td><td class="px-4 py-3 text-neutral-300">comando <code>codex mcp add</code></td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Caminho do servidor</td><td class="px-4 py-3 text-neutral-300">relativo à pasta do kit</td><td class="px-4 py-3 text-neutral-300">completo, com <code>"$PWD/…"</code></td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Como conferir</td><td class="px-4 py-3 text-neutral-300"><code>claude mcp list</code> → <code>✔ Connected</code></td><td class="px-4 py-3 text-neutral-300">pedir os horários de 07/10</td></tr>
+            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Ponte usada</td><td class="px-4 py-3 text-neutral-300" colspan="2">a mesma: <code>runtime/pontes/mcp-modelo/server.mjs</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> só a forma de registrar muda. É por isso que MCP compensa: você escreve a ponte uma vez e qualquer agente que fala MCP a usa.</p>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> E o seu próprio sistema?</h3>
+        <p class="text-neutral-300 text-sm">A ponte-modelo lê os CSVs de exemplo. Para ler a exportação do seu sistema, o kit prevê a variável <code>PONTE_DADOS=/caminho/da/exportacao</code>, no campo <code>env</code> do <code>.mcp.json</code>. É o assunto do módulo 2.3, com as colunas trocadas e o registro no <code>CAPACIDADES.md</code>.</p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-2#q1">
+        <p class="font-medium mb-4">Teste rápido (opcional): o <code>claude mcp list</code> mostra <code>ponte-modelo … ✔ Connected</code>. O que isso prova?</p>
+        <div class="space-y-2">
+          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Que o Claude Code ligou o servidor e enxerga as ferramentas dele.</button>
+          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Que os horários livres estão certos.</button>
+          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Que o Codex também já está conectado.</button>
+        </div>
+        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-blue-400">Uma ponte</div><p class="text-xs text-neutral-400 mt-1">dois agentes</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➕</div><div class="text-sm font-semibold text-blue-400">codex mcp add</div><p class="text-xs text-neutral-400 mt-1">registro do Codex</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📍</div><div class="text-sm font-semibold text-blue-400">"$PWD/…"</div><p class="text-xs text-neutral-400 mt-1">caminho completo</p></div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏗️</div><div class="text-sm font-semibold text-blue-400">PONTE_DADOS</div><p class="text-xs text-neutral-400 mt-1">seu sistema, no 2.3</p></div>
+      </div>
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== RESUMO ===================== -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">MCP entrega ferramentas com nome</strong><span class="text-neutral-400"> — ponte local (6) exposta por MCP (2).</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Duas ferramentas de exemplo</strong><span class="text-neutral-400"> — agenda da Clara e vendas da Sônia.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">--selftest antes do agente</strong><span class="text-neutral-400"> — tools: 2 e TOTAL: R$ 856.00, sem gastar cota.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">No Claude Code já vem ligada</strong><span class="text-neutral-400"> — .mcp.json + settings.json, ✔ Connected.</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Mesma ponte no Codex</strong><span class="text-neutral-400"> — codex mcp add, sem mudar o servidor.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
+          <p class="text-neutral-300">2.3 — A ponte do seu sistema</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
+          <a href="modulo-2-3.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Módulo 2.3 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="hidden lg:block">
+    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
+      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
+      <ol class="space-y-2 text-sm">
+        <li><a href="#topico-1" class="text-neutral-400 hover:text-blue-400">1. O que é MCP</a></li>
+        <li><a href="#topico-2" class="text-neutral-400 hover:text-blue-400">2. As duas ferramentas</a></li>
+        <li><a href="#topico-3" class="text-neutral-400 hover:text-blue-400">3. Autoteste</a></li>
+        <li><a href="#topico-4" class="text-neutral-400 hover:text-blue-400">4. Ligar ao Claude</a></li>
+        <li><a href="#topico-5" class="text-neutral-400 hover:text-blue-400">5. Usar pelo agente</a></li>
+        <li><a href="#topico-6" class="text-neutral-400 hover:text-blue-400">6. Ligar ao Codex</a></li>
+      </ol>
+    </nav>
+  </aside>
+  </div>
+<!--CHECKS-->
+        INEMA.registerCheck('modulo-2-2#q1', { answer: 0, explain: {
+          '0': 'Isso. Connected quer dizer que o servidor ligou e respondeu. Se os dados estão certos é outra prova: o --selftest e o pedido de 07/10.',
+          '1': 'Não. A conexão não confere dados. Quem confere os horários é o --selftest e a resposta de 07/10 (08:00 Dra. Ana, 16:00 Dr. Bruno).',
+          '2': 'Não. O claude mcp list só mostra o Claude Code. O Codex tem registro próprio, com codex mcp add.'
+        } });
