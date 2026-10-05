@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Browser with policy | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-4" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🌐 Browser with policy</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Some systems only exist as websites: a vendor portal, city hall, a bank. The agent can operate the browser, as long as the rule is written in advance: reading is allowed, filling things out requires approval, paying is never allowed.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Medium</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 2.4 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:2-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="2-4" data-inema-track="2" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Use the browser only as a last resort</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t1-p1">On the <code>runtime/LEIA-ME.md</code>, the browser is step 5, <strong class="text-blue-400">computer use</strong>. But look at the stability column: it is the only one marked as <strong>downloads</strong>. Even the local bridge, level 6, is intermediate.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t1-p2">That’s why the R5 recipe opens with a warning: use the browser only when no API, MCP, or CLI exists <strong>or export</strong>. It's the most fragile approach because the site changes. The only thing below it is reverse engineering, which is for the lab.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Three words from this module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Browser for agents</strong> — a command-line program that opens pages, reads text, clicks, and fills in forms, taking instructions from the agent instead of the mouse.</li>
+<li><strong>Chromium</strong> — Google's open-source foundation for Chrome. The browser for agents uses its own copy, separate from your Chrome.</li>
+<li><strong>Selector</strong> — the "address" of a button or field on the page. When the site changes its design, the address changes and the automation gets lost.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Stability bars for the seven rungs of the approach ladder. API, MCP, and CLI have high bars. SDK and the local bridge have medium bars. Computer use, the browser, is highlighted with a low bar. Reverse engineering has a minimal bar, in red, marked as lab only." class="w-full h-auto" role="img" viewbox="0 0 800 260">
+<defs>
+<pattern height="32" id="m24-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m24-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m24-grid)" height="260" width="800" x="0" y="0"></rect>
+<line stroke="#4b5563" stroke-width="1.5" x1="40" x2="770" y1="210" y2="210"></line>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<rect fill="#0b1f2e" height="160" rx="6" stroke="#38bdf8" stroke-width="1.8" width="70" x="60" y="50"></rect><text fill="#bae6fd" x="95" y="230">1 · API</text>
+<rect fill="#0b1f2e" height="160" rx="6" stroke="#38bdf8" stroke-width="1.8" width="70" x="160" y="50"></rect><text fill="#bae6fd" x="195" y="230">2 · MCP</text>
+<rect fill="#0b1f2e" height="160" rx="6" stroke="#38bdf8" stroke-width="1.8" width="70" x="260" y="50"></rect><text fill="#bae6fd" x="295" y="230">3 · CLI</text>
+<rect fill="#1f2937" height="100" rx="6" stroke="#6b7280" stroke-width="1.8" width="70" x="360" y="110"></rect><text fill="#e5e7eb" x="395" y="230">4 · SDK</text>
+<g filter="url(#m24-glow)"><rect fill="#0f1b33" height="50" rx="6" stroke="#60a5fa" stroke-width="2" width="70" x="460" y="160"></rect></g><text fill="#60a5fa" font-weight="600" x="495" y="230">5 · browser</text>
+<rect fill="#1f2937" height="100" rx="6" stroke="#6b7280" stroke-width="1.8" width="70" x="560" y="110"></rect><text fill="#e5e7eb" x="595" y="230">6 · local bridge</text>
+<rect fill="#2a0f0f" height="20" rx="6" stroke="#f87171" stroke-dasharray="4 3" stroke-width="1.8" width="70" x="660" y="190"></rect><text fill="#fca5a5" x="695" y="230">7 · reverse engineering</text>
+</g>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<text fill="#7dd3fc" x="195" y="38">high</text>
+<text fill="#9ca3af" x="395" y="98">average</text>
+<text fill="#bfdbfe" x="495" y="148">downloads</text>
+<text fill="#9ca3af" x="595" y="98">average</text>
+<text fill="#fca5a5" x="695" y="178">lab</text>
+</g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="495" y="252">second-to-last in stability</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the bar’s height represents the stability of the <code>LEIA-ME.md</code> gives each step. The step number isn't the order of preference: the browser bar (highlighted) is lower than the local bridge. That's why it's the second-to-last resort.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ When using the browser makes sense</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ The vendor’s portal has no API or export button</li>
+<li>✓ The information appears on only one screen (price table, status)</li>
+<li>✓ The task is to read and copy, not decide</li>
+<li>✓ You accept that the site may change one day and need adjustments</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ When to look for another way</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ The system exports CSV (use the bridge, module 2.3)</li>
+<li>✗ An official API or MCP server exists</li>
+<li>✗ The main task is to send or pay</li>
+<li>✗ The site requires you to solve a “I’m not a robot” challenge</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖱️</div><div class="text-sm font-semibold text-blue-400">Step 5</div><p class="text-xs text-neutral-400 mt-1">computer use</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📉</div><div class="text-sm font-semibold text-blue-400">Low</div><p class="text-xs text-neutral-400 mt-1">stability in the README</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-blue-400">Export first</div><p class="text-xs text-neutral-400 mt-1">the bridge wins</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔄</div><div class="text-sm font-semibold text-blue-400">Websites change</div><p class="text-xs text-neutral-400 mt-1">the automation gets lost</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Install the browser for agents</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t2-p1">Recipe R5 uses the <strong class="text-blue-400">agent-browser</strong>, a command-line browser built for agents. It is installed via <code>npm</code>, the same installer you used for Claude Code and Codex in module 1.2.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t2-p2">These are two commands: one installs the program, the other downloads the Chromium it uses. The second takes longer because it’s a whole browser.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: have agent-browser and its Chromium on the machine</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal (any folder), one command at a time:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">npm i -g agent-browser
+agent-browser install</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Expected result (according to the instructions):</p>
+<p class="text-sm text-neutral-300">The first command installs the <code>agent-browser</code>; the second one “downloads the Chromium it uses.” The instructions don’t specify a fixed output for the installation: the proof comes in topic 3.</p>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> both commands finish without an error message. If the <code>npm</code> complaining about permissions is the same problem you solved when you installed Claude Code.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Option</th><th class="px-4 py-3 font-semibold">Which browser it uses</th><th class="px-4 py-3 font-semibold">When it makes sense</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>agent-browser</code> (R5 recipe)</td><td class="px-4 py-3 text-neutral-300">its own clean Chromium, without your logins</td><td class="px-4 py-3 text-neutral-300">public sites, tests, reading tables</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">"Claude in Chrome" extension</td><td class="px-4 py-3 text-neutral-300">your browser, already logged in</td><td class="px-4 py-3 text-neutral-300">when the site requires your login (topic 6)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the two options appear in R5, and the same rules apply to both. The difference is whose browser it is and, therefore, whose accounts are signed in there.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A separate browser is a safeguard</h3>
+<p class="text-neutral-300 text-sm">agent-browser's Chromium doesn't have your email, your bank account, or your saved passwords. If the agent gets confused, it gets confused in an empty browser. Always start there.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-blue-400">npm i -g</div><p class="text-xs text-neutral-400 mt-1">install the program</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⬇️</div><div class="text-sm font-semibold text-blue-400">install</div><p class="text-xs text-neutral-400 mt-1">downloads Chromium</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧼</div><div class="text-sm font-semibold text-blue-400">Clean browser</div><p class="text-xs text-neutral-400 mt-1">without your logins</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Claude in Chrome</div><p class="text-xs text-neutral-400 mt-1">the logged-in alternative</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Test reading only</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t3-p1">Before handing the browser to the agent, test it yourself. And test it in the safest way possible: open a sample page, read the title, and close it. Nothing is clicked or submitted.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t3-p2">The site <code>example.com</code> exists exactly for this purpose: it is a demo page reserved for examples, with no form or purchase button.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">open — opens the page</h4><p class="text-neutral-300 text-sm">agent-browser's Chromium loads the address you provided.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">get title — reads the title</h4><p class="text-neutral-300 text-sm">Purely read-only. It's the kind of action the policy lets the agent perform on its own (N4).</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">close — closes</h4><p class="text-neutral-300 text-sm">Close the browser. Don’t leave a session open for no reason.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: prove that the browser opens and reads</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, one command at a time:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">agent-browser open https://example.com
+agent-browser get title
+agent-browser close</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.2.0:</p>
+<p class="text-sm text-neutral-300"><code>agent-browser open https://example.com</code> + <code>get title</code> → <code>Example Domain</code>.</p>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> o <code>get title</code> returns <code>Example Domain</code>. This is the R5 recipe test.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="The agent sends commands to agent-browser, highlighted here, which operates a separate Chromium instance. Chromium performs four types of actions, color-coded like a traffic light: read, scroll, and take a screenshot in blue, allowed; fill in fields in gray, ask first; send and confirm in dashed red, never on its own; pay in red, never." class="w-full h-auto" role="img" viewbox="0 0 800 270">
+<defs>
+<pattern height="32" id="m24b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m24b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m24b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m24b-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m24b-grid)" height="270" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="130" x="20" y="105"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="85" y="131">🤖 agent</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="85" y="150">Claude or Codex</text>
+<line class="wf-flow" marker-end="url(#m24b-arrow)" stroke="#38bdf8" stroke-width="2" x1="152" x2="198" y1="135" y2="135"></line>
+<g filter="url(#m24b-glow)"><rect fill="#0f1b33" height="70" rx="14" stroke="#60a5fa" stroke-width="2" width="160" x="202" y="100"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="282" y="131">agent-browser</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="282" y="151">Separate Chromium</text>
+<g stroke-width="2">
+<line class="wf-flow" marker-end="url(#m24b-arrow)" stroke="#38bdf8" x1="364" x2="470" y1="125" y2="45"></line>
+<line marker-end="url(#m24b-arrow)" stroke="#9ca3af" stroke-dasharray="6 4" x1="364" x2="470" y1="130" y2="105"></line>
+<line marker-end="url(#m24b-arrow-r)" stroke="#f87171" stroke-dasharray="4 4" x1="364" x2="470" y1="140" y2="165"></line>
+<line marker-end="url(#m24b-arrow-r)" stroke="#f87171" stroke-dasharray="2 5" x1="364" x2="470" y1="145" y2="225"></line>
+</g>
+<g font-family="Inter,sans-serif" font-size="12">
+<rect class="wf-a" fill="#0b1f2e" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="300" x="475" y="22"></rect>
+<text fill="#bae6fd" x="490" y="49">read, scroll, take a screenshot → allowed (N4)</text>
+<rect fill="#1f2937" height="44" rx="10" stroke="#9ca3af" stroke-width="2" width="300" x="475" y="82"></rect>
+<text fill="#e5e7eb" x="490" y="109">fill in → show it and wait for OK (N2)</text>
+<rect fill="#2a0f0f" height="44" rx="10" stroke="#f87171" stroke-width="2" width="300" x="475" y="142"></rect>
+<text fill="#fca5a5" x="490" y="169">send, confirm, delete → never on your own</text>
+<rect fill="#2a0f0f" height="44" rx="10" stroke="#f87171" stroke-width="2.5" width="300" x="475" y="202"></rect>
+<text fill="#fca5a5" x="490" y="229">pay → never (N1: you execute it)</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> only the blue arrow at the top is a clear path. The dashed gray one goes through you first. The red ones aren’t agent paths: the agent prepares and stops. The test in this topic uses only the blue arrow.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌐</div><div class="text-sm font-semibold text-blue-400">open</div><p class="text-xs text-neutral-400 mt-1">opens the page</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-blue-400">get title</div><p class="text-xs text-neutral-400 mt-1">reads the title</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚪</div><div class="text-sm font-semibold text-blue-400">close</div><p class="text-xs text-neutral-400 mt-1">close</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-blue-400">Example Domain</div><p class="text-xs text-neutral-400 mt-1">the proof</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Ask the agent with a written limit</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t4-p1">With the proof in hand, the agent can use the browser. The key is in the request: it already says what to do <strong>and where to stop</strong>. Sônia uses this to copy the supplier’s price table from the portal when it doesn’t offer any export option.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t4-p2">The R5 policy has three tiers, and the request below fits entirely in the first one.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Action on the site</th><th class="px-4 py-3 font-semibold">Level (R5)</th><th class="px-4 py-3 font-semibold">What the agent does</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Read a page</td><td class="px-4 py-3 text-neutral-300">N4</td><td class="px-4 py-3 text-neutral-300">do it automatically, without notifying me</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Fill in or submit</td><td class="px-4 py-3 text-neutral-300">N2</td><td class="px-4 py-3 text-neutral-300">asks beforehand, every time</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Pay</td><td class="px-4 py-3 text-neutral-300">N1</td><td class="px-4 py-3 text-neutral-300">never: prepares it, and you execute it</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> is the same per-action ceiling as the <code>POLITICA.md</code> (read N4, send N2, spend money N1), applied to the browser.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: have the agent read a website table and return it as CSV</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> (or <code>codex</code>) in the kit folder and paste the R5 recipe request, replacing &lt;site&gt; with the address:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o agent-browser para abrir &lt;site&gt;, ler a tabela de preços e me devolver em CSV. Não clique em botões de envio ou compra: se precisar, pare e me pergunte.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> compare two or three CSV rows with what you see on the website. And read the commands the agent ran: only <code>open</code>, readings and <code>close</code>, no clicking submit or purchase.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Request with limits</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Says which site to use and what to read</li>
+<li>✓ Specifies the delivery format (CSV)</li>
+<li>✓ Says what not to do (send, purchase)</li>
+<li>✓ Says what to do when unsure: stop and ask</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Request with no limits</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ “Take care of this in the portal for me”</li>
+<li>✗ “Place this month’s order with the supplier”</li>
+<li>✗ “Go in there and update the record”</li>
+<li>✗ No row says where to stop</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> "Stop and ask me" is the most useful phrase in the request</h3>
+<p class="text-neutral-300 text-sm">Websites have surprises: a cookie notice, a “continue” button that actually confirms something. Without this sentence, the agent tends to keep going to finish the task. With it, the surprise becomes a question for you.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📋</div><div class="text-sm font-semibold text-blue-400">What to read</div><p class="text-xs text-neutral-400 mt-1">pricing table</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📄</div><div class="text-sm font-semibold text-blue-400">Format</div><p class="text-xs text-neutral-400 mt-1">CSV to use later</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛑</div><div class="text-sm font-semibold text-blue-400">Where to stop</div><p class="text-xs text-neutral-400 mt-1">sending and purchasing</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙋</div><div class="text-sm font-semibold text-blue-400">When in doubt</div><p class="text-xs text-neutral-400 mt-1">asks you</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Paste the browser rules into AGENTS.md</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t5-p1">Writing the limit in every request works, but one day you’ll forget. The solution is to put the rule somewhere the agent reads <strong>before</strong> for any request: the <code>AGENTS.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t5-p2">Codex reads the <code>AGENTS.md</code> directly, and the <code>CLAUDE.md</code> from the kit points to it with <code>@AGENTS.md</code>. One rule, two agents. Recipe R5 has the block ready to use:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 The R5 recipe block for AGENTS.md (actual)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Browser:
+- Read, scroll, take screenshots: allowed.
+- Fill out a form: show what you’re going to enter and wait for my OK.
+- Submit, confirm, pay, delete: never on your own.
+- Login: I do it; you don’t ask for or save the password.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">What to look for:</strong> four lines, one for each risk level. They fit on a pocket card, and the agent reads them every time.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: add the browser block to AGENTS.md without changing anything else</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Copy the “Navegador:” block from the “Regras para colar no AGENTS.md” section of runtime/receitas/R5-navegador-com-politica.md to the end of AGENTS.md, without changing any other line. Show the new section before saving.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> open the <code>AGENTS.md</code>. The "Browser:" block appears at the end, with all four lines, and the earlier rules remain unchanged.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Rule in AGENTS.md</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Applies to every request, even one you forgot to limit</li>
+<li>✓ Applies to Claude and Codex</li>
+<li>✓ It stays in Git: you can see when it changed</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Rule only in the conversation</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Disappears when the session ends</li>
+<li>✗ Each agent has a different version</li>
+<li>✗ No one remembers what was agreed on</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Register the site on the map too</h3>
+<p class="text-neutral-300 text-sm">O <code>CAPACIDADES.md</code> already includes the example <code>Site do fornecedor | Uso do computador | 5 | navegador automatizado | enviar (N2) | pendente</code>. After testing it with your site, replace "pending" with the date, as in module 2.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-blue-400">AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">read before acting</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-blue-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">Claude reads the same</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">4️⃣</div><div class="text-sm font-semibold text-blue-400">Four lines</div><p class="text-xs text-neutral-400 mt-1">one per range</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-blue-400">Line on the map</div><p class="text-xs text-neutral-400 mt-1">site with a date</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Remember, you handle the login</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t6-p1">The last line of the block is the most serious: <em>"Login: I’ll handle it; you don’t ask for or store the password."</em> A password doesn’t go in chat, in a project file, or from one tool to another.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t6-p2">A <code>POLITICA.md</code> says the same thing in general: "Never pass a tool’s credentials to another tool." In the browser, this applies twice as much, because the login page is exactly where the password would be at hand.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Logged-in browser = your accounts are open</h3>
+<p class="text-neutral-300 text-sm">The "Claude in Chrome" extension uses your browser, already logged in. The agent can reach everything you can do in it: email, bank, social networks. R5 warns that the same rules apply. Use the logged-in browser only for sites that require your login, and keep the "Browser:" block in the <code>AGENTS.md</code>.</p>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">The agent reaches the login screen</h4><p class="text-neutral-300 text-sm">Under the rule, it stops and lets you know. It doesn’t try to guess or ask for the password in chat.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">You log in</h4><p class="text-neutral-300 text-sm">In your browser, with your own hands. That includes the code that arrives on your phone.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">The agent goes back to reading</h4><p class="text-neutral-300 text-sm">With the session open, it stays within the same boundaries: reads on its own, asks before filling things out, never submits or pays.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Clara and the agreement portal</h3>
+<p class="text-neutral-300 text-sm">Clara wants to check on the agreement website which claims have been approved. She logs in with her own credentials; the agent reads the list and returns it as a CSV. Requesting approval for a new claim is already “sending”: the agent prepares what to fill in and waits for her OK.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-4#q1">
+<p class="font-medium mb-4">Quick test (optional): the agent is on the supplier's portal and finds the "Confirm order" button. What does the R5 rule say?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Stop and ask: confirmation and sending are never done automatically.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Click, since the task was to make the request of the month.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Ask for the portal password to check the request first.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-blue-400">Login</div><p class="text-xs text-neutral-400 mt-1">you do</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙅</div><div class="text-sm font-semibold text-blue-400">Password</div><p class="text-xs text-neutral-400 mt-1">never in chat</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚫</div><div class="text-sm font-semibold text-blue-400">Credential</div><p class="text-xs text-neutral-400 mt-1">doesn’t pass it on</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Claude in Chrome</div><p class="text-xs text-neutral-400 mt-1">same rules</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Browser is a last resort</strong><span class="text-neutral-400"> — low stability; export comes first.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">agent-browser with its own Chromium</strong><span class="text-neutral-400"> — clean browser, without your logins.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Read-only proof</strong><span class="text-neutral-400"> — open, get title, close → Example Domain.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Reading is allowed, filling in requires a request, paying is never allowed</strong><span class="text-neutral-400"> — in the request and AGENTS.md.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">You handle the login</strong><span class="text-neutral-400"> — the agent doesn't ask for or store passwords.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next learning path:</h3>
+<p class="text-neutral-300">Track 3 — Route and execute (3.1 The right model makes your quota go further)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/index.html">Next learning path: Route and execute →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-1">1. Last resort</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-2">2. Install</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-3">3. Test reading</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-4">4. Request with a limit</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-5">5. Rules in AGENTS.md</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-6">6. Login is yours</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-2-4#q1', { answer: 0, explain: {
+          '0': 'Isso. Pela R5, enviar, confirmar, pagar e apagar nunca são feitos sozinhos. O agente prepara, para e pergunta.',
+          '1': 'Não. Confirmar pedido é enviar (N2) e, se envolve pagamento, N1. A tarefa não autoriza o clique: só o seu OK, a cada vez.',
+          '2': 'Não. Login é com você: o agente não pede nem guarda senha, e credencial não passa de uma ferramenta para outra.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Your system’s bridge | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-3" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ Your system’s bridge</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">The sample bridge works with the example files. Now it reads your system’s export. You replace the CSV and column names while keeping the rule: the bridge only reads.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Medium</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 2.3 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:2-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="2-3" data-inema-track="2" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Find your system's export</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t1-p1">In module 2.2, the bridge read <code>runtime/exemplos/agenda.csv</code> e <code>runtime/exemplos/erp-vendas.csv</code>. These files imitate what a system without an API provides: a <strong class="text-blue-400">export</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t1-p2">The first step is to find this file on your system. Look in the menus for “Export,” “Reports,” or “Save as CSV.” In Sônia’s client’s ERP, it’s the monthly sales report, saved in a fixed folder.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Three words from this module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Export</strong> — the file the system generates so you can take data out of it (CSV, spreadsheet).</li>
+<li><strong>Header</strong> — the first line of the CSV, with the name of each column. The bridge uses these names to find the values.</li>
+<li><strong>Environment variable</strong> — a named value (such as <code>PONTE_DADOS</code>) that a program reads when it starts. It lets you change the configuration without touching the code.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Data flow from left to right. The system without an API generates a CSV export, which lands in a folder. the ponte-modelo bridge, highlighted, reads the folder and provides tools to the agent. Below, a warning: the bridge only reads; it never writes back to the system." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m23-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m23-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m23-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23-grid)" height="240" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="70" rx="14" stroke="#6b7280" stroke-width="2" width="150" x="20" y="70"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="95" y="100">🏢 ERP / calendar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="95" y="120">no API</text>
+<line marker-end="url(#m23-arrow)" stroke="#38bdf8" stroke-width="2" x1="172" x2="222" y1="105" y2="105"></line>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="140" x="226" y="70"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="296" y="100">📄 export</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="296" y="120">vendas.csv</text>
+<line class="wf-flow" marker-end="url(#m23-arrow)" stroke="#38bdf8" stroke-width="2" x1="368" x2="418" y1="105" y2="105"></line>
+<rect fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="110" x="422" y="70"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="477" y="100">📁 folder</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="477" y="120">PONTE_DADOS</text>
+<line class="wf-flow" marker-end="url(#m23-arrow)" stroke="#38bdf8" stroke-width="2" x1="534" x2="584" y1="105" y2="105"></line>
+<g filter="url(#m23-glow)"><rect fill="#0f1b33" height="90" rx="14" stroke="#60a5fa" stroke-width="2" width="190" x="588" y="60"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="683" y="92">ponte-modelo</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="683" y="112">reads the CSV and becomes</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="683" y="128">agent tool</text>
+<rect fill="#2a0f0f" height="36" rx="10" stroke="#f87171" stroke-width="1.8" width="400" x="200" y="182"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="400" y="205">no arrow goes back to the system: the bridge only reads</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the blue arrows always go from left to right. The system generates the file, the file lands in a folder, and the bridge (highlighted box) reads that folder. Nothing goes back to the ERP: that’s what keeps the risk low.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Export format the bridge can read easily</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ First line with the column names</li>
+<li>✓ Comma-separated columns, like the kit examples</li>
+<li>✓ Always saves to the same folder, with the same name</li>
+<li>✓ Numbers with a decimal point (<code>18.50</code>)</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Export that requires adjustment</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Semicolon-separated (common in Brazilian spreadsheets)</li>
+<li>✗ Values with commas inside a field</li>
+<li>✗ Title or total rows before the header</li>
+<li>✗ File name that changes every day</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Why the right-hand column matters</h3>
+<p class="text-neutral-300 text-sm">The sample bridge separates columns by splitting each line at commas. If your file uses semicolons or has a comma inside a name, the data is read incorrectly. It’s not a defect: it’s a simple model. In topic 3, you ask the agent to adjust it.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-blue-400">Export</div><p class="text-xs text-neutral-400 mt-1">the file that comes out of the system</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-blue-400">Header</div><p class="text-xs text-neutral-400 mt-1">column names</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-blue-400">Fixed folder</div><p class="text-xs text-neutral-400 mt-1">same place, same name</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-blue-400">One-way</div><p class="text-xs text-neutral-400 mt-1">from the system to the agent</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Point the bridge to your files</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t2-p1">The bridge doesn’t have the file paths set in stone. Right at the beginning of the <code>server.mjs</code> it asks: is there <code>PONTE_DADOS</code>? If it exists, read from there. If not, use the folder <code>runtime/exemplos/</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t2-p2">This is the actual line from the kit file:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 runtime/pontes/mcp-modelo/server.mjs (actual excerpt)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">const pastaExemplos = process.env.PONTE_DADOS || join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'exemplos');
+
+function lerCsv(nome) {
+  const [cabecalho, ...linhas] = readFileSync(join(pastaExemplos, nome), 'utf8').trim().split('\n');
+  const campos = cabecalho.split(',');
+  return linhas.map(l =&gt; Object.fromEntries(l.split(',').map((v, i) =&gt; [campos[i], v])));
+}</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">What to look for:</strong> o <code>||</code> means "otherwise." And the function <code>lerCsv</code> combine the folder with the <strong>name</strong> from the file (<code>agenda.csv</code>, <code>erp-vendas.csv</code>). Either your export has that name, or you change the name in the code (topic 3).</div>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t2-p3">Recipe R3 says to put the variable in the <code>.mcp.json</code>, in the field <code>env</code>. This way, every time Claude Code connects the bridge, it starts up already pointed at your folder.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Goal: the bridge reads the export folder, not the examples</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Edit the <code>.mcp.json</code> from the kit's root. Today it has only <code>command</code> e <code>args</code>; add the field <code>env</code> with your folder path:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">{
+  "mcpServers": {
+    "ponte-modelo": {
+      "command": "node",
+      "args": ["runtime/pontes/mcp-modelo/server.mjs"],
+      "env": { "PONTE_DADOS": "/caminho/da/exportacao" }
+    }
+  }
+}</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">Close the <code>claude</code>, open it again in the kit folder and check that the bridge is still connected:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude mcp list</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Real output (10/05/2026, Linux), bridge line:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">ponte-modelo: node runtime/pontes/mcp-modelo/server.mjs - ✔ Connected</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> the line ends with <code>✔ Connected</code>. Replace <code>/caminho/da/exportacao</code> using the full path to your folder, in quotes, with no trailing slash.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Situation</th><th class="px-4 py-3 font-semibold">Where the bridge reads from</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Without <code>PONTE_DADOS</code></td><td class="px-4 py-3 text-neutral-300"><code>runtime/exemplos/</code> (a made-up Clara and Sônia)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">With <code>PONTE_DADOS</code> no <code>env</code> of the <code>.mcp.json</code></td><td class="px-4 py-3 text-neutral-300">the folder you wrote there</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Running <code>--selftest</code> directly in the terminal</td><td class="px-4 py-3 text-neutral-300">the examples (the <code>.mcp.json</code> only applies when the agent connects the bridge)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the last line avoids confusion. The <code>--selftest</code> continues proving the model with the examples; the bridge connected by the agent is what reads your folder.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Don't rename the bridge for now</h3>
+<p class="text-neutral-300 text-sm">O <code>.claude/settings.json</code> from the kit enables the bridge by name, in <code>"enabledMcpjsonServers": ["ponte-modelo"]</code>. If you change the name in <code>.mcp.json</code>, change it there too, or Claude Code will ask for approval again.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔀</div><div class="text-sm font-semibold text-blue-400">PONTE_DADOS</div><p class="text-xs text-neutral-400 mt-1">switches the folder being read</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-blue-400">.mcp.json</div><p class="text-xs text-neutral-400 mt-1">env field</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📛</div><div class="text-sm font-semibold text-blue-400">File name</div><p class="text-xs text-neutral-400 mt-1">hard-coded</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✔</div><div class="text-sm font-semibold text-blue-400">Connected</div><p class="text-xs text-neutral-400 mt-1">claude mcp list</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Change the columns with the agent’s help</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t3-p1">Each bridge tool has a purpose <code>run()</code>: that’s where the calculation happens. And that’s where the example CSV column names are. This is the <code>run()</code> actual tool <code>resumo_vendas</code>:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 server.mjs — run() for resumo_vendas (actual excerpt)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">run({ agrupar_por = 'cliente' } = {}) {
+  const grupos = {};
+  let total = 0;
+  for (const r of lerCsv('erp-vendas.csv')) {
+    const v = Number(r.quantidade) * Number(r.valor_unitario);
+    grupos[r[agrupar_por]] = (grupos[r[agrupar_por]] || 0) + v;
+    total += v;
+  }
+  const linhas = Object.entries(grupos).map(([k, v]) =&gt; `${k}: R$ ${v.toFixed(2)}`);
+  return [...linhas, `TOTAL: R$ ${total.toFixed(2)}`].join('\n');
+},</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">What to look for:</strong> <code>r.quantidade</code> e <code>r.valor_unitario</code> are example header column names (<code>data,cliente,produto,quantidade,valor_unitario</code>). If your ERP calls it something else, that’s the only thing that changes.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Two columns connected by arrows. On the left, the header of any ERP with the columns emissao, cliente, item, qtd, and preco. On the right, the names used by the tool run: date, customer, product, quantity, and unit_price. The highlighted run box shows that you only need to change the names for the calculation to stay the same." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m23b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m23b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m23b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23b-grid)" height="250" width="800" x="0" y="0"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="140" y="26">your ERP header (example)</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="560" y="26">what run() uses today</text>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="60" y="40"></rect><text fill="#e5e7eb" x="140" y="60">emission</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="60" y="80"></rect><text fill="#e5e7eb" x="140" y="100">client</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="60" y="120"></rect><text fill="#e5e7eb" x="140" y="140">item</text>
+<rect fill="#0b1f2e" height="30" rx="8" stroke="#38bdf8" stroke-width="1.8" width="160" x="60" y="160"></rect><text fill="#bae6fd" x="140" y="180">qty</text>
+<rect fill="#0b1f2e" height="30" rx="8" stroke="#38bdf8" stroke-width="1.8" width="160" x="60" y="200"></rect><text fill="#bae6fd" x="140" y="220">price</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="480" y="40"></rect><text fill="#e5e7eb" x="560" y="60">date</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="480" y="80"></rect><text fill="#e5e7eb" x="560" y="100">client</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="480" y="120"></rect><text fill="#e5e7eb" x="560" y="140">product</text>
+<rect fill="#0f1b33" height="30" rx="8" stroke="#60a5fa" stroke-width="1.8" width="160" x="480" y="160"></rect><text fill="#bfdbfe" x="560" y="180">quantity</text>
+<rect fill="#0f1b33" height="30" rx="8" stroke="#60a5fa" stroke-width="1.8" width="160" x="480" y="200"></rect><text fill="#bfdbfe" x="560" y="220">valor_unitario</text>
+</g>
+<g stroke="#38bdf8" stroke-width="1.8">
+<line marker-end="url(#m23b-arrow)" opacity="0.5" x1="222" x2="476" y1="55" y2="55"></line>
+<line marker-end="url(#m23b-arrow)" opacity="0.5" x1="222" x2="476" y1="95" y2="95"></line>
+<line marker-end="url(#m23b-arrow)" opacity="0.5" x1="222" x2="476" y1="135" y2="135"></line>
+<line class="wf-flow" marker-end="url(#m23b-arrow)" x1="222" x2="476" y1="175" y2="175"></line>
+<line class="wf-flow" marker-end="url(#m23b-arrow)" x1="222" x2="476" y1="215" y2="215"></line>
+</g>
+<g filter="url(#m23b-glow)"><rect fill="#0f1b33" height="90" rx="14" stroke="#60a5fa" stroke-width="2" width="125" x="660" y="150"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="722" y="182">run()</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="722" y="202">qty × price</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="722" y="220">same amount</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> on the left, an invented header from some ERP; on the right, the names the code expects. The two lit arrows are the ones used in the calculation. Changing the name in the code connects the right arrow: the rule (quantity times price) doesn’t change.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t3-p2">You don't need to edit the code by hand. Ask the agent, with a written limit: only replace names inside the <code>run()</code>, without creating a tool that writes.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Goal: the resumo_vendas tool reads the columns in your file</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste (replace what’s between &lt; &gt;):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/pontes/mcp-modelo/server.mjs e a primeira linha do meu arquivo &lt;/caminho/da/exportacao/vendas.csv&gt;.
+Na ferramenta resumo_vendas, troque só os nomes de colunas usados em run() e o nome do arquivo em lerCsv pelos do meu arquivo.
+Se o meu arquivo usar ponto e vírgula, ajuste a separação em lerCsv.
+Não crie ferramenta que escreve e não mexa em listar_horarios_livres.
+Antes de salvar, me mostre o antes e o depois de cada linha alterada.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> the agent shows only lines of <code>run()</code> and of <code>lerCsv</code> changing. If a new tool or any file writing appears, decline and ask again.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Save the old proof before making changes</h3>
+<p class="text-neutral-300 text-sm">Run the <code>--selftest</code> once before the switch and note the <code>TOTAL: R$ 856.00</code>. After the change, the selftest keeps reading the examples, which have the old names, so its total is no longer valid. The test is now the calculation by hand with your data (topic 5).</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-blue-400">run()</div><p class="text-xs text-neutral-400 mt-1">where the account is calculated</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-blue-400">Column name</div><p class="text-xs text-neutral-400 mt-1">what you replace</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📏</div><div class="text-sm font-semibold text-blue-400">The rule</div><p class="text-xs text-neutral-400 mt-1">what stays the same</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-blue-400">Before and after</div><p class="text-xs text-neutral-400 mt-1">you check</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Keep the bridge read-only</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t4-p1">The <code>server.mjs</code> brings the rule in a comment: <em>"POLITICA: both tools only READ (N4). A tool that writes needs another level and confirmation."</em></p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t4-p2">Reading is N4: the agent does it on its own, without notifying you, because nothing changes in the world. The temptation appears right away. Clara will want the agent to <strong>mark</strong> consult, not just list the time. That already counts as writing, and recipe R3 is clear: a tool that writes is raised to "modify" in <code>POLITICA.md</code>, N2, asks first.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Read-only tool (N4)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ <code>listar_horarios_livres</code>: shows what's available</li>
+<li>✓ <code>resumo_vendas</code>: sums and groups</li>
+<li>✓ A mistake here costs you a wrong answer, not corrupted data</li>
+<li>✓ The agent uses it without asking</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Tool that writes (moves up to N2)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Schedule a patient for an appointment slot</li>
+<li>✗ Record or correct a sale in the ERP file</li>
+<li>✗ A mistake here corrupts data that others use</li>
+<li>✗ Only with a request and “yes” each time</li>
+</ul>
+</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Start with read-only access</h4><p class="text-neutral-300 text-sm">Use the bridge for a few weeks just to look things up. You'll learn where it makes mistakes without taking any risks.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">If you need to write, change the level first</h4><p class="text-neutral-300 text-sm">Before the code, the line in the <code>CAPACIDADES.md</code> now says "change (N2)", as in the agenda example included in the file.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Separate writing tool</h4><p class="text-neutral-300 text-sm">Never turn a read-only tool into one that "reads and writes." A new one, with a name that says what it does, makes it clear when the agent will ask.</p></div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Read what the agent wrote in the bridge</h3>
+<p class="text-neutral-300 text-sm">When the agent changes the <code>server.mjs</code>, it changes the program that will run every time you ask for something. Look for words like in the before and after <code>writeFileSync</code> or <code>appendFileSync</code>: they write to a file. In a read-only bridge, only <code>readFileSync</code> should appear.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👁️</div><div class="text-sm font-semibold text-blue-400">Read = N4</div><p class="text-xs text-neutral-400 mt-1">on its own, without notice</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-blue-400">Writing = N2</div><p class="text-xs text-neutral-400 mt-1">asks each time</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Separate tool</div><p class="text-xs text-neutral-400 mt-1">one name, one action</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔍</div><div class="text-sm font-semibold text-blue-400">readFileSync</div><p class="text-xs text-neutral-400 mt-1">the only one that reads without writing</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Check Sônia’s summary by hand</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t5-p1">A new bridge only counts after a calculation you did yourself. Not because the code makes lots of mistakes, but because a misspelled column name doesn't cause an error: it gives you a wrong number that looks right.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t5-p2">Practice with Sônia's data, which you know. Run the selftest and recalculate the total with a calculator.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: see the total calculated by the bridge</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/pontes/mcp-modelo/server.mjs --selftest</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Real output (10/05/2026, Linux):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">tools: 2 (listar_horarios_livres, resumo_vendas)
+2026-10-06 09:00 · Dra. Ana
+2026-10-06 10:00 · Dra. Ana
+2026-10-06 15:00 · Dr. Bruno
+TOTAL: R$ 856.00</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> the last line is <code>TOTAL: R$ 856.00</code>. Now close the terminal and calculate the table below.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">erp-vendas.csv line</th><th class="px-4 py-3 font-semibold">Account</th><th class="px-4 py-3 font-semibold">Value</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">01/10 · Mercado Sol · Coffee 500g</td><td class="px-4 py-3 text-neutral-300">10 × 18,50</td><td class="px-4 py-3 text-neutral-300">185,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">01/10 · Padaria Lua · Sugar 1kg</td><td class="px-4 py-3 text-neutral-300">25 × 5,20</td><td class="px-4 py-3 text-neutral-300">130,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">02/10 · Mercado Sol · Sugar 1kg</td><td class="px-4 py-3 text-neutral-300">40 × 5,20</td><td class="px-4 py-3 text-neutral-300">208,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">03/10 · Empório Mar · Coffee 500g</td><td class="px-4 py-3 text-neutral-300">6 × 18,50</td><td class="px-4 py-3 text-neutral-300">111,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">03/10 · Padaria Lua · Coffee 500g</td><td class="px-4 py-3 text-neutral-300">12 × 18,50</td><td class="px-4 py-3 text-neutral-300">222,00</td></tr>
+<tr class="bg-dark-700/40"><td class="px-4 py-3 text-blue-400 font-semibold">Total</td><td class="px-4 py-3 text-neutral-300">185 + 130 + 208 + 111 + 222</td><td class="px-4 py-3 text-blue-400 font-semibold">856,00</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> by client, the same account shows Mercado Sol 393.00 (185 + 208), Padaria Lua 352.00 (130 + 222), and Empório Mar 111.00. Adding the three gives 856.00 again. When the bridge reads the real data, do the same with three or four rows you can add up.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: compare the agent’s response with your account</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use a tool resumo_vendas da ponte-modelo agrupando por cliente. Mostre a resposta da ferramenta sem arredondar e sem comentar.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> each customer matches their account, and the last row shows the total. If a value doesn’t match, the first thing to suspect is an incorrectly swapped column name.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> The calculation you check by hand becomes your proof</h3>
+<p class="text-neutral-300 text-sm">Write down: "file from a given date, client X, amount Y". That’s proof in the kit’s format, <strong>command → expected output</strong>. In module 3.4, it goes into the goal and is checked automatically.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-blue-400">Calculator</div><p class="text-xs text-neutral-400 mt-1">three lines are enough</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎯</div><div class="text-sm font-semibold text-blue-400">R$ 856,00</div><p class="text-xs text-neutral-400 mt-1">Sônia's total</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-blue-400">Wrong column</div><p class="text-xs text-neutral-400 mt-1">wrong number without an error</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-blue-400">Proof</div><p class="text-xs text-neutral-400 mt-1">command → output</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Register the bridge in CAPACIDADES.md</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t6-p1">The rule in <code>runtime/CAPACIDADES.md</code> applies here: <strong class="text-blue-400">a system without a line isn’t used by the agent</strong>. The bridge goes on the map only after you have the numbers in hand, along with the test date.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t6-p2">The file already includes an example for Sônia's case, marked as pending:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 runtime/CAPACIDADES.md — example to copy (actual)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| ERP sem API                  | Exportação CSV diária   | 6 | ler ~/erp/export/*.csv          | ler (N4)        | pendente |</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">After verifying the account, Sônia’s line looks like this (replace it with your test data):</p>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| ERP da distribuidora | Exportação CSV + ponte MCP | 6 | tool resumo_vendas da ponte-modelo | ler (N4) | &lt;AAAA-MM-DD&gt; ok |</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">What changed:</strong> the "How the agent calls it" column now names the tool, and "Tested in" changes <code>pendente</code> by the date with <code>ok</code>.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: have the agent record the bridge while you review it</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Acrescente uma linha na tabela de runtime/CAPACIDADES.md para a ponte-modelo lendo a minha exportação: via ponte local por MCP, nível 6, política ler (N4), testado em &lt;data de hoje&gt; ok. Não mude as outras linhas. Mostre a linha antes de salvar.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> open the <code>runtime/CAPACIDADES.md</code> and see the new row in the main table, with all six columns filled in.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Four steps in order to put the bridge into use: export found, PONTE_DADOS configured, account checked manually, and, highlighted, a dated entry in CAPACIDADES.md. The agent uses the bridge only after the fourth step." class="w-full h-auto" role="img" viewbox="0 0 800 180">
+<defs>
+<pattern height="32" id="m23c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m23c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m23c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23c-grid)" height="180" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="20" y="60"></rect><text fill="#bae6fd" x="95" y="86">1 · export</text><text fill="#7dd3fc" font-size="11" x="95" y="104">found</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="210" y="60"></rect><text fill="#bae6fd" x="285" y="86">2 · PONTE_DADOS</text><text fill="#7dd3fc" font-size="11" x="285" y="104">pointed to</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="400" y="60"></rect><text fill="#bae6fd" x="475" y="86">3 · account</text><text fill="#7dd3fc" font-size="11" x="475" y="104">manually checked</text>
+</g>
+<g stroke="#38bdf8" stroke-width="2">
+<line class="wf-flow" marker-end="url(#m23c-arrow)" x1="172" x2="206" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m23c-arrow)" x1="362" x2="396" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m23c-arrow)" x1="552" x2="586" y1="90" y2="90"></line>
+</g>
+<g filter="url(#m23c-glow)"><rect fill="#0f1b33" height="80" rx="14" stroke="#60a5fa" stroke-width="2" width="190" x="590" y="50"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="685" y="82">4 · CAPACIDADES.md</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="685" y="102">row with date and ok</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="685" y="155">only from this point on does the agent use it</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the first three steps are technical; the fourth (highlighted) is what enables use. Skipping a line on the map leaves the agent using a system no one has registered.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-3#q1">
+<p class="font-medium mb-4">Quick test (optional): you pointed the bridge to the ERP export and changed the columns. What authorizes the agent to use the bridge day to day?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">O <code>claude mcp list</code> show <code>✔ Connected</code>.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Add a tool that also writes to the file to save work.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">The calculation checked by hand and the row in CAPACIDADES.md with the test date.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-blue-400">Map</div><p class="text-xs text-neutral-400 mt-1">no line, no usage</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-blue-400">Test date</div><p class="text-xs text-neutral-400 mt-1">pending becomes OK</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧰</div><div class="text-sm font-semibold text-blue-400">Tool name</div><p class="text-xs text-neutral-400 mt-1">how the agent calls it</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔒</div><div class="text-sm font-semibold text-blue-400">read (N4)</div><p class="text-xs text-neutral-400 mt-1">the row policy</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">The export is the raw material</strong><span class="text-neutral-400"> — header, comma, fixed folder.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">PONTE_DADOS swaps the folder</strong><span class="text-neutral-400"> — in the env field of .mcp.json.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Change the names, not the rule</strong><span class="text-neutral-400"> — only inside run(), with the agent showing before and after.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Bridge only reads</strong><span class="text-neutral-400"> — writing raises it to N2 and turns it into another tool.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Do the math by hand, then see the map</strong><span class="text-neutral-400"> — R$ 856,00 verified and a dated line.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">2.4 — Browser with policy</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-4.html">Module 2.4 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-1">1. The export</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-2">2. PONTE_DADOS</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-3">3. Swap columns</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-4">4. Read-only</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-5">5. Manual account</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-6">6. In CAPACIDADES.md</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-2-3#q1', { answer: 2, explain: {
+          '0': 'Não basta. Connected só diz que a ponte liga. Uma coluna trocada errado continua dando número errado com a ponte conectada.',
+          '1': 'Não. Ferramenta que grava sobe para N2 na POLITICA.md e precisa de pedido a cada vez. Aqui a ponte fica só de leitura.',
+          '2': 'Isso. A conta na mão prova que os números batem, e a linha com data no CAPACIDADES.md é o que autoriza o uso.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

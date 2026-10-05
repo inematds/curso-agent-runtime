@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Ruta de aprendizaje 1 · Descubrir | INEMA Agent Runtime</title>
+<meta content="Curso gratuito de INEMA.CLUB: usa el kit INEMA Agent Runtime para que Claude Code y Codex descubran, conecten y usen las herramientas que ya tienes, de la forma más estable y con reglas claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha1/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha1/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha1/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="./" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descubrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Enrutar y ejecutar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Gobernar y aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Apariencia" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Apariencia</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fuente" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+<div aria-label="Tamaño del texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Ancho de línea" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Medio</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+<div aria-label="Entre líneas" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">RUTA 1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧭 Descubrir</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Antes de conectar cualquier cosa, averigua qué existe. Entiende por qué la ingeniería inversa no es un producto, instala el kit, ejecuta el diagnóstico y arma el mapa de las herramientas que tus agentes pueden usar.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">24</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~2h20</div><div class="text-xs text-neutral-400">Duración</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+</div>
+<div aria-label="Progreso de la ruta 1" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="trilha:1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 24</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="mt-8 lg:mt-0 rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 overflow-hidden">
+<svg aria-label="Una lupa sobre una escalera de siete peldaños. Los peldaños superiores, API, MCP y CLI, están iluminados en verde; los del medio, en azul; el último, ingeniería inversa, está en rojo y marcado como laboratorio." class="w-full h-auto" role="img" viewbox="0 0 380 240">
+<defs>
+<pattern height="28" id="t1h-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#34d399" opacity="0.12" r="1.2"></circle></pattern>
+<filter height="180%" id="t1h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#t1h-grid)" height="240" width="380" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="11">
+<g filter="url(#t1h-glow)"><rect fill="#0e2018" height="24" rx="6" stroke="#34d399" stroke-width="2" width="110" x="40" y="20"></rect></g>
+<text fill="#34d399" font-weight="600" text-anchor="middle" x="95" y="36">1 · API</text>
+<rect fill="#0e2018" height="24" rx="6" stroke="#34d399" stroke-width="1.8" width="110" x="60" y="50"></rect><text fill="#a7f3d0" text-anchor="middle" x="115" y="66">2 · MCP</text>
+<rect fill="#0e2018" height="24" rx="6" stroke="#34d399" stroke-width="1.8" width="110" x="80" y="80"></rect><text fill="#a7f3d0" text-anchor="middle" x="135" y="96">3 · CLI</text>
+<rect class="wf-a" fill="#0b1f2e" height="24" rx="6" stroke="#38bdf8" stroke-width="1.8" width="110" x="100" y="110"></rect><text fill="#bae6fd" text-anchor="middle" x="155" y="126">4 · SDK</text>
+<rect class="wf-a" fill="#0b1f2e" height="24" rx="6" stroke="#38bdf8" stroke-width="1.8" width="110" x="120" y="140"></rect><text fill="#bae6fd" text-anchor="middle" x="175" y="156">5 · computadora</text>
+<rect class="wf-a" fill="#0b1f2e" height="24" rx="6" stroke="#38bdf8" stroke-width="1.8" width="110" x="140" y="170"></rect><text fill="#bae6fd" text-anchor="middle" x="195" y="186">6 · puente local</text>
+<rect fill="#2a0f0f" height="24" rx="6" stroke="#f87171" stroke-dasharray="4 3" stroke-width="1.8" width="110" x="160" y="200"></rect><text fill="#fca5a5" text-anchor="middle" x="215" y="216">7 · ing. inversa</text>
+</g>
+<circle cx="300" cy="80" fill="none" r="40" stroke="#34d399" stroke-width="3"></circle>
+<line stroke="#34d399" stroke-linecap="round" stroke-width="5" x1="329" x2="360" y1="109" y2="140"></line>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="300" y="85">¿qué vía?</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="315" y="216">solo laboratorio</text>
+</svg>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="1" id="conteudo">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa de la ruta de aprendizaje</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-1">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🧭 La ingeniería inversa no es un producto</h3>
+<p class="text-xs text-neutral-400">Técnica, no producto</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-2">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🩺 Instalar y diagnosticar</h3>
+<p class="text-xs text-neutral-400">doctor dice LISTO</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-3">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🪜 La escalera de las vías</h3>
+<p class="text-xs text-neutral-400">La más alta que exista</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-4">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🗺️ El mapa de capacidades</h3>
+<p class="text-xs text-neutral-400">Sin línea, no hay uso</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- ===== MODULO 1.1 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-1" data-inema-track="1" id="modulo-1-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧭 La ingeniería inversa no es un producto</h3>
+<p class="text-neutral-400 text-sm">Qué mostraron los videos sobre mods, por qué el apaño solo sirve para descubrir y qué vías oficiales hacen lo mismo hoy.</p>
+<div aria-label="Progreso del módulo 1.1" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎬</span>
+<div><span class="font-medium">Mira lo que mostraron los videos sobre mods</span><span class="text-neutral-500 text-sm ml-2">- el hilo improvisado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Los videos mostraron a Claude Code usando el control de la computadora de la app de Codex y varias sesiones en paralelo, casi todo mediante ingeniería inversa.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Saber qué se hizo y cómo se hizo permite distinguir la idea (buena) del camino (frágil).</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Claude Code, Codex, mod, uso de la computadora, ingeniería inversa.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔍</span>
+<div><span class="font-medium">Separa el descubrimiento del producto</span><span class="text-neutral-500 text-sm ml-2">- prueba × camino</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La regla del curso: la ingeniería inversa demuestra que algo es posible; el sistema de uso diario utiliza la vía oficial.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Lo que depende de un cableado improvisado se rompe con la próxima actualización y solo tú sabes cómo repararlo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Descubrimiento, producto, contrato, etiqueta de frágil.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🛣️</span>
+<div><span class="font-medium">Conoce las vías oficiales actuales</span><span class="text-neutral-500 text-sm ml-2">- el video × el oficial</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La tabla de alternativas: codex exec, claude --bg y claude agents, plugins oficiales y permisos escritos en lugar de trucos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Cada fila de la tabla se convierte en un módulo del curso que ejecutas en tu máquina.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Vía oficial, CLI, sesión en segundo plano, plugin.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📁</span>
+<div><span class="font-medium">Entiende qué es el kit</span><span class="text-neutral-500 text-sm ml-2">- una carpeta, no un servidor</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El INEMA Agent Runtime: carpeta runtime/ con cuatro archivos de reglas, scripts, puentes, protección y siete recetas probadas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Funciona con la suscripción de Claude Code y Codex, sin API de pago ni servidor que mantener.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Kit copiable, suscripción, cuota, API, receta.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">Recorre el ciclo de siete etapas</span><span class="text-neutral-500 text-sm ml-2">- de descubrir a aprender</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Descubrir, conectar, enrutar, ejecutar, observar, verificar y aprender, con un archivo del kit para cada etapa.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El ciclo sigue el orden del curso y el orden en que conectas agentes en el trabajo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Ciclo, política, prueba, comando → salida esperada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧑‍🤝‍🧑</span>
+<div><span class="font-medium">Conoce a Clara, a Sônia y el mapa del curso</span><span class="text-neutral-500 text-sm ml-2">- agenda y ERP</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La dueña de una clínica con la agenda en una hoja de cálculo y la contadora con un ERP sin API, cuyos datos vienen en el propio kit.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Con los mismos archivos de ejemplo, lo que ejecutas coincide con lo que muestra la lección.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">ERP, CSV, archivos de ejemplo, proyecto final.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-1')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-1.html">Ver completo</a>
+</div>
+</div>
+<!-- ===== MODULO 1.2 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-2" data-inema-track="1" id="modulo-1-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🩺 Instalar y diagnosticar</h3>
+<p class="text-neutral-400 text-sm">De cero a "LISTO": requisitos previos, clon del kit, el diagnóstico doctor.mjs y el primer pedido al agente.</p>
+<div aria-label="Progreso del módulo 1.2" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧰</span>
+<div><span class="font-medium">Verifica lo que necesitas tener</span><span class="text-neutral-500 text-sm ml-2">- Node y un agente con sesión iniciada</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Node 18 o posterior, Claude Code y/o Codex con sesión iniciada mediante la suscripción, Linux o Mac (Windows mediante WSL).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Sin estos tres elementos no se ejecuta ninguna receta; con ellos, se ejecutan todas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Terminal, Node, WSL, inicio de sesión con la suscripción.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📥</span>
+<div><span class="font-medium">Clona el kit en tu máquina</span><span class="text-neutral-500 text-sm ml-2">- git clone</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Descargar el repositorio del kit a una carpeta tuya con un comando.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La carpeta clonada se convierte en tu proyecto: reglas, puentes y recetas ya están en su lugar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Git, repositorio, clon, carpeta del proyecto.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🩺</span>
+<div><span class="font-medium">Ejecuta el diagnóstico</span><span class="text-neutral-500 text-sm ml-2">- doctor.mjs</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Un script que verifica Node, Claude Code, Codex y Ollama y termina con PRONTO o FALTA.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Solo lee las versiones y el estado: no llama a ningún modelo ni consume cuota.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Diagnóstico, salida 0, LISTO, FALTA.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔎</span>
+<div><span class="font-medium">Lee cada línea del doctor</span><span class="text-neutral-500 text-sm ml-2">- ok, ausente, sin iniciar sesión</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El significado de cada estado y el comando que el propio doctor sugiere para resolverlo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Tú corriges por tu cuenta lo que falta, sin adivinar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">ok, ausente, sin sesión iniciada, viejo, opcional.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🤝</span>
+<div><span class="font-medium">Mira cómo ambos agentes leen las mismas reglas</span><span class="text-neutral-500 text-sm ml-2">- AGENTS.md y CLAUDE.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Codex lee AGENTS.md; el CLAUDE.md del kit apunta a él. Las mismas reglas se aplican a ambos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Escribes la regla una vez y no tienes que mantener dos versiones.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">AGENTS.md, CLAUDE.md, @AGENTS.md, .claude/settings.json.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">💬</span>
+<div><span class="font-medium">Haz el primer pedido al agente</span><span class="text-neutral-500 text-sm ml-2">- lee el LEIA-ME conmigo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Abrir claude en la carpeta del kit y pedirle que lea el LEIA-ME y ayude a completar el CAPACIDADES.md.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es el primer uso real: el agente lee las reglas del kit antes de actuar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Sesión interactiva, carpeta confiable, primer prompt.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-2')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-2.html">Ver completo</a>
+</div>
+</div>
+<!-- ===== MODULO 1.3 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-3" data-inema-track="1" id="modulo-1-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🪜 La escalera de las vías</h3>
+<p class="text-neutral-400 text-sm">Siete niveles, de API a ingeniería inversa: cómo elegir la vía más estable y exigir una prueba antes de aceptar un «no se puede».</p>
+<div aria-label="Progreso del módulo 1.3" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🪜</span>
+<div><span class="font-medium">Sube los siete escalones de la escalera</span><span class="text-neutral-500 text-sm ml-2">- API hasta ingeniería inversa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La tabla de LEIA-ME: API, MCP, CLI, SDK, uso de la computadora, puente local e ingeniería inversa, con ejemplos y nivel de estabilidad.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es la regla de decisión más útil del kit y cabe en una página.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Vía, nivel, API, MCP, CLI, SDK, puente local.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">⚖️</span>
+<div><span class="font-medium">Entiende por qué la estabilidad es lo más importante</span><span class="text-neutral-500 text-sm ml-2">- alta, media, baja</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Cada peldaño tiene una estabilidad: cuánto sigue funcionando cuando cambia la otra parte.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La vía que menos se rompe es la que cuesta menos mantener, aunque requiera más trabajo el primer día.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Estabilidad, mantenimiento, contrato, frágil.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧪</span>
+<div><span class="font-medium">Exige una prueba antes de decir «no se puede»</span><span class="text-neutral-500 text-sm ml-2">- un comando por nivel</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La regla de LEIA-ME y de AGENTS.md: antes de concluir que algo es imposible, el agente prueba cada nivel con un comando.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Muchas veces la vía existe, pero simplemente no estaba documentada.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Imposible prematuro, prueba concreta, evidencia.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧾</span>
+<div><span class="font-medium">Sube la escalera con el ERP de Sônia</span><span class="text-neutral-500 text-sm ml-2">- se detiene en el escalón 6</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El ERP sin API avanza paso a paso hasta la exportación CSV, el puente local.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es el caso más común en una oficina pequeña: un sistema antiguo que solo exporta archivos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Exportación, CSV, puente local, solo lectura.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🩺</span>
+<div><span class="font-medium">Sube la escalera con la agenda de Clara</span><span class="text-neutral-500 text-sm ml-2">- la hoja de cálculo se convierte en archivo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La agenda en una hoja de cálculo también pasa por el puente local: leer es sencillo, escribir requiere aprobación.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Muestra que una misma vía puede tener políticas distintas para leer y para modificar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Hoja de cálculo, agenda.csv, leer × modificar, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🎯</span>
+<div><span class="font-medium">Sube la escalera con tu sistema</span><span class="text-neutral-500 text-sm ml-2">- prompt listo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Un prompt para que el agente recorra la escalera contigo y pruebe cada nivel en tu sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Terminas sabiendo qué vía usar en el proyecto final.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Diagnóstico de vía, evidencia por nivel, elección.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-3')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-3.html">Ver completo</a>
+</div>
+</div>
+<!-- ===== MODULO 1.4 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-4" data-inema-track="1" id="modulo-1-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🗺️ El mapa de capacidades</h3>
+<p class="text-neutral-400 text-sm">El CAPACIDADES.md: una línea por sistema, con vía, nivel, cómo llamarlo, política y fecha de la prueba.</p>
+<div aria-label="Progreso del módulo 1.4" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📋</span>
+<div><span class="font-medium">Lee las columnas de CAPACIDADES.md</span><span class="text-neutral-500 text-sm ml-2">- seis columnas</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Sistema, vía, nivel, cómo lo llama el agente, política y probado el.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Cada columna responde una pregunta que harías antes de dejar que alguien use tu sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Mapa de capacidades, vía, política y fecha de la prueba.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">✅</span>
+<div><span class="font-medium">Entiende las dos líneas que ya vienen listas</span><span class="text-neutral-500 text-sm ml-2">- Codex y Claude</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Codex CLI mediante el puente codex-exec.sh y Claude Code en modo de planificación, ambos con política de lectura.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Son el modelo de cómo se escribe una buena línea.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Nivel 3, leer (N4), línea probada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📎</span>
+<div><span class="font-medium">Usa los ejemplos para copiar</span><span class="text-neutral-500 text-sm ml-2">- inventario, ERP, agenda, sitio web</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Las cuatro filas de ejemplo del archivo, todas marcadas como pendientes hasta la prueba.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Empezar con un ejemplo parecido a tu caso ahorra la mitad del trabajo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Pendiente, puente local, uso de la computadora, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🤖</span>
+<div><span class="font-medium">Completa el mapa con el agente</span><span class="text-neutral-500 text-sm ml-2">- nivel por nivel</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El prompt del README para que el agente complete el mapa contigo, sistema por sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El agente conoce la escalera; tú conoces tu trabajo. Juntos, el mapa queda listo en minutos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Entrevista guiada, una pregunta a la vez, revisión humana.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚫</span>
+<div><span class="font-medium">Deja pasar solo las líneas probadas</span><span class="text-neutral-500 text-sm ml-2">- sin fila, no hay uso</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La regla del archivo: un sistema sin línea no se usa, y una línea sin prueba queda pendiente.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Evita que el agente invente acceso a un sistema que nadie verificó.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Lista de permitidos, prueba, fecha, pendiente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">👀</span>
+<div><span class="font-medium">Explora el software antes de decir que es imposible</span><span class="text-neutral-500 text-sm ml-2">- menús, exportaciones, ayuda</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Observar lo que el programa ya ofrece (exportación, integraciones, línea de comandos) antes de pensar en atajos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Explorar es la parte buena de la ingeniería inversa: te permite encontrar el camino sin depender de soluciones improvisadas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Observar, exportación, integración, LIMITES.md.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-4')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-4.html">Ver completo</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../../index.html">← Volver al inicio</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/index.html">Próxima ruta: Conectar →</a>
+</div>
+</main>
+<!-- MODAIS (iframe carrega a pagina do modulo) -->
+<div aria-labelledby="modal-1-1-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-1" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.1</span><span class="font-semibold" id="modal-1-1-title">La ingeniería inversa no es un producto</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-1.html" title="Módulo 1.1"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-1-2-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-2" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.2</span><span class="font-semibold" id="modal-1-2-title">Instalar y diagnosticar</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-2.html" title="Módulo 1.2"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-1-3-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-3" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.3</span><span class="font-semibold" id="modal-1-3-title">La escalera de las vías</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-3.html" title="Módulo 1.3"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-1-4-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-4" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.4</span><span class="font-semibold" id="modal-1-4-title">El mapa de capacidades</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-4.html" title="Módulo 1.4"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit utilizado en el curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

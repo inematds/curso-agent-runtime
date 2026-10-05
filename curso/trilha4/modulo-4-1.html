@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>Política de autonomia | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Política de autonomia | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,349 +174,325 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="../trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-amber-400">Início</a><span>/</span>
-      <a href="index.html" class="hover:text-amber-400">Trilha 4</a><span>/</span>
-      <span class="text-amber-400">Módulo 4.1</span>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-1" data-inema-track="4">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.1</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚦 Política de autonomia</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Quanto maior o impacto da ação, mais você participa. O arquivo <code>runtime/POLITICA.md</code> escreve isso em duas tabelas, e o kit aplica as duas no Claude Code e no Codex. O padrão é um só: "prepara e pede".</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">N0–N4</div><div class="text-xs text-neutral-400">Níveis</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Fundamento</div><div class="text-xs text-neutral-400">Tipo</div></div>
-      </div>
-      <div data-inema-meter="modulo:4-1" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 4.1">
-        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-      </div>
-    </div>
-  </header>
-
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
-  <main id="conteudo" class="min-w-0" data-inema-module="4-1" data-inema-track="4">
-
-    <!-- ===================== TOPICO 1 ===================== -->
-    <section id="topico-1" data-inema-topic="modulo-4-1#topico-1" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold flex-1">Leia os cinco níveis de autonomia</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-1-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">Até aqui você conectou ferramentas e montou um time. Falta a pergunta que decide se dá para dormir tranquilo: <strong class="text-amber-400">o que o agente pode fazer sem você?</strong></p>
-      <p data-inema-block="m4-1-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">A <code>runtime/POLITICA.md</code> responde com cinco níveis, de N0 a N4. A primeira linha do arquivo resume a ideia: quanto maior o impacto da ação, mais o humano participa.</p>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três palavras deste módulo</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>Autonomia</strong> — quanto o agente age sozinho, sem esperar o seu "pode".</li>
-          <li><strong>Nível (N0 a N4)</strong> — o grau dessa autonomia. N0 é só conversa. N4 é agir sem nem avisar.</li>
-          <li><strong>"Prepara e pede"</strong> — o padrão do kit: o agente deixa tudo pronto e pergunta antes de fazer o que tem impacto.</li>
-        </ul>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Nível</th><th class="px-4 py-3 font-semibold">O agente…</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N0</td><td class="px-4 py-3 text-neutral-300">só conversa</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N1</td><td class="px-4 py-3 text-neutral-300">prepara; o humano executa</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N2</td><td class="px-4 py-3 text-neutral-300">executa depois de pedir, a cada vez</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N3</td><td class="px-4 py-3 text-neutral-300">executa sozinho e avisa</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N4</td><td class="px-4 py-3 text-neutral-300">executa sozinho, sem aviso</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> é a cópia exata da seção "Níveis de autonomia" da <code>POLITICA.md</code>. A diferença entre N1 e N2 é quem aperta o botão: no N1 é você, no N2 é o agente, com o seu sim.</p>
-
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 240" class="w-full h-auto" role="img" aria-label="Cinco degraus de autonomia, do N0 ao N4, crescendo da esquerda para a direita. Embaixo de cada degrau, quem age: no N0 e no N1 é o humano, no N2 o agente depois do sim, no N3 e no N4 o agente sozinho. O N2 está destacado como o ponto do padrão prepara e pede.">
-          <defs>
-            <pattern id="m41-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.10"/></pattern>
-            <filter id="m41-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <rect x="0" y="0" width="800" height="240" fill="url(#m41-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect x="40" y="150" width="130" height="40" rx="10" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="105" y="175" fill="#e5e7eb" font-size="13">N0 · conversa</text>
-            <rect x="185" y="125" width="130" height="65" rx="10" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="250" y="152" fill="#e5e7eb" font-size="13">N1 · prepara</text>
-            <text x="250" y="172" fill="#9ca3af" font-size="11">você executa</text>
-            <g filter="url(#m41-glow)"><rect x="330" y="95" width="140" height="95" rx="12" fill="#2a1d06" stroke="#fbbf24" stroke-width="2"/></g>
-            <text x="400" y="128" fill="#fbbf24" font-size="14" font-weight="600">N2 · pede</text>
-            <text x="400" y="148" fill="#fde68a" font-size="11">executa depois</text>
-            <text x="400" y="164" fill="#fde68a" font-size="11">do seu sim</text>
-            <rect class="wf-a" x="485" y="65" width="130" height="125" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="550" y="98" fill="#bae6fd" font-size="13">N3 · avisa</text>
-            <text x="550" y="118" fill="#7dd3fc" font-size="11">faz e conta</text>
-            <rect class="wf-a" x="630" y="35" width="130" height="155" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="695" y="68" fill="#bae6fd" font-size="13">N4 · silêncio</text>
-            <text x="695" y="88" fill="#7dd3fc" font-size="11">faz sem aviso</text>
-            <text x="180" y="218" fill="#9ca3af" font-size="12">o humano age</text>
-            <text x="400" y="218" fill="#fde68a" font-size="12">padrão "prepara e pede"</text>
-            <text x="622" y="218" fill="#7dd3fc" font-size="12">o agente age sozinho</text>
-          </g>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> cada degrau dá mais liberdade ao agente. O degrau âmbar (N2) é onde o kit coloca tudo o que tem impacto. Os degraus azuis são para ações que, se derem errado, você desfaz sem dor.</p>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-amber-400">N0</div><p class="text-xs text-neutral-400 mt-1">só conversa</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📝</div><div class="text-sm font-semibold text-amber-400">N1</div><p class="text-xs text-neutral-400 mt-1">você executa</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙋</div><div class="text-sm font-semibold text-amber-400">N2</div><p class="text-xs text-neutral-400 mt-1">pede a cada vez</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📣</div><div class="text-sm font-semibold text-amber-400">N3 / N4</div><p class="text-xs text-neutral-400 mt-1">age e avisa, ou nem avisa</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 2 ===================== -->
-    <section id="topico-2" data-inema-topic="modulo-4-1#topico-2" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold flex-1">Use o teto por tipo de ação</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-1-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">Os níveis sozinhos não dizem nada. Eles ganham sentido quando você liga cada <strong>tipo de ação</strong> a um nível máximo. É a segunda tabela da <code>POLITICA.md</code>, a do <strong class="text-amber-400">teto</strong>.</p>
-      <p data-inema-block="m4-1-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">As duas últimas colunas mostram como cada teto vira configuração: no Claude Code e no Codex. Você verá as duas nos tópicos 4 e 5.</p>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O que é "teto"</h3>
-        <p class="text-neutral-300 text-sm"><strong>Teto</strong> é o nível mais alto que uma ação pode ter. Ninguém sobe acima dele, nem o agente, nem um clique apressado. Abaixo dele você pode ser mais rígido: o teto é máximo, não obrigação.</p>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Ação</th><th class="px-4 py-3 font-semibold">Teto</th><th class="px-4 py-3 font-semibold">No Claude Code</th><th class="px-4 py-3 font-semibold">No Codex</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Ler arquivo, página, planilha</td><td class="px-4 py-3 text-neutral-300">N4</td><td class="px-4 py-3 text-neutral-300">permitido</td><td class="px-4 py-3 text-neutral-300"><code>-s read-only</code></td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Criar/alterar arquivo do projeto</td><td class="px-4 py-3 text-neutral-300">N3</td><td class="px-4 py-3 text-neutral-300"><code>acceptEdits</code></td><td class="px-4 py-3 text-neutral-300"><code>-s workspace-write</code></td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Comando que altera o sistema</td><td class="px-4 py-3 text-neutral-300">N2</td><td class="px-4 py-3 text-neutral-300">pede confirmação</td><td class="px-4 py-3 text-neutral-300">sem auto-aprovação</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Enviar (e-mail, mensagem, post, push)</td><td class="px-4 py-3 text-neutral-300">N2</td><td class="px-4 py-3 text-neutral-300">pede confirmação</td><td class="px-4 py-3 text-neutral-300">sem auto-aprovação</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Gastar dinheiro ou crédito</td><td class="px-4 py-3 text-neutral-300">N1</td><td class="px-4 py-3 text-neutral-300">bloqueado</td><td class="px-4 py-3 text-neutral-300">não executar</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Apagar dados / produção</td><td class="px-4 py-3 text-neutral-300">N1 + backup</td><td class="px-4 py-3 text-neutral-300">bloqueado (<code>rm -rf</code>)</td><td class="px-4 py-3 text-neutral-300">não executar</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> o teto cai conforme o estrago possível sobe. Ler não quebra nada (N4). Gastar e apagar não têm volta (N1): o agente prepara e quem faz é você.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="text-3xl mb-3">🩺</div>
-          <h3 class="font-semibold text-lg mb-2">Clara e a agenda</h3>
-          <p class="text-neutral-300 text-sm mb-2"><strong>Ler</strong> a planilha para achar horário livre é "ler planilha": <strong class="text-amber-400">N4</strong>. O agente responde sem perguntar.</p>
-          <p class="text-neutral-300 text-sm"><strong>Alterar</strong> a agenda mexe com paciente de verdade. A agenda não é um arquivo de rascunho do projeto: é dado da clínica em uso. Clara trata como comando que altera o sistema: <strong class="text-amber-400">N2</strong>, o agente pede a cada vez.</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="text-3xl mb-3">🧾</div>
-          <h3 class="font-semibold text-lg mb-2">Sônia e o dinheiro do cliente</h3>
-          <p class="text-neutral-300 text-sm mb-2">Somar o CSV de vendas é ler: N4. Montar o relatório num arquivo novo é alterar arquivo do projeto: N3.</p>
-          <p class="text-neutral-300 text-sm">Pagar guia, emitir boleto ou gastar crédito é "gastar dinheiro": <strong class="text-amber-400">N1</strong>. O agente deixa tudo pronto, e quem paga é a Sônia.</p>
-        </div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objetivo: ver o agente consultar a política antes de responder</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/POLITICA.md e responda em uma linha qual é o teto de 'Enviar'.</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.2.0 (mesma pergunta, numa sessão em segundo plano):</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">respondeu "N2" lendo a POLITICA</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">Como verificar:</strong> a resposta diz <code>N2</code>. Troque 'Enviar' por 'Gastar dinheiro ou crédito' e a resposta tem de ser <code>N1</code>.</div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-amber-400">Ler</div><p class="text-xs text-neutral-400 mt-1">teto N4</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✏️</div><div class="text-sm font-semibold text-amber-400">Alterar arquivo</div><p class="text-xs text-neutral-400 mt-1">teto N3</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-amber-400">Enviar</div><p class="text-xs text-neutral-400 mt-1">teto N2</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-amber-400">Gastar / apagar</div><p class="text-xs text-neutral-400 mt-1">teto N1</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 3 ===================== -->
-    <section id="topico-3" data-inema-topic="modulo-4-1#topico-3" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold flex-1">Entenda por que "sempre permitir" tem teto</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-1-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">Quando o Claude Code pede licença, ele oferece "sim", "não" e uma opção para não perguntar mais. Na décima pergunta seguida, a tentação é clicar na terceira. Em um dos vídeos de mods, havia até um ajudante que aprovava as permissões sozinho.</p>
-      <p data-inema-block="m4-1-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">A <code>POLITICA.md</code> fecha essa porta com uma frase: <strong class="text-amber-400">uma permissão "sempre permitir" nunca passa do teto da ação.</strong> Você pode liberar leitura para sempre. Não pode liberar pagamento para sempre.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
-          <h3 class="font-semibold text-amber-400 mb-3">✓ "Sempre permitir" faz sentido</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Ler a agenda da Clara (teto N4)</li>
-            <li>✓ Ler o CSV de vendas da Sônia (teto N4)</li>
-            <li>✓ Criar um relatório na pasta do projeto (teto N3)</li>
-            <li>✓ Rodar o <code>doctor.mjs</code>, que só olha e informa</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ "Sempre permitir" passa do teto</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ Enviar mensagem a paciente (teto N2: pede a cada vez)</li>
-            <li>✗ Fazer <code>push</code> no repositório (teto N2)</li>
-            <li>✗ Pagar a guia do cliente da Sônia (teto N1)</li>
-            <li>✗ Apagar uma pasta com <code>rm -rf</code> (N1 + backup)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Cansaço</h4><p class="text-neutral-300 text-sm">Muitas perguntas seguidas, todas inofensivas. Você para de ler e começa a aprovar no automático.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Liberação ampla</h4><p class="text-neutral-300 text-sm">Um clique em "não perguntar mais" vale para todos os casos parecidos, inclusive os perigosos.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">O teto segura</h4><p class="text-neutral-300 text-sm">Mesmo liberado, o que está acima do teto continua bloqueado ou continua perguntando. É isso que o tópico 4 mostra funcionando.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Cuidado com o modo que libera tudo</h3>
-        <p class="text-neutral-300 text-sm">O Claude Code tem um modo de permissão que não pergunta nada. Ele existe para testes em pasta descartável. Se você usar, o que ainda protege é só o que está escrito como bloqueio no <code>.claude/settings.json</code>. Por isso os bloqueios de N1 ficam no arquivo, e não na sua memória.</p>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Frase para guardar</h3>
-        <p class="text-neutral-300 text-sm">"Sempre permitir" é atalho para o que é seguro repetir. Para o que tem impacto, a pergunta é o próprio controle: se ela some, o controle some junto.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-amber-400">Sempre permitir</div><p class="text-xs text-neutral-400 mt-1">só até o teto</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">😮‍💨</div><div class="text-sm font-semibold text-amber-400">Cansaço</div><p class="text-xs text-neutral-400 mt-1">o risco real</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧱</div><div class="text-sm font-semibold text-amber-400">Bloqueio escrito</div><p class="text-xs text-neutral-400 mt-1">não depende de clique</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙋</div><div class="text-sm font-semibold text-amber-400">Pergunta</div><p class="text-xs text-neutral-400 mt-1">é o controle</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 4 ===================== -->
-    <section id="topico-4" data-inema-topic="modulo-4-1#topico-4" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold flex-1">Veja o bloqueio no Claude Code</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-1-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">No Claude Code, a política vira o arquivo <code>.claude/settings.json</code>, que já vem no kit. O Claude Code lê esse arquivo sozinho ao abrir na pasta.</p>
-      <p data-inema-block="m4-1-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">A parte que importa aqui é a lista <code>deny</code>: comandos que o agente não roda, peça quem pedir. São os bloqueios básicos que a <code>POLITICA.md</code> cita para "apagar" e para o push forçado.</p>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três termos do settings.json</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>settings.json</strong> — o arquivo de configuração do Claude Code para esta pasta. Texto puro, você abre e lê.</li>
-          <li><strong>deny</strong> — "negar". Lista de comandos que o Claude Code recusa sem perguntar. O <code>:*</code> no fim quer dizer "com qualquer coisa depois".</li>
-          <li><strong>hook</strong> — um pequeno programa que o Claude Code roda antes ou depois de cada ação. O kit usa hooks para a guarda (módulo 4.3).</li>
-        </ul>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 .claude/settings.json (bloco de permissões; hooks resumidos)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">{
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/modulo-4-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/modulo-4-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/modulo-4-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-4-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/modulo-4-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/modulo-4-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Trilha 4</a><span>/</span>
+<span class="text-amber-400">Módulo 4.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-1" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🚦 Política de autonomia</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Quanto maior o impacto da ação, mais você participa. O arquivo <code>runtime/POLITICA.md</code> escreve isso em duas tabelas, e o kit aplica as duas no Claude Code e no Codex. O padrão é um só: "prepara e pede".</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">N0–N4</div><div class="text-xs text-neutral-400">Níveis</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Fundamento</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progresso do módulo 4.1" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:4-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="4-1" data-inema-track="4" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Leia os cinco níveis de autonomia</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-1-t1-p1">Até aqui você conectou ferramentas e montou um time. Falta a pergunta que decide se dá para dormir tranquilo: <strong class="text-amber-400">o que o agente pode fazer sem você?</strong></p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p2">A <code>runtime/POLITICA.md</code> responde com cinco níveis, de N0 a N4. A primeira linha do arquivo resume a ideia: quanto maior o impacto da ação, mais o humano participa.</p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três palavras deste módulo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Autonomia</strong> — quanto o agente age sozinho, sem esperar o seu "pode".</li>
+<li><strong>Nível (N0 a N4)</strong> — o grau dessa autonomia. N0 é só conversa. N4 é agir sem nem avisar.</li>
+<li><strong>"Prepara e pede"</strong> — o padrão do kit: o agente deixa tudo pronto e pergunta antes de fazer o que tem impacto.</li>
+</ul>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Nível</th><th class="px-4 py-3 font-semibold">O agente…</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N0</td><td class="px-4 py-3 text-neutral-300">só conversa</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N1</td><td class="px-4 py-3 text-neutral-300">prepara; o humano executa</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N2</td><td class="px-4 py-3 text-neutral-300">executa depois de pedir, a cada vez</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N3</td><td class="px-4 py-3 text-neutral-300">executa sozinho e avisa</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">N4</td><td class="px-4 py-3 text-neutral-300">executa sozinho, sem aviso</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> é a cópia exata da seção "Níveis de autonomia" da <code>POLITICA.md</code>. A diferença entre N1 e N2 é quem aperta o botão: no N1 é você, no N2 é o agente, com o seu sim.</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Cinco degraus de autonomia, do N0 ao N4, crescendo da esquerda para a direita. Embaixo de cada degrau, quem age: no N0 e no N1 é o humano, no N2 o agente depois do sim, no N3 e no N4 o agente sozinho. O N2 está destacado como o ponto do padrão prepara e pede." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m41-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m41-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m41-grid)" height="240" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="40" rx="10" stroke="#6b7280" stroke-width="2" width="130" x="40" y="150"></rect>
+<text fill="#e5e7eb" font-size="13" x="105" y="175">N0 · conversa</text>
+<rect fill="#1f2937" height="65" rx="10" stroke="#6b7280" stroke-width="2" width="130" x="185" y="125"></rect>
+<text fill="#e5e7eb" font-size="13" x="250" y="152">N1 · prepara</text>
+<text fill="#9ca3af" font-size="11" x="250" y="172">você executa</text>
+<g filter="url(#m41-glow)"><rect fill="#2a1d06" height="95" rx="12" stroke="#fbbf24" stroke-width="2" width="140" x="330" y="95"></rect></g>
+<text fill="#fbbf24" font-size="14" font-weight="600" x="400" y="128">N2 · pede</text>
+<text fill="#fde68a" font-size="11" x="400" y="148">executa depois</text>
+<text fill="#fde68a" font-size="11" x="400" y="164">do seu sim</text>
+<rect class="wf-a" fill="#0b1f2e" height="125" rx="10" stroke="#38bdf8" stroke-width="2" width="130" x="485" y="65"></rect>
+<text fill="#bae6fd" font-size="13" x="550" y="98">N3 · avisa</text>
+<text fill="#7dd3fc" font-size="11" x="550" y="118">faz e conta</text>
+<rect class="wf-a" fill="#0b1f2e" height="155" rx="10" stroke="#38bdf8" stroke-width="2" width="130" x="630" y="35"></rect>
+<text fill="#bae6fd" font-size="13" x="695" y="68">N4 · silêncio</text>
+<text fill="#7dd3fc" font-size="11" x="695" y="88">faz sem aviso</text>
+<text fill="#9ca3af" font-size="12" x="180" y="218">o humano age</text>
+<text fill="#fde68a" font-size="12" x="400" y="218">padrão "prepara e pede"</text>
+<text fill="#7dd3fc" font-size="12" x="622" y="218">o agente age sozinho</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> cada degrau dá mais liberdade ao agente. O degrau âmbar (N2) é onde o kit coloca tudo o que tem impacto. Os degraus azuis são para ações que, se derem errado, você desfaz sem dor.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-amber-400">N0</div><p class="text-xs text-neutral-400 mt-1">só conversa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📝</div><div class="text-sm font-semibold text-amber-400">N1</div><p class="text-xs text-neutral-400 mt-1">você executa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙋</div><div class="text-sm font-semibold text-amber-400">N2</div><p class="text-xs text-neutral-400 mt-1">pede a cada vez</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📣</div><div class="text-sm font-semibold text-amber-400">N3 / N4</div><p class="text-xs text-neutral-400 mt-1">age e avisa, ou nem avisa</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Use o teto por tipo de ação</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-1-t2-p1">Os níveis sozinhos não dizem nada. Eles ganham sentido quando você liga cada <strong>tipo de ação</strong> a um nível máximo. É a segunda tabela da <code>POLITICA.md</code>, a do <strong class="text-amber-400">teto</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t2-p2">As duas últimas colunas mostram como cada teto vira configuração: no Claude Code e no Codex. Você verá as duas nos tópicos 4 e 5.</p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O que é "teto"</h3>
+<p class="text-neutral-300 text-sm"><strong>Teto</strong> é o nível mais alto que uma ação pode ter. Ninguém sobe acima dele, nem o agente, nem um clique apressado. Abaixo dele você pode ser mais rígido: o teto é máximo, não obrigação.</p>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Ação</th><th class="px-4 py-3 font-semibold">Teto</th><th class="px-4 py-3 font-semibold">No Claude Code</th><th class="px-4 py-3 font-semibold">No Codex</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Ler arquivo, página, planilha</td><td class="px-4 py-3 text-neutral-300">N4</td><td class="px-4 py-3 text-neutral-300">permitido</td><td class="px-4 py-3 text-neutral-300"><code>-s read-only</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Criar/alterar arquivo do projeto</td><td class="px-4 py-3 text-neutral-300">N3</td><td class="px-4 py-3 text-neutral-300"><code>acceptEdits</code></td><td class="px-4 py-3 text-neutral-300"><code>-s workspace-write</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Comando que altera o sistema</td><td class="px-4 py-3 text-neutral-300">N2</td><td class="px-4 py-3 text-neutral-300">pede confirmação</td><td class="px-4 py-3 text-neutral-300">sem auto-aprovação</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Enviar (e-mail, mensagem, post, push)</td><td class="px-4 py-3 text-neutral-300">N2</td><td class="px-4 py-3 text-neutral-300">pede confirmação</td><td class="px-4 py-3 text-neutral-300">sem auto-aprovação</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Gastar dinheiro ou crédito</td><td class="px-4 py-3 text-neutral-300">N1</td><td class="px-4 py-3 text-neutral-300">bloqueado</td><td class="px-4 py-3 text-neutral-300">não executar</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Apagar dados / produção</td><td class="px-4 py-3 text-neutral-300">N1 + backup</td><td class="px-4 py-3 text-neutral-300">bloqueado (<code>rm -rf</code>)</td><td class="px-4 py-3 text-neutral-300">não executar</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> o teto cai conforme o estrago possível sobe. Ler não quebra nada (N4). Gastar e apagar não têm volta (N1): o agente prepara e quem faz é você.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🩺</div>
+<h3 class="font-semibold text-lg mb-2">Clara e a agenda</h3>
+<p class="text-neutral-300 text-sm mb-2"><strong>Ler</strong> a planilha para achar horário livre é "ler planilha": <strong class="text-amber-400">N4</strong>. O agente responde sem perguntar.</p>
+<p class="text-neutral-300 text-sm"><strong>Alterar</strong> a agenda mexe com paciente de verdade. A agenda não é um arquivo de rascunho do projeto: é dado da clínica em uso. Clara trata como comando que altera o sistema: <strong class="text-amber-400">N2</strong>, o agente pede a cada vez.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🧾</div>
+<h3 class="font-semibold text-lg mb-2">Sônia e o dinheiro do cliente</h3>
+<p class="text-neutral-300 text-sm mb-2">Somar o CSV de vendas é ler: N4. Montar o relatório num arquivo novo é alterar arquivo do projeto: N3.</p>
+<p class="text-neutral-300 text-sm">Pagar guia, emitir boleto ou gastar crédito é "gastar dinheiro": <strong class="text-amber-400">N1</strong>. O agente deixa tudo pronto, e quem paga é a Sônia.</p>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objetivo: ver o agente consultar a política antes de responder</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/POLITICA.md e responda em uma linha qual é o teto de 'Enviar'.</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.2.0 (mesma pergunta, numa sessão em segundo plano):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">respondeu "N2" lendo a POLITICA</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">Como verificar:</strong> a resposta diz <code>N2</code>. Troque 'Enviar' por 'Gastar dinheiro ou crédito' e a resposta tem de ser <code>N1</code>.</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-amber-400">Ler</div><p class="text-xs text-neutral-400 mt-1">teto N4</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✏️</div><div class="text-sm font-semibold text-amber-400">Alterar arquivo</div><p class="text-xs text-neutral-400 mt-1">teto N3</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-amber-400">Enviar</div><p class="text-xs text-neutral-400 mt-1">teto N2</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-amber-400">Gastar / apagar</div><p class="text-xs text-neutral-400 mt-1">teto N1</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Entenda por que "sempre permitir" tem teto</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-1-t3-p1">Quando o Claude Code pede licença, ele oferece "sim", "não" e uma opção para não perguntar mais. Na décima pergunta seguida, a tentação é clicar na terceira. Em um dos vídeos de mods, havia até um ajudante que aprovava as permissões sozinho.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p2">A <code>POLITICA.md</code> fecha essa porta com uma frase: <strong class="text-amber-400">uma permissão "sempre permitir" nunca passa do teto da ação.</strong> Você pode liberar leitura para sempre. Não pode liberar pagamento para sempre.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">✓ "Sempre permitir" faz sentido</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Ler a agenda da Clara (teto N4)</li>
+<li>✓ Ler o CSV de vendas da Sônia (teto N4)</li>
+<li>✓ Criar um relatório na pasta do projeto (teto N3)</li>
+<li>✓ Rodar o <code>doctor.mjs</code>, que só olha e informa</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ "Sempre permitir" passa do teto</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Enviar mensagem a paciente (teto N2: pede a cada vez)</li>
+<li>✗ Fazer <code>push</code> no repositório (teto N2)</li>
+<li>✗ Pagar a guia do cliente da Sônia (teto N1)</li>
+<li>✗ Apagar uma pasta com <code>rm -rf</code> (N1 + backup)</li>
+</ul>
+</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Cansaço</h4><p class="text-neutral-300 text-sm">Muitas perguntas seguidas, todas inofensivas. Você para de ler e começa a aprovar no automático.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Liberação ampla</h4><p class="text-neutral-300 text-sm">Um clique em "não perguntar mais" vale para todos os casos parecidos, inclusive os perigosos.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">O teto segura</h4><p class="text-neutral-300 text-sm">Mesmo liberado, o que está acima do teto continua bloqueado ou continua perguntando. É isso que o tópico 4 mostra funcionando.</p></div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Cuidado com o modo que libera tudo</h3>
+<p class="text-neutral-300 text-sm">O Claude Code tem um modo de permissão que não pergunta nada. Ele existe para testes em pasta descartável. Se você usar, o que ainda protege é só o que está escrito como bloqueio no <code>.claude/settings.json</code>. Por isso os bloqueios de N1 ficam no arquivo, e não na sua memória.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Frase para guardar</h3>
+<p class="text-neutral-300 text-sm">"Sempre permitir" é atalho para o que é seguro repetir. Para o que tem impacto, a pergunta é o próprio controle: se ela some, o controle some junto.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-amber-400">Sempre permitir</div><p class="text-xs text-neutral-400 mt-1">só até o teto</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">😮‍💨</div><div class="text-sm font-semibold text-amber-400">Cansaço</div><p class="text-xs text-neutral-400 mt-1">o risco real</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧱</div><div class="text-sm font-semibold text-amber-400">Bloqueio escrito</div><p class="text-xs text-neutral-400 mt-1">não depende de clique</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙋</div><div class="text-sm font-semibold text-amber-400">Pergunta</div><p class="text-xs text-neutral-400 mt-1">é o controle</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Veja o bloqueio no Claude Code</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-1-t4-p1">No Claude Code, a política vira o arquivo <code>.claude/settings.json</code>, que já vem no kit. O Claude Code lê esse arquivo sozinho ao abrir na pasta.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t4-p2">A parte que importa aqui é a lista <code>deny</code>: comandos que o agente não roda, peça quem pedir. São os bloqueios básicos que a <code>POLITICA.md</code> cita para "apagar" e para o push forçado.</p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três termos do settings.json</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>settings.json</strong> — o arquivo de configuração do Claude Code para esta pasta. Texto puro, você abre e lê.</li>
+<li><strong>deny</strong> — "negar". Lista de comandos que o Claude Code recusa sem perguntar. O <code>:*</code> no fim quer dizer "com qualquer coisa depois".</li>
+<li><strong>hook</strong> — um pequeno programa que o Claude Code roda antes ou depois de cada ação. O kit usa hooks para a guarda (módulo 4.3).</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 .claude/settings.json (bloco de permissões; hooks resumidos)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">{
   "permissions": {
     "deny": [
       "Bash(rm -rf:*)",
@@ -533,260 +506,239 @@
   ],
   "hooks": { ... }
 }</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">O que mais tem no arquivo:</strong> o bloco <code>hooks</code> liga a guarda (colisão e raio) antes e depois de cada edição e de cada comando. Ele está resumido aqui com <code>...</code> e é o assunto do módulo 4.3.</div>
-      </div>
-
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 250" class="w-full h-auto" role="img" aria-label="Dois pedidos chegam ao Claude Code mesmo no modo que libera tudo. O pedido touch passa pelo settings.json e roda. O pedido rm -rf bate na lista deny do settings.json e é negado. Resultado provado no CHANGELOG 0.1.0.">
-          <defs>
-            <pattern id="m41b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.10"/></pattern>
-            <filter id="m41b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m41b-arrow-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-            <marker id="m41b-arrow-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="250" fill="url(#m41b-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect x="30" y="40" width="160" height="50" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="110" y="70" fill="#e5e7eb" font-size="13">pedido: touch</text>
-            <rect x="30" y="160" width="160" height="50" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="110" y="190" fill="#e5e7eb" font-size="13">pedido: rm -rf</text>
-            <g filter="url(#m41b-glow)"><rect x="300" y="70" width="200" height="110" rx="14" fill="#2a1d06" stroke="#fbbf24" stroke-width="2"/></g>
-            <text x="400" y="110" fill="#fbbf24" font-size="14" font-weight="600">.claude/settings.json</text>
-            <text x="400" y="132" fill="#fde68a" font-size="11">lista deny</text>
-            <text x="400" y="150" fill="#fde68a" font-size="11">vale até no modo que libera tudo</text>
-            <line class="wf-flow" x1="192" y1="65" x2="298" y2="100" stroke="#38bdf8" stroke-width="2"/>
-            <line x1="192" y1="185" x2="298" y2="155" stroke="#f87171" stroke-width="2"/>
-            <line class="wf-flow" x1="502" y1="100" x2="598" y2="65" stroke="#38bdf8" stroke-width="2" marker-end="url(#m41b-arrow-c)"/>
-            <rect class="wf-a" x="602" y="40" width="170" height="50" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="687" y="70" fill="#bae6fd" font-size="13">roda ✓</text>
-            <line x1="502" y1="155" x2="598" y2="185" stroke="#f87171" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m41b-arrow-r)"/>
-            <rect x="602" y="160" width="170" height="50" rx="12" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
-            <text x="687" y="190" fill="#fca5a5" font-size="13">negado ✗</text>
-            <text x="400" y="232" fill="#9ca3af" font-size="11">provado no CHANGELOG 0.1.0</text>
-          </g>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> os dois pedidos passam pela mesma caixa âmbar. O que não está na lista segue pela seta azul. O que está na lista para na seta vermelha, sem pergunta e sem depender de você estar olhando.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="font-semibold text-amber-400 mb-2">Resultado provado no CHANGELOG 0.1.0</h3>
-        <p class="text-neutral-300 text-sm mb-2">O teste usou o Claude Code sem tela, no modo de permissão que libera tudo, pedindo duas coisas: criar um arquivo vazio e apagar com <code>rm -rf</code>.</p>
-        <p class="text-neutral-300 text-sm"><code>touch</code> roda; <code>rm -rf</code> negado pelo <code>.claude/settings.json</code>.</p>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Ajuste para o seu caso</h3>
-        <p class="text-neutral-300 text-sm">O passo 3 do <code>LEIA-ME.md</code> diz: leia a <code>POLITICA.md</code> e ajuste o <code>.claude/settings.json</code> se precisar. Se a Clara tiver um comando que regrava a agenda, ele é um bom candidato a entrar na lista <code>deny</code> ou a ficar no N2.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-amber-400">settings.json</div><p class="text-xs text-neutral-400 mt-1">já vem no kit</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⛔</div><div class="text-sm font-semibold text-amber-400">deny</div><p class="text-xs text-neutral-400 mt-1">4 comandos negados</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪝</div><div class="text-sm font-semibold text-amber-400">hooks</div><p class="text-xs text-neutral-400 mt-1">a guarda, no 4.3</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-amber-400">Provado</div><p class="text-xs text-neutral-400 mt-1">CHANGELOG 0.1.0</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 5 ===================== -->
-    <section id="topico-5" data-inema-topic="modulo-4-1#topico-5" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold flex-1">Aplique a política no Codex</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-1-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">O Codex não lê o <code>.claude/settings.json</code>. Nele, a política entra pelo <strong class="text-amber-400">sandbox</strong>, escolhido com a opção <code>-s</code> a cada chamada. A tabela do teto já diz qual usar.</p>
-      <p data-inema-block="m4-1-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">A ponte <code>runtime/pontes/codex-exec.sh</code>, que você usou no módulo 2.1, só aceita dois valores. Qualquer outro é recusado antes de o Codex ser chamado.</p>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O que é sandbox</h3>
-        <p class="text-neutral-300 text-sm"><strong>Sandbox</strong> ("caixa de areia") é uma cerca em volta do programa. No <code>read-only</code> o Codex só lê. No <code>workspace-write</code> ele também escreve, mas só dentro da pasta indicada. Existe ainda um modo sem cerca nenhuma, e é esse que a ponte recusa.</p>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Sandbox na ponte</th><th class="px-4 py-3 font-semibold">Linha da POLITICA</th><th class="px-4 py-3 font-semibold">Teto</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>read-only</code> (padrão)</td><td class="px-4 py-3 text-neutral-300">Ler arquivo, página, planilha</td><td class="px-4 py-3 text-neutral-300">N4</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>workspace-write</code></td><td class="px-4 py-3 text-neutral-300">Criar/alterar arquivo do projeto</td><td class="px-4 py-3 text-neutral-300">N3</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">qualquer outro</td><td class="px-4 py-3 text-neutral-300">recusado: <code>sandbox recusado pela POLITICA</code></td><td class="px-4 py-3 text-neutral-300">—</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> enviar, gastar e apagar não têm sandbox na ponte. Para essas linhas a POLITICA diz "sem auto-aprovação" ou "não executar": o Codex prepara, e a ação fica com você.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objetivo: ver a ponte recusar o sandbox sem cerca</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/pontes/codex-exec.sh "x" . danger-full-access</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.1.0:</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">sandbox recusado pela POLITICA, saída 2</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">Como verificar:</strong> a mensagem aparece na hora, sem esperar o Codex, e a saída do comando é 2. Nenhum arquivo muda na pasta.</div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 O trecho da ponte que faz a recusa (runtime/pontes/codex-exec.sh)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">case "$sandbox" in
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">O que mais tem no arquivo:</strong> o bloco <code>hooks</code> liga a guarda (colisão e raio) antes e depois de cada edição e de cada comando. Ele está resumido aqui com <code>...</code> e é o assunto do módulo 4.3.</div>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Dois pedidos chegam ao Claude Code mesmo no modo que libera tudo. O pedido touch passa pelo settings.json e roda. O pedido rm -rf bate na lista deny do settings.json e é negado. Resultado provado no CHANGELOG 0.1.0." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m41b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m41b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m41b-arrow-c" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m41b-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m41b-grid)" height="250" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="50" rx="12" stroke="#6b7280" stroke-width="2" width="160" x="30" y="40"></rect>
+<text fill="#e5e7eb" font-size="13" x="110" y="70">pedido: touch</text>
+<rect fill="#1f2937" height="50" rx="12" stroke="#6b7280" stroke-width="2" width="160" x="30" y="160"></rect>
+<text fill="#e5e7eb" font-size="13" x="110" y="190">pedido: rm -rf</text>
+<g filter="url(#m41b-glow)"><rect fill="#2a1d06" height="110" rx="14" stroke="#fbbf24" stroke-width="2" width="200" x="300" y="70"></rect></g>
+<text fill="#fbbf24" font-size="14" font-weight="600" x="400" y="110">.claude/settings.json</text>
+<text fill="#fde68a" font-size="11" x="400" y="132">lista deny</text>
+<text fill="#fde68a" font-size="11" x="400" y="150">vale até no modo que libera tudo</text>
+<line class="wf-flow" stroke="#38bdf8" stroke-width="2" x1="192" x2="298" y1="65" y2="100"></line>
+<line stroke="#f87171" stroke-width="2" x1="192" x2="298" y1="185" y2="155"></line>
+<line class="wf-flow" marker-end="url(#m41b-arrow-c)" stroke="#38bdf8" stroke-width="2" x1="502" x2="598" y1="100" y2="65"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="170" x="602" y="40"></rect>
+<text fill="#bae6fd" font-size="13" x="687" y="70">roda ✓</text>
+<line marker-end="url(#m41b-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2" x1="502" x2="598" y1="155" y2="185"></line>
+<rect fill="#2a0f0f" height="50" rx="12" stroke="#f87171" stroke-width="2" width="170" x="602" y="160"></rect>
+<text fill="#fca5a5" font-size="13" x="687" y="190">negado ✗</text>
+<text fill="#9ca3af" font-size="11" x="400" y="232">provado no CHANGELOG 0.1.0</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> os dois pedidos passam pela mesma caixa âmbar. O que não está na lista segue pela seta azul. O que está na lista para na seta vermelha, sem pergunta e sem depender de você estar olhando.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="font-semibold text-amber-400 mb-2">Resultado provado no CHANGELOG 0.1.0</h3>
+<p class="text-neutral-300 text-sm mb-2">O teste usou o Claude Code sem tela, no modo de permissão que libera tudo, pedindo duas coisas: criar um arquivo vazio e apagar com <code>rm -rf</code>.</p>
+<p class="text-neutral-300 text-sm"><code>touch</code> roda; <code>rm -rf</code> negado pelo <code>.claude/settings.json</code>.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Ajuste para o seu caso</h3>
+<p class="text-neutral-300 text-sm">O passo 3 do <code>LEIA-ME.md</code> diz: leia a <code>POLITICA.md</code> e ajuste o <code>.claude/settings.json</code> se precisar. Se a Clara tiver um comando que regrava a agenda, ele é um bom candidato a entrar na lista <code>deny</code> ou a ficar no N2.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-amber-400">settings.json</div><p class="text-xs text-neutral-400 mt-1">já vem no kit</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⛔</div><div class="text-sm font-semibold text-amber-400">deny</div><p class="text-xs text-neutral-400 mt-1">4 comandos negados</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪝</div><div class="text-sm font-semibold text-amber-400">hooks</div><p class="text-xs text-neutral-400 mt-1">a guarda, no 4.3</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-amber-400">Provado</div><p class="text-xs text-neutral-400 mt-1">CHANGELOG 0.1.0</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Aplique a política no Codex</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-1-t5-p1">O Codex não lê o <code>.claude/settings.json</code>. Nele, a política entra pelo <strong class="text-amber-400">sandbox</strong>, escolhido com a opção <code>-s</code> a cada chamada. A tabela do teto já diz qual usar.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p2">A ponte <code>runtime/pontes/codex-exec.sh</code>, que você usou no módulo 2.1, só aceita dois valores. Qualquer outro é recusado antes de o Codex ser chamado.</p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O que é sandbox</h3>
+<p class="text-neutral-300 text-sm"><strong>Sandbox</strong> ("caixa de areia") é uma cerca em volta do programa. No <code>read-only</code> o Codex só lê. No <code>workspace-write</code> ele também escreve, mas só dentro da pasta indicada. Existe ainda um modo sem cerca nenhuma, e é esse que a ponte recusa.</p>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Sandbox na ponte</th><th class="px-4 py-3 font-semibold">Linha da POLITICA</th><th class="px-4 py-3 font-semibold">Teto</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>read-only</code> (padrão)</td><td class="px-4 py-3 text-neutral-300">Ler arquivo, página, planilha</td><td class="px-4 py-3 text-neutral-300">N4</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>workspace-write</code></td><td class="px-4 py-3 text-neutral-300">Criar/alterar arquivo do projeto</td><td class="px-4 py-3 text-neutral-300">N3</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">qualquer outro</td><td class="px-4 py-3 text-neutral-300">recusado: <code>sandbox recusado pela POLITICA</code></td><td class="px-4 py-3 text-neutral-300">—</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> enviar, gastar e apagar não têm sandbox na ponte. Para essas linhas a POLITICA diz "sem auto-aprovação" ou "não executar": o Codex prepara, e a ação fica com você.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objetivo: ver a ponte recusar o sandbox sem cerca</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/pontes/codex-exec.sh "x" . danger-full-access</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.1.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">sandbox recusado pela POLITICA, saída 2</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">Como verificar:</strong> a mensagem aparece na hora, sem esperar o Codex, e a saída do comando é 2. Nenhum arquivo muda na pasta.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 O trecho da ponte que faz a recusa (runtime/pontes/codex-exec.sh)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">case "$sandbox" in
   read-only|workspace-write) ;;
   *) echo "sandbox recusado pela POLITICA: $sandbox" &gt;&amp;2; exit 2 ;;
 esac</pre>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que a recusa fica na ponte</h3>
-        <p class="text-neutral-300 text-sm">Se o Claude pedir ao Codex pelo atalho errado, a ponte barra antes. A regra está num lugar só, em quatro linhas que você consegue ler. Quem quiser mudar precisa mudar o arquivo, e isso aparece no Git.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-amber-400">-s read-only</div><p class="text-xs text-neutral-400 mt-1">ler, N4</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✏️</div><div class="text-sm font-semibold text-amber-400">-s workspace-write</div><p class="text-xs text-neutral-400 mt-1">alterar, N3</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚫</div><div class="text-sm font-semibold text-amber-400">Sem cerca</div><p class="text-xs text-neutral-400 mt-1">recusado, saída 2</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-amber-400">Ponte</div><p class="text-xs text-neutral-400 mt-1">a regra num lugar só</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 6 ===================== -->
-    <section id="topico-6" data-inema-topic="modulo-4-1#topico-6" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold flex-1">Siga as três regras de integração</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-1-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">Além dos níveis e do teto, a <code>POLITICA.md</code> tem uma seção curta chamada <strong class="text-amber-400">Integração</strong>. São três regras sobre como as ferramentas se ligam umas às outras.</p>
-      <p data-inema-block="m4-1-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">Elas protegem o que nenhum <code>deny</code> pega: a conta, a senha e a estabilidade do seu sistema.</p>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Só ferramentas oficiais pela assinatura (Claude Code, Codex CLI).</h4><p class="text-neutral-300 text-sm">Nada de chave de API emprestada nem cliente paralelo. Cada agente entra com o próprio login.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Nunca passe credencial de uma ferramenta para outra.</h4><p class="text-neutral-300 text-sm">Quando o Claude chama o Codex pela ponte, o Codex usa o login dele. O Claude não entrega senha, token nem cookie a ninguém.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Engenharia reversa é laboratório: anote em <code>LIMITES.md</code> e não use em produção.</h4><p class="text-neutral-300 text-sm">É a tese do curso em forma de regra. O módulo 4.2 mostra o <code>LIMITES.md</code> e o 4.4 trata do laboratório.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Credencial</h3>
-        <p class="text-neutral-300 text-sm"><strong>Credencial</strong> é tudo o que prova quem você é para um sistema: senha, token, chave, cookie de sessão. Quem tem a credencial age em seu nome.</p>
-      </div>
-
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 230" class="w-full h-auto" role="img" aria-label="Claude Code e Codex, cada um com o seu próprio login de assinatura. A ponte entre eles leva só o pedido e a resposta. Uma seta riscada em vermelho mostra que a credencial não atravessa a ponte.">
-          <defs>
-            <pattern id="m41c-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.10"/></pattern>
-            <filter id="m41c-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m41c-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="230" fill="url(#m41c-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect x="40" y="50" width="180" height="80" rx="14" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="130" y="85" fill="#e5e7eb" font-size="14">Claude Code</text>
-            <text x="130" y="107" fill="#9ca3af" font-size="11">login próprio (assinatura)</text>
-            <rect x="580" y="50" width="180" height="80" rx="14" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="670" y="85" fill="#e5e7eb" font-size="14">Codex CLI</text>
-            <text x="670" y="107" fill="#9ca3af" font-size="11">login próprio (assinatura)</text>
-            <g filter="url(#m41c-glow)"><rect x="300" y="60" width="200" height="60" rx="14" fill="#2a1d06" stroke="#fbbf24" stroke-width="2"/></g>
-            <text x="400" y="88" fill="#fbbf24" font-size="13" font-weight="600">ponte codex-exec.sh</text>
-            <text x="400" y="106" fill="#fde68a" font-size="11">pedido e resposta</text>
-            <line class="wf-flow" x1="222" y1="90" x2="296" y2="90" stroke="#38bdf8" stroke-width="2" marker-end="url(#m41c-arrow)"/>
-            <line class="wf-flow" x1="502" y1="90" x2="576" y2="90" stroke="#38bdf8" stroke-width="2" marker-end="url(#m41c-arrow)"/>
-            <rect x="250" y="160" width="300" height="44" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="1.8"/>
-            <text x="400" y="187" fill="#fca5a5" font-size="12">🔑 credencial não atravessa a ponte</text>
-            <line x1="150" y1="132" x2="250" y2="175" stroke="#f87171" stroke-width="2" stroke-dasharray="4 4"/>
-            <line x1="550" y1="175" x2="650" y2="132" stroke="#f87171" stroke-width="2" stroke-dasharray="4 4"/>
-          </g>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> pela ponte âmbar passa só texto: o pedido vai, a resposta volta. Os logins ficam cada um na sua caixa. O tracejado vermelho é o caminho que a regra 2 proíbe.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-4-1#q1">
-        <p class="font-medium mb-4">Teste rápido (opcional): a Sônia clicou "sempre permitir" quando o agente pediu para pagar uma guia. O que vale?</p>
-        <div class="space-y-2">
-          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">A partir de agora o agente paga sozinho, porque ela liberou.</button>
-          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">O agente passa a pagar e só avisa depois (N3).</button>
-          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Nada muda: gastar dinheiro tem teto N1, o agente prepara e quem paga é ela.</button>
-        </div>
-        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-amber-400">Assinatura</div><p class="text-xs text-neutral-400 mt-1">ferramenta oficial</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-amber-400">Credencial</div><p class="text-xs text-neutral-400 mt-1">fica onde está</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-amber-400">Laboratório</div><p class="text-xs text-neutral-400 mt-1">engenharia reversa</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📒</div><div class="text-sm font-semibold text-amber-400">LIMITES.md</div><p class="text-xs text-neutral-400 mt-1">onde se anota</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== RESUMO ===================== -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Cinco níveis, de N0 a N4</strong><span class="text-neutral-400"> — o padrão é "prepara e pede".</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Cada ação tem teto</strong><span class="text-neutral-400"> — ler N4, alterar N3, enviar N2, gastar e apagar N1.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">"Sempre permitir" não fura o teto</strong><span class="text-neutral-400"> — a pergunta é o controle.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">No Claude, deny; no Codex, -s</strong><span class="text-neutral-400"> — rm -rf negado, sandbox sem cerca recusado.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Três regras de integração</strong><span class="text-neutral-400"> — oficial, sem trocar credencial, engenharia reversa no laboratório.</span></div></div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
-          <p class="text-neutral-300">4.2 — O agente propõe, você aprova</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
-          <a href="modulo-4-2.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Módulo 4.2 →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <aside class="hidden lg:block">
-    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
-      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
-      <ol class="space-y-2 text-sm">
-        <li><a href="#topico-1" class="text-neutral-400 hover:text-amber-400">1. Os cinco níveis</a></li>
-        <li><a href="#topico-2" class="text-neutral-400 hover:text-amber-400">2. Teto por ação</a></li>
-        <li><a href="#topico-3" class="text-neutral-400 hover:text-amber-400">3. "Sempre permitir"</a></li>
-        <li><a href="#topico-4" class="text-neutral-400 hover:text-amber-400">4. Bloqueio no Claude</a></li>
-        <li><a href="#topico-5" class="text-neutral-400 hover:text-amber-400">5. Política no Codex</a></li>
-        <li><a href="#topico-6" class="text-neutral-400 hover:text-amber-400">6. Regras de integração</a></li>
-      </ol>
-    </nav>
-  </aside>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que a recusa fica na ponte</h3>
+<p class="text-neutral-300 text-sm">Se o Claude pedir ao Codex pelo atalho errado, a ponte barra antes. A regra está num lugar só, em quatro linhas que você consegue ler. Quem quiser mudar precisa mudar o arquivo, e isso aparece no Git.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-amber-400">-s read-only</div><p class="text-xs text-neutral-400 mt-1">ler, N4</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✏️</div><div class="text-sm font-semibold text-amber-400">-s workspace-write</div><p class="text-xs text-neutral-400 mt-1">alterar, N3</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚫</div><div class="text-sm font-semibold text-amber-400">Sem cerca</div><p class="text-xs text-neutral-400 mt-1">recusado, saída 2</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-amber-400">Ponte</div><p class="text-xs text-neutral-400 mt-1">a regra num lugar só</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Siga as três regras de integração</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-1-t6-p1">Além dos níveis e do teto, a <code>POLITICA.md</code> tem uma seção curta chamada <strong class="text-amber-400">Integração</strong>. São três regras sobre como as ferramentas se ligam umas às outras.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p2">Elas protegem o que nenhum <code>deny</code> pega: a conta, a senha e a estabilidade do seu sistema.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Só ferramentas oficiais pela assinatura (Claude Code, Codex CLI).</h4><p class="text-neutral-300 text-sm">Nada de chave de API emprestada nem cliente paralelo. Cada agente entra com o próprio login.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Nunca passe credencial de uma ferramenta para outra.</h4><p class="text-neutral-300 text-sm">Quando o Claude chama o Codex pela ponte, o Codex usa o login dele. O Claude não entrega senha, token nem cookie a ninguém.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Engenharia reversa é laboratório: anote em <code>LIMITES.md</code> e não use em produção.</h4><p class="text-neutral-300 text-sm">É a tese do curso em forma de regra. O módulo 4.2 mostra o <code>LIMITES.md</code> e o 4.4 trata do laboratório.</p></div>
+</div>
+</div>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Credencial</h3>
+<p class="text-neutral-300 text-sm"><strong>Credencial</strong> é tudo o que prova quem você é para um sistema: senha, token, chave, cookie de sessão. Quem tem a credencial age em seu nome.</p>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Claude Code e Codex, cada um com o seu próprio login de assinatura. A ponte entre eles leva só o pedido e a resposta. Uma seta riscada em vermelho mostra que a credencial não atravessa a ponte." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m41c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m41c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m41c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m41c-grid)" height="230" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="80" rx="14" stroke="#6b7280" stroke-width="2" width="180" x="40" y="50"></rect>
+<text fill="#e5e7eb" font-size="14" x="130" y="85">Claude Code</text>
+<text fill="#9ca3af" font-size="11" x="130" y="107">login próprio (assinatura)</text>
+<rect fill="#1f2937" height="80" rx="14" stroke="#6b7280" stroke-width="2" width="180" x="580" y="50"></rect>
+<text fill="#e5e7eb" font-size="14" x="670" y="85">Codex CLI</text>
+<text fill="#9ca3af" font-size="11" x="670" y="107">login próprio (assinatura)</text>
+<g filter="url(#m41c-glow)"><rect fill="#2a1d06" height="60" rx="14" stroke="#fbbf24" stroke-width="2" width="200" x="300" y="60"></rect></g>
+<text fill="#fbbf24" font-size="13" font-weight="600" x="400" y="88">ponte codex-exec.sh</text>
+<text fill="#fde68a" font-size="11" x="400" y="106">pedido e resposta</text>
+<line class="wf-flow" marker-end="url(#m41c-arrow)" stroke="#38bdf8" stroke-width="2" x1="222" x2="296" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m41c-arrow)" stroke="#38bdf8" stroke-width="2" x1="502" x2="576" y1="90" y2="90"></line>
+<rect fill="#2a0f0f" height="44" rx="10" stroke="#f87171" stroke-width="1.8" width="300" x="250" y="160"></rect>
+<text fill="#fca5a5" font-size="12" x="400" y="187">🔑 credencial não atravessa a ponte</text>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="150" x2="250" y1="132" y2="175"></line>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="550" x2="650" y1="175" y2="132"></line>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> pela ponte âmbar passa só texto: o pedido vai, a resposta volta. Os logins ficam cada um na sua caixa. O tracejado vermelho é o caminho que a regra 2 proíbe.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-4-1#q1">
+<p class="font-medium mb-4">Teste rápido (opcional): a Sônia clicou "sempre permitir" quando o agente pediu para pagar uma guia. O que vale?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A partir de agora o agente paga sozinho, porque ela liberou.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">O agente passa a pagar e só avisa depois (N3).</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Nada muda: gastar dinheiro tem teto N1, o agente prepara e quem paga é ela.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-amber-400">Assinatura</div><p class="text-xs text-neutral-400 mt-1">ferramenta oficial</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-amber-400">Credencial</div><p class="text-xs text-neutral-400 mt-1">fica onde está</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-amber-400">Laboratório</div><p class="text-xs text-neutral-400 mt-1">engenharia reversa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📒</div><div class="text-sm font-semibold text-amber-400">LIMITES.md</div><p class="text-xs text-neutral-400 mt-1">onde se anota</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Cinco níveis, de N0 a N4</strong><span class="text-neutral-400"> — o padrão é "prepara e pede".</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Cada ação tem teto</strong><span class="text-neutral-400"> — ler N4, alterar N3, enviar N2, gastar e apagar N1.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">"Sempre permitir" não fura o teto</strong><span class="text-neutral-400"> — a pergunta é o controle.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">No Claude, deny; no Codex, -s</strong><span class="text-neutral-400"> — rm -rf negado, sandbox sem cerca recusado.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Três regras de integração</strong><span class="text-neutral-400"> — oficial, sem trocar credencial, engenharia reversa no laboratório.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">4.2 — O agente propõe, você aprova</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-2.html">Módulo 4.2 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Seção 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-1">1. Os cinco níveis</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-2">2. Teto por ação</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-3">3. "Sempre permitir"</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-4">4. Bloqueio no Claude</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-5">5. Política no Codex</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-6">6. Regras de integração</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -813,11 +765,11 @@ esac</pre>
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
-  <script>
+<script>
     window.addEventListener('DOMContentLoaded', function () {
       if (window.INEMA && INEMA.registerCheck) {
 

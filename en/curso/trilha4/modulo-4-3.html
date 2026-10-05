@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Guard and dashboard | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/modulo-4-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/modulo-4-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/modulo-4-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-3" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧱 Guard and panel</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">When several agents work at the same time, two kinds of damage become possible: one overwriting the other’s work and a command deleting too much. The kit’s safeguard asks first. The dashboard shows the team without leaving Claude Code.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">R7</div><div class="text-xs text-neutral-400">Recipe</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 4.3 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:4-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="4-3" data-inema-track="4" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Understand what a Claude Code mod is</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t1-p1">In videos that circulated about Claude Code mods, two safeguards appeared: a <strong class="text-amber-400">collision</strong> (two agents in the same file) and one of <strong class="text-amber-400">"blast radius"</strong> (the size of the damage a command that deletes can cause).</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p2">The idea is great. The kit makes its own version, using only official resources: the <strong>hooks</strong> from Claude Code. The split is simple: <strong class="text-amber-400">the rule stays in the script, the screen stays in the mod</strong>.</p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Four words from this module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Hook (hook)</strong> — a command that Claude Code runs automatically at a set time. <code>PreToolUse</code> runs <em>before</em> a tool (edit, run Bash); <code>PostToolUse</code> runs <em>then</em>.</li>
+<li><strong>Plugin</strong> — an official package that adds hooks, commands, or screens to Claude Code. It has a <code>.claude-plugin/plugin.json</code> with a name and version.</li>
+<li><strong>Mod</strong> — the nickname the videos gave the plugins. In the kit, the mods are in <code>runtime/mods/</code>.</li>
+<li><strong>Worktree</strong> — a second working copy of the same Git repository in a separate folder. Two agents, two copies, no one stepping on the other's work.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Flow for an agent action with the guard. The agent asks to edit or run a command. Before that, the PreToolUse hook calls colisao.mjs or raio.mjs. If there’s a risk, the guard asks the human. After the edit, the PostToolUse hook records who edited the file." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m43-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m43-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m43-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m43-grid)" height="250" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="64" rx="12" stroke="#6b7280" stroke-width="2" width="140" x="20" y="90"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="90" y="118">agent asks</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="90" y="137">Edit · Bash</text>
+<line class="wf-flow" marker-end="url(#m43-arrow)" stroke="#38bdf8" stroke-width="2" x1="162" x2="218" y1="122" y2="122"></line>
+<g filter="url(#m43-glow)"><rect fill="#2a1d06" height="84" rx="14" stroke="#fbbf24" stroke-width="2" width="190" x="222" y="80"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="317" y="108">PreToolUse</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="317" y="128">colisao.mjs pre</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="317" y="146">raio.mjs</text>
+<line class="wf-flow" marker-end="url(#m43-arrow)" stroke="#38bdf8" stroke-width="2" x1="414" x2="490" y1="110" y2="70"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="130" x="494" y="40"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="559" y="70">no risk: continue</text>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="414" x2="490" y1="140" y2="175"></line>
+<rect fill="#2a0f0f" height="50" rx="12" stroke="#f87171" stroke-width="2" width="130" x="494" y="152"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="559" y="175">risk: "ask"</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="559" y="192">you decide</text>
+<line stroke="#38bdf8" stroke-width="2" x1="626" x2="660" y1="122" y2="122"></line>
+<rect fill="#0b1f2e" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="120" x="664" y="90"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="724" y="118">PostToolUse</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="724" y="137">records who edited</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="400" y="232">log: ~/.local/state/inema-runtime/toques.json (cleared after 24 h)</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the amber box is the control point. Every edit and command passes through it before taking effect. If there is no risk, it follows the blue arrow. If there is a risk, the guard neither blocks nor allows it: it sends the question back to you (N2).</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 Excerpt from the <code>.claude/settings.json</code> from the kit (the guard is already enabled)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">"PreToolUse": [
+  {
+    "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+    "hooks": [ { "type": "command",
+      "command": "node \"$CLAUDE_PROJECT_DIR/runtime/mods/runtime-guarda/hooks/colisao.mjs\" pre",
+      "timeout": 10 } ]
+  },
+  {
+    "matcher": "Bash",
+    "hooks": [ { "type": "command",
+      "command": "node \"$CLAUDE_PROJECT_DIR/runtime/mods/runtime-guarda/hooks/raio.mjs\"",
+      "timeout": 15 } ]
+  }
+]
+…
+"PostToolUse": [ … colisao.mjs pos … ]</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">What to look for:</strong> o <code>matcher</code> says which tool triggers the hook. Editing triggers the collision; Bash triggers the lightning bolt.</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪝</div><div class="text-sm font-semibold text-amber-400">Hook</div><p class="text-xs text-neutral-400 mt-1">runs before or after</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-amber-400">Plugin</div><p class="text-xs text-neutral-400 mt-1">the official "mod"</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-amber-400">Rule in the script</div><p class="text-xs text-neutral-400 mt-1">colisao.mjs · raio.mjs</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖥️</div><div class="text-sm font-semibold text-amber-400">Screen in the mod</div><p class="text-xs text-neutral-400 mt-1">the panel</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">See the collision guard in action</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t2-p1">The pain is real. It happened in one of our projects: <strong class="text-amber-400">one session emptied a file that another was editing</strong>. Neither one was wrong on its own. Each thought the file belonged only to them.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p2">The collision resolves this with memory. After each edit, it notes, “this session just changed this file.” Before the next edit, it checks the note and the file’s date.</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Two sessions and Clara’s schedule. Session A edits agenda.csv and the log records it. Ten minutes later, session B tries to edit the same file. The guard checks the log and asks: continue, use a worktree, or cancel." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m43b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m43b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m43b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m43b-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m43b-grid)" height="230" width="800" x="0" y="0"></rect>
+<rect class="wf-a" fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="30" y="30"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="105" y="55">session A</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="105" y="73">edits at 10:00</text>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-width="2" width="150" x="30" y="144"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="105" y="169">session B</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="105" y="187">try at 10:10</text>
+<line class="wf-flow" marker-end="url(#m43b-arrow)" stroke="#38bdf8" stroke-width="2" x1="182" x2="318" y1="58" y2="98"></line>
+<line marker-end="url(#m43b-arrow-r)" stroke="#f87171" stroke-dasharray="5 4" stroke-width="2" x1="182" x2="318" y1="172" y2="132"></line>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-width="2" width="150" x="322" y="88"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="397" y="113">agenda.csv</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="397" y="131">from Clara</text>
+<line stroke="#fbbf24" stroke-width="2" x1="474" x2="530" y1="116" y2="116"></line>
+<g filter="url(#m43b-glow)"><rect fill="#2a1d06" height="92" rx="14" stroke="#fbbf24" stroke-width="2" width="236" x="534" y="70"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="652" y="96">Collision guard</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="652" y="118">another session edited 10 min ago</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="652" y="140">continue · worktree · cancel?</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the blue arrow is session A's normal edit, which is recorded. The red arrow is session B arriving within the 30-minute window. You answer the question in the amber box.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">After editing: log it</h4><p class="text-neutral-300 text-sm"><code>colisao.mjs pos</code> records the file path, the session ID, and the time at <code>toques.json</code>. The write is atomic: two sessions won’t corrupt the record.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Before editing: check</h4><p class="text-neutral-300 text-sm"><code>colisao.mjs pre</code> checks whether another session changed the file, or whether the file's date changed externally, in the last 30 minutes.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">If there's a risk: ask</h4><p class="text-neutral-300 text-sm">The text assembled by the script is: <code>Guarda de colisão: Outra sessão (&lt;id&gt;) editou &lt;arquivo&gt; há &lt;N&gt; min. Seguir mesmo assim, usar outra cópia (worktree) ou cancelar?</code></p></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">✓ Ask when</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Another Claude session edited the file less than 30 min ago</li>
+<li>✓ The file changed externally: Codex, editor, or someone else</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h3 class="font-semibold text-neutral-300 mb-3">✗ Stays quiet when</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ The file is new (there’s nothing to protect)</li>
+<li>✗ It was the same session that last edited it</li>
+<li>✗ The last change was made more than 30 min ago</li>
+</ul>
+</div>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Proven in CHANGELOG 0.3.0:</strong> with 5 cases (old file, changed externally, same session, another session, nonexistent), the collision only prompts in cases involving another session and external changes. In Claude, an Edit to a file from another session was blocked, and the file remained intact.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Codex limitation</h3>
+<p class="text-neutral-300 text-sm">Codex still doesn't have an equivalent "before editing" hook. The guard protects Claude sessions and <strong>detects</strong> Codex edits by the file's date. It doesn't prevent Codex from editing. If Codex and Claude will work in the same folder, give each one a worktree.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Adjust the window</h3>
+<p class="text-neutral-300 text-sm">If your team works slowly, increase the window: <code>INEMA_COLISAO_MIN=60</code> make the guard consider the last hour instead of 30 minutes.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Prove the scope before deleting</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t3-p1">O <strong class="text-amber-400">ray</strong> comes before a <code>rm</code> or <code>git clean</code>. It counts how many existing files would be deleted, adds up their size, and lists the first paths. Then it asks: "Do you have a backup? Confirm to continue."</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p2">The lightning bolt doesn’t delete anything: it only reads the disk. And if the command wouldn’t delete any existing files, it stays quiet. You can test the script on its own, without opening Claude, by sending it the same request Claude would send.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objective: see the ray ask for confirmation before a <code>rm -r</code></span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal. Replace <code>/caminho/do/kit</code> from the folder where you cloned the kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">mkdir -p /tmp/teste-raio/x &amp;&amp; echo a &gt; /tmp/teste-raio/x/a &amp;&amp; cd /tmp/teste-raio
+printf '{"cwd":"%s","tool_name":"Bash","tool_input":{"command":"rm -r x"}}' "$PWD" \
+  | node /caminho/do/kit/runtime/mods/runtime-guarda/hooks/raio.mjs</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.3.0 / expected by instructions R7:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">a saída traz "permissionDecision":"ask"
+e o texto Raio: este comando apaga 1 arquivo(s)</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">How to verify:</strong> look for the two expressions in the output. Then check: the folder <code>x</code> is still there. The command above only asked the ray; it didn’t delete anything.</div>
+</div>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? What the <code>printf … |</code> do it</h3>
+<p class="text-neutral-300 text-sm">O <code>printf</code> builds text in the format Claude Code sends to the hook: the folder (<code>cwd</code>), the tool (<code>Bash</code>) and the command (<code>rm -r x</code>). The bar <code>|</code> put this text inside the <code>raio.mjs</code>. It's a rehearsal: the hook responds as it would to Claude.</p>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Tested case (CHANGELOG 0.3.0)</th><th class="px-4 py-3 font-semibold">The lightning bolt…</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>rm -r</code>, <code>rm -f *.txt</code>, <code>git clean -fd</code></td><td class="px-4 py-3 text-neutral-300">lists exactly which files would be deleted and asks</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>rm</code> for a nonexistent file, <code>ls</code></td><td class="px-4 py-3 text-neutral-300">nothing to delete: doesn’t ask</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Claude in the mode that unlocks everything, asking <code>rm -r pasta</code></td><td class="px-4 py-3 text-neutral-300">blocked by "Raio"; folder intact</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Two layers, not one</h3>
+<p class="text-neutral-300 text-sm">O <code>.claude/settings.json</code> already denies it <code>rm -rf</code> at a time (module 4.1). The lightning bolt covers the rest: <code>rm -r</code>, <code>rm</code> with a wildcard, <code>git clean</code>. A denial is a wall; the lightning bolt is a door that opens only with your approval.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💥</div><div class="text-sm font-semibold text-amber-400">Blast radius</div><p class="text-xs text-neutral-400 mt-1">size of the damage</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔢</div><div class="text-sm font-semibold text-amber-400">Account</div><p class="text-xs text-neutral-400 mt-1">files and size</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-amber-400">Only reads</div><p class="text-xs text-neutral-400 mt-1">never deletes</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💾</div><div class="text-sm font-semibold text-amber-400">Backup?</div><p class="text-xs text-neutral-400 mt-1">the final question</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Take the safeguard to another project</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t4-p1">The guard is already enabled in the kit folder. But Sônia has another folder, the one for monthly closings, where agents also run. She wants the same protection there.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p2">Recipe R7 offers two ways. <strong class="text-amber-400">Choose one, not both.</strong></p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">Way 1 · This session only</h3>
+<p class="text-neutral-300 text-sm mb-3">Opens Claude with the guard loaded as a plugin. When the session ends, so does the guard.</p>
+<p class="text-xs text-neutral-400">Good for testing or a short-lived project.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">Way 2 · Fixed for the project</h3>
+<p class="text-neutral-300 text-sm mb-3">Copy the block <code>hooks</code> of the <code>.claude/settings.json</code> from the kit for the <code>.claude/settings.json</code> from the other project, changing the path.</p>
+<p class="text-xs text-neutral-400">Good for the folder you use every day.</p>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Goal: open Claude in another project with the guard enabled</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the other project's folder (replace <code>/caminho/do/kit</code>):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude --plugin-dir /caminho/do/kit/runtime/mods/runtime-guarda</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.3.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">com --plugin-dir runtime-guarda e o modo que libera tudo,
+rm -r pasta foi barrado pelo "Raio" e a pasta ficou intacta;
+Edit em arquivo editado por outra sessão foi barrado pela "colisão".</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">How to verify:</strong> in the session, ask Claude to delete a test folder with <code>rm -r</code>. It has to stop and show the Raio question. Answer "no".</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Why the path changes</h3>
+<p class="text-neutral-300 text-sm">In the kit, settings uses <code>$CLAUDE_PROJECT_DIR/runtime/mods/…</code>, that is, "this project’s folder." In the other project, there is no <code>runtime/</code>. That's why, with method 2, the path has to point to where the kit actually is.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧳</div><div class="text-sm font-semibold text-amber-400">--plugin-dir</div><p class="text-xs text-neutral-400 mt-1">only in this session</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">Hooks block</div><p class="text-xs text-neutral-400 mt-1">fixed in the project</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">☝️</div><div class="text-sm font-semibold text-amber-400">One way</div><p class="text-xs text-neutral-400 mt-1">never both</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗂️</div><div class="text-sm font-semibold text-amber-400">Real workflow</div><p class="text-xs text-neutral-400 mt-1">points to the kit</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Open the team panel</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t5-p1">In module 3.3, you launched sessions with <code>claude --bg</code> and tracked it through <code>observar.mjs</code>, in another terminal. The <strong class="text-amber-400">panel</strong> brings this list into Claude Code. It’s optional.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p2">It shows each background session with its name, status, and minutes, a button <strong>Update</strong> and a button <strong>Stop</strong> in the ones that are running. Only your click applies to a session.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objective: open the team dashboard in the background</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder. Then, in the session, type <code>/painel</code>:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude --plugin-dir runtime/mods/runtime-painel</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">To check the mod before using it:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude plugin validate runtime/mods/runtime-painel
+claude plugin test runtime/mods/runtime-painel</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.3.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">validate: passa
+test: 1 pass</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">How to verify:</strong> o <code>/painel</code> opens a panel with the sessions for <code>claude --bg</code> of this folder and the Update and Stop buttons.</div>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Illustration of the team dashboard. At the top, the Refresh button and the time of the reading. Below, one row per background session, with its name, status, and minutes. The r4-revisor session appears as done 7 minutes ago. Running sessions get a Stop button." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m43c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m43c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m43c-grid)" height="230" width="800" x="0" y="0"></rect>
+<g filter="url(#m43c-glow)"><rect fill="#2a1d06" height="190" rx="14" stroke="#fbbf24" stroke-width="2" width="560" x="120" y="20"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="14" font-weight="600" x="145" y="48">Background team</text>
+<rect fill="#0b1f2e" height="28" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="145" y="62"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="193" y="81">Update</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" x="255" y="81">read at &lt;hora&gt;</text>
+<g font-family="Inter,sans-serif" font-size="12">
+<text fill="#fde68a" x="145" y="118">name</text><text fill="#fde68a" x="345" y="118">state</text><text fill="#fde68a" x="465" y="118">min</text>
+<line opacity="0.4" stroke="#fbbf24" stroke-width="1" x1="145" x2="655" y1="126" y2="126"></line>
+<text fill="#e5e7eb" x="145" y="150">r4-revisor</text><text fill="#e5e7eb" x="345" y="150">done</text><text fill="#e5e7eb" x="465" y="150">7</text>
+<text fill="#e5e7eb" x="145" y="182">&lt;another session&gt;</text><text fill="#e5e7eb" x="345" y="182">&lt;running&gt;</text><text fill="#e5e7eb" x="465" y="182">&lt;N&gt;</text>
+<rect class="wf-a" fill="#2a0f0f" height="26" rx="8" stroke="#f87171" stroke-width="1.8" width="80" x="565" y="164"></rect>
+<text fill="#fca5a5" text-anchor="middle" x="605" y="182">Stop</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> is an illustration, not a screenshot. The line <code>r4-revisor · done · 7</code> it’s the same session as the <code>observar.mjs</code> showed in module 3.3. The red button only appears for sessions that are still running.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold"></th><th class="px-4 py-3 font-semibold">observar.mjs</th><th class="px-4 py-3 font-semibold">/painel</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Where it runs</td><td class="px-4 py-3 text-neutral-300">another terminal</td><td class="px-4 py-3 text-neutral-300">inside the Claude session</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">End session</td><td class="px-4 py-3 text-neutral-300">you type <code>claude stop &lt;id&gt;</code></td><td class="px-4 py-3 text-neutral-300">Stop button</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Needs to be installed</td><td class="px-4 py-3 text-neutral-300">no, it comes with the kit</td><td class="px-4 py-3 text-neutral-300">load the mod with <code>--plugin-dir</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> both read the same session list. Choose whichever feels more comfortable, not based on functionality.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📊</div><div class="text-sm font-semibold text-amber-400">/painel</div><p class="text-xs text-neutral-400 mt-1">the new command</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔄</div><div class="text-sm font-semibold text-amber-400">Update</div><p class="text-xs text-neutral-400 mt-1">read it again</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⏹️</div><div class="text-sm font-semibold text-amber-400">Stop</div><p class="text-xs text-neutral-400 mt-1">only with your click</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-amber-400">1 pass</div><p class="text-xs text-neutral-400 mt-1">mod test</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Read the code before installing a mod</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t6-p1">Mods and plugins run with <strong class="text-amber-400">the same Claude Code permissions</strong>. A hook can read your files, run commands, and access the network without asking. That's why it protects so well, and why a malicious mod can do so much damage.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p2">The rule in Recipe R7: <strong>read the code of any third-party mod before installing it</strong>. You don't need to program for this. Ask the agent to read and explain it without running anything.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objective: understand what a mod does before enabling it</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste (for a third-party mod, replace the paths):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Read runtime/mods/runtime-guarda/.claude-plugin/plugin.json, runtime/mods/runtime-guarda/hooks/hooks.json, colisao.mjs, and raio.mjs. Explain in plain language: when each hook runs, what it reads, what it writes, and whether it accesses the network. Do not install or run anything.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">How to verify:</strong> the answer has to match this module: the probe only reads the disk; the collision writes only to <code>toques.json</code>; neither one accesses the network.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">✓ Signs of a healthy mod</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ <code>plugin.json</code> with the code's author, license, and address</li>
+<li>✓ <code>hooks.json</code> short: you can see each hook</li>
+<li>✓ Writes only to a known location</li>
+<li>✓ Ask instead of deciding on your own</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Warning signs</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Obfuscated code that no one can read</li>
+<li>✗ Reads credentials, tokens, or another tool’s configuration folder</li>
+<li>✗ Sends data to an internet address</li>
+<li>✗ Approves permissions on its own</li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-4-3#q1">
+<p class="font-medium mb-4">Quick test (optional): the guard finds a risk in an edit. What does it do?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Blocks editing entirely, with no way to proceed.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Automatically undoes the other session’s edit.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Asks you whether to continue, use another copy (worktree), or cancel.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-amber-400">Permissions</div><p class="text-xs text-neutral-400 mt-1">those from Claude Code</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-amber-400">Read first</div><p class="text-xs text-neutral-400 mt-1">every third-party mod</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤖</div><div class="text-sm font-semibold text-amber-400">The agent explains</div><p class="text-xs text-neutral-400 mt-1">without running anything</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌐</div><div class="text-sm font-semibold text-amber-400">Network?</div><p class="text-xs text-neutral-400 mt-1">the key question</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Mod is an official plugin with hooks</strong><span class="text-neutral-400"> — the rule in the script, the screen in the mod.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">The collision asks before stepping on someone else’s work</strong><span class="text-neutral-400"> — 30-minute window; only Codex is detected.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">The lightning bolt shows the damage first</strong><span class="text-neutral-400"> — counts files and size, never deletes anything.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Another project: one way</strong><span class="text-neutral-400"> — --plugin-dir or the hooks block.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Optional panel, code always read</strong><span class="text-neutral-400"> — mod runs with your permissions.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.4 — Lab and final project</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-4.html">Module 4.4 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-1">1. What is a mod</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-2">2. Collision</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-3">3. Ray</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-4">4. Another project</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-5">5. Dashboard</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-6">6. Read the code</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-4-3#q1', { answer: 2, explain: {
+          '0': 'Não. A guarda nunca decide sozinha: ela devolve a pergunta para você (N2). Seguir continua sendo uma opção.',
+          '1': 'Não. A guarda não mexe em nada: só lê o registro e a data do arquivo e pergunta antes da edição.',
+          '2': 'Isso. A resposta é "ask": seguir mesmo assim, usar outra cópia (worktree) ou cancelar. Quem decide é você.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

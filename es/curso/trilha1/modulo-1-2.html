@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Instalar y diagnosticar | INEMA Agent Runtime</title>
+<meta content="Curso gratuito de INEMA.CLUB: usa el kit INEMA Agent Runtime para que Claude Code y Codex descubran, conecten y usen las herramientas que ya tienes, de la forma más estable y con reglas claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha1/modulo-1-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha1/modulo-1-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha1/modulo-1-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descubrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Enrutar y ejecutar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Gobernar y aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Apariencia" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Apariencia</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fuente" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+<div aria-label="Tamaño del texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Ancho de línea" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Medio</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+<div aria-label="Entre líneas" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta de aprendizaje 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-2" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🩺 Instalar y diagnosticar</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">De cero a "LISTO": qué debe haber en la computadora, cómo llevar el kit a una carpeta tuya, el diagnóstico que comprueba todo sin consumir cuota y el primer pedido al agente.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo 1.2" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:1-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="1-2" data-inema-track="1" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Verifica lo que necesitas tener</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t1-p1">La lista es breve. El README del kit pide tres cosas: <strong class="text-emerald-400">Node 18 o posterior</strong>, o <strong class="text-emerald-400">Claude Code y/o Codex</strong> conectados con su propia suscripción, y una computadora con <strong>Linux o Mac</strong>. En Windows, usa WSL.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t1-p2">Basta con uno de los dos agentes para empezar. Con los dos, aprovechas todas las recetas, incluida la R1, en la que Claude le pide ayuda a Codex.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? Cuatro términos de este módulo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Terminal</strong> — la ventana de texto donde escribes comandos y presionas Enter. En Mac, la aplicación se llama Terminal; en Linux, también.</li>
+<li><strong>Node</strong> — el programa que ejecuta los scripts del kit (los archivos <code>.mjs</code>). También incluye el <code>npm</code>, que instala herramientas.</li>
+<li><strong>WSL</strong> — Linux que se ejecuta dentro de Windows. Es la forma en que quienes usan Windows siguen este curso.</li>
+<li><strong>Inicio de sesión con la suscripción</strong> — iniciar sesión en Claude Code o Codex con la misma cuenta del plan mensual. Nada de claves de API.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ Lo necesitas</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Node 18 o más nuevo</li>
+<li>✓ Claude Code o Codex (o ambos), con sesión iniciada</li>
+<li>✓ Linux, Mac o Windows con WSL</li>
+<li>✓ Una carpeta donde vivirá el kit</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ No lo necesitas</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Clave de API de pago</li>
+<li>✗ Servidor, nube o panel web</li>
+<li>✗ Saber programar</li>
+<li>✗ Ollama (es opcional: modelos locales gratis)</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-emerald-400">Terminal</div><p class="text-xs text-neutral-400 mt-1">dónde sucede todo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🟩</div><div class="text-sm font-semibold text-emerald-400">Node 18+</div><p class="text-xs text-neutral-400 mt-1">ejecuta los scripts</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🐧</div><div class="text-sm font-semibold text-emerald-400">WSL</div><p class="text-xs text-neutral-400 mt-1">Linux en Windows</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-emerald-400">Suscripción</div><p class="text-xs text-neutral-400 mt-1">inicio de sesión, sin API</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Clona el kit en tu máquina</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t2-p1">El kit está en GitHub. Un comando copia todo a una carpeta nueva en tu computadora. El nombre <code>meu-projeto</code> es una sugerencia del README: si quieres, cámbialo por el nombre de tu trabajo.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t2-p2">La carpeta clonada <strong class="text-emerald-400">se convierte en tu proyecto</strong>. Las reglas, los puentes y las recetas ya vienen en el lugar correcto. No instalas nada más.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? Git, repositorio y clone</h3>
+<p class="text-neutral-300 text-sm"><strong>Git</strong> es el programa que guarda el historial de cambios de una carpeta. <strong>Repositorio</strong> es esta carpeta con historial, publicada en un sitio como GitHub. <strong>Clonar</strong> es descargar una copia completa en tu computadora, lista para usar y editar.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: tener el kit en una carpeta propia</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">En la terminal, en la carpeta donde guardas tus proyectos (ejecuta las dos líneas, una a la vez):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">git clone https://github.com/inematds/inema-agent-runtime meu-projeto
+cd meu-projeto</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Cómo verificar:</strong> abre la carpeta <code>meu-projeto</code> en el administrador de archivos. Dentro de ella debe estar la carpeta <code>runtime/</code> y los archivos <code>README.md</code>, <code>AGENTS.md</code> e <code>CLAUDE.md</code>.</div>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Diagrama del clon. A la izquierda, el repositorio inema-agent-runtime en GitHub. Una flecha marcada git clone lleva hasta la carpeta meu-projeto en tu computadora, que contiene runtime, AGENTS.md, CLAUDE.md y la carpeta .claude." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m12-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m12-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m12-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12-grid)" height="240" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="80" rx="14" stroke="#6b7280" stroke-width="2" width="200" x="40" y="80"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="140" y="113">☁️ GitHub</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="140" y="135">inematds/inema-agent-runtime</text>
+<line class="wf-flow" marker-end="url(#m12-arrow)" stroke="#38bdf8" stroke-width="2.5" x1="242" x2="378" y1="120" y2="120"></line>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="310" y="106">git clone</text>
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="180" rx="14" stroke="#34d399" stroke-width="2" width="370" x="385" y="30"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" x="405" y="58">📁 mi-proyecto (en tu computadora)</text>
+<g font-family="Inter,sans-serif" font-size="12">
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="405" y="75"></rect><text fill="#bae6fd" text-anchor="middle" x="485" y="97">runtime/</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="575" y="75"></rect><text fill="#bae6fd" text-anchor="middle" x="655" y="97">.claude/</text>
+<rect fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="405" y="120"></rect><text fill="#bae6fd" text-anchor="middle" x="485" y="142">AGENTS.md</text>
+<rect fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="575" y="120"></rect><text fill="#bae6fd" text-anchor="middle" x="655" y="142">CLAUDE.md</text>
+</g>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="570" y="188">reglas, puentes y recetas ya implementados</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> la caja gris es la copia pública, que no modificas. La caja verde es tu copia: todo lo que el curso te pide editar queda ahí. El <code>cd</code> del comando es el paso para "entrar" en esta caja.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Todo comando del curso se ejecuta desde aquí</h3>
+<p class="text-neutral-300 text-sm">Las rutas de las recetas empiezan en <code>runtime/…</code>. Solo funcionan si la terminal está dentro de la carpeta del kit. ¿Abriste una terminal nueva? Vuelve a entrar con <code>cd meu-projeto</code>.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗂️</div><div class="text-sm font-semibold text-emerald-400">Git</div><p class="text-xs text-neutral-400 mt-1">historial de la carpeta</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">☁️</div><div class="text-sm font-semibold text-emerald-400">Repositorio</div><p class="text-xs text-neutral-400 mt-1">la carpeta publicada</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📥</div><div class="text-sm font-semibold text-emerald-400">Clonar</div><p class="text-xs text-neutral-400 mt-1">copia completa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-emerald-400">meu-projeto</div><p class="text-xs text-neutral-400 mt-1">la carpeta del kit</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Ejecuta el diagnóstico</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t3-p1">O <code>doctor.mjs</code> é o <strong class="text-emerald-400">diagnóstico</strong> del kit. Revisa cuatro programas (Node, Claude Code, Codex y Ollama) y termina con una palabra: <strong>LISTO</strong> o <strong>FALTA</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t3-p2">Solo pregunta la versión de cada programa y si Codex tiene la sesión iniciada. No llama a ningún modelo, así que <strong>no consume cuota</strong>. Puedes ejecutarlo tantas veces como quieras.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: saber qué está instalado y qué sesiones están iniciadas</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">En la terminal, dentro de la carpeta del kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/scripts/doctor.mjs</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Salida real (05/10/2026, Linux):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node    ok        24.13.0
+claude  ok        2.1.289   login: abra `claude` uma vez; R2 usa ele
+codex   ok        0.159.2   Logged in using ChatGPT
+ollama  ok        0.33.2    opcional: modelos locais grátis
+
+PRONTO: siga para runtime/receitas/R1-claude-usa-codex.md</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Cómo verificar:</strong> la última línea empieza con <code>PRONTO</code>. Si aparece <code>FALTA</code>, consulta el tema 4. Las versiones en tu máquina pueden ser otras; lo que importa es la segunda columna.</div>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Flujo del diagnóstico. El doctor comprueba cuatro elementos: node, claude, codex y ollama. Los tres primeros determinan el resultado; ollama es opcional. Si hay Node 18 o superior y al menos uno de los agentes, el resultado es PRONTO con salida 0. De lo contrario, FALTA con salida 1." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m12b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m12b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m12b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12b-grid)" height="250" width="800" x="0" y="0"></rect>
+<g filter="url(#m12b-glow)"><rect fill="#0e2018" height="60" rx="14" stroke="#34d399" stroke-width="2" width="140" x="30" y="95"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="100" y="122">doctor.mjs</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="100" y="140">solo lee versiones</text>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="240" y="20"></rect><text fill="#bae6fd" x="325" y="44">node · requiere 18+</text>
+<rect class="wf-a" fill="#0b1f2e" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="240" y="78"></rect><text fill="#bae6fd" x="325" y="102">claude · ¿instalado?</text>
+<rect class="wf-a" fill="#0b1f2e" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="240" y="136"></rect><text fill="#bae6fd" x="325" y="160">codex · ¿con sesión iniciada?</text>
+<rect fill="#1f2937" height="38" rx="10" stroke="#6b7280" stroke-dasharray="5 4" stroke-width="2" width="170" x="240" y="194"></rect><text fill="#9ca3af" x="325" y="218">ollama · opcional</text>
+</g>
+<g opacity="0.6" stroke="#38bdf8" stroke-width="1.5">
+<line x1="170" x2="240" y1="115" y2="39"></line><line x1="170" x2="240" y1="120" y2="97"></line><line x1="170" x2="240" y1="130" y2="155"></line><line stroke-dasharray="4 4" x1="170" x2="240" y1="135" y2="213"></line>
+</g>
+<line class="wf-flow" marker-end="url(#m12b-arrow)" stroke="#38bdf8" stroke-width="2" x1="412" x2="530" y1="97" y2="75"></line>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="412" x2="530" y1="155" y2="175"></line>
+<rect fill="#0e2018" height="60" rx="12" stroke="#34d399" stroke-width="2" width="230" x="535" y="45"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="650" y="71">LISTO · salida 0</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="650" y="90">Node 18+ y al menos un agente</text>
+<rect fill="#2a0f0f" height="60" rx="12" stroke="#f87171" stroke-width="2" width="230" x="535" y="145"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="650" y="171">FALTA · salida 1</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="650" y="190">Node antiguo o ningún agente</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> las cajas azules deciden el resultado; la gris discontinua (Ollama) solo informa. Basta con un agente para que quede LISTO: Claude Code por sí solo basta, Codex por sí solo también.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? «Salida 0» y «salida 1»</h3>
+<p class="text-neutral-300 text-sm">Al terminar, todo comando devuelve un número al sistema. <strong>Salida 0</strong> quiere decir "salió bien"; cualquier otro número quiere decir "faltó algo". No ves este número en pantalla, pero los agentes y los scripts del kit lo leen. Así es como el agente sabe, sin adivinar, si el diagnóstico pasó.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-emerald-400">Diagnóstico</div><p class="text-xs text-neutral-400 mt-1">comprueba sin gastar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">0️⃣</div><div class="text-sm font-semibold text-emerald-400">Salida 0</div><p class="text-xs text-neutral-400 mt-1">salió bien</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">LISTO</div><p class="text-xs text-neutral-400 mt-1">sigue a la R1</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⛔</div><div class="text-sm font-semibold text-emerald-400">FALTA</div><p class="text-xs text-neutral-400 mt-1">instala lo que falta</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Lee cada línea del doctor</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t4-p1">Cada línea tiene cuatro columnas: el programa, el <strong class="text-emerald-400">estado</strong>, la versión y una nota. Cuando falta algo, la nota ya incluye el comando que lo resuelve. No tienes que adivinar.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t4-p2">La tabla de abajo reúne todos los estados que el <code>doctor.mjs</code> puede mostrar y qué hacer en cada uno.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Línea</th><th class="px-4 py-3 font-semibold">Estado</th><th class="px-4 py-3 font-semibold">Quiere decir</th><th class="px-4 py-3 font-semibold">Qué hacer</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">node</td><td class="px-4 py-3 text-neutral-300"><code>velho</code></td><td class="px-4 py-3 text-neutral-300">versión inferior a la 18</td><td class="px-4 py-3 text-neutral-300">actualiza Node (la nota dice "necesita 18+")</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">claude</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">Claude Code no está instalado</td><td class="px-4 py-3 text-neutral-300"><code>npm i -g @anthropic-ai/claude-code</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">codex</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">Codex no está instalado</td><td class="px-4 py-3 text-neutral-300"><code>npm i -g @openai/codex</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">codex</td><td class="px-4 py-3 text-neutral-300"><code>sem login</code></td><td class="px-4 py-3 text-neutral-300">instalado, pero sin cuenta</td><td class="px-4 py-3 text-neutral-300"><code>codex login</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">ollama</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">sin modelos locales</td><td class="px-4 py-3 text-neutral-300">nada: es opcional y no cambia el LISTO</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">cualquier</td><td class="px-4 py-3 text-neutral-300"><code>ok</code></td><td class="px-4 py-3 text-neutral-300">instalado (y, en Codex, con sesión iniciada)</td><td class="px-4 py-3 text-neutral-300">sigue adelante</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Qué revisar en la tabla:</strong> solo la línea de Codex comprueba el inicio de sesión. La de Claude comprueba la instalación y recuerda, en la nota, abrir el <code>claude</code> una vez para iniciar sesión en la cuenta.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Lee la última línea</h4><p class="text-neutral-300 text-sm">LISTO: salta al tema 5. FALTA: continúa en el paso 2.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Encuentra la línea que no está «ok»</h4><p class="text-neutral-300 text-sm">Copia el comando de la nota de esta línea y ejecútalo en la terminal.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ejecuta el doctor de nuevo</h4><p class="text-neutral-300 text-sm">Repite hasta que la última línea diga PRONTO. Como no consume cuota, repetir es gratis.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Hasta el doctor ya se equivocó y quedó registrado</h3>
+<p class="text-neutral-300 text-sm">La primera línea del <code>runtime/FALHAS.md</code> del kit cuenta un caso real: el doctor decía "codex sin login" aunque Codex tenía la sesión iniciada. La causa: Codex responde el estado de inicio de sesión por un canal que el script no leía. La corrección mínima fue leer ambos canales. Una línea, sin drama. Harás lo mismo en el módulo 4.2.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">ok</div><p class="text-xs text-neutral-400 mt-1">todo está bien</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-emerald-400">ausente</div><p class="text-xs text-neutral-400 mt-1">instala con npm</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-emerald-400">sin iniciar sesión</div><p class="text-xs text-neutral-400 mt-1">codex login</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🕰️</div><div class="text-sm font-semibold text-emerald-400">antiguo</div><p class="text-xs text-neutral-400 mt-1">Node anterior a la 18</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Mira cómo ambos agentes leen las mismas reglas</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t5-p1">Al abrirse, cada agente busca un archivo de instrucciones con un nombre diferente. Codex lee el <code>AGENTS.md</code>. Claude Code lee el <code>CLAUDE.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t5-p2">El kit escribe las reglas <strong class="text-emerald-400">una sola vez</strong>, en el <code>AGENTS.md</code>. O <code>CLAUDE.md</code> empieza con <code>@AGENTS.md</code>, que le indica a Claude que incluya ese archivo. Resultado: una regla, dos lectores.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Diagrama de las reglas compartidas. En el centro, AGENTS.md con las reglas. Codex lee AGENTS.md directamente. Claude Code lee CLAUDE.md, que contiene la línea @AGENTS.md y por eso incluye el mismo archivo. Abajo, .claude/settings.json aplica los bloqueos solo en Claude Code." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m12c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m12c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m12c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12c-grid)" height="230" width="800" x="0" y="0"></rect>
+<rect fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="30" y="30"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="105" y="63">Codex</text>
+<rect fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="620" y="30"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="695" y="63">Claude Code</text>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-width="2" width="150" x="430" y="30"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="505" y="55">CLAUDE.md</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="505" y="73">@AGENTS.md</text>
+<line class="wf-flow" marker-end="url(#m12c-arrow)" stroke="#38bdf8" stroke-width="2" x1="618" x2="584" y1="58" y2="58"></line>
+<g filter="url(#m12c-glow)"><rect fill="#0e2018" height="64" rx="14" stroke="#34d399" stroke-width="2" width="210" x="235" y="110"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="340" y="138">AGENTS.md</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="340" y="158">las reglas, escritas una sola vez</text>
+<path class="wf-flow" d="M105,88 C 110,140 170,142 232,142" fill="none" marker-end="url(#m12c-arrow)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="wf-flow" d="M505,88 C 500,140 480,142 448,142" fill="none" marker-end="url(#m12c-arrow)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-dasharray="5 4" stroke-width="2" width="210" x="560" y="150"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="665" y="175">.claude/settings.json</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="665" y="193">bloqueos, solo en Claude Code</text>
+<line stroke="#6b7280" stroke-dasharray="4 4" stroke-width="1.5" x1="695" x2="695" y1="88" y2="148"></line>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> las dos flechas azules llegan a la misma caja verde. Cambió una regla en el <code>AGENTS.md</code>? Los dos agentes empiezan a obedecer en la próxima sesión. El <code>settings.json</code> queda al margen porque es algo exclusivo de Claude Code.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 El CLAUDE.md completo (contenido real del kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">@AGENTS.md
+
+## Autoaprendizaje
+
+Cuando el humano te corrija o notes un error tuyo: propón la lección como una fila en la tabla «Aprendizaje» de `runtime/POLITICA.md`. Después de que la aprueben, se agrega a `## Lessons` de `AGENTS.md`.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Fíjate:</strong> la primera fila obtiene el <code>AGENTS.md</code>. El resto es la regla de aprender sin cambiar las propias reglas, que verás en el módulo 4.2.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ El AGENTS.md dirige al agente</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Leer la <code>POLITICA.md</code> antes de actuar</li>
+<li>✓ Usar solo los sistemas enumerados en el <code>CAPACIDADES.md</code></li>
+<li>✓ Usar el modelo más pequeño que resuelve el problema (<code>ROTEAMENTO.md</code>)</li>
+<li>✓ Recorrer las vías disponibles antes de decir «imposible»</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ settings.json bloquea en Claude Code</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ <code>rm -rf</code></li>
+<li>✗ <code>git push --force</code> e <code>git push -f</code></li>
+<li>✗ <code>git reset --hard</code></li>
+<li>✗ servidor MCP fuera de la lista (solo <code>ponte-modelo</code> está habilitado)</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> La protección ya viene activada</h3>
+<p class="text-neutral-300 text-sm">Lo mismo <code>.claude/settings.json</code> activa la protección del kit: antes de editar un archivo que otra sesión modificó, o de borrar archivos, Claude Code pregunta. No tienes que configurar nada ahora. Los detalles están en el módulo 4.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📘</div><div class="text-sm font-semibold text-emerald-400">AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">reglas para ambos</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📗</div><div class="text-sm font-semibold text-emerald-400">CLAUDE.md</div><p class="text-xs text-neutral-400 mt-1">apunta al AGENTS</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-emerald-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">incluye el otro archivo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-emerald-400">settings.json</div><p class="text-xs text-neutral-400 mt-1">bloqueos y protección</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Haz el primer pedido al agente</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t6-p1">Con LISTO en pantalla, abre el agente <strong>dentro de la carpeta del kit</strong>: escribe <code>claude</code> (o <code>codex</code>) y presiona Enter. Se abre una conversación en la misma terminal.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t6-p2">El primer pedido es el que sugiere el README: el agente lee las reglas del kit antes de hacer cualquier cosa y empieza contigo a mapear tus herramientas.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? Sesión interactiva y carpeta confiable</h3>
+<p class="text-neutral-300 text-sm"><strong>Sesión interactiva</strong> es la conversación que se abre cuando escribes <code>claude</code>: tú escribes, responde y actúa hasta que sales. <strong>Carpeta confiable</strong> es la carpeta que autorizaste a Claude Code a usar. La primera vez te pregunta si confías en la carpeta: elige «Yes, I trust this folder». Lee la opción marcada antes de presionar Enter; el CHANGELOG 0.2.0 del kit registra que, para las sesiones en segundo plano (<code>claude --bg</code>), este aviso se abre con «No, exit» seleccionado.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: que el agente lea las reglas del kit y empiece el mapa contigo</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abre <code>claude</code> en la carpeta del kit y pega:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Lee runtime/LEIA-ME.md y ayúdame a completar CAPACIDADES.md para mi trabajo.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Cómo verificar:</strong> el agente muestra que abrió el <code>runtime/LEIA-ME.md</code> y empieza a preguntar sobre los sistemas de tu trabajo. Si se pone a escribir en el <code>CAPACIDADES.md</code> sin preguntar nada, detente y pide ir sistema por sistema (módulo 1.4).</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Lee las reglas</h4><p class="text-neutral-300 text-sm">O <code>CLAUDE.md</code> (y a través de él el <code>AGENTS.md</code>) se agrega automáticamente. La solicitud añade el <code>LEIA-ME.md</code>, con el ciclo y la escalera.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Tú cuentas tu trabajo</h4><p class="text-neutral-300 text-sm">Clara hablaría de la hoja de cálculo de la agenda. Sonia, del ERP que solo exporta CSV. Describe tus sistemas con tus propias palabras.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Todavía no aceptes nada</h4><p class="text-neutral-300 text-sm">Por ahora es una conversación. En los módulos 1.3 y 1.4 aprenderás qué debe incluir una buena línea del mapa antes de aprobarla.</p></div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Abre siempre en la carpeta del kit</h3>
+<p class="text-neutral-300 text-sm">Abierto en otra carpeta, el agente no encuentra el <code>CLAUDE.md</code>, o <code>AGENTS.md</code> ni el <code>.claude/settings.json</code>. Funciona, pero sin las reglas ni los bloqueos del kit. Antes de escribir <code>claude</code>, comprueba si la terminal está dentro de <code>meu-projeto</code>.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-1-2#q1">
+<p class="font-medium mb-4">Prueba rápida (opcional): el doctor terminó con <code>FALTA</code>. ¿Cuál es el siguiente paso?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Abrir claude de todos modos y pedirle que lo resuelva.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Encontrar la línea que no está «ok», ejecutar el comando de su nota y volver a ejecutar el doctor.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Instala Ollama, porque sin él nada funciona.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-emerald-400">Sesión</div><p class="text-xs text-neutral-400 mt-1">conversación en la terminal</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔓</div><div class="text-sm font-semibold text-emerald-400">Carpeta confiable</div><p class="text-xs text-neutral-400 mt-1">"Yes, I trust"</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-emerald-400">LEIA-ME</div><p class="text-xs text-neutral-400 mt-1">leído antes de actuar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-emerald-400">CAPACIDADES</div><p class="text-xs text-neutral-400 mt-1">el mapa comienza</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Tres requisitos</strong><span class="text-neutral-400"> — Node 18+, un agente con sesión iniciada, Linux/Mac o WSL.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Un clon se convierte en el proyecto</strong><span class="text-neutral-400"> — todo se ejecuta desde dentro de la carpeta.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">El doctor no gasta cuota</strong><span class="text-neutral-400"> — termina con PRONTO o FALTA.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Cada línea incluye la solución</strong><span class="text-neutral-400"> — ejecuta la nota y vuelve a ejecutar el doctor.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Una regla, dos agentes</strong><span class="text-neutral-400"> — el CLAUDE.md incorpora el AGENTS.md.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">1.3 — La escalera de las vías</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-3.html">Módulo 1.3 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Sección 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Qué tener</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Clon del kit</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-3">3. El diagnóstico</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Líneas del doctor</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-5">5. AGENTS y CLAUDE</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Primer pedido</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit utilizado en el curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-1-2#q1', { answer: 1, explain: {
+          '0': 'Não. Com FALTA, falta Node 18+ ou nenhum agente está instalado: o claude pode nem abrir. Resolva antes pela nota da linha.',
+          '1': 'Isso. A nota de cada linha traz o comando que resolve, e o doctor não gasta cota: rode de novo até ver PRONTO.',
+          '2': 'Não. O Ollama é opcional (modelos locais grátis) e não muda o PRONTO.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

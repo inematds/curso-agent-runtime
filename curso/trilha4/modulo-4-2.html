@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>O agente propõe, você aprova | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>O agente propõe, você aprova | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,581 +174,537 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="../trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-amber-400">Início</a><span>/</span>
-      <a href="index.html" class="hover:text-amber-400">Trilha 4</a><span>/</span>
-      <span class="text-amber-400">Módulo 4.2</span>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-2" data-inema-track="4">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.2</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📚 O agente propõe, você aprova</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">O agente erra, aprende e quer mudar o jeito de trabalhar. Ótimo, desde que a regra nova só entre com o seu sim. Este módulo mostra os quatro lugares onde o kit guarda o aprendizado e como revisar tudo uma vez por semana.</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Arquivos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
-      </div>
-      <div data-inema-meter="modulo:4-2" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 4.2">
-        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-      </div>
-    </div>
-  </header>
-
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
-  <main id="conteudo" class="min-w-0" data-inema-module="4-2" data-inema-track="4">
-
-    <!-- ===================== TOPICO 1 ===================== -->
-    <section id="topico-1" data-inema-topic="modulo-4-2#topico-1" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold flex-1">Entenda por que o agente não muda as próprias regras</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-2-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">Um agente que reescreve as próprias regras pode, sem querer, afrouxar justamente a regra que o segurava. Uma linha "pode pagar boletos pequenos" e a política do módulo 4.1 deixa de valer.</p>
-      <p data-inema-block="m4-2-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">Por isso o <code>AGENTS.md</code> do kit diz, com todas as letras: <strong class="text-amber-400">"Você não muda estas regras. Para propor uma mudança, acrescente uma linha na tabela 'Aprendizado' da <code>runtime/POLITICA.md</code>. Quem aprova é o humano."</strong></p>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Os quatro arquivos do aprendizado</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>Tabela Aprendizado</strong> — no fim da <code>runtime/POLITICA.md</code>. Onde o agente escreve as propostas.</li>
-          <li><strong>Lessons</strong> — seção <code>## Lessons</code> do <code>AGENTS.md</code>. Só regras que você aprovou, uma por linha.</li>
-          <li><strong>FALHAS.md</strong> — <code>runtime/FALHAS.md</code>. Uma linha por coisa que quebrou.</li>
-          <li><strong>LIMITES.md</strong> — <code>runtime/LIMITES.md</code>. Uma linha por coisa que o ambiente não deixou fazer.</li>
-        </ul>
-      </div>
-
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 230" class="w-full h-auto" role="img" aria-label="Fluxo do aprendizado em três passos: o agente propõe uma linha na tabela Aprendizado, o humano aprova ou recusa, e o aprovado é incorporado nas Lessons do AGENTS.md. Uma seta de volta mostra que o agente passa a seguir a regra nova. Uma seta vermelha riscada mostra que o agente não escreve direto nas Lessons.">
-          <defs>
-            <pattern id="m42-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.10"/></pattern>
-            <filter id="m42-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m42-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-            <marker id="m42-arrow-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="230" fill="url(#m42-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect class="wf-a" x="30" y="70" width="190" height="70" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="125" y="100" fill="#bae6fd" font-size="13">1 · agente propõe</text>
-            <text x="125" y="120" fill="#7dd3fc" font-size="11">linha na tabela Aprendizado</text>
-            <line class="wf-flow" x1="222" y1="105" x2="296" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m42-arrow)"/>
-            <g filter="url(#m42-glow)"><rect x="300" y="65" width="200" height="80" rx="14" fill="#2a1d06" stroke="#fbbf24" stroke-width="2"/></g>
-            <text x="400" y="98" fill="#fbbf24" font-size="14" font-weight="600">2 · você decide</text>
-            <text x="400" y="120" fill="#fde68a" font-size="11">aprovado ou recusado</text>
-            <line class="wf-flow" x1="502" y1="105" x2="576" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m42-arrow)"/>
-            <rect class="wf-a" x="580" y="70" width="190" height="70" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="675" y="100" fill="#bae6fd" font-size="13">3 · incorpora</text>
-            <text x="675" y="120" fill="#7dd3fc" font-size="11">## Lessons do AGENTS.md</text>
-            <path d="M675,142 C 675,200 125,200 125,142" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 6" marker-end="url(#m42-arrow)"/>
-            <text x="400" y="218" fill="#9ca3af" font-size="11">o agente passa a seguir a regra aprovada</text>
-            <path d="M125,68 C 125,20 675,20 675,68" fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m42-arrow-r)"/>
-            <rect x="320" y="10" width="160" height="26" rx="8" fill="#2a0f0f" stroke="#f87171" stroke-width="1.5"/>
-            <text x="400" y="28" fill="#fca5a5" font-size="11">atalho proibido</text>
-          </g>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> o caminho azul de baixo passa sempre pela caixa âmbar, que é você. O arco vermelho de cima é o agente escrevendo direto nas Lessons, sem passar por você. É esse atalho que o <code>AGENTS.md</code> proíbe.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
-          <h3 class="font-semibold text-amber-400 mb-3">✓ O agente pode</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Acrescentar linha na tabela Aprendizado</li>
-            <li>✓ Anotar falha no <code>FALHAS.md</code></li>
-            <li>✓ Anotar bloqueio no <code>LIMITES.md</code></li>
-            <li>✓ Propor a lição quando você o corrige</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ O agente não pode</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ Marcar a própria proposta como aprovada</li>
-            <li>✗ Escrever nas Lessons sem o seu sim</li>
-            <li>✗ Subir o teto de uma ação na POLITICA</li>
-            <li>✗ Apagar linha de falha que o incomoda</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-amber-400">Propõe</div><p class="text-xs text-neutral-400 mt-1">o agente</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👍</div><div class="text-sm font-semibold text-amber-400">Aprova</div><p class="text-xs text-neutral-400 mt-1">você</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">Incorpora</div><p class="text-xs text-neutral-400 mt-1">vira Lesson</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔒</div><div class="text-sm font-semibold text-amber-400">Regras</div><p class="text-xs text-neutral-400 mt-1">só mudam com seu sim</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 2 ===================== -->
-    <section id="topico-2" data-inema-topic="modulo-4-2#topico-2" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold flex-1">Preencha a tabela Aprendizado</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-2-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">A tabela fica no fim da <code>runtime/POLITICA.md</code>, sob o título "Aprendizado (propõe → aprova → incorpora)". No kit ela vem vazia: só o cabeçalho, esperando a primeira proposta.</p>
-      <p data-inema-block="m4-2-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">Cada linha tem quatro colunas. A segunda pede <strong class="text-amber-400">evidência</strong>: não vale "achei melhor", vale "aconteceu isto, neste dia, com este resultado".</p>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/POLITICA.md, seção Aprendizado (como vem no kit)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">O agente **não muda as próprias regras**. Ele acrescenta uma linha aqui; você decide.
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/modulo-4-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/modulo-4-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/modulo-4-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-4-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/modulo-4-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/modulo-4-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Trilha 4</a><span>/</span>
+<span class="text-amber-400">Módulo 4.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-2" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📚 O agente propõe, você aprova</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">O agente erra, aprende e quer mudar o jeito de trabalhar. Ótimo, desde que a regra nova só entre com o seu sim. Este módulo mostra os quatro lugares onde o kit guarda o aprendizado e como revisar tudo uma vez por semana.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Arquivos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progresso do módulo 4.2" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:4-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="4-2" data-inema-track="4" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Entenda por que o agente não muda as próprias regras</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t1-p1">Um agente que reescreve as próprias regras pode, sem querer, afrouxar justamente a regra que o segurava. Uma linha "pode pagar boletos pequenos" e a política do módulo 4.1 deixa de valer.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t1-p2">Por isso o <code>AGENTS.md</code> do kit diz, com todas as letras: <strong class="text-amber-400">"Você não muda estas regras. Para propor uma mudança, acrescente uma linha na tabela 'Aprendizado' da <code>runtime/POLITICA.md</code>. Quem aprova é o humano."</strong></p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Os quatro arquivos do aprendizado</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Tabela Aprendizado</strong> — no fim da <code>runtime/POLITICA.md</code>. Onde o agente escreve as propostas.</li>
+<li><strong>Lessons</strong> — seção <code>## Lessons</code> do <code>AGENTS.md</code>. Só regras que você aprovou, uma por linha.</li>
+<li><strong>FALHAS.md</strong> — <code>runtime/FALHAS.md</code>. Uma linha por coisa que quebrou.</li>
+<li><strong>LIMITES.md</strong> — <code>runtime/LIMITES.md</code>. Uma linha por coisa que o ambiente não deixou fazer.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Fluxo do aprendizado em três passos: o agente propõe uma linha na tabela Aprendizado, o humano aprova ou recusa, e o aprovado é incorporado nas Lessons do AGENTS.md. Uma seta de volta mostra que o agente passa a seguir a regra nova. Uma seta vermelha riscada mostra que o agente não escreve direto nas Lessons." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m42-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m42-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m42-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m42-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m42-grid)" height="230" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="190" x="30" y="70"></rect>
+<text fill="#bae6fd" font-size="13" x="125" y="100">1 · agente propõe</text>
+<text fill="#7dd3fc" font-size="11" x="125" y="120">linha na tabela Aprendizado</text>
+<line class="wf-flow" marker-end="url(#m42-arrow)" stroke="#38bdf8" stroke-width="2" x1="222" x2="296" y1="105" y2="105"></line>
+<g filter="url(#m42-glow)"><rect fill="#2a1d06" height="80" rx="14" stroke="#fbbf24" stroke-width="2" width="200" x="300" y="65"></rect></g>
+<text fill="#fbbf24" font-size="14" font-weight="600" x="400" y="98">2 · você decide</text>
+<text fill="#fde68a" font-size="11" x="400" y="120">aprovado ou recusado</text>
+<line class="wf-flow" marker-end="url(#m42-arrow)" stroke="#38bdf8" stroke-width="2" x1="502" x2="576" y1="105" y2="105"></line>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="190" x="580" y="70"></rect>
+<text fill="#bae6fd" font-size="13" x="675" y="100">3 · incorpora</text>
+<text fill="#7dd3fc" font-size="11" x="675" y="120">## Lessons do AGENTS.md</text>
+<path d="M675,142 C 675,200 125,200 125,142" fill="none" marker-end="url(#m42-arrow)" stroke="#38bdf8" stroke-dasharray="4 6" stroke-width="1.5"></path>
+<text fill="#9ca3af" font-size="11" x="400" y="218">o agente passa a seguir a regra aprovada</text>
+<path d="M125,68 C 125,20 675,20 675,68" fill="none" marker-end="url(#m42-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+<rect fill="#2a0f0f" height="26" rx="8" stroke="#f87171" stroke-width="1.5" width="160" x="320" y="10"></rect>
+<text fill="#fca5a5" font-size="11" x="400" y="28">atalho proibido</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> o caminho azul de baixo passa sempre pela caixa âmbar, que é você. O arco vermelho de cima é o agente escrevendo direto nas Lessons, sem passar por você. É esse atalho que o <code>AGENTS.md</code> proíbe.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">✓ O agente pode</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Acrescentar linha na tabela Aprendizado</li>
+<li>✓ Anotar falha no <code>FALHAS.md</code></li>
+<li>✓ Anotar bloqueio no <code>LIMITES.md</code></li>
+<li>✓ Propor a lição quando você o corrige</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ O agente não pode</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Marcar a própria proposta como aprovada</li>
+<li>✗ Escrever nas Lessons sem o seu sim</li>
+<li>✗ Subir o teto de uma ação na POLITICA</li>
+<li>✗ Apagar linha de falha que o incomoda</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-amber-400">Propõe</div><p class="text-xs text-neutral-400 mt-1">o agente</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👍</div><div class="text-sm font-semibold text-amber-400">Aprova</div><p class="text-xs text-neutral-400 mt-1">você</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">Incorpora</div><p class="text-xs text-neutral-400 mt-1">vira Lesson</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔒</div><div class="text-sm font-semibold text-amber-400">Regras</div><p class="text-xs text-neutral-400 mt-1">só mudam com seu sim</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Preencha a tabela Aprendizado</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t2-p1">A tabela fica no fim da <code>runtime/POLITICA.md</code>, sob o título "Aprendizado (propõe → aprova → incorpora)". No kit ela vem vazia: só o cabeçalho, esperando a primeira proposta.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t2-p2">Cada linha tem quatro colunas. A segunda pede <strong class="text-amber-400">evidência</strong>: não vale "achei melhor", vale "aconteceu isto, neste dia, com este resultado".</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/POLITICA.md, seção Aprendizado (como vem no kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">O agente **não muda as próprias regras**. Ele acrescenta uma linha aqui; você decide.
 
 | data | o que aconteceu (com evidência) | proposta (1 linha) | status: proposto / aprovado / recusado |
 |---|---|---|---|</pre>
-        </div>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">data</th><th class="px-4 py-3 font-semibold">o que aconteceu (com evidência)</th><th class="px-4 py-3 font-semibold">proposta (1 linha)</th><th class="px-4 py-3 font-semibold">status</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">exemplo</td><td class="px-4 py-3 text-neutral-300">Clara pediu "horários livres de amanhã" e o agente respondeu com a data de hoje; a resposta tinha horários já marcados</td><td class="px-4 py-3 text-neutral-300">Antes de consultar a agenda, repetir a data em AAAA-MM-DD e esperar confirmação</td><td class="px-4 py-3 text-neutral-300">proposto</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">exemplo</td><td class="px-4 py-3 text-neutral-300">No relatório da distribuidora, o agente escreveu "posso emitir o boleto?" em vez de deixar o boleto pronto para a Sônia</td><td class="px-4 py-3 text-neutral-300">Em pagamento, entregar o texto pronto e a lista do que conferir; nunca oferecer executar</td><td class="px-4 py-3 text-neutral-300">proposto</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> as duas linhas são exemplos de como ficaria, escritos para este curso, não vêm no kit. Repare que a proposta cabe em uma linha e diz o que fazer, não o que sentir.</p>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">proposto</h4><p class="text-neutral-300 text-sm">O agente escreveu. Ninguém decidiu ainda. Nada muda no comportamento.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">aprovado</h4><p class="text-neutral-300 text-sm">Você trocou o status. A proposta vai para as Lessons (tópico 3) e passa a valer.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">recusado</h4><p class="text-neutral-300 text-sm">Fica na tabela. Assim o agente não propõe a mesma coisa de novo na semana seguinte.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Não apague o recusado</h3>
-        <p class="text-neutral-300 text-sm">A linha recusada é memória. Ela mostra ao agente, e a você daqui a três meses, que a ideia já foi pensada e por que não entrou.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-amber-400">data</div><p class="text-xs text-neutral-400 mt-1">quando aconteceu</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-amber-400">evidência</div><p class="text-xs text-neutral-400 mt-1">o fato, não a opinião</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-amber-400">proposta</div><p class="text-xs text-neutral-400 mt-1">uma linha</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-amber-400">status</div><p class="text-xs text-neutral-400 mt-1">proposto / aprovado / recusado</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 3 ===================== -->
-    <section id="topico-3" data-inema-topic="modulo-4-2#topico-3" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold flex-1">Promova o aprovado para as Lessons</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-2-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">A <code>POLITICA.md</code> fecha a seção assim: "Aprovado → vira regra no <code>CLAUDE.md</code>/<code>AGENTS.md</code>". No kit, o lugar é a seção <strong class="text-amber-400"><code>## Lessons</code></strong> do <code>AGENTS.md</code>.</p>
-      <p data-inema-block="m4-2-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">Por que no <code>AGENTS.md</code> e não no <code>CLAUDE.md</code>? Porque o <code>CLAUDE.md</code> do kit começa puxando o <code>AGENTS.md</code>. Uma regra escrita num lugar só vale para o Claude e para o Codex.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
-          <div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 AGENTS.md (fim do arquivo, como vem)</span></div>
-          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap p-4">## Lessons
+</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">data</th><th class="px-4 py-3 font-semibold">o que aconteceu (com evidência)</th><th class="px-4 py-3 font-semibold">proposta (1 linha)</th><th class="px-4 py-3 font-semibold">status</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">exemplo</td><td class="px-4 py-3 text-neutral-300">Clara pediu "horários livres de amanhã" e o agente respondeu com a data de hoje; a resposta tinha horários já marcados</td><td class="px-4 py-3 text-neutral-300">Antes de consultar a agenda, repetir a data em AAAA-MM-DD e esperar confirmação</td><td class="px-4 py-3 text-neutral-300">proposto</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">exemplo</td><td class="px-4 py-3 text-neutral-300">No relatório da distribuidora, o agente escreveu "posso emitir o boleto?" em vez de deixar o boleto pronto para a Sônia</td><td class="px-4 py-3 text-neutral-300">Em pagamento, entregar o texto pronto e a lista do que conferir; nunca oferecer executar</td><td class="px-4 py-3 text-neutral-300">proposto</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> as duas linhas são exemplos de como ficaria, escritos para este curso, não vêm no kit. Repare que a proposta cabe em uma linha e diz o que fazer, não o que sentir.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">proposto</h4><p class="text-neutral-300 text-sm">O agente escreveu. Ninguém decidiu ainda. Nada muda no comportamento.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">aprovado</h4><p class="text-neutral-300 text-sm">Você trocou o status. A proposta vai para as Lessons (tópico 3) e passa a valer.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">recusado</h4><p class="text-neutral-300 text-sm">Fica na tabela. Assim o agente não propõe a mesma coisa de novo na semana seguinte.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Não apague o recusado</h3>
+<p class="text-neutral-300 text-sm">A linha recusada é memória. Ela mostra ao agente, e a você daqui a três meses, que a ideia já foi pensada e por que não entrou.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-amber-400">data</div><p class="text-xs text-neutral-400 mt-1">quando aconteceu</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-amber-400">evidência</div><p class="text-xs text-neutral-400 mt-1">o fato, não a opinião</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-amber-400">proposta</div><p class="text-xs text-neutral-400 mt-1">uma linha</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-amber-400">status</div><p class="text-xs text-neutral-400 mt-1">proposto / aprovado / recusado</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Promova o aprovado para as Lessons</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t3-p1">A <code>POLITICA.md</code> fecha a seção assim: "Aprovado → vira regra no <code>CLAUDE.md</code>/<code>AGENTS.md</code>". No kit, o lugar é a seção <strong class="text-amber-400"><code>## Lessons</code></strong> do <code>AGENTS.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t3-p2">Por que no <code>AGENTS.md</code> e não no <code>CLAUDE.md</code>? Porque o <code>CLAUDE.md</code> do kit começa puxando o <code>AGENTS.md</code>. Uma regra escrita num lugar só vale para o Claude e para o Codex.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 AGENTS.md (fim do arquivo, como vem)</span></div>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap p-4">## Lessons
 
 Regras aprovadas pelo humano, uma por linha:</pre>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
-          <div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 CLAUDE.md (inteiro, como vem)</span></div>
-          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap p-4">@AGENTS.md
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 CLAUDE.md (inteiro, como vem)</span></div>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap p-4">@AGENTS.md
 
 ## Self-learning
 
 Quando o humano corrigir você, ou você notar um erro seu: proponha a lição como uma linha na tabela "Aprendizado" de `runtime/POLITICA.md`. Depois de aprovada, ela entra em `## Lessons` do `AGENTS.md`.</pre>
-        </div>
-      </div>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O que faz o <code>@AGENTS.md</code></h3>
-        <p class="text-neutral-300 text-sm">No <code>CLAUDE.md</code>, uma linha com <code>@</code> e o nome de um arquivo pede ao Claude Code que leia aquele arquivo junto. O Codex lê o <code>AGENTS.md</code> direto. Resultado: os dois agentes leem as mesmas Lessons.</p>
-      </div>
-
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 230" class="w-full h-auto" role="img" aria-label="A linha aprovada sai da tabela Aprendizado da POLITICA.md e entra nas Lessons do AGENTS.md. Do AGENTS.md saem duas setas: uma para o Codex, que lê o arquivo direto, e outra para o CLAUDE.md, que puxa o AGENTS.md com a linha arroba AGENTS.md e entrega ao Claude Code.">
-          <defs>
-            <pattern id="m42b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.10"/></pattern>
-            <filter id="m42b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m42b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="230" fill="url(#m42b-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect x="30" y="85" width="190" height="60" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="125" y="111" fill="#e5e7eb" font-size="13">POLITICA.md</text>
-            <text x="125" y="130" fill="#9ca3af" font-size="11">linha "aprovado"</text>
-            <line class="wf-flow" x1="222" y1="115" x2="296" y2="115" stroke="#38bdf8" stroke-width="2" marker-end="url(#m42b-arrow)"/>
-            <g filter="url(#m42b-glow)"><rect x="300" y="80" width="190" height="70" rx="14" fill="#2a1d06" stroke="#fbbf24" stroke-width="2"/></g>
-            <text x="395" y="110" fill="#fbbf24" font-size="14" font-weight="600">AGENTS.md</text>
-            <text x="395" y="130" fill="#fde68a" font-size="11">## Lessons</text>
-            <line class="wf-flow" x1="492" y1="100" x2="576" y2="55" stroke="#38bdf8" stroke-width="2" marker-end="url(#m42b-arrow)"/>
-            <rect class="wf-a" x="580" y="30" width="190" height="50" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="675" y="60" fill="#bae6fd" font-size="13">Codex lê direto</text>
-            <line class="wf-flow" x1="492" y1="130" x2="576" y2="175" stroke="#38bdf8" stroke-width="2" marker-end="url(#m42b-arrow)"/>
-            <rect class="wf-a" x="580" y="150" width="190" height="50" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="675" y="172" fill="#bae6fd" font-size="13">CLAUDE.md → Claude</text>
-            <text x="675" y="189" fill="#7dd3fc" font-size="11">pela linha @AGENTS.md</text>
-          </g>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> tudo passa pela caixa âmbar. Você escreve a regra uma vez no <code>AGENTS.md</code>, e as duas setas azuis levam a mesma regra aos dois agentes. Não existe uma versão "só do Claude" para ficar desatualizada.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="font-semibold text-amber-400 mb-2">Exemplo de como ficaria (não vem no kit)</h3>
-        <p class="text-neutral-300 text-sm mb-3">Se a Clara aprovar a primeira proposta do tópico 2, o fim do <code>AGENTS.md</code> fica assim:</p>
-        <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">## Lessons
+</div>
+</div>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O que faz o <code>@AGENTS.md</code></h3>
+<p class="text-neutral-300 text-sm">No <code>CLAUDE.md</code>, uma linha com <code>@</code> e o nome de um arquivo pede ao Claude Code que leia aquele arquivo junto. O Codex lê o <code>AGENTS.md</code> direto. Resultado: os dois agentes leem as mesmas Lessons.</p>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="A linha aprovada sai da tabela Aprendizado da POLITICA.md e entra nas Lessons do AGENTS.md. Do AGENTS.md saem duas setas: uma para o Codex, que lê o arquivo direto, e outra para o CLAUDE.md, que puxa o AGENTS.md com a linha arroba AGENTS.md e entrega ao Claude Code." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m42b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m42b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m42b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m42b-grid)" height="230" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="190" x="30" y="85"></rect>
+<text fill="#e5e7eb" font-size="13" x="125" y="111">POLITICA.md</text>
+<text fill="#9ca3af" font-size="11" x="125" y="130">linha "aprovado"</text>
+<line class="wf-flow" marker-end="url(#m42b-arrow)" stroke="#38bdf8" stroke-width="2" x1="222" x2="296" y1="115" y2="115"></line>
+<g filter="url(#m42b-glow)"><rect fill="#2a1d06" height="70" rx="14" stroke="#fbbf24" stroke-width="2" width="190" x="300" y="80"></rect></g>
+<text fill="#fbbf24" font-size="14" font-weight="600" x="395" y="110">AGENTS.md</text>
+<text fill="#fde68a" font-size="11" x="395" y="130">## Lessons</text>
+<line class="wf-flow" marker-end="url(#m42b-arrow)" stroke="#38bdf8" stroke-width="2" x1="492" x2="576" y1="100" y2="55"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="580" y="30"></rect>
+<text fill="#bae6fd" font-size="13" x="675" y="60">Codex lê direto</text>
+<line class="wf-flow" marker-end="url(#m42b-arrow)" stroke="#38bdf8" stroke-width="2" x1="492" x2="576" y1="130" y2="175"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="580" y="150"></rect>
+<text fill="#bae6fd" font-size="13" x="675" y="172">CLAUDE.md → Claude</text>
+<text fill="#7dd3fc" font-size="11" x="675" y="189">pela linha @AGENTS.md</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> tudo passa pela caixa âmbar. Você escreve a regra uma vez no <code>AGENTS.md</code>, e as duas setas azuis levam a mesma regra aos dois agentes. Não existe uma versão "só do Claude" para ficar desatualizada.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="font-semibold text-amber-400 mb-2">Exemplo de como ficaria (não vem no kit)</h3>
+<p class="text-neutral-300 text-sm mb-3">Se a Clara aprovar a primeira proposta do tópico 2, o fim do <code>AGENTS.md</code> fica assim:</p>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">## Lessons
 
 Regras aprovadas pelo humano, uma por linha:
 - Antes de consultar a agenda, repetir a data em AAAA-MM-DD e esperar confirmação.</pre>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Quem escreve a linha nas Lessons</h3>
-        <p class="text-neutral-300 text-sm">Pode ser você, à mão, ou o agente, depois do seu pedido explícito ("aprovo a linha X, copie para as Lessons"). O que conta é a ordem: primeiro o seu sim, depois a cópia.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">## Lessons</div><p class="text-xs text-neutral-400 mt-1">uma regra por linha</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-amber-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">Claude lê junto</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤝</div><div class="text-sm font-semibold text-amber-400">Dois agentes</div><p class="text-xs text-neutral-400 mt-1">mesmas regras</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-amber-400">Self-learning</div><p class="text-xs text-neutral-400 mt-1">corrigido → propõe</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 4 ===================== -->
-    <section id="topico-4" data-inema-topic="modulo-4-2#topico-4" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold flex-1">Anote cada falha em uma linha</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-2-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">Quando algo quebra e você conserta, a tentação é seguir em frente. O <code>runtime/FALHAS.md</code> pede trinta segundos antes: <strong class="text-amber-400">uma linha</strong> com a data, o que quebrou, a menor correção e se o problema era de prompt ou de infra.</p>
-      <p data-inema-block="m4-2-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">O kit já traz uma linha real, de quando ele mesmo foi testado. É o melhor exemplo do formato:</p>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/FALHAS.md (como vem no kit)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que quebrou | menor correção | prompt \| infra |
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Quem escreve a linha nas Lessons</h3>
+<p class="text-neutral-300 text-sm">Pode ser você, à mão, ou o agente, depois do seu pedido explícito ("aprovo a linha X, copie para as Lessons"). O que conta é a ordem: primeiro o seu sim, depois a cópia.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">## Lessons</div><p class="text-xs text-neutral-400 mt-1">uma regra por linha</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-amber-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">Claude lê junto</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤝</div><div class="text-sm font-semibold text-amber-400">Dois agentes</div><p class="text-xs text-neutral-400 mt-1">mesmas regras</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-amber-400">Self-learning</div><p class="text-xs text-neutral-400 mt-1">corrigido → propõe</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Anote cada falha em uma linha</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t4-p1">Quando algo quebra e você conserta, a tentação é seguir em frente. O <code>runtime/FALHAS.md</code> pede trinta segundos antes: <strong class="text-amber-400">uma linha</strong> com a data, o que quebrou, a menor correção e se o problema era de prompt ou de infra.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t4-p2">O kit já traz uma linha real, de quando ele mesmo foi testado. É o melhor exemplo do formato:</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/FALHAS.md (como vem no kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que quebrou | menor correção | prompt \| infra |
 |---|---|---|---|
 | 2026-10-05 | `doctor.mjs` dizia "codex sem login" com o Codex logado | ler stdout **e** stderr (`codex login status` responde no stderr) | infra |</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">O que olhar:</strong> a correção não foi "reescrever o doctor". Foi ler também a outra saída do comando. É isso que "menor correção" quer dizer.</div>
-      </div>
-
-      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? stdout e stderr</h3>
-        <p class="text-neutral-300 text-sm">Todo comando de terminal tem duas saídas de texto: a normal (<strong>stdout</strong>) e a de avisos e erros (<strong>stderr</strong>). Na tela as duas aparecem juntas, mas um programa que lê só uma delas perde a outra. Foi o que aconteceu com o <code>doctor.mjs</code>.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
-          <h3 class="font-semibold text-amber-400 mb-3">prompt</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ O pedido induziu o erro</li>
-            <li>✓ O modelo entendeu outra coisa</li>
-            <li>✓ Faltou dizer um limite no pedido</li>
-            <li>✓ Correção típica: uma frase a mais na instrução</li>
-          </ul>
-        </div>
-        <div class="bg-dark-800 rounded-xl p-6 border border-sky-500/30">
-          <h3 class="font-semibold text-sky-400 mb-3">infra</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Máquina, rede, login, versão de programa</li>
-            <li>✓ Script que lê o lugar errado</li>
-            <li>✓ Serviço fora do ar ou lento</li>
-            <li>✓ Correção típica: uma proteção (limite de tempo, nova tentativa, checagem)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que uma linha só</h3>
-        <p class="text-neutral-300 text-sm">Depois de umas dez linhas o padrão aparece sozinho: "metade é infra de login", "toda falha de prompt é data". Texto longo esconde o padrão. Se precisar de detalhe, escreva noutro arquivo e ponha o link na linha.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-amber-400">data</div><p class="text-xs text-neutral-400 mt-1">quando quebrou</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💥</div><div class="text-sm font-semibold text-amber-400">o que quebrou</div><p class="text-xs text-neutral-400 mt-1">o sintoma visto</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩹</div><div class="text-sm font-semibold text-amber-400">menor correção</div><p class="text-xs text-neutral-400 mt-1">a proteção que faltava</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-amber-400">prompt | infra</div><p class="text-xs text-neutral-400 mt-1">ou os dois</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 5 ===================== -->
-    <section id="topico-5" data-inema-topic="modulo-4-2#topico-5" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold flex-1">Anote o que o ambiente barrou</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-2-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">Nem todo problema é falha. Às vezes nada quebrou: o ambiente simplesmente <strong class="text-amber-400">não deixou</strong>. O sandbox bloqueou a rede, a ferramenta não tem o recurso, o site pede login. Isso vai para o <code>runtime/LIMITES.md</code>.</p>
-      <p data-inema-block="m4-2-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">No kit ele vem só com o cabeçalho. A última coluna, <strong>status</strong>, diz se o limite continua aberto ou se você aceitou conviver com ele.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/LIMITES.md (como vem no kit)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que tentei | o que barrou | contorno | status |
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">O que olhar:</strong> a correção não foi "reescrever o doctor". Foi ler também a outra saída do comando. É isso que "menor correção" quer dizer.</div>
+</div>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? stdout e stderr</h3>
+<p class="text-neutral-300 text-sm">Todo comando de terminal tem duas saídas de texto: a normal (<strong>stdout</strong>) e a de avisos e erros (<strong>stderr</strong>). Na tela as duas aparecem juntas, mas um programa que lê só uma delas perde a outra. Foi o que aconteceu com o <code>doctor.mjs</code>.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">prompt</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ O pedido induziu o erro</li>
+<li>✓ O modelo entendeu outra coisa</li>
+<li>✓ Faltou dizer um limite no pedido</li>
+<li>✓ Correção típica: uma frase a mais na instrução</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl p-6 border border-sky-500/30">
+<h3 class="font-semibold text-sky-400 mb-3">infra</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Máquina, rede, login, versão de programa</li>
+<li>✓ Script que lê o lugar errado</li>
+<li>✓ Serviço fora do ar ou lento</li>
+<li>✓ Correção típica: uma proteção (limite de tempo, nova tentativa, checagem)</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que uma linha só</h3>
+<p class="text-neutral-300 text-sm">Depois de umas dez linhas o padrão aparece sozinho: "metade é infra de login", "toda falha de prompt é data". Texto longo esconde o padrão. Se precisar de detalhe, escreva noutro arquivo e ponha o link na linha.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-amber-400">data</div><p class="text-xs text-neutral-400 mt-1">quando quebrou</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💥</div><div class="text-sm font-semibold text-amber-400">o que quebrou</div><p class="text-xs text-neutral-400 mt-1">o sintoma visto</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩹</div><div class="text-sm font-semibold text-amber-400">menor correção</div><p class="text-xs text-neutral-400 mt-1">a proteção que faltava</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-amber-400">prompt | infra</div><p class="text-xs text-neutral-400 mt-1">ou os dois</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Anote o que o ambiente barrou</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t5-p1">Nem todo problema é falha. Às vezes nada quebrou: o ambiente simplesmente <strong class="text-amber-400">não deixou</strong>. O sandbox bloqueou a rede, a ferramenta não tem o recurso, o site pede login. Isso vai para o <code>runtime/LIMITES.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t5-p2">No kit ele vem só com o cabeçalho. A última coluna, <strong>status</strong>, diz se o limite continua aberto ou se você aceitou conviver com ele.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/LIMITES.md (como vem no kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que tentei | o que barrou | contorno | status |
 |---|---|---|---|---|</pre>
-        </div>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Situação</th><th class="px-4 py-3 font-semibold">Vai para</th><th class="px-4 py-3 font-semibold">Por quê</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">O <code>doctor.mjs</code> lia só uma saída e errava</td><td class="px-4 py-3 text-neutral-300"><code>FALHAS.md</code></td><td class="px-4 py-3 text-neutral-300">era defeito, e foi corrigido</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">O sandbox do Codex bloqueia a rede, até a local</td><td class="px-4 py-3 text-neutral-300"><code>LIMITES.md</code></td><td class="px-4 py-3 text-neutral-300">é regra do ambiente; a receita R1 manda anotar</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Você usou engenharia reversa num teste</td><td class="px-4 py-3 text-neutral-300"><code>LIMITES.md</code></td><td class="px-4 py-3 text-neutral-300">a POLITICA manda: laboratório anotado</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Você corrigiu o agente e ele aprendeu</td><td class="px-4 py-3 text-neutral-300">tabela Aprendizado</td><td class="px-4 py-3 text-neutral-300">é mudança de regra, precisa do seu sim</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a pergunta que separa é "quebrou ou não deixaram?". Quebrou e consertou, FALHAS. Não deixaram, LIMITES. Mudou o jeito de trabalhar, Aprendizado.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="font-semibold text-amber-400 mb-2">O exemplo que o próprio kit dá</h3>
-        <p class="text-neutral-300 text-sm mb-3">A receita R1 avisa: o sandbox do Codex bloqueia rede. Se um teste precisar subir um servidor, acrescente na ponte o ajuste abaixo <strong>e anote em <code>LIMITES.md</code></strong>:</p>
-        <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">-c sandbox_workspace_write.network_access=true</pre>
-        <p class="text-neutral-400 text-xs mt-3">A linha registraria: o que você tentou (subir o servidor de teste), o que barrou (sandbox sem rede), o contorno (esse ajuste) e o status.</p>
-      </div>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Contorno não é licença</h3>
-        <p class="text-neutral-300 text-sm">Abrir a rede do sandbox é afrouxar uma cerca. Por isso ele vai para um arquivo que você revisa. Um contorno sem anotação vira, em três meses, uma porta aberta que ninguém lembra de ter aberto.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧱</div><div class="text-sm font-semibold text-amber-400">o que barrou</div><p class="text-xs text-neutral-400 mt-1">regra do ambiente</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">↪️</div><div class="text-sm font-semibold text-amber-400">contorno</div><p class="text-xs text-neutral-400 mt-1">o que você fez</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-amber-400">status</div><p class="text-xs text-neutral-400 mt-1">aberto ou aceito</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-amber-400">laboratório</div><p class="text-xs text-neutral-400 mt-1">também se anota</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 6 ===================== -->
-    <section id="topico-6" data-inema-topic="modulo-4-2#topico-6" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold flex-1">Faça a revisão da semana com o agente</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m4-2-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">Os três arquivos só ajudam se alguém os lê. Uma vez por semana, peça ao agente para ler tudo e transformar o que se repete em propostas. Ele faz a parte chata. Você faz a parte que importa: decidir.</p>
-      <p data-inema-block="m4-2-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">São dois pedidos. O primeiro só gera propostas. O segundo, que você escreve depois de ler, aprova o que você quiser.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objetivo: o agente transforma a semana em propostas, sem aprovar nada</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> (ou <code>codex</code>) na pasta do projeto e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/FALHAS.md, runtime/LIMITES.md e a tabela Aprendizado de runtime/POLITICA.md. Procure o que se repete ou ainda está aberto. Para cada caso, acrescente uma linha na tabela Aprendizado com data, evidência, proposta em uma linha e status proposto. Não marque nada como aprovado e não altere o AGENTS.md nem o CLAUDE.md. No fim, liste as linhas que você acrescentou.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">Como verificar:</strong> as linhas novas aparecem só na tabela Aprendizado, todas com status <code>proposto</code>. A seção <code>## Lessons</code> do <code>AGENTS.md</code> continua igual.</div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">✍️ Depois de ler: o seu pedido de aprovação (troque o que está entre &lt; &gt;)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Na tabela Aprendizado de runtime/POLITICA.md, mude para aprovado a linha &lt;data e proposta&gt; e para recusado a linha &lt;data e proposta&gt;. Copie só a proposta aprovada, em uma linha, para ## Lessons do AGENTS.md.</pre>
-        </div>
-      </div>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">O agente lê e propõe</h4><p class="text-neutral-300 text-sm">Primeiro pedido. Ele cruza FALHAS, LIMITES e as propostas antigas.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Você lê cada linha</h4><p class="text-neutral-300 text-sm">Pergunta-chave: esta regra afrouxa algum teto da POLITICA? Se afrouxa, recuse.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Você aprova ou recusa</h4><p class="text-neutral-300 text-sm">Segundo pedido, com as suas palavras. Só o aprovado vai para as Lessons.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Git guarda a mudança</h4><p class="text-neutral-300 text-sm">Como tudo é arquivo de texto, cada regra nova fica no histórico, com data. Dá para ver quando e por que entrou.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-4-2#q1">
-        <p class="font-medium mb-4">Teste rápido (opcional): na revisão, o agente propôs "pode enviar lembrete aos pacientes sem perguntar". O que a Clara faz?</p>
-        <div class="space-y-2">
-          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Nada: como o agente propôs, a regra já vale.</button>
-          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Recusa e deixa a linha na tabela: enviar tem teto N2, e a proposta furaria o teto.</button>
-          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Apaga a linha da tabela para o agente esquecer a ideia.</button>
-        </div>
-        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗓️</div><div class="text-sm font-semibold text-amber-400">Semanal</div><p class="text-xs text-neutral-400 mt-1">um horário fixo</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📥</div><div class="text-sm font-semibold text-amber-400">Pedido 1</div><p class="text-xs text-neutral-400 mt-1">só propostas</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-amber-400">Pedido 2</div><p class="text-xs text-neutral-400 mt-1">a sua decisão</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🕰️</div><div class="text-sm font-semibold text-amber-400">Git</div><p class="text-xs text-neutral-400 mt-1">histórico das regras</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== RESUMO ===================== -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">O agente não muda as próprias regras</strong><span class="text-neutral-400"> — ele propõe uma linha.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Tabela Aprendizado</strong><span class="text-neutral-400"> — data, evidência, proposta, status.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Aprovado vira Lesson no AGENTS.md</strong><span class="text-neutral-400"> — e vale para o Claude e o Codex.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Quebrou: FALHAS. Não deixaram: LIMITES.</strong><span class="text-neutral-400"> — uma linha cada.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Revisão semanal em dois pedidos</strong><span class="text-neutral-400"> — o agente propõe, você decide.</span></div></div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
-          <p class="text-neutral-300">4.3 — Guarda e painel</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
-          <a href="modulo-4-3.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Módulo 4.3 →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <aside class="hidden lg:block">
-    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
-      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
-      <ol class="space-y-2 text-sm">
-        <li><a href="#topico-1" class="text-neutral-400 hover:text-amber-400">1. Regras não se mudam sozinhas</a></li>
-        <li><a href="#topico-2" class="text-neutral-400 hover:text-amber-400">2. Tabela Aprendizado</a></li>
-        <li><a href="#topico-3" class="text-neutral-400 hover:text-amber-400">3. Lessons</a></li>
-        <li><a href="#topico-4" class="text-neutral-400 hover:text-amber-400">4. FALHAS.md</a></li>
-        <li><a href="#topico-5" class="text-neutral-400 hover:text-amber-400">5. LIMITES.md</a></li>
-        <li><a href="#topico-6" class="text-neutral-400 hover:text-amber-400">6. Revisão da semana</a></li>
-      </ol>
-    </nav>
-  </aside>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Situação</th><th class="px-4 py-3 font-semibold">Vai para</th><th class="px-4 py-3 font-semibold">Por quê</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">O <code>doctor.mjs</code> lia só uma saída e errava</td><td class="px-4 py-3 text-neutral-300"><code>FALHAS.md</code></td><td class="px-4 py-3 text-neutral-300">era defeito, e foi corrigido</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">O sandbox do Codex bloqueia a rede, até a local</td><td class="px-4 py-3 text-neutral-300"><code>LIMITES.md</code></td><td class="px-4 py-3 text-neutral-300">é regra do ambiente; a receita R1 manda anotar</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Você usou engenharia reversa num teste</td><td class="px-4 py-3 text-neutral-300"><code>LIMITES.md</code></td><td class="px-4 py-3 text-neutral-300">a POLITICA manda: laboratório anotado</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Você corrigiu o agente e ele aprendeu</td><td class="px-4 py-3 text-neutral-300">tabela Aprendizado</td><td class="px-4 py-3 text-neutral-300">é mudança de regra, precisa do seu sim</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a pergunta que separa é "quebrou ou não deixaram?". Quebrou e consertou, FALHAS. Não deixaram, LIMITES. Mudou o jeito de trabalhar, Aprendizado.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="font-semibold text-amber-400 mb-2">O exemplo que o próprio kit dá</h3>
+<p class="text-neutral-300 text-sm mb-3">A receita R1 avisa: o sandbox do Codex bloqueia rede. Se um teste precisar subir um servidor, acrescente na ponte o ajuste abaixo <strong>e anote em <code>LIMITES.md</code></strong>:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">-c sandbox_workspace_write.network_access=true</pre>
+<p class="text-neutral-400 text-xs mt-3">A linha registraria: o que você tentou (subir o servidor de teste), o que barrou (sandbox sem rede), o contorno (esse ajuste) e o status.</p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Contorno não é licença</h3>
+<p class="text-neutral-300 text-sm">Abrir a rede do sandbox é afrouxar uma cerca. Por isso ele vai para um arquivo que você revisa. Um contorno sem anotação vira, em três meses, uma porta aberta que ninguém lembra de ter aberto.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧱</div><div class="text-sm font-semibold text-amber-400">o que barrou</div><p class="text-xs text-neutral-400 mt-1">regra do ambiente</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">↪️</div><div class="text-sm font-semibold text-amber-400">contorno</div><p class="text-xs text-neutral-400 mt-1">o que você fez</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-amber-400">status</div><p class="text-xs text-neutral-400 mt-1">aberto ou aceito</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-amber-400">laboratório</div><p class="text-xs text-neutral-400 mt-1">também se anota</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Faça a revisão da semana com o agente</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t6-p1">Os três arquivos só ajudam se alguém os lê. Uma vez por semana, peça ao agente para ler tudo e transformar o que se repete em propostas. Ele faz a parte chata. Você faz a parte que importa: decidir.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t6-p2">São dois pedidos. O primeiro só gera propostas. O segundo, que você escreve depois de ler, aprova o que você quiser.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objetivo: o agente transforma a semana em propostas, sem aprovar nada</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> (ou <code>codex</code>) na pasta do projeto e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/FALHAS.md, runtime/LIMITES.md e a tabela Aprendizado de runtime/POLITICA.md. Procure o que se repete ou ainda está aberto. Para cada caso, acrescente uma linha na tabela Aprendizado com data, evidência, proposta em uma linha e status proposto. Não marque nada como aprovado e não altere o AGENTS.md nem o CLAUDE.md. No fim, liste as linhas que você acrescentou.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">Como verificar:</strong> as linhas novas aparecem só na tabela Aprendizado, todas com status <code>proposto</code>. A seção <code>## Lessons</code> do <code>AGENTS.md</code> continua igual.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">✍️ Depois de ler: o seu pedido de aprovação (troque o que está entre &lt; &gt;)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Na tabela Aprendizado de runtime/POLITICA.md, mude para aprovado a linha &lt;data e proposta&gt; e para recusado a linha &lt;data e proposta&gt;. Copie só a proposta aprovada, em uma linha, para ## Lessons do AGENTS.md.</pre>
+</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">O agente lê e propõe</h4><p class="text-neutral-300 text-sm">Primeiro pedido. Ele cruza FALHAS, LIMITES e as propostas antigas.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Você lê cada linha</h4><p class="text-neutral-300 text-sm">Pergunta-chave: esta regra afrouxa algum teto da POLITICA? Se afrouxa, recuse.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Você aprova ou recusa</h4><p class="text-neutral-300 text-sm">Segundo pedido, com as suas palavras. Só o aprovado vai para as Lessons.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Git guarda a mudança</h4><p class="text-neutral-300 text-sm">Como tudo é arquivo de texto, cada regra nova fica no histórico, com data. Dá para ver quando e por que entrou.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-4-2#q1">
+<p class="font-medium mb-4">Teste rápido (opcional): na revisão, o agente propôs "pode enviar lembrete aos pacientes sem perguntar". O que a Clara faz?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Nada: como o agente propôs, a regra já vale.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Recusa e deixa a linha na tabela: enviar tem teto N2, e a proposta furaria o teto.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Apaga a linha da tabela para o agente esquecer a ideia.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗓️</div><div class="text-sm font-semibold text-amber-400">Semanal</div><p class="text-xs text-neutral-400 mt-1">um horário fixo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📥</div><div class="text-sm font-semibold text-amber-400">Pedido 1</div><p class="text-xs text-neutral-400 mt-1">só propostas</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-amber-400">Pedido 2</div><p class="text-xs text-neutral-400 mt-1">a sua decisão</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🕰️</div><div class="text-sm font-semibold text-amber-400">Git</div><p class="text-xs text-neutral-400 mt-1">histórico das regras</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">O agente não muda as próprias regras</strong><span class="text-neutral-400"> — ele propõe uma linha.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Tabela Aprendizado</strong><span class="text-neutral-400"> — data, evidência, proposta, status.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Aprovado vira Lesson no AGENTS.md</strong><span class="text-neutral-400"> — e vale para o Claude e o Codex.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Quebrou: FALHAS. Não deixaram: LIMITES.</strong><span class="text-neutral-400"> — uma linha cada.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Revisão semanal em dois pedidos</strong><span class="text-neutral-400"> — o agente propõe, você decide.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">4.3 — Guarda e painel</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-3.html">Módulo 4.3 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Seção 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-1">1. Regras não se mudam sozinhas</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-2">2. Tabela Aprendizado</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-3">3. Lessons</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-4">4. FALHAS.md</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-5">5. LIMITES.md</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-6">6. Revisão da semana</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -778,11 +731,11 @@ Regras aprovadas pelo humano, uma por linha:
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
-  <script>
+<script>
     window.addEventListener('DOMContentLoaded', function () {
       if (window.INEMA && INEMA.registerCheck) {
 

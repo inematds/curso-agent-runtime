@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>A ponte do seu sistema | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>A ponte do seu sistema | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,230 +174,216 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="../trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="../trilha4/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-blue-400">Início</a><span>/</span>
-      <a href="index.html" class="hover:text-blue-400">Trilha 2</a><span>/</span>
-      <span class="text-blue-400">Módulo 2.3</span>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-3" data-inema-track="2">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.3</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ A ponte do seu sistema</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">A ponte-modelo funciona com os arquivos de exemplo. Agora ela passa a ler a exportação do seu sistema. Você troca o CSV e os nomes das colunas, e mantém a regra: a ponte só lê.</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Médio</div><div class="text-xs text-neutral-400">Nível</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
-      </div>
-      <div data-inema-meter="modulo:2-3" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 2.3">
-        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-      </div>
-    </div>
-  </header>
-
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
-  <main id="conteudo" class="min-w-0" data-inema-module="2-3" data-inema-track="2">
-
-    <!-- ===================== TOPICO 1 ===================== -->
-    <section id="topico-1" data-inema-topic="modulo-2-3#topico-1" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold flex-1">Ache a exportação do seu sistema</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m2-3-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">No módulo 2.2 a ponte leu <code>runtime/exemplos/agenda.csv</code> e <code>runtime/exemplos/erp-vendas.csv</code>. Esses arquivos imitam o que um sistema sem API entrega: uma <strong class="text-blue-400">exportação</strong>.</p>
-      <p data-inema-block="m2-3-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">O primeiro passo é achar esse arquivo no seu sistema. Procure nos menus por "Exportar", "Relatórios" ou "Salvar como CSV". No ERP do cliente da Sônia, é o relatório de vendas do mês, salvo numa pasta fixa.</p>
-
-      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três palavras deste módulo</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>Exportação</strong> — o arquivo que o sistema gera para você levar os dados para fora dele (CSV, planilha).</li>
-          <li><strong>Cabeçalho</strong> — a primeira linha do CSV, com o nome de cada coluna. A ponte usa esses nomes para achar os valores.</li>
-          <li><strong>Variável de ambiente</strong> — um valor com nome (como <code>PONTE_DADOS</code>) que um programa lê ao começar. Serve para mudar a configuração sem mexer no código.</li>
-        </ul>
-      </div>
-
-      <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 240" class="w-full h-auto" role="img" aria-label="Caminho dos dados da esquerda para a direita. O sistema sem API gera uma exportação CSV, que cai numa pasta. A ponte-modelo, em destaque, lê a pasta e oferece ferramentas ao agente. Abaixo, um aviso: a ponte só lê, nunca escreve de volta no sistema.">
-          <defs>
-            <pattern id="m23-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#60a5fa" opacity="0.10"/></pattern>
-            <filter id="m23-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m23-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="240" fill="url(#m23-grid)"/>
-          <rect x="20" y="70" width="150" height="70" rx="14" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-          <text x="95" y="100" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13">🏢 ERP / agenda</text>
-          <text x="95" y="120" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">sem API</text>
-          <line x1="172" y1="105" x2="222" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m23-arrow)"/>
-          <rect class="wf-a" x="226" y="70" width="140" height="70" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-          <text x="296" y="100" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">📄 exportação</text>
-          <text x="296" y="120" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">vendas.csv</text>
-          <line class="wf-flow" x1="368" y1="105" x2="418" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m23-arrow)"/>
-          <rect x="422" y="70" width="110" height="70" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-          <text x="477" y="100" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">📁 pasta</text>
-          <text x="477" y="120" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11">PONTE_DADOS</text>
-          <line class="wf-flow" x1="534" y1="105" x2="584" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m23-arrow)"/>
-          <g filter="url(#m23-glow)"><rect x="588" y="60" width="190" height="90" rx="14" fill="#0f1b33" stroke="#60a5fa" stroke-width="2"/></g>
-          <text x="683" y="92" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-weight="600" font-size="14">ponte-modelo</text>
-          <text x="683" y="112" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">lê o CSV e vira</text>
-          <text x="683" y="128" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">ferramenta do agente</text>
-          <rect x="200" y="182" width="400" height="36" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="1.8"/>
-          <text x="400" y="205" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="12">nenhuma seta volta para o sistema: a ponte só lê</text>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as setas azuis vão sempre da esquerda para a direita. O sistema gera o arquivo, o arquivo cai numa pasta e a ponte (caixa em destaque) lê essa pasta. Nada volta para o ERP: é isso que mantém o risco baixo.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
-          <h3 class="font-semibold text-blue-400 mb-3">✓ Exportação que a ponte lê fácil</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Primeira linha com o nome das colunas</li>
-            <li>✓ Colunas separadas por vírgula, como os exemplos do kit</li>
-            <li>✓ Sempre salva na mesma pasta, com o mesmo nome</li>
-            <li>✓ Números com ponto decimal (<code>18.50</code>)</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ Exportação que pede ajuste</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ Separada por ponto e vírgula (comum em planilha brasileira)</li>
-            <li>✗ Valores com vírgula dentro de um campo</li>
-            <li>✗ Linhas de título ou total antes do cabeçalho</li>
-            <li>✗ Nome do arquivo que muda todo dia</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que a coluna da direita importa</h3>
-        <p class="text-neutral-300 text-sm">A ponte-modelo separa as colunas cortando cada linha nas vírgulas. Se o seu arquivo usa ponto e vírgula, ou tem vírgula dentro de um nome, a leitura sai torta. Não é defeito: é um modelo simples. No tópico 3 você pede ao agente para ajustar isso.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-blue-400">Exportação</div><p class="text-xs text-neutral-400 mt-1">o arquivo que sai do sistema</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-blue-400">Cabeçalho</div><p class="text-xs text-neutral-400 mt-1">nomes das colunas</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-blue-400">Pasta fixa</div><p class="text-xs text-neutral-400 mt-1">mesmo lugar, mesmo nome</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-blue-400">Mão única</div><p class="text-xs text-neutral-400 mt-1">do sistema para o agente</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 2 ===================== -->
-    <section id="topico-2" data-inema-topic="modulo-2-3#topico-2" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold flex-1">Aponte a ponte para os seus arquivos</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m2-3-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">A ponte não tem o caminho dos arquivos gravado em pedra. Logo no começo do <code>server.mjs</code> ela pergunta: existe <code>PONTE_DADOS</code>? Se existe, lê dali. Se não, usa a pasta <code>runtime/exemplos/</code>.</p>
-      <p data-inema-block="m2-3-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">Esta é a linha real do arquivo do kit:</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 runtime/pontes/mcp-modelo/server.mjs (trecho real)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">const pastaExemplos = process.env.PONTE_DADOS || join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'exemplos');
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-3" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ A ponte do seu sistema</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">A ponte-modelo funciona com os arquivos de exemplo. Agora ela passa a ler a exportação do seu sistema. Você troca o CSV e os nomes das colunas, e mantém a regra: a ponte só lê.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Médio</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progresso do módulo 2.3" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:2-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="2-3" data-inema-track="2" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Ache a exportação do seu sistema</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t1-p1">No módulo 2.2 a ponte leu <code>runtime/exemplos/agenda.csv</code> e <code>runtime/exemplos/erp-vendas.csv</code>. Esses arquivos imitam o que um sistema sem API entrega: uma <strong class="text-blue-400">exportação</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t1-p2">O primeiro passo é achar esse arquivo no seu sistema. Procure nos menus por "Exportar", "Relatórios" ou "Salvar como CSV". No ERP do cliente da Sônia, é o relatório de vendas do mês, salvo numa pasta fixa.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Três palavras deste módulo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Exportação</strong> — o arquivo que o sistema gera para você levar os dados para fora dele (CSV, planilha).</li>
+<li><strong>Cabeçalho</strong> — a primeira linha do CSV, com o nome de cada coluna. A ponte usa esses nomes para achar os valores.</li>
+<li><strong>Variável de ambiente</strong> — um valor com nome (como <code>PONTE_DADOS</code>) que um programa lê ao começar. Serve para mudar a configuração sem mexer no código.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Caminho dos dados da esquerda para a direita. O sistema sem API gera uma exportação CSV, que cai numa pasta. A ponte-modelo, em destaque, lê a pasta e oferece ferramentas ao agente. Abaixo, um aviso: a ponte só lê, nunca escreve de volta no sistema." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m23-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m23-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m23-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23-grid)" height="240" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="70" rx="14" stroke="#6b7280" stroke-width="2" width="150" x="20" y="70"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="95" y="100">🏢 ERP / agenda</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="95" y="120">sem API</text>
+<line marker-end="url(#m23-arrow)" stroke="#38bdf8" stroke-width="2" x1="172" x2="222" y1="105" y2="105"></line>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="140" x="226" y="70"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="296" y="100">📄 exportação</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="296" y="120">vendas.csv</text>
+<line class="wf-flow" marker-end="url(#m23-arrow)" stroke="#38bdf8" stroke-width="2" x1="368" x2="418" y1="105" y2="105"></line>
+<rect fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="110" x="422" y="70"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="477" y="100">📁 pasta</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="477" y="120">PONTE_DADOS</text>
+<line class="wf-flow" marker-end="url(#m23-arrow)" stroke="#38bdf8" stroke-width="2" x1="534" x2="584" y1="105" y2="105"></line>
+<g filter="url(#m23-glow)"><rect fill="#0f1b33" height="90" rx="14" stroke="#60a5fa" stroke-width="2" width="190" x="588" y="60"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="683" y="92">ponte-modelo</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="683" y="112">lê o CSV e vira</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="683" y="128">ferramenta do agente</text>
+<rect fill="#2a0f0f" height="36" rx="10" stroke="#f87171" stroke-width="1.8" width="400" x="200" y="182"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="400" y="205">nenhuma seta volta para o sistema: a ponte só lê</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as setas azuis vão sempre da esquerda para a direita. O sistema gera o arquivo, o arquivo cai numa pasta e a ponte (caixa em destaque) lê essa pasta. Nada volta para o ERP: é isso que mantém o risco baixo.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Exportação que a ponte lê fácil</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Primeira linha com o nome das colunas</li>
+<li>✓ Colunas separadas por vírgula, como os exemplos do kit</li>
+<li>✓ Sempre salva na mesma pasta, com o mesmo nome</li>
+<li>✓ Números com ponto decimal (<code>18.50</code>)</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Exportação que pede ajuste</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Separada por ponto e vírgula (comum em planilha brasileira)</li>
+<li>✗ Valores com vírgula dentro de um campo</li>
+<li>✗ Linhas de título ou total antes do cabeçalho</li>
+<li>✗ Nome do arquivo que muda todo dia</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Por que a coluna da direita importa</h3>
+<p class="text-neutral-300 text-sm">A ponte-modelo separa as colunas cortando cada linha nas vírgulas. Se o seu arquivo usa ponto e vírgula, ou tem vírgula dentro de um nome, a leitura sai torta. Não é defeito: é um modelo simples. No tópico 3 você pede ao agente para ajustar isso.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-blue-400">Exportação</div><p class="text-xs text-neutral-400 mt-1">o arquivo que sai do sistema</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-blue-400">Cabeçalho</div><p class="text-xs text-neutral-400 mt-1">nomes das colunas</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-blue-400">Pasta fixa</div><p class="text-xs text-neutral-400 mt-1">mesmo lugar, mesmo nome</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-blue-400">Mão única</div><p class="text-xs text-neutral-400 mt-1">do sistema para o agente</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Aponte a ponte para os seus arquivos</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t2-p1">A ponte não tem o caminho dos arquivos gravado em pedra. Logo no começo do <code>server.mjs</code> ela pergunta: existe <code>PONTE_DADOS</code>? Se existe, lê dali. Se não, usa a pasta <code>runtime/exemplos/</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t2-p2">Esta é a linha real do arquivo do kit:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 runtime/pontes/mcp-modelo/server.mjs (trecho real)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">const pastaExemplos = process.env.PONTE_DADOS || join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'exemplos');
 
 function lerCsv(nome) {
   const [cabecalho, ...linhas] = readFileSync(join(pastaExemplos, nome), 'utf8').trim().split('\n');
   const campos = cabecalho.split(',');
   return linhas.map(l =&gt; Object.fromEntries(l.split(',').map((v, i) =&gt; [campos[i], v])));
 }</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">O que olhar:</strong> o <code>||</code> quer dizer "senão". E a função <code>lerCsv</code> junta a pasta com o <strong>nome</strong> do arquivo (<code>agenda.csv</code>, <code>erp-vendas.csv</code>). Ou sua exportação tem esse nome, ou você troca o nome no código (tópico 3).</div>
-      </div>
-
-      <p data-inema-block="m2-3-t2-p3" class="text-neutral-300 mb-4 leading-relaxed">A receita R3 manda pôr a variável no <code>.mcp.json</code>, no campo <code>env</code>. Assim, toda vez que o Claude Code liga a ponte, ela já nasce olhando para a sua pasta.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: a ponte ler a pasta da exportação, não os exemplos</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Edite o <code>.mcp.json</code> da raiz do kit. Hoje ele tem só <code>command</code> e <code>args</code>; acrescente o campo <code>env</code> com o caminho da sua pasta:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">{
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">O que olhar:</strong> o <code>||</code> quer dizer "senão". E a função <code>lerCsv</code> junta a pasta com o <strong>nome</strong> do arquivo (<code>agenda.csv</code>, <code>erp-vendas.csv</code>). Ou sua exportação tem esse nome, ou você troca o nome no código (tópico 3).</div>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t2-p3">A receita R3 manda pôr a variável no <code>.mcp.json</code>, no campo <code>env</code>. Assim, toda vez que o Claude Code liga a ponte, ela já nasce olhando para a sua pasta.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: a ponte ler a pasta da exportação, não os exemplos</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Edite o <code>.mcp.json</code> da raiz do kit. Hoje ele tem só <code>command</code> e <code>args</code>; acrescente o campo <code>env</code> com o caminho da sua pasta:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">{
   "mcpServers": {
     "ponte-modelo": {
       "command": "node",
@@ -409,57 +392,52 @@ function lerCsv(nome) {
     }
   }
 }</pre>
-          <p class="text-sm text-neutral-400 mt-4 mb-3">Feche o <code>claude</code>, abra de novo na pasta do kit e confira se a ponte continua ligada:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude mcp list</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux), linha da ponte:</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">ponte-modelo: node runtime/pontes/mcp-modelo/server.mjs - ✔ Connected</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> a linha termina em <code>✔ Connected</code>. Troque <code>/caminho/da/exportacao</code> pelo caminho completo da sua pasta, entre aspas, sem barra no fim.</div>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Situação</th><th class="px-4 py-3 font-semibold">De onde a ponte lê</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Sem <code>PONTE_DADOS</code></td><td class="px-4 py-3 text-neutral-300"><code>runtime/exemplos/</code> (Clara e Sônia de mentira)</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Com <code>PONTE_DADOS</code> no <code>env</code> do <code>.mcp.json</code></td><td class="px-4 py-3 text-neutral-300">a pasta que você escreveu ali</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Rodando <code>--selftest</code> direto no terminal</td><td class="px-4 py-3 text-neutral-300">os exemplos (o <code>.mcp.json</code> só vale quando o agente liga a ponte)</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a última linha evita confusão. O <code>--selftest</code> continua provando o modelo com os exemplos; quem lê a sua pasta é a ponte ligada pelo agente.</p>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Não renomeie a ponte por enquanto</h3>
-        <p class="text-neutral-300 text-sm">O <code>.claude/settings.json</code> do kit libera a ponte pelo nome, em <code>"enabledMcpjsonServers": ["ponte-modelo"]</code>. Se trocar o nome no <code>.mcp.json</code>, troque ali também, ou o Claude Code volta a pedir aprovação.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔀</div><div class="text-sm font-semibold text-blue-400">PONTE_DADOS</div><p class="text-xs text-neutral-400 mt-1">troca a pasta lida</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-blue-400">.mcp.json</div><p class="text-xs text-neutral-400 mt-1">campo env</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📛</div><div class="text-sm font-semibold text-blue-400">Nome do arquivo</div><p class="text-xs text-neutral-400 mt-1">fixo dentro do código</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✔</div><div class="text-sm font-semibold text-blue-400">Connected</div><p class="text-xs text-neutral-400 mt-1">claude mcp list</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 3 ===================== -->
-    <section id="topico-3" data-inema-topic="modulo-2-3#topico-3" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold flex-1">Troque as colunas com a ajuda do agente</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m2-3-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">Cada ferramenta da ponte tem uma função <code>run()</code>: é ali que a conta acontece. E ali estão os nomes das colunas do CSV de exemplo. Este é o <code>run()</code> real da ferramenta <code>resumo_vendas</code>:</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 server.mjs — run() de resumo_vendas (trecho real)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">run({ agrupar_por = 'cliente' } = {}) {
+<p class="text-sm text-neutral-400 mt-4 mb-3">Feche o <code>claude</code>, abra de novo na pasta do kit e confira se a ponte continua ligada:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude mcp list</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux), linha da ponte:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">ponte-modelo: node runtime/pontes/mcp-modelo/server.mjs - ✔ Connected</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> a linha termina em <code>✔ Connected</code>. Troque <code>/caminho/da/exportacao</code> pelo caminho completo da sua pasta, entre aspas, sem barra no fim.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Situação</th><th class="px-4 py-3 font-semibold">De onde a ponte lê</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Sem <code>PONTE_DADOS</code></td><td class="px-4 py-3 text-neutral-300"><code>runtime/exemplos/</code> (Clara e Sônia de mentira)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Com <code>PONTE_DADOS</code> no <code>env</code> do <code>.mcp.json</code></td><td class="px-4 py-3 text-neutral-300">a pasta que você escreveu ali</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Rodando <code>--selftest</code> direto no terminal</td><td class="px-4 py-3 text-neutral-300">os exemplos (o <code>.mcp.json</code> só vale quando o agente liga a ponte)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a última linha evita confusão. O <code>--selftest</code> continua provando o modelo com os exemplos; quem lê a sua pasta é a ponte ligada pelo agente.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Não renomeie a ponte por enquanto</h3>
+<p class="text-neutral-300 text-sm">O <code>.claude/settings.json</code> do kit libera a ponte pelo nome, em <code>"enabledMcpjsonServers": ["ponte-modelo"]</code>. Se trocar o nome no <code>.mcp.json</code>, troque ali também, ou o Claude Code volta a pedir aprovação.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔀</div><div class="text-sm font-semibold text-blue-400">PONTE_DADOS</div><p class="text-xs text-neutral-400 mt-1">troca a pasta lida</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-blue-400">.mcp.json</div><p class="text-xs text-neutral-400 mt-1">campo env</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📛</div><div class="text-sm font-semibold text-blue-400">Nome do arquivo</div><p class="text-xs text-neutral-400 mt-1">fixo dentro do código</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✔</div><div class="text-sm font-semibold text-blue-400">Connected</div><p class="text-xs text-neutral-400 mt-1">claude mcp list</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Troque as colunas com a ajuda do agente</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t3-p1">Cada ferramenta da ponte tem uma função <code>run()</code>: é ali que a conta acontece. E ali estão os nomes das colunas do CSV de exemplo. Este é o <code>run()</code> real da ferramenta <code>resumo_vendas</code>:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 server.mjs — run() de resumo_vendas (trecho real)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">run({ agrupar_por = 'cliente' } = {}) {
   const grupos = {};
   let total = 0;
   for (const r of lerCsv('erp-vendas.csv')) {
@@ -470,335 +448,309 @@ function lerCsv(nome) {
   const linhas = Object.entries(grupos).map(([k, v]) =&gt; `${k}: R$ ${v.toFixed(2)}`);
   return [...linhas, `TOTAL: R$ ${total.toFixed(2)}`].join('\n');
 },</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">O que olhar:</strong> <code>r.quantidade</code> e <code>r.valor_unitario</code> são nomes de coluna do cabeçalho de exemplo (<code>data,cliente,produto,quantidade,valor_unitario</code>). Se o seu ERP chama de outro jeito, é só isso que muda.</div>
-      </div>
-
-      <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 250" class="w-full h-auto" role="img" aria-label="Duas colunas ligadas por setas. À esquerda, o cabeçalho de um ERP qualquer com as colunas emissao, cliente, item, qtd e preco. À direita, os nomes que o run da ferramenta usa: data, cliente, produto, quantidade e valor_unitario. A caixa do run, em destaque, mostra que basta trocar os nomes para a conta continuar igual.">
-          <defs>
-            <pattern id="m23b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#60a5fa" opacity="0.10"/></pattern>
-            <filter id="m23b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m23b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="250" fill="url(#m23b-grid)"/>
-          <text x="140" y="26" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">cabeçalho do seu ERP (exemplo)</text>
-          <text x="560" y="26" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">o que o run() usa hoje</text>
-          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
-            <rect x="60" y="40" width="160" height="30" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/><text x="140" y="60" fill="#e5e7eb">emissao</text>
-            <rect x="60" y="80" width="160" height="30" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/><text x="140" y="100" fill="#e5e7eb">cliente</text>
-            <rect x="60" y="120" width="160" height="30" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/><text x="140" y="140" fill="#e5e7eb">item</text>
-            <rect x="60" y="160" width="160" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="140" y="180" fill="#bae6fd">qtd</text>
-            <rect x="60" y="200" width="160" height="30" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="140" y="220" fill="#bae6fd">preco</text>
-            <rect x="480" y="40" width="160" height="30" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/><text x="560" y="60" fill="#e5e7eb">data</text>
-            <rect x="480" y="80" width="160" height="30" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/><text x="560" y="100" fill="#e5e7eb">cliente</text>
-            <rect x="480" y="120" width="160" height="30" rx="8" fill="#1f2937" stroke="#6b7280" stroke-width="1.5"/><text x="560" y="140" fill="#e5e7eb">produto</text>
-            <rect x="480" y="160" width="160" height="30" rx="8" fill="#0f1b33" stroke="#60a5fa" stroke-width="1.8"/><text x="560" y="180" fill="#bfdbfe">quantidade</text>
-            <rect x="480" y="200" width="160" height="30" rx="8" fill="#0f1b33" stroke="#60a5fa" stroke-width="1.8"/><text x="560" y="220" fill="#bfdbfe">valor_unitario</text>
-          </g>
-          <g stroke="#38bdf8" stroke-width="1.8">
-            <line x1="222" y1="55" x2="476" y2="55" marker-end="url(#m23b-arrow)" opacity="0.5"/>
-            <line x1="222" y1="95" x2="476" y2="95" marker-end="url(#m23b-arrow)" opacity="0.5"/>
-            <line x1="222" y1="135" x2="476" y2="135" marker-end="url(#m23b-arrow)" opacity="0.5"/>
-            <line class="wf-flow" x1="222" y1="175" x2="476" y2="175" marker-end="url(#m23b-arrow)"/>
-            <line class="wf-flow" x1="222" y1="215" x2="476" y2="215" marker-end="url(#m23b-arrow)"/>
-          </g>
-          <g filter="url(#m23b-glow)"><rect x="660" y="150" width="125" height="90" rx="14" fill="#0f1b33" stroke="#60a5fa" stroke-width="2"/></g>
-          <text x="722" y="182" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-weight="600" font-size="13">run()</text>
-          <text x="722" y="202" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">qtd × preco</text>
-          <text x="722" y="220" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">conta igual</text>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> à esquerda, um cabeçalho inventado de um ERP qualquer; à direita, os nomes que o código espera. As duas setas acesas são as que entram na conta. Trocar o nome no código é ligar a seta certa: a regra (quantidade vezes preço) não muda.</p>
-
-      <p data-inema-block="m2-3-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">Você não precisa editar o código à mão. Peça ao agente, com limite escrito: só trocar nomes dentro do <code>run()</code>, sem criar ferramenta que escreve.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: a ferramenta resumo_vendas ler as colunas do seu arquivo</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole (troque o que está entre &lt; &gt;):</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/pontes/mcp-modelo/server.mjs e a primeira linha do meu arquivo &lt;/caminho/da/exportacao/vendas.csv&gt;.
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">O que olhar:</strong> <code>r.quantidade</code> e <code>r.valor_unitario</code> são nomes de coluna do cabeçalho de exemplo (<code>data,cliente,produto,quantidade,valor_unitario</code>). Se o seu ERP chama de outro jeito, é só isso que muda.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Duas colunas ligadas por setas. À esquerda, o cabeçalho de um ERP qualquer com as colunas emissao, cliente, item, qtd e preco. À direita, os nomes que o run da ferramenta usa: data, cliente, produto, quantidade e valor_unitario. A caixa do run, em destaque, mostra que basta trocar os nomes para a conta continuar igual." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m23b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m23b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m23b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23b-grid)" height="250" width="800" x="0" y="0"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="140" y="26">cabeçalho do seu ERP (exemplo)</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="560" y="26">o que o run() usa hoje</text>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="60" y="40"></rect><text fill="#e5e7eb" x="140" y="60">emissao</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="60" y="80"></rect><text fill="#e5e7eb" x="140" y="100">cliente</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="60" y="120"></rect><text fill="#e5e7eb" x="140" y="140">item</text>
+<rect fill="#0b1f2e" height="30" rx="8" stroke="#38bdf8" stroke-width="1.8" width="160" x="60" y="160"></rect><text fill="#bae6fd" x="140" y="180">qtd</text>
+<rect fill="#0b1f2e" height="30" rx="8" stroke="#38bdf8" stroke-width="1.8" width="160" x="60" y="200"></rect><text fill="#bae6fd" x="140" y="220">preco</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="480" y="40"></rect><text fill="#e5e7eb" x="560" y="60">data</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="480" y="80"></rect><text fill="#e5e7eb" x="560" y="100">cliente</text>
+<rect fill="#1f2937" height="30" rx="8" stroke="#6b7280" stroke-width="1.5" width="160" x="480" y="120"></rect><text fill="#e5e7eb" x="560" y="140">produto</text>
+<rect fill="#0f1b33" height="30" rx="8" stroke="#60a5fa" stroke-width="1.8" width="160" x="480" y="160"></rect><text fill="#bfdbfe" x="560" y="180">quantidade</text>
+<rect fill="#0f1b33" height="30" rx="8" stroke="#60a5fa" stroke-width="1.8" width="160" x="480" y="200"></rect><text fill="#bfdbfe" x="560" y="220">valor_unitario</text>
+</g>
+<g stroke="#38bdf8" stroke-width="1.8">
+<line marker-end="url(#m23b-arrow)" opacity="0.5" x1="222" x2="476" y1="55" y2="55"></line>
+<line marker-end="url(#m23b-arrow)" opacity="0.5" x1="222" x2="476" y1="95" y2="95"></line>
+<line marker-end="url(#m23b-arrow)" opacity="0.5" x1="222" x2="476" y1="135" y2="135"></line>
+<line class="wf-flow" marker-end="url(#m23b-arrow)" x1="222" x2="476" y1="175" y2="175"></line>
+<line class="wf-flow" marker-end="url(#m23b-arrow)" x1="222" x2="476" y1="215" y2="215"></line>
+</g>
+<g filter="url(#m23b-glow)"><rect fill="#0f1b33" height="90" rx="14" stroke="#60a5fa" stroke-width="2" width="125" x="660" y="150"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="722" y="182">run()</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="722" y="202">qtd × preco</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="722" y="220">conta igual</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> à esquerda, um cabeçalho inventado de um ERP qualquer; à direita, os nomes que o código espera. As duas setas acesas são as que entram na conta. Trocar o nome no código é ligar a seta certa: a regra (quantidade vezes preço) não muda.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t3-p2">Você não precisa editar o código à mão. Peça ao agente, com limite escrito: só trocar nomes dentro do <code>run()</code>, sem criar ferramenta que escreve.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: a ferramenta resumo_vendas ler as colunas do seu arquivo</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole (troque o que está entre &lt; &gt;):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/pontes/mcp-modelo/server.mjs e a primeira linha do meu arquivo &lt;/caminho/da/exportacao/vendas.csv&gt;.
 Na ferramenta resumo_vendas, troque só os nomes de colunas usados em run() e o nome do arquivo em lerCsv pelos do meu arquivo.
 Se o meu arquivo usar ponto e vírgula, ajuste a separação em lerCsv.
 Não crie ferramenta que escreve e não mexa em listar_horarios_livres.
 Antes de salvar, me mostre o antes e o depois de cada linha alterada.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> o agente mostra só linhas de <code>run()</code> e de <code>lerCsv</code> mudando. Se aparecer uma ferramenta nova ou alguma escrita em arquivo, recuse e peça de novo.</div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Guarde a prova antiga antes de mexer</h3>
-        <p class="text-neutral-300 text-sm">Rode o <code>--selftest</code> uma vez antes da troca e anote o <code>TOTAL: R$ 856.00</code>. Depois da troca, o selftest continua lendo os exemplos, que têm os nomes antigos, então o total dele deixa de valer. A prova passa a ser a conta na mão com os seus dados (tópico 5).</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-blue-400">run()</div><p class="text-xs text-neutral-400 mt-1">onde a conta acontece</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-blue-400">Nome da coluna</div><p class="text-xs text-neutral-400 mt-1">o que você troca</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📏</div><div class="text-sm font-semibold text-blue-400">A regra</div><p class="text-xs text-neutral-400 mt-1">o que fica igual</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-blue-400">Antes e depois</div><p class="text-xs text-neutral-400 mt-1">você confere</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 4 ===================== -->
-    <section id="topico-4" data-inema-topic="modulo-2-3#topico-4" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold flex-1">Mantenha a ponte só de leitura</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m2-3-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">O próprio <code>server.mjs</code> traz a regra num comentário: <em>"POLITICA: as duas tools só LEEM (N4). Tool que escreve precisa de outro nível e de confirmação."</em></p>
-      <p data-inema-block="m2-3-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">Ler é N4: o agente faz sozinho, sem aviso, porque nada muda no mundo. A tentação aparece logo. A Clara vai querer que o agente <strong>marque</strong> consulta, não só liste horário. Isso já é escrever, e a receita R3 é clara: ferramenta que escreve sobe para "alterar" na <code>POLITICA.md</code>, N2, pede antes.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
-          <h3 class="font-semibold text-blue-400 mb-3">✓ Ferramenta de leitura (N4)</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ <code>listar_horarios_livres</code>: mostra o que está livre</li>
-            <li>✓ <code>resumo_vendas</code>: soma e agrupa</li>
-            <li>✓ Errar aqui custa uma resposta errada, não um dado estragado</li>
-            <li>✓ O agente usa sem pedir</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ Ferramenta que escreve (sobe para N2)</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ Marcar paciente num horário da agenda</li>
-            <li>✗ Lançar ou corrigir venda no arquivo do ERP</li>
-            <li>✗ Errar aqui estraga o dado que outros usam</li>
-            <li>✗ Só com pedido e "sim" a cada vez</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Comece só lendo</h4><p class="text-neutral-300 text-sm">Use a ponte por algumas semanas apenas para consultar. Você aprende onde ela erra sem risco.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Se precisar escrever, mude o nível primeiro</h4><p class="text-neutral-300 text-sm">Antes do código, a linha na <code>CAPACIDADES.md</code> passa a dizer "alterar (N2)", como no exemplo da agenda que vem no arquivo.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ferramenta de escrita separada</h4><p class="text-neutral-300 text-sm">Nunca transforme uma ferramenta de leitura em "lê e escreve". Uma nova, com nome que diga o que faz, deixa claro quando o agente vai pedir.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Leia o que o agente escreveu na ponte</h3>
-        <p class="text-neutral-300 text-sm">Quando o agente mexe no <code>server.mjs</code>, ele mexe no programa que vai rodar toda vez que você pedir algo. Procure no antes e depois palavras como <code>writeFileSync</code> ou <code>appendFileSync</code>: elas gravam em arquivo. Numa ponte só de leitura, só <code>readFileSync</code> deve aparecer.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👁️</div><div class="text-sm font-semibold text-blue-400">Ler = N4</div><p class="text-xs text-neutral-400 mt-1">sozinho, sem aviso</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-blue-400">Escrever = N2</div><p class="text-xs text-neutral-400 mt-1">pede a cada vez</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Ferramenta separada</div><p class="text-xs text-neutral-400 mt-1">um nome, uma ação</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔍</div><div class="text-sm font-semibold text-blue-400">readFileSync</div><p class="text-xs text-neutral-400 mt-1">o único que lê sem gravar</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 5 ===================== -->
-    <section id="topico-5" data-inema-topic="modulo-2-3#topico-5" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold flex-1">Confira o resumo da Sônia na mão</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m2-3-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">Uma ponte nova só vale depois de uma conta que você mesmo fez. Não porque o código erra muito, mas porque um nome de coluna trocado errado não dá erro: dá um número errado com cara de certo.</p>
-      <p data-inema-block="m2-3-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">Treine com os dados da Sônia, que você conhece. Rode o selftest e refaça o total com calculadora.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: ver o total que a ponte calcula</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/pontes/mcp-modelo/server.mjs --selftest</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux):</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">tools: 2 (listar_horarios_livres, resumo_vendas)
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> o agente mostra só linhas de <code>run()</code> e de <code>lerCsv</code> mudando. Se aparecer uma ferramenta nova ou alguma escrita em arquivo, recuse e peça de novo.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Guarde a prova antiga antes de mexer</h3>
+<p class="text-neutral-300 text-sm">Rode o <code>--selftest</code> uma vez antes da troca e anote o <code>TOTAL: R$ 856.00</code>. Depois da troca, o selftest continua lendo os exemplos, que têm os nomes antigos, então o total dele deixa de valer. A prova passa a ser a conta na mão com os seus dados (tópico 5).</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-blue-400">run()</div><p class="text-xs text-neutral-400 mt-1">onde a conta acontece</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-blue-400">Nome da coluna</div><p class="text-xs text-neutral-400 mt-1">o que você troca</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📏</div><div class="text-sm font-semibold text-blue-400">A regra</div><p class="text-xs text-neutral-400 mt-1">o que fica igual</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-blue-400">Antes e depois</div><p class="text-xs text-neutral-400 mt-1">você confere</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Mantenha a ponte só de leitura</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t4-p1">O próprio <code>server.mjs</code> traz a regra num comentário: <em>"POLITICA: as duas tools só LEEM (N4). Tool que escreve precisa de outro nível e de confirmação."</em></p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t4-p2">Ler é N4: o agente faz sozinho, sem aviso, porque nada muda no mundo. A tentação aparece logo. A Clara vai querer que o agente <strong>marque</strong> consulta, não só liste horário. Isso já é escrever, e a receita R3 é clara: ferramenta que escreve sobe para "alterar" na <code>POLITICA.md</code>, N2, pede antes.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Ferramenta de leitura (N4)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ <code>listar_horarios_livres</code>: mostra o que está livre</li>
+<li>✓ <code>resumo_vendas</code>: soma e agrupa</li>
+<li>✓ Errar aqui custa uma resposta errada, não um dado estragado</li>
+<li>✓ O agente usa sem pedir</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Ferramenta que escreve (sobe para N2)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Marcar paciente num horário da agenda</li>
+<li>✗ Lançar ou corrigir venda no arquivo do ERP</li>
+<li>✗ Errar aqui estraga o dado que outros usam</li>
+<li>✗ Só com pedido e "sim" a cada vez</li>
+</ul>
+</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Comece só lendo</h4><p class="text-neutral-300 text-sm">Use a ponte por algumas semanas apenas para consultar. Você aprende onde ela erra sem risco.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Se precisar escrever, mude o nível primeiro</h4><p class="text-neutral-300 text-sm">Antes do código, a linha na <code>CAPACIDADES.md</code> passa a dizer "alterar (N2)", como no exemplo da agenda que vem no arquivo.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ferramenta de escrita separada</h4><p class="text-neutral-300 text-sm">Nunca transforme uma ferramenta de leitura em "lê e escreve". Uma nova, com nome que diga o que faz, deixa claro quando o agente vai pedir.</p></div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Leia o que o agente escreveu na ponte</h3>
+<p class="text-neutral-300 text-sm">Quando o agente mexe no <code>server.mjs</code>, ele mexe no programa que vai rodar toda vez que você pedir algo. Procure no antes e depois palavras como <code>writeFileSync</code> ou <code>appendFileSync</code>: elas gravam em arquivo. Numa ponte só de leitura, só <code>readFileSync</code> deve aparecer.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👁️</div><div class="text-sm font-semibold text-blue-400">Ler = N4</div><p class="text-xs text-neutral-400 mt-1">sozinho, sem aviso</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-blue-400">Escrever = N2</div><p class="text-xs text-neutral-400 mt-1">pede a cada vez</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Ferramenta separada</div><p class="text-xs text-neutral-400 mt-1">um nome, uma ação</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔍</div><div class="text-sm font-semibold text-blue-400">readFileSync</div><p class="text-xs text-neutral-400 mt-1">o único que lê sem gravar</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Confira o resumo da Sônia na mão</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t5-p1">Uma ponte nova só vale depois de uma conta que você mesmo fez. Não porque o código erra muito, mas porque um nome de coluna trocado errado não dá erro: dá um número errado com cara de certo.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t5-p2">Treine com os dados da Sônia, que você conhece. Rode o selftest e refaça o total com calculadora.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: ver o total que a ponte calcula</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/pontes/mcp-modelo/server.mjs --selftest</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">tools: 2 (listar_horarios_livres, resumo_vendas)
 2026-10-06 09:00 · Dra. Ana
 2026-10-06 10:00 · Dra. Ana
 2026-10-06 15:00 · Dr. Bruno
 TOTAL: R$ 856.00</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> a última linha é <code>TOTAL: R$ 856.00</code>. Agora feche o terminal e faça a conta da tabela abaixo.</div>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Linha do erp-vendas.csv</th><th class="px-4 py-3 font-semibold">Conta</th><th class="px-4 py-3 font-semibold">Valor</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">01/10 · Mercado Sol · Café 500g</td><td class="px-4 py-3 text-neutral-300">10 × 18,50</td><td class="px-4 py-3 text-neutral-300">185,00</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">01/10 · Padaria Lua · Açúcar 1kg</td><td class="px-4 py-3 text-neutral-300">25 × 5,20</td><td class="px-4 py-3 text-neutral-300">130,00</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">02/10 · Mercado Sol · Açúcar 1kg</td><td class="px-4 py-3 text-neutral-300">40 × 5,20</td><td class="px-4 py-3 text-neutral-300">208,00</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">03/10 · Empório Mar · Café 500g</td><td class="px-4 py-3 text-neutral-300">6 × 18,50</td><td class="px-4 py-3 text-neutral-300">111,00</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">03/10 · Padaria Lua · Café 500g</td><td class="px-4 py-3 text-neutral-300">12 × 18,50</td><td class="px-4 py-3 text-neutral-300">222,00</td></tr>
-            <tr class="bg-dark-700/40"><td class="px-4 py-3 text-blue-400 font-semibold">Total</td><td class="px-4 py-3 text-neutral-300">185 + 130 + 208 + 111 + 222</td><td class="px-4 py-3 text-blue-400 font-semibold">856,00</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> por cliente, a mesma conta dá Mercado Sol 393,00 (185 + 208), Padaria Lua 352,00 (130 + 222) e Empório Mar 111,00. Somando os três, 856,00 de novo. Quando a ponte ler os dados reais, faça o mesmo com três ou quatro linhas que você consegue somar.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: comparar a resposta do agente com a sua conta</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use a tool resumo_vendas da ponte-modelo agrupando por cliente. Mostre a resposta da ferramenta sem arredondar e sem comentar.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> cada cliente bate com a sua conta e a última linha traz o total. Se um valor não bate, a primeira suspeita é um nome de coluna trocado errado.</div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A conta na mão vira a sua prova</h3>
-        <p class="text-neutral-300 text-sm">Anote: "arquivo de tal dia, cliente X, valor Y". Isso é uma prova no formato do kit, <strong>comando → saída esperada</strong>. No módulo 3.4 ela entra no goal e passa a ser conferida sozinha.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-blue-400">Calculadora</div><p class="text-xs text-neutral-400 mt-1">três linhas bastam</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎯</div><div class="text-sm font-semibold text-blue-400">R$ 856,00</div><p class="text-xs text-neutral-400 mt-1">o total da Sônia</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-blue-400">Coluna trocada</div><p class="text-xs text-neutral-400 mt-1">número errado sem erro</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-blue-400">Prova</div><p class="text-xs text-neutral-400 mt-1">comando → saída</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 6 ===================== -->
-    <section id="topico-6" data-inema-topic="modulo-2-3#topico-6" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold flex-1">Registre a ponte no CAPACIDADES.md</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m2-3-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">A regra do <code>runtime/CAPACIDADES.md</code> vale aqui: <strong class="text-blue-400">sistema sem linha não é usado pelo agente</strong>. A ponte só entra no mapa depois da conta na mão, e com a data do teste.</p>
-      <p data-inema-block="m2-3-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">O arquivo já traz um exemplo para o caso da Sônia, marcado como pendente:</p>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 runtime/CAPACIDADES.md — exemplo para copiar (real)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| ERP sem API                  | Exportação CSV diária   | 6 | ler ~/erp/export/*.csv          | ler (N4)        | pendente |</pre>
-          <p class="text-sm text-neutral-400 mt-4 mb-3">Depois da conta conferida, a linha da Sônia fica assim (troque pelos dados do seu teste):</p>
-          <pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| ERP da distribuidora | Exportação CSV + ponte MCP | 6 | tool resumo_vendas da ponte-modelo | ler (N4) | &lt;AAAA-MM-DD&gt; ok |</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">O que mudou:</strong> a coluna "Como o agente chama" agora diz a ferramenta, e "Testado em" troca <code>pendente</code> pela data com <code>ok</code>.</div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: o agente registrar a ponte com você conferindo</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Acrescente uma linha na tabela de runtime/CAPACIDADES.md para a ponte-modelo lendo a minha exportação: via ponte local por MCP, nível 6, política ler (N4), testado em &lt;data de hoje&gt; ok. Não mude as outras linhas. Mostre a linha antes de salvar.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> abra o <code>runtime/CAPACIDADES.md</code> e veja a linha nova na tabela principal, com as seis colunas preenchidas.</div>
-      </div>
-
-      <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 180" class="w-full h-auto" role="img" aria-label="Quatro passos em linha para a ponte entrar em uso: exportação achada, PONTE_DADOS apontada, conta conferida na mão e, em destaque, linha no CAPACIDADES.md com data. Só depois do quarto passo o agente usa a ponte.">
-          <defs>
-            <pattern id="m23c-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#60a5fa" opacity="0.10"/></pattern>
-            <filter id="m23c-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m23c-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="180" fill="url(#m23c-grid)"/>
-          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
-            <rect class="wf-a" x="20" y="60" width="150" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="95" y="86" fill="#bae6fd">1 · exportação</text><text x="95" y="104" fill="#7dd3fc" font-size="11">achada</text>
-            <rect class="wf-a" x="210" y="60" width="150" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="285" y="86" fill="#bae6fd">2 · PONTE_DADOS</text><text x="285" y="104" fill="#7dd3fc" font-size="11">apontada</text>
-            <rect class="wf-a" x="400" y="60" width="150" height="60" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="475" y="86" fill="#bae6fd">3 · conta</text><text x="475" y="104" fill="#7dd3fc" font-size="11">conferida na mão</text>
-          </g>
-          <g stroke="#38bdf8" stroke-width="2">
-            <line class="wf-flow" x1="172" y1="90" x2="206" y2="90" marker-end="url(#m23c-arrow)"/>
-            <line class="wf-flow" x1="362" y1="90" x2="396" y2="90" marker-end="url(#m23c-arrow)"/>
-            <line class="wf-flow" x1="552" y1="90" x2="586" y2="90" marker-end="url(#m23c-arrow)"/>
-          </g>
-          <g filter="url(#m23c-glow)"><rect x="590" y="50" width="190" height="80" rx="14" fill="#0f1b33" stroke="#60a5fa" stroke-width="2"/></g>
-          <text x="685" y="82" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-weight="600" font-size="13">4 · CAPACIDADES.md</text>
-          <text x="685" y="102" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11">linha com data e ok</text>
-          <text x="685" y="155" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">só daqui em diante o agente usa</text>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> os três primeiros passos são técnicos; o quarto (em destaque) é o que libera o uso. Pular a linha no mapa é deixar o agente usar um sistema que ninguém registrou.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-3#q1">
-        <p class="font-medium mb-4">Teste rápido (opcional): você apontou a ponte para a exportação do ERP e trocou as colunas. O que libera o agente para usar a ponte no dia a dia?</p>
-        <div class="space-y-2">
-          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">O <code>claude mcp list</code> mostrar <code>✔ Connected</code>.</button>
-          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Acrescentar uma ferramenta que também grava no arquivo, para economizar trabalho.</button>
-          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">A conta conferida na mão e a linha no CAPACIDADES.md com a data do teste.</button>
-        </div>
-        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-blue-400">Mapa</div><p class="text-xs text-neutral-400 mt-1">sem linha, sem uso</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-blue-400">Data do teste</div><p class="text-xs text-neutral-400 mt-1">pendente vira ok</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧰</div><div class="text-sm font-semibold text-blue-400">Nome da tool</div><p class="text-xs text-neutral-400 mt-1">como o agente chama</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔒</div><div class="text-sm font-semibold text-blue-400">ler (N4)</div><p class="text-xs text-neutral-400 mt-1">a política da linha</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== RESUMO ===================== -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Exportação é a matéria-prima</strong><span class="text-neutral-400"> — cabeçalho, vírgula, pasta fixa.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">PONTE_DADOS troca a pasta</strong><span class="text-neutral-400"> — no campo env do .mcp.json.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Troque os nomes, não a regra</strong><span class="text-neutral-400"> — só dentro do run(), com o agente mostrando antes e depois.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Ponte só lê</strong><span class="text-neutral-400"> — escrever sobe para N2 e vira outra ferramenta.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Conta na mão, depois o mapa</strong><span class="text-neutral-400"> — R$ 856,00 conferido e linha com data.</span></div></div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
-          <p class="text-neutral-300">2.4 — Navegador com política</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
-          <a href="modulo-2-4.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Módulo 2.4 →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <aside class="hidden lg:block">
-    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
-      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
-      <ol class="space-y-2 text-sm">
-        <li><a href="#topico-1" class="text-neutral-400 hover:text-blue-400">1. A exportação</a></li>
-        <li><a href="#topico-2" class="text-neutral-400 hover:text-blue-400">2. PONTE_DADOS</a></li>
-        <li><a href="#topico-3" class="text-neutral-400 hover:text-blue-400">3. Trocar colunas</a></li>
-        <li><a href="#topico-4" class="text-neutral-400 hover:text-blue-400">4. Só leitura</a></li>
-        <li><a href="#topico-5" class="text-neutral-400 hover:text-blue-400">5. Conta na mão</a></li>
-        <li><a href="#topico-6" class="text-neutral-400 hover:text-blue-400">6. No CAPACIDADES.md</a></li>
-      </ol>
-    </nav>
-  </aside>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> a última linha é <code>TOTAL: R$ 856.00</code>. Agora feche o terminal e faça a conta da tabela abaixo.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Linha do erp-vendas.csv</th><th class="px-4 py-3 font-semibold">Conta</th><th class="px-4 py-3 font-semibold">Valor</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">01/10 · Mercado Sol · Café 500g</td><td class="px-4 py-3 text-neutral-300">10 × 18,50</td><td class="px-4 py-3 text-neutral-300">185,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">01/10 · Padaria Lua · Açúcar 1kg</td><td class="px-4 py-3 text-neutral-300">25 × 5,20</td><td class="px-4 py-3 text-neutral-300">130,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">02/10 · Mercado Sol · Açúcar 1kg</td><td class="px-4 py-3 text-neutral-300">40 × 5,20</td><td class="px-4 py-3 text-neutral-300">208,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">03/10 · Empório Mar · Café 500g</td><td class="px-4 py-3 text-neutral-300">6 × 18,50</td><td class="px-4 py-3 text-neutral-300">111,00</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">03/10 · Padaria Lua · Café 500g</td><td class="px-4 py-3 text-neutral-300">12 × 18,50</td><td class="px-4 py-3 text-neutral-300">222,00</td></tr>
+<tr class="bg-dark-700/40"><td class="px-4 py-3 text-blue-400 font-semibold">Total</td><td class="px-4 py-3 text-neutral-300">185 + 130 + 208 + 111 + 222</td><td class="px-4 py-3 text-blue-400 font-semibold">856,00</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> por cliente, a mesma conta dá Mercado Sol 393,00 (185 + 208), Padaria Lua 352,00 (130 + 222) e Empório Mar 111,00. Somando os três, 856,00 de novo. Quando a ponte ler os dados reais, faça o mesmo com três ou quatro linhas que você consegue somar.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: comparar a resposta do agente com a sua conta</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use a tool resumo_vendas da ponte-modelo agrupando por cliente. Mostre a resposta da ferramenta sem arredondar e sem comentar.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> cada cliente bate com a sua conta e a última linha traz o total. Se um valor não bate, a primeira suspeita é um nome de coluna trocado errado.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A conta na mão vira a sua prova</h3>
+<p class="text-neutral-300 text-sm">Anote: "arquivo de tal dia, cliente X, valor Y". Isso é uma prova no formato do kit, <strong>comando → saída esperada</strong>. No módulo 3.4 ela entra no goal e passa a ser conferida sozinha.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-blue-400">Calculadora</div><p class="text-xs text-neutral-400 mt-1">três linhas bastam</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎯</div><div class="text-sm font-semibold text-blue-400">R$ 856,00</div><p class="text-xs text-neutral-400 mt-1">o total da Sônia</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-blue-400">Coluna trocada</div><p class="text-xs text-neutral-400 mt-1">número errado sem erro</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-blue-400">Prova</div><p class="text-xs text-neutral-400 mt-1">comando → saída</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Registre a ponte no CAPACIDADES.md</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-3-t6-p1">A regra do <code>runtime/CAPACIDADES.md</code> vale aqui: <strong class="text-blue-400">sistema sem linha não é usado pelo agente</strong>. A ponte só entra no mapa depois da conta na mão, e com a data do teste.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t6-p2">O arquivo já traz um exemplo para o caso da Sônia, marcado como pendente:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 runtime/CAPACIDADES.md — exemplo para copiar (real)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| ERP sem API                  | Exportação CSV diária   | 6 | ler ~/erp/export/*.csv          | ler (N4)        | pendente |</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">Depois da conta conferida, a linha da Sônia fica assim (troque pelos dados do seu teste):</p>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| ERP da distribuidora | Exportação CSV + ponte MCP | 6 | tool resumo_vendas da ponte-modelo | ler (N4) | &lt;AAAA-MM-DD&gt; ok |</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">O que mudou:</strong> a coluna "Como o agente chama" agora diz a ferramenta, e "Testado em" troca <code>pendente</code> pela data com <code>ok</code>.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: o agente registrar a ponte com você conferindo</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Acrescente uma linha na tabela de runtime/CAPACIDADES.md para a ponte-modelo lendo a minha exportação: via ponte local por MCP, nível 6, política ler (N4), testado em &lt;data de hoje&gt; ok. Não mude as outras linhas. Mostre a linha antes de salvar.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Como verificar:</strong> abra o <code>runtime/CAPACIDADES.md</code> e veja a linha nova na tabela principal, com as seis colunas preenchidas.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Quatro passos em linha para a ponte entrar em uso: exportação achada, PONTE_DADOS apontada, conta conferida na mão e, em destaque, linha no CAPACIDADES.md com data. Só depois do quarto passo o agente usa a ponte." class="w-full h-auto" role="img" viewbox="0 0 800 180">
+<defs>
+<pattern height="32" id="m23c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m23c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m23c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23c-grid)" height="180" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="20" y="60"></rect><text fill="#bae6fd" x="95" y="86">1 · exportação</text><text fill="#7dd3fc" font-size="11" x="95" y="104">achada</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="210" y="60"></rect><text fill="#bae6fd" x="285" y="86">2 · PONTE_DADOS</text><text fill="#7dd3fc" font-size="11" x="285" y="104">apontada</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="400" y="60"></rect><text fill="#bae6fd" x="475" y="86">3 · conta</text><text fill="#7dd3fc" font-size="11" x="475" y="104">conferida na mão</text>
+</g>
+<g stroke="#38bdf8" stroke-width="2">
+<line class="wf-flow" marker-end="url(#m23c-arrow)" x1="172" x2="206" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m23c-arrow)" x1="362" x2="396" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m23c-arrow)" x1="552" x2="586" y1="90" y2="90"></line>
+</g>
+<g filter="url(#m23c-glow)"><rect fill="#0f1b33" height="80" rx="14" stroke="#60a5fa" stroke-width="2" width="190" x="590" y="50"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="685" y="82">4 · CAPACIDADES.md</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="685" y="102">linha com data e ok</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="685" y="155">só daqui em diante o agente usa</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> os três primeiros passos são técnicos; o quarto (em destaque) é o que libera o uso. Pular a linha no mapa é deixar o agente usar um sistema que ninguém registrou.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-3#q1">
+<p class="font-medium mb-4">Teste rápido (opcional): você apontou a ponte para a exportação do ERP e trocou as colunas. O que libera o agente para usar a ponte no dia a dia?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">O <code>claude mcp list</code> mostrar <code>✔ Connected</code>.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Acrescentar uma ferramenta que também grava no arquivo, para economizar trabalho.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">A conta conferida na mão e a linha no CAPACIDADES.md com a data do teste.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-blue-400">Mapa</div><p class="text-xs text-neutral-400 mt-1">sem linha, sem uso</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-blue-400">Data do teste</div><p class="text-xs text-neutral-400 mt-1">pendente vira ok</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧰</div><div class="text-sm font-semibold text-blue-400">Nome da tool</div><p class="text-xs text-neutral-400 mt-1">como o agente chama</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔒</div><div class="text-sm font-semibold text-blue-400">ler (N4)</div><p class="text-xs text-neutral-400 mt-1">a política da linha</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Exportação é a matéria-prima</strong><span class="text-neutral-400"> — cabeçalho, vírgula, pasta fixa.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">PONTE_DADOS troca a pasta</strong><span class="text-neutral-400"> — no campo env do .mcp.json.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Troque os nomes, não a regra</strong><span class="text-neutral-400"> — só dentro do run(), com o agente mostrando antes e depois.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Ponte só lê</strong><span class="text-neutral-400"> — escrever sobe para N2 e vira outra ferramenta.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Conta na mão, depois o mapa</strong><span class="text-neutral-400"> — R$ 856,00 conferido e linha com data.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">2.4 — Navegador com política</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-4.html">Módulo 2.4 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Seção 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-1">1. A exportação</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-2">2. PONTE_DADOS</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-3">3. Trocar colunas</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-4">4. Só leitura</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-5">5. Conta na mão</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-6">6. No CAPACIDADES.md</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -825,11 +777,11 @@ TOTAL: R$ 856.00</pre>
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
-  <script>
+<script>
     window.addEventListener('DOMContentLoaded', function () {
       if (window.INEMA && INEMA.registerCheck) {
 

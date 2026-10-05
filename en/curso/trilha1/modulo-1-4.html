@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>The capabilities map | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha1/modulo-1-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha1/modulo-1-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha1/modulo-1-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Track 1</a><span>/</span>
+<span class="text-emerald-400">Module 1.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-4" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULE 1.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗺️ The capabilities map</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">O <code>runtime/CAPACIDADES.md</code> it’s the list of what the agent can use: one line per system, with access method, level, how to call it, policy, and test date. A system without a line isn’t used.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 1.4 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:1-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="1-4" data-inema-track="1" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-4#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Read the columns in CAPACIDADES.md</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-4-t1-p1">In module 1.3, you discovered each system’s path. The <strong class="text-emerald-400">capability map</strong> is where that discovery is written down in a format the agent reads before acting. The <code>AGENTS.md</code> says: use only systems listed there, through the specified method.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t1-p2">Each line has six columns. Each column answers a question you would ask before letting someone use your system.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Anatomy of a capability map row. Six boxes side by side: System answers what; Path answers how; Level answers at what level; How the agent calls it answers with what command; Policy answers whether it can act on its own; Tested on answers when it was checked. The last box is highlighted." class="w-full h-auto" role="img" viewbox="0 0 800 220">
+<defs>
+<pattern height="32" id="m14-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m14-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m14-grid)" height="220" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="115" x="20" y="60"></rect>
+<text fill="#bae6fd" font-size="13" font-weight="600" x="77" y="87">System</text><text fill="#7dd3fc" font-size="11" x="77" y="106">what?</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="115" x="145" y="60"></rect>
+<text fill="#bae6fd" font-size="13" font-weight="600" x="202" y="87">Via</text><text fill="#7dd3fc" font-size="11" x="202" y="106">which way?</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="115" x="270" y="60"></rect>
+<text fill="#bae6fd" font-size="13" font-weight="600" x="327" y="87">Level</text><text fill="#7dd3fc" font-size="11" x="327" y="106">which step?</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="130" x="395" y="60"></rect>
+<text fill="#bae6fd" font-size="12" font-weight="600" x="460" y="87">What it’s called</text><text fill="#7dd3fc" font-size="11" x="460" y="106">which command?</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="115" x="535" y="60"></rect>
+<text fill="#bae6fd" font-size="13" font-weight="600" x="592" y="87">Policy</text><text fill="#7dd3fc" font-size="11" x="592" y="106">can it do it alone?</text>
+<g filter="url(#m14-glow)"><rect fill="#0e2018" height="60" rx="10" stroke="#34d399" stroke-width="2" width="120" x="660" y="60"></rect></g>
+<text fill="#34d399" font-size="13" font-weight="600" x="720" y="87">Tested in</text><text fill="#a7f3d0" font-size="11" x="720" y="106">when?</text>
+</g>
+<line class="wf-flow" opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="20" x2="780" y1="150" y2="150"></line>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="400" y="178">one line = one system the agent can use</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="720" y="45">without a date, it doesn’t count</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> read from left to right as a sentence: "system X, through path Y, at level N, is called this, with this policy, and was tested on this date". The green box carries the most weight: without it, the line doesn't count.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Column</th><th class="px-4 py-3 font-semibold">Question</th><th class="px-4 py-3 font-semibold">Where it comes from</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">System</td><td class="px-4 py-3 text-neutral-300">Which tool do you use for your work?</td><td class="px-4 py-3 text-neutral-300">you</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Via</td><td class="px-4 py-3 text-neutral-300">How does the agent reach it?</td><td class="px-4 py-3 text-neutral-300">the ladder (1.3)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Level</td><td class="px-4 py-3 text-neutral-300">Where does this path sit on the ladder?</td><td class="px-4 py-3 text-neutral-300">table of <code>LEIA-ME.md</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">How the agent calls it</td><td class="px-4 py-3 text-neutral-300">With what command or path?</td><td class="px-4 py-3 text-neutral-300">the test that worked</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Policy</td><td class="px-4 py-3 text-neutral-300">Does it act on its own or ask first?</td><td class="px-4 py-3 text-neutral-300"><code>POLITICA.md</code> (read, change, send…)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Tested in</td><td class="px-4 py-3 text-neutral-300">When did someone check?</td><td class="px-4 py-3 text-neutral-300">the test date, or "pending"</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> only the first column depends solely on you. The others come from the ladder, the policy, and a test that was run.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-emerald-400">Map</div><p class="text-xs text-neutral-400 mt-1">what the agent can use</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛣️</div><div class="text-sm font-semibold text-emerald-400">Via and level</div><p class="text-xs text-neutral-400 mt-1">come from the ladder</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚦</div><div class="text-sm font-semibold text-emerald-400">Policy</div><p class="text-xs text-neutral-400 mt-1">comes from POLITICA.md</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-emerald-400">Test date</div><p class="text-xs text-neutral-400 mt-1">or "pending"</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-4#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Understand the two lines that are already ready to use</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-4-t2-p1">The file isn't empty. It includes two lines that have already been tested: the agents themselves. One can call the other, and the map needs to explain how.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t2-p2">Use these two as <strong class="text-emerald-400">good row template</strong>: clear path, ladder level, exact command, policy, and date.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 The runtime/CAPACIDADES.md table (actual kit content)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| Sistema | Via | Nível | Como o agente chama | Política | Testado em |
+|---|---|---|---|---|---|
+| Codex CLI | CLI | 3 | `runtime/pontes/codex-exec.sh` | ler (N4) | 2026-10-05 ok |
+| Claude Code | CLI | 3 | `claude -p --permission-mode plan` | ler (N4) | 2026-10-05 ok |</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Notice:</strong> both are at level 3 (CLI), with a read policy (N4) and a test date. Neither lets the other agent modify files by default.</div>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? Bridge and planning mode</h3>
+<p class="text-neutral-300 text-sm"><strong>Bridge</strong> is what turns a route into something the agent can call. The <code>codex-exec.sh</code> is a bridge: it wraps the <code>codex exec</code> with the kit's rules (module 2.1). <strong>Planning mode</strong> (<code>--permission-mode plan</code>) is the way to run Claude Code where it only reads and plans, without changing anything. That’s why the Claude line fits under “read.”</p>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t2-p3">On the Codex side, Claude asks for a second opinion through the bridge; changing files through Codex is a separate policy, which you enable only when you ask (recipe R1). On the Claude side, it’s called without opening the screen, in planning mode: it reads and responds without changing anything.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ What makes them a good model</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Exact command you can copy</li>
+<li>✓ Level checked against the ladder</li>
+<li>✓ Read-only policy</li>
+<li>✓ Date with “ok” from a real test</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ What a bad row would have</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ “Use Codex” without saying how</li>
+<li>✗ Guessed level</li>
+<li>✗ “Everything allowed” policy</li>
+<li>✗ No date</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">3️⃣</div><div class="text-sm font-semibold text-emerald-400">Level 3</div><p class="text-xs text-neutral-400 mt-1">CLI, high stability</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👁️</div><div class="text-sm font-semibold text-emerald-400">read (N4)</div><p class="text-xs text-neutral-400 mt-1">without asking, without changing anything</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-emerald-400">Bridge</div><p class="text-xs text-neutral-400 mt-1">codex-exec.sh</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">Tested line</div><p class="text-xs text-neutral-400 mt-1">2026-10-05 ok</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-4#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Use the examples to copy</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-4-t3-p1">Below the table, the file has a section called "Examples to copy": four lines for common cases. Look at the last column in each one: <strong class="text-emerald-400">pending</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t3-p2">Pending means the line describes the plan, but no one has tested it on your machine yet. Starting with an example similar to your case saves half the work.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 Examples to copy (actual CAPACIDADES.md content)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| Planilha de estoque (.xlsx)  | Ponte local (arquivo)   | 6 | ler ~/estoque/estoque.xlsx      | ler (N4)        | pendente |
+| ERP sem API                  | Exportação CSV diária   | 6 | ler ~/erp/export/*.csv          | ler (N4)        | pendente |
+| Agenda da clínica (planilha) | Ponte local (arquivo)   | 6 | ler/escrever agenda.csv         | alterar (N2)    | pendente |
+| Site do fornecedor           | Uso do computador       | 5 | navegador automatizado          | enviar (N2)     | pendente |</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">How to use:</strong> copy the closest matching row into the table above, replace the name and path with yours, and leave it as "pending" until you test it.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Example</th><th class="px-4 py-3 font-semibold">Who has this case</th><th class="px-4 py-3 font-semibold">Where the course tests</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Inventory spreadsheet</td><td class="px-4 py-3 text-neutral-300">store, warehouse</td><td class="px-4 py-3 text-neutral-300">2.3 (your system’s bridge)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">ERP without an API</td><td class="px-4 py-3 text-neutral-300">Sônia</td><td class="px-4 py-3 text-neutral-300">2.2 and 2.3 (R3 recipe)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Clinic schedule</td><td class="px-4 py-3 text-neutral-300">Clara</td><td class="px-4 py-3 text-neutral-300">2.2 (R3 recipe)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Vendor’s website</td><td class="px-4 py-3 text-neutral-300">who buys through the portal</td><td class="px-4 py-3 text-neutral-300">2.4 (R5 recipe)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> three examples stop at step 6 and one at 5. The website one stays at 5 because vendor websites usually don’t have an export option, and its policy is "send" (N2), because filling out a form sends data outside.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> The policy matches the riskiest action</h3>
+<p class="text-neutral-300 text-sm">Inventory and ERP are read-only: N4. The calendar reads and writes: use the higher level, "change" (N2). The website can send: "send" (N2). When copying a line, ask "what’s the worst thing the agent could do here?" and adjust the policy.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⏳</div><div class="text-sm font-semibold text-emerald-400">Pending</div><p class="text-xs text-neutral-400 mt-1">plan without a test</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-emerald-400">Local bridge</div><p class="text-xs text-neutral-400 mt-1">three of the four</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖱️</div><div class="text-sm font-semibold text-emerald-400">Computer</div><p class="text-xs text-neutral-400 mt-1">the site only</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✋</div><div class="text-sm font-semibold text-emerald-400">N2</div><p class="text-xs text-neutral-400 mt-1">modifying and sending require</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-4#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Fill in the map with the agent</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-4-t4-p1">The agent knows the ladder; you know your work. Together, you can map it out in minutes. The README includes the ready-to-use request, the same one you used in module 1.2.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t4-p2">O <code>LEIA-ME.md</code> gives a hint on how to guide it: ask the agent to fill in <strong class="text-emerald-400">"with me, level by level"</strong>. It's a guided interview, with you approving each line.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objective: add a new line to CAPACIDADES.md for one of your systems</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Read runtime/LEIA-ME.md and help me fill out CAPACIDADES.md for my work.</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">If it tries to do everything at once, add:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Fill it in with me, level by level: one system at a time, one question at a time. Use the examples in CAPACIDADES.md as a guide and mark every row we haven't tested yet as "pending".</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">How to verify:</strong> open the <code>runtime/CAPACIDADES.md</code>. The new line has all six columns filled in, and the last one says “pending” or gives a date and the result of a test you watched run.</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">You name the system</h4><p class="text-neutral-300 text-sm">In your own words: “the scheduling spreadsheet,” “the ERP that exports sales.”</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">The agent moves up the ladder</h4><p class="text-neutral-300 text-sm">Ask and test one level at a time, as in module 1.3, until you find the most stable route.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">He proposes the line</h4><p class="text-neutral-300 text-sm">Via, level, how to call it and policy, with "pending" at the end.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">You review and approve</h4><p class="text-neutral-300 text-sm">Check the policy especially. When in doubt, choose the most restrictive one.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Sônia in ten minutes</h3>
+<p class="text-neutral-300 text-sm">Sônia says, “the distributor’s ERP, it only exports sales CSVs.” The agent goes through the ladder, stops at step 6, and proposes a row based on the “ERP without an API” example, with the path to her export folder and the policy “read (N4).” She approves it. It stays “pending” until the bridge runs, in module 2.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎤</div><div class="text-sm font-semibold text-emerald-400">Interview</div><p class="text-xs text-neutral-400 mt-1">agent-guided</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">1️⃣</div><div class="text-sm font-semibold text-emerald-400">One at a time</div><p class="text-xs text-neutral-400 mt-1">system and question</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📎</div><div class="text-sm font-semibold text-emerald-400">Example</div><p class="text-xs text-neutral-400 mt-1">starting point</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👤</div><div class="text-sm font-semibold text-emerald-400">Human review</div><p class="text-xs text-neutral-400 mt-1">you approve</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-4#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Only let tested rows in</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-4-t5-p1">The file opens and closes with the same rule. At the top: "only add a row with <strong>test</strong> done". At the end: "system with no line here <strong>no</strong> is used by the agent".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t5-p2">Works like a <strong class="text-emerald-400">allowlist</strong>: anything not on the list is excluded. This prevents the agent from inventing access to a system no one has checked.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Map decision flow. The agent wants to use a system. First question: is there an entry in CAPACIDADES.md? If not, don’t use it. If so, second question: does the entry have a test date? If it’s pending, don’t use it yet; propose the test. If it has a date, use it through the method and under the policy specified in the entry." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m14b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m14b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m14b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m14b-grid)" height="240" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-width="2" width="130" x="20" y="85"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="85" y="110">agent wants</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="85" y="127">use a system</text>
+<line class="wf-flow" marker-end="url(#m14b-arrow)" stroke="#38bdf8" stroke-width="2" x1="152" x2="198" y1="113" y2="113"></line>
+<rect class="wf-a" fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="202" y="85"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="277" y="110">has a line in</text>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="277" y="127">CAPACIDADES?</text>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="277" x2="277" y1="143" y2="180"></line>
+<rect fill="#2a0f0f" height="40" rx="10" stroke="#f87171" stroke-width="2" width="150" x="202" y="182"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="277" y="207">no → don’t use it</text>
+<line class="wf-flow" marker-end="url(#m14b-arrow)" stroke="#38bdf8" stroke-width="2" x1="354" x2="410" y1="113" y2="113"></line>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="382" y="104">yes</text>
+<rect class="wf-a" fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="414" y="85"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="489" y="110">has a date</text>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="489" y="127">test?</text>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="489" x2="489" y1="143" y2="180"></line>
+<rect fill="#2a0f0f" height="40" rx="10" stroke="#f87171" stroke-width="2" width="170" x="404" y="182"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="489" y="207">pending → proposes a test</text>
+<line class="wf-flow" marker-end="url(#m14b-arrow)" stroke="#38bdf8" stroke-width="2" x1="566" x2="606" y1="113" y2="113"></line>
+<g filter="url(#m14b-glow)"><rect fill="#0e2018" height="76" rx="14" stroke="#34d399" stroke-width="2" width="170" x="610" y="75"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="695" y="105">uses</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="695" y="125">via route and policy</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="695" y="141">from the row</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> there are two gates in sequence. Only those who pass through both reach the green box. The red boxes aren’t errors: they show the agent following the rule and returning the decision to you.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ Line that can be added</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Six completed columns</li>
+<li>✓ Exact command or path in "how to call it"</li>
+<li>✓ Policy checked in the <code>POLITICA.md</code></li>
+<li>✓ Date of a test you watched run</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Row that is left out (or pending)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ “I think there’s an API” without testing</li>
+<li>✗ Command no one has run</li>
+<li>✗ Blank policy</li>
+<li>✗ Date copied from another row</li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> The agent doesn't test itself by keyword</h3>
+<p class="text-neutral-300 text-sm">If the agent writes "tested" on the line, ask to see the command and output. The date on the map is for a test that actually happened on screen, not one it "thinks" would pass. It's the same proof idea as in the recipes: command → expected output.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📋</div><div class="text-sm font-semibold text-emerald-400">Allowlist</div><p class="text-xs text-neutral-400 mt-1">out of the list, out</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-emerald-400">Test</div><p class="text-xs text-neutral-400 mt-1">shown on screen</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-emerald-400">Date</div><p class="text-xs text-neutral-400 mt-1">when it passed</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⏳</div><div class="text-sm font-semibold text-emerald-400">Pending</div><p class="text-xs text-neutral-400 mt-1">doesn't use it yet</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-4#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Look at the software before saying it’s impossible</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-4-t6-p1">Before marking a system as "no path", <strong class="text-emerald-400">observe what the program already provides</strong>. A lot of exports are hidden in a menu no one opens. A lot of integrations are on a forgotten settings page.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t6-p2">The good side of reverse engineering is that you discover the path by observing, without connecting any improvised wires. And if there’s no path after you look, that gets recorded too.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Export menus and reports</h4><p class="text-neutral-300 text-sm">Look for "Export", "Save As", "Reports". A CSV is already a local bridge (step 6).</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Settings and integrations</h4><p class="text-neutral-300 text-sm">Screens with "Integrations," "API," "Developers," or "Webhooks" point to levels 1 to 3.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Manufacturer help and website</h4><p class="text-neutral-300 text-sm">Documentation usually lists what the program exchanges with other systems. Show it to the agent and ask it to test.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Couldn't find it? Make a note in LIMITES.md</h4><p class="text-neutral-300 text-sm">What you tried, what blocked you, and the workaround. This record prevents repeating the search and shows what to ask the vendor.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 The runtime/LIMITES.md columns (actual kit content)</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que tentei | o que barrou | contorno | status |
+|---|---|---|---|---|</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Notice:</strong> the file arrives empty. The first line is yours. The <code>POLITICA.md</code> also asks you to log every reverse engineering experiment here, for lab purposes only (module 4.4).</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Clara looked first</h3>
+<p class="text-neutral-300 text-sm">She thought the schedule "didn’t connect to anything." Looking at her own spreadsheet, she saw she could save it as CSV, in the same format as the <code>agenda.csv</code> from the kit. Done: step 6, no hacks.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-1-4#q1">
+<p class="font-medium mb-4">Quick test (optional): the agent wants to read a system that has a row in CAPACIDADES.md, but the last column says "pending." What happens?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">It doesn’t use it yet: first the test runs, and the date goes in the line.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">It uses it normally because the line exists.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">He deletes the line and tries reverse engineering.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-emerald-400">Observe</div><p class="text-xs text-neutral-400 mt-1">what already exists</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-emerald-400">Export</div><p class="text-xs text-neutral-400 mt-1">forgotten menu</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-emerald-400">Integration</div><p class="text-xs text-neutral-400 mt-1">settings screen</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧱</div><div class="text-sm font-semibold text-emerald-400">LIMITES.md</div><p class="text-xs text-neutral-400 mt-1">what blocked it</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Six columns, one sentence</strong><span class="text-neutral-400"> — system, method, level, how to invoke it, policy, date.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Two ready-to-use lines</strong><span class="text-neutral-400"> — Codex and Claude, level 3, read (N4).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Examples start as pending</strong><span class="text-neutral-400"> — copy the closest match and adjust it.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">No entry, no use</strong><span class="text-neutral-400"> — and a line without a test remains pending.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Look before calling it “impossible”</strong><span class="text-neutral-400"> — and note in LIMITES.md what blocked you.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next learning path:</h3>
+<p class="text-neutral-300">Track 2 — Connect: the map becomes a bridge, starting with Claude using Codex (2.1).</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/index.html">Next learning path: Connect →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-1">1. The six columns</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Ready-to-use lines</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Examples</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-4">4. With the agent</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Only a tested line</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Look at the software</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-1-4#q1', { answer: 0, explain: {
+          '0': 'Isso. "Pendente" quer dizer que ninguém testou ainda. Primeiro roda o teste, aí a data entra e o agente pode usar.',
+          '1': 'Não. Ter linha é a primeira porta; a segunda é a data do teste. Linha pendente ainda não vale.',
+          '2': 'Não. O agente não muda as regras sozinho, e engenharia reversa é só laboratório. O caminho é testar a via da linha.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

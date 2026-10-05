@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Track 4 · Govern and learn | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRACK 4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛡️ Govern and learn</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">An unconstrained agent needs written rules. Define what it can do on its own and what it must ask you first, let it propose new rules only with your approval, turn on the guard that asks before causing damage, and finish with the final project: your bridge and your team.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Modules</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">24</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~2h20</div><div class="text-xs text-neutral-400">Duration</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Project</div><div class="text-xs text-neutral-400">Level</div></div>
+</div>
+<div aria-label="Track 4 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="trilha:4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 24</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="mt-8 lg:mt-0 rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 overflow-hidden">
+<svg aria-label="An amber shield in the center with levels N0 through N4. On the left, the agent proposes a rule; on the right, the human approves it; below, the approved rule goes into Lessons. A red strip at the bottom reminds you: never delete or spend on your own." class="w-full h-auto" role="img" viewbox="0 0 380 240">
+<defs>
+<pattern height="28" id="t4h-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#fbbf24" opacity="0.12" r="1.2"></circle></pattern>
+<filter height="180%" id="t4h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="t4h-arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t4h-grid)" height="240" width="380" x="0" y="0"></rect>
+<g filter="url(#t4h-glow)"><path d="M190,20 L250,42 L250,100 C250,140 222,162 190,175 C158,162 130,140 130,100 L130,42 Z" fill="#2a1d06" stroke="#fbbf24" stroke-width="2.5"></path></g>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<text fill="#fbbf24" font-weight="600" x="190" y="60">POLICY</text>
+<text fill="#fde68a" x="190" y="80">N0 · N1 · N2</text>
+<text fill="#fde68a" x="190" y="97">N3 · N4</text>
+<text fill="#fde68a" x="190" y="122">prepares and asks</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="12" y="60"></rect>
+<text fill="#bae6fd" x="60" y="78">agent</text><text fill="#7dd3fc" x="60" y="93">proposes</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="272" y="60"></rect>
+<text fill="#bae6fd" x="320" y="78">you</text><text fill="#7dd3fc" x="320" y="93">approves</text>
+<rect fill="#0b1f2e" height="22" rx="6" stroke="#38bdf8" stroke-width="1.5" width="100" x="140" y="186"></rect>
+<text fill="#bae6fd" x="190" y="201">Lessons</text>
+<rect fill="#2a0f0f" height="20" rx="6" stroke="#f87171" stroke-width="1.5" width="300" x="40" y="214"></rect>
+<text fill="#fca5a5" font-size="10" x="190" y="228">deleting and spending: never on its own</text>
+</g>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="2" x1="110" x2="128" y1="80" y2="80"></line>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="2" x1="252" x2="270" y1="80" y2="80"></line>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="1.5" x1="320" x2="242" y1="102" y2="194"></line>
+</svg>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="4" id="conteudo">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Learning path map</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-1">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🚦 Autonomy policy</h3>
+<p class="text-xs text-neutral-400">Prepares and asks</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-2">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">📚 The agent proposes, you approve</h3>
+<p class="text-xs text-neutral-400">New rule only with your approval</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-3">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧱 Guard and panel</h3>
+<p class="text-xs text-neutral-400">Ask before the damage is done</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-4">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧪 Lab and final project</h3>
+<p class="text-xs text-neutral-400">Your bridge and your team</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- ===== MODULO 4.1 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-1" data-inema-track="4" id="modulo-4-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🚦 Autonomy policy</h3>
+<p class="text-neutral-400 text-sm">POLITICA.md: five levels of autonomy, a limit for each type of action, and how Claude Code and Codex apply the same rules.</p>
+<div aria-label="Module 4.1 progress" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎚️</span>
+<div><span class="font-medium">Read the five autonomy levels</span><span class="text-neutral-500 text-sm ml-2">- from N0 to N4</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">N0 only talks, N1 prepares and the human executes, N2 executes after asking, N3 executes and notifies, N4 executes without notifying.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It’s the scale that determines how much the agent can do without you. The kit’s default is “prepare and ask.”</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Autonomy, N0–N4, prepare and ask, impact of the action.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📏</span>
+<div><span class="font-medium">Use the cap for each type of action</span><span class="text-neutral-500 text-sm ml-2">- read, modify, send, spend</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The POLITICA.md table: reading goes up to N4, modifying files up to N3, system commands and sending up to N2, and spending and deleting only at N1.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The greater the impact of the action, the more you participate. The table determines this before the agent starts.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Limit, action type, send, spend credits, delete with a backup.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔒</span>
+<div><span class="font-medium">Understand why "always allow" has a limit</span><span class="text-neutral-500 text-sm ml-2">- clicking doesn't raise the level</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The rule in POLITICA.md: a "always allow" permission never exceeds the action limit.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">One hasty click must not turn "send" or "delete" into an automatic action.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Always allow, ceiling, accumulated permission.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⛔</span>
+<div><span class="font-medium">See the block in Claude Code</span><span class="text-neutral-500 text-sm ml-2">- the settings.json</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The kit's .claude/settings.json blocks rm -rf, git push --force, git push -f, and git reset --hard.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">In CHANGELOG 0.1.0, even in the mode that allows everything, touch ran and rm -rf was denied.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Permissions, deny, acceptEdits, written block.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧰</span>
+<div><span class="font-medium">Apply the policy in Codex</span><span class="text-neutral-500 text-sm ml-2">- the -s options</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">In Codex, the policy becomes a sandbox: read-only to read, workspace-write to make changes, and no auto-approval for everything else.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The codex-exec.sh bridge rejects danger-full-access: the same rule applies to both agents.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Sandbox, read-only, workspace-write, refusal due to POLICY.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🤝</span>
+<div><span class="font-medium">Follow the three integration rules</span><span class="text-neutral-500 text-sm ml-2">- official source, credential, lab</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Only official tools through the subscription, never pass credentials from one tool to another, reverse engineering only in a lab.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">These are the three lines that protect your account and your data when connecting one tool to another.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Subscription, credential, LIMITES.md, production.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-1')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-1.html">View Full</a>
+</div>
+</div>
+<!-- ===== MODULO 4.2 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-2" data-inema-track="4" id="modulo-4-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">📚 The agent proposes, you approve</h3>
+<p class="text-neutral-400 text-sm">The kit's learning cycle: the Aprendizado table, the AGENTS.md Lessons, FALHAS.md, and LIMITES.md, one line at a time.</p>
+<div aria-label="Module 4.2 progress" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🙅</span>
+<div><span class="font-medium">Understand why the agent doesn’t change its own rules</span><span class="text-neutral-500 text-sm ml-2">- you are the one who approves</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The AGENTS.md rule: the agent doesn’t change the rules; to propose a change, it adds a row to the Aprendizado table.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">An agent that rewrites its own rules may give itself more freedom than you allowed.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Proposes, approves, incorporates; separation of roles.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📝</span>
+<div><span class="font-medium">Fill in the Learning table</span><span class="text-neutral-500 text-sm ml-2">- four columns</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Date, what happened with evidence, one-line proposal, and status: proposed, approved, or rejected.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">You can approve a proposal with evidence in seconds; without evidence, you can't decide.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Evidence, one-line proposal, status.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">⬆️</span>
+<div><span class="font-medium">Promote the approved item to Lessons</span><span class="text-neutral-500 text-sm ml-2">- one rule per line</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">What you approve becomes a rule in the Lessons section of AGENTS.md, which Claude and Codex read.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The lesson applies in future sessions for both agents, without you having to repeat it.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Lessons, AGENTS.md, CLAUDE.md, approved rule.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🩹</span>
+<div><span class="font-medium">Record each failure on one line</span><span class="text-neutral-500 text-sm ml-2">- the FALHAS.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Date, what broke, the smallest fix, and whether it was a prompt or infrastructure issue. Real example from the kit: the doctor read only Codex’s stdout.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">After a few lines, the pattern emerges, and you stop rebuilding what only needed a safeguard.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Smallest fix, prompt × infrastructure, one line.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚧</span>
+<div><span class="font-medium">Record what the environment blocked</span><span class="text-neutral-500 text-sm ml-2">- the LIMITES.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Date, what was attempted, what blocked it, the workaround, and the status. Bugs go in FALHAS.md; environment limits go here.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Quota, permission, or network blocks don’t disappear on their own: once recorded, they become a list to resolve.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Environment limitation, workaround, open or accepted status.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🗓️</span>
+<div><span class="font-medium">Do the weekly review with the agent</span><span class="text-neutral-500 text-sm ml-2">- proposals on the table</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Once a week, the agent reads FALHAS.md and LIMITES.md and proposes entries for the Learning table; you approve or reject them.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It’s the “learn” step of the cycle becoming a habit, without taking the decision away from you.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Weekly review, failure patterns, approve or reject.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-2')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-2.html">View Full</a>
+</div>
+</div>
+<!-- ===== MODULO 4.3 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-3" data-inema-track="4" id="modulo-4-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧱 Guard and panel</h3>
+<p class="text-neutral-400 text-sm">Recipe R7: official hooks that ask before stepping on another session’s work or deleting too much, and the team dashboard in the background.</p>
+<div aria-label="Module 4.3 progress" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧩</span>
+<div><span class="font-medium">Understand what a Claude Code mod is</span><span class="text-neutral-500 text-sm ml-2">- hooks and plugins</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Mod is the nickname for official plugins. The guard uses PreToolUse and PostToolUse hooks: the rule lives in the script, the interface in the mod.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The videos showed collision and blast-radius guards; the kit does the same using only official features.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Hook, plugin, mod, PreToolUse, PostToolUse, worktree.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">💥</span>
+<div><span class="font-medium">See the collision guard in action</span><span class="text-neutral-500 text-sm ml-2">- two sessions, one file</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Before editing a file another session has touched, or that changed externally in the last 30 min, the guard asks: continue, worktree, or cancel.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">In one of our projects, one session emptied a file another was editing.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Collision, toques.json, 30-minute window, Codex limit.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧨</span>
+<div><span class="font-medium">Prove the scope before deleting</span><span class="text-neutral-500 text-sm ml-2">- how many files, how much space</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Before rm or git clean, the guard counts the files that would be deleted, shows their size, and asks for confirmation.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The R7 proof runs the script on its own and shows "permissionDecision":"ask" without deleting anything.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Blast radius, disk read-only, backup.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧳</span>
+<div><span class="font-medium">Take the safeguard to another project</span><span class="text-neutral-500 text-sm ml-2">- one way, not two</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">claude --plugin-dir for one session, or the hooks block copied into the other project's settings.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The protection applies wherever your agents work, not just in the kit’s folder.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">--plugin-dir, hooks block, kit path.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Open the team panel</span><span class="text-neutral-500 text-sm ml-2">- /painel</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">An optional mod that shows claude --bg sessions with Refresh and Stop buttons.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Monitor and stop the team without leaving Claude Code; just your click for a session.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Panel, plugin validate, plugin test, 1 pass.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📖</span>
+<div><span class="font-medium">Read the code before installing a mod</span><span class="text-neutral-500 text-sm ml-2">- a mod has its own permissions</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Mods run with Claude Code permissions. Before installing a third-party one, ask the agent to read and explain it without running it.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The same power that protects can cause damage: reading the code is the only guarantee.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">plugin.json, hooks.json, network, credentials.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-3')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-3.html">View Full</a>
+</div>
+</div>
+<!-- ===== MODULO 4.4 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-4" data-inema-track="4" id="modulo-4-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧪 Lab and final project</h3>
+<p class="text-neutral-400 text-sm">The right place for reverse engineering, and the project that wraps up the course: a system of your own without an API becomes a bridge, a team works on it, and the verifier proves it.</p>
+<div aria-label="Module 4.4 progress" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🪜</span>
+<div><span class="font-medium">Go back to the ladder before the lab</span><span class="text-neutral-500 text-sm ml-2">- six tests before the seventh</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Before any reverse engineering, test each level with one command, from API to local bridge.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Often the route exists; it just wasn’t documented.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Ladder, evidence by level, rung 7.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🧪</span>
+<div><span class="font-medium">Treat reverse engineering as a lab</span><span class="text-neutral-500 text-sm ml-2">- fragile, with a date</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Test machine, one line in LIMITES.md, "fragile" label with date, and never in production.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The lab answers “where does it communicate?”; the answer leads back to an official route.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Test machine, LIMITES.md, fragile, production.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔐</span>
+<div><span class="font-medium">Respect terms of use and credentials</span><span class="text-neutral-500 text-sm ml-2">- each login in its own place</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Only official tools through the subscription, and never pass credentials or a token from one tool to another.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Whoever has the token acts as you; the right bridge doesn't carry a password.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Credential, token, terms of use, human login.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🗺️</span>
+<div><span class="font-medium">Choose your system and fill in the map</span><span class="text-neutral-500 text-sm ml-2">- one tested line</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A system of your own without an API, one line in CAPACIDADES.md, and the highest-level path that works.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Without an entry in the map, the agent won’t use the system; it’s the first step in the final project.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Final project, CAPACIDADES.md, via, pending.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🏗️</span>
+<div><span class="font-medium">Build the bridge and run the team</span><span class="text-neutral-500 text-sm ml-2">- R3 or R5, then R2</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The bridge through recipe R3 (file) or R5 (site), with the three-role team working on it under N2 policy.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It’s the whole course applied to your work: connect, route, and execute with rules.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Bridge, selftest, Connected, planner, executor, reviewer, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🏁</span>
+<div><span class="font-medium">Deliver with the verifier and an approved lesson</span><span class="text-neutral-500 text-sm ml-2">- all OK</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">One goal with command → expected criteria, the output from verificar.mjs with all OK, and one approved row in the Aprendizado table.</p></div>
+<div><span class="text-amber-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Done means proof, not a guess; and the cycle only closes when learning becomes a rule.</p></div>
+<div><span class="text-amber-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Goal, verificar.mjs, delivery checklist, Lessons.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-4')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-4.html">View Full</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha3/index.html">← Previous track: Route and execute</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../../index.html">Back to top →</a>
+</div>
+</main>
+<!-- MODAIS (iframe carrega a pagina do modulo) -->
+<div aria-labelledby="modal-4-1-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-1" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold" id="modal-4-1-title">Autonomy policy</span></div>
+<button aria-label="Close" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-1.html" title="Module 4.1"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-2-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-2" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold" id="modal-4-2-title">The agent proposes; you approve</span></div>
+<button aria-label="Close" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-2.html" title="Module 4.2"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-3-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-3" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold" id="modal-4-3-title">Guard and dashboard</span></div>
+<button aria-label="Close" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-3.html" title="Module 4.3"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-4-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-4" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold" id="modal-4-4-title">Lab and final project</span></div>
+<button aria-label="Close" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-4.html" title="Module 4.4"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

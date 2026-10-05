@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Three-role team | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha3/modulo-3-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha3/modulo-3-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha3/modulo-3-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a><span>/</span>
+<span class="text-purple-400">Module 3.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-2" data-inema-track="3">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">👥 Three-role team</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">A strong model plans, a medium model does the work, and a light model checks it. Each role uses only the model it needs, so your quota goes further. This is the kit’s R2 recipe, documented in the CHANGELOG.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">R2</div><div class="text-xs text-neutral-400">Recipe</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 3.2 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:3-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="3-2" data-inema-track="3" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Meet the planner, executor, and reviewer</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t1-p1">Recipe R2 splits a task into three roles. The <strong class="text-purple-400">planner</strong> thinks and writes the plan. The <strong class="text-purple-400">executor</strong> do it. The <strong class="text-purple-400">reviewer</strong> check whether it’s actually ready.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t1-p2">It’s the routing from module 3.1 applied to a single task: thinking uses a strong model, doing uses a medium one, and checking uses a light one. Nobody pays for a top-tier model for a checking task.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Subagent and role</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Subagent</strong> — a helper that Claude Code calls during a conversation. It gets part of the work, handles it with its own model and tools, and returns the result. It’s an official Claude Code feature.</li>
+<li><strong>Role</strong> — the subagent's "role": what it does, which model it uses, and what it can touch. In the kit, each role is a file in <code>.claude/agents/</code>.</li>
+</ul>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Role</th><th class="px-4 py-3 font-semibold">File</th><th class="px-4 py-3 font-semibold">Model</th><th class="px-4 py-3 font-semibold">Does</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">planner</td><td class="px-4 py-3 text-neutral-300"><code>planejador.md</code></td><td class="px-4 py-3 text-neutral-300">opus</td><td class="px-4 py-3 text-neutral-300">short plan with a completion criterion <code>comando → saída esperada</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300"><code>executor.md</code></td><td class="px-4 py-3 text-neutral-300">sonnet</td><td class="px-4 py-3 text-neutral-300">execute the plan and show the evidence</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">reviewer</td><td class="px-4 py-3 text-neutral-300"><code>revisor.md</code></td><td class="px-4 py-3 text-neutral-300">haiku</td><td class="px-4 py-3 text-neutral-300">run the criteria; reply APPROVED or say what’s missing</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the Model column steps down in level from the first row to the last (top tier, executor, smaller on the <code>ROTEAMENTO.md</code>). The table is the same as in recipe R2.</p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="The team's assembly line. The task goes to the planner, using the opus model, who only reads and returns a plan and completion criteria. The executor, using the sonnet model, changes files and shows the proof. The reviewer, using the haiku model, only reads and runs the criteria. If everything passes, the result is APROVADO. If not, it comes back with FALTA and a list of what to fix." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m32-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m32-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m32-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m32-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m32-grid)" height="240" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="56" rx="10" stroke="#6b7280" stroke-width="2" width="100" x="20" y="75"></rect><text fill="#e5e7eb" font-size="13" x="70" y="100">task</text><text fill="#9ca3af" font-size="10" x="70" y="117">your sentence</text>
+<g filter="url(#m32-glow)"><rect fill="#1e1233" height="76" rx="14" stroke="#c084fc" stroke-width="2" width="160" x="160" y="65"></rect></g>
+<text fill="#c084fc" font-size="14" font-weight="600" x="240" y="92">planner</text><text fill="#e9d5ff" font-size="11" x="240" y="110">opus · read-only</text><text fill="#e9d5ff" font-size="10" x="240" y="126">plan + criteria</text>
+<rect class="wf-a" fill="#0b1f2e" height="76" rx="14" stroke="#38bdf8" stroke-width="2" width="160" x="360" y="65"></rect>
+<text fill="#bae6fd" font-size="14" font-weight="600" x="440" y="92">executor</text><text fill="#7dd3fc" font-size="11" x="440" y="110">sonnet · edits (N3)</text><text fill="#7dd3fc" font-size="10" x="440" y="126">do it and show the evidence</text>
+<rect class="wf-a" fill="#0b1f2e" height="76" rx="14" stroke="#38bdf8" stroke-width="2" width="160" x="560" y="65"></rect>
+<text fill="#bae6fd" font-size="14" font-weight="600" x="640" y="92">reviewer</text><text fill="#7dd3fc" font-size="11" x="640" y="110">haiku · read-only</text><text fill="#7dd3fc" font-size="10" x="640" y="126">run the criteria</text>
+<rect fill="#1e1233" height="40" rx="10" stroke="#c084fc" stroke-width="2" width="180" x="600" y="180"></rect><text fill="#e9d5ff" font-size="13" font-weight="600" x="690" y="205">APPROVED</text>
+<rect fill="#2a0f0f" height="40" rx="10" stroke="#f87171" stroke-width="2" width="200" x="330" y="180"></rect><text fill="#fca5a5" font-size="12" x="430" y="205">MISSING: list of what to fix</text>
+</g>
+<g stroke="#38bdf8" stroke-width="2">
+<line class="wf-flow" marker-end="url(#m32-arrow)" x1="122" x2="156" y1="103" y2="103"></line>
+<line class="wf-flow" marker-end="url(#m32-arrow)" x1="322" x2="356" y1="103" y2="103"></line>
+<line class="wf-flow" marker-end="url(#m32-arrow)" x1="522" x2="556" y1="103" y2="103"></line>
+<line marker-end="url(#m32-arrow)" x1="660" x2="680" y1="143" y2="176"></line>
+</g>
+<path d="M610,143 C 590,170 560,195 534,198" fill="none" marker-end="url(#m32-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+<path d="M330,198 C 300,198 440,170 440,145" fill="none" marker-end="url(#m32-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the task moves from left to right. Only the executor (blue) changes files. The reviewer closes with <code>APROVADO</code>; if something fails, the red dashed line returns the list of corrections to the executor.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧠</div><div class="text-sm font-semibold text-purple-400">Planner</div><p class="text-xs text-neutral-400 mt-1">opus, read-only</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-purple-400">Executor</div><p class="text-xs text-neutral-400 mt-1">sonnet, edits</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-purple-400">Reviewer</div><p class="text-xs text-neutral-400 mt-1">haiku, read-only</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-purple-400">Subagents</div><p class="text-xs text-neutral-400 mt-1">through the official channel</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Read the role files</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t2-p1">Each role is a short text file. At the top is a header between lines <code>---</code>; the instructions in Portuguese underneath. This is the <code>.claude/agents/planejador.md</code>, in full:</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 .claude/agents/planner.md (from the kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">---
+name: planejador
+description: Planeja uma tarefa antes de executar. Use no início do time de três papéis (runtime/receitas/R2). Não edita arquivos.
+model: opus
+tools: Read, Grep, Glob
+---
+Você é o planejador do time. Leia a tarefa e o que for preciso do projeto, sem alterar nada.
+
+Devolva somente:
+1. Plano em no máximo 5 passos.
+2. Critérios de pronto, um por linha, no formato `comando → saída esperada`, que só passam se o trabalho for feito de verdade.
+3. Riscos pela runtime/POLITICA.md (ações que exigem pedir antes).</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Notice:</strong> the list <code>tools</code> doesn’t have <code>Write</code> nor <code>Edit</code>. The planner can't change a file even if it wants to.</div>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Frontmatter and tools</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Frontmatter</strong> — the header at the top of the file, between the two lines <code>---</code>. Claude Code reads the role's name, description, model, and tools there.</li>
+<li><strong>description</strong> — tells Claude when to call this role. That's why it mentions the R2 recipe.</li>
+<li><strong>tools</strong> — the enabled tools: <code>Read</code> (read), <code>Grep</code>/<code>Glob</code> (search), <code>Write</code>/<code>Edit</code> (create and modify), <code>Bash</code> (run commands).</li>
+</ul>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Role</th><th class="px-4 py-3 font-semibold"><code>tools:</code> in the file</th><th class="px-4 py-3 font-semibold">Instruction that holds the role</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">planner</td><td class="px-4 py-3 text-neutral-300"><code>Read, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"without changing anything"</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300"><code>Read, Write, Edit, Bash, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"don’t send, delete, or spend credits; if the plan calls for that, stop and return the question"</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">reviewer</td><td class="px-4 py-3 text-neutral-300"><code>Read, Bash, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"Don’t change any files." End with <code>APROVADO</code> or <code>FALTA:</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the reviewer has <code>Bash</code> to run the criteria, but there's no <code>Write</code> nor <code>Edit</code>. It checks without being able to "fix under the hood" what it found.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+<h3 class="font-semibold text-purple-400 mb-3">✓ Well-written role</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Minimum tools for the job</li>
+<li>✓ Fixed-format output (plan, PASS/FAIL)</li>
+<li>✓ Cites the <code>POLITICA.md</code></li>
+<li>✓ Fits on one screen</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Poorly written paper</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ All the tools “just in case”</li>
+<li>✗ Reviewer who can edit what they review</li>
+<li>✗ Open-ended answer with no clear verdict</li>
+<li>✗ Top model for everything</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📇</div><div class="text-sm font-semibold text-purple-400">Frontmatter</div><p class="text-xs text-neutral-400 mt-1">the role card</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧰</div><div class="text-sm font-semibold text-purple-400">tools</div><p class="text-xs text-neutral-400 mt-1">what can be changed</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">model</div><p class="text-xs text-neutral-400 mt-1">routing level</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚦</div><div class="text-sm font-semibold text-purple-400">POLICY</div><p class="text-xs text-neutral-400 mt-1">cited in the instructions</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Run the team through Claude’s interface</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t3-p1">The simplest way is to talk. Open Claude Code in the kit folder and request the team by the roles' names. Claude calls each subagent in order.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t3-p2">The test task is deliberately trivial: create a file with one sentence. That way, you can see the team working without worrying about the content.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: see the three roles working on a small task</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste (R2 recipe prompt):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: crie saudacao.txt com a frase "Olá, comunidade INEMA".</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">When you're done, check the file in the terminal:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">cat saudacao.txt</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Expected result (according to the instructions):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">cat saudacao.txt displays the phrase, and the response ends with APROVADO.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> the file contains the phrase "Hello, INEMA community" and the reviewer's last word is <code>APROVADO</code>. If you get <code>FALTA:</code>, read the list: it’s what the executor didn’t do.</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Planner returns the plan</h4><p class="text-neutral-300 text-sm">Up to 5 steps, the completion criteria in the format <code>comando → saída esperada</code> and policy risks.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Executor does the work and shows the proof</h4><p class="text-neutral-300 text-sm">Creates the file, runs the proof command for each step, and lists what it created or changed.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Reviewer gives the verdict</h4><p class="text-neutral-300 text-sm">One line per criterion, OK or FAIL with the output, and at the end <code>APROVADO</code> or <code>FALTA:</code>.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> The criteria are set before the work begins</h3>
+<p class="text-neutral-300 text-sm">The planner writes the completion criteria before the executor starts. That way, the reviewer checks against what was agreed on, not against what the executor says it did. It’s the same idea of “proof” used in the recipes.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-purple-400">Through the screen</div><p class="text-xs text-neutral-400 mt-1">you follow along</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📋</div><div class="text-sm font-semibold text-purple-400">Plan</div><p class="text-xs text-neutral-400 mt-1">up to 5 steps</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">Criterion</div><p class="text-xs text-neutral-400 mt-1">command → output</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏁</div><div class="text-sm font-semibold text-purple-400">APPROVED</div><p class="text-xs text-neutral-400 mt-1">or MISSING:</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Run the team without opening the interface</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t4-p1">The same request fits on one line in the terminal. You don’t have a conversation: you send the task, wait, and read the final response. It’s useful for repeating the same team’s work every week with the same phrase.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? The <code>-p</code> from Claude</h3>
+<p class="text-neutral-300 text-sm"><code>claude -p "pedido"</code> run the request once and print the response without opening the chat screen. The "p" comes from <em>screenshot</em> (print). It lets you call Claude from a script or another agent.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: run the whole team with a single command</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude -p "Use o time (planejador, executor, revisor). Tarefa: crie saudacao.txt com a frase 'Olá, comunidade INEMA'. Termine com a resposta do revisor."</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.1.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">modelos opus + sonnet + haiku usados; revisor APROVADO; saudacao.txt correto
+Custo da R2 em cota: equivalente a ~US$ 0,73 de API (não é cobrança na assinatura).</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> the answer ends with the reviewer's answer (<code>APROVADO</code>) e <code>cat saudacao.txt</code> shows the sentence.</div>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Comparison of the two ways to run the team. On the left, through the screen: you talk, see each role, and can interrupt. On the right, with claude -p: one line goes in, the three roles run inside a closed box, and only the reviewer’s final answer comes out." class="w-full h-auto" role="img" viewbox="0 0 800 210">
+<defs>
+<pattern height="32" id="m32b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m32b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m32b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m32b-grid)" height="210" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="150" rx="14" stroke="#6b7280" stroke-width="2" width="330" x="30" y="30"></rect>
+<text fill="#e5e7eb" font-size="14" font-weight="600" x="195" y="56">💬 through the screen (claude)</text>
+<rect fill="#1e1233" height="34" rx="8" stroke="#c084fc" stroke-width="1.5" width="90" x="50" y="78"></rect><text fill="#e9d5ff" font-size="11" x="95" y="100">planner</text>
+<rect fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="90" x="150" y="78"></rect><text fill="#bae6fd" font-size="11" x="195" y="100">executor</text>
+<rect fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="90" x="250" y="78"></rect><text fill="#bae6fd" font-size="11" x="295" y="100">reviewer</text>
+<text fill="#9ca3af" font-size="11" x="195" y="145">you see each step and can interrupt</text>
+<text fill="#9ca3af" font-size="11" x="195" y="163">good for learning and new tasks</text>
+<rect fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="80" x="420" y="88"></rect><text fill="#bae6fd" font-size="11" x="460" y="110">1 line</text>
+<g filter="url(#m32b-glow)"><rect fill="#1e1233" height="90" rx="14" stroke="#c084fc" stroke-width="2" width="140" x="530" y="60"></rect></g>
+<text fill="#c084fc" font-size="13" font-weight="600" x="600" y="98">claude -p</text><text fill="#e9d5ff" font-size="10" x="600" y="117">3 roles inside</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="80" x="700" y="88"></rect><text fill="#bae6fd" font-size="11" x="740" y="110">response</text>
+<text fill="#9ca3af" font-size="11" x="600" y="185">good for repeating the same task</text>
+</g>
+<line class="wf-flow" marker-end="url(#m32b-arrow)" stroke="#38bdf8" stroke-width="2" x1="502" x2="526" y1="105" y2="105"></line>
+<line class="wf-flow" marker-end="url(#m32b-arrow)" stroke="#38bdf8" stroke-width="2" x1="672" x2="696" y1="105" y2="105"></line>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> on the left, all three roles are visible in the conversation. On the right, they run inside the purple box of the <code>claude -p</code> and you only see what comes out. Same team, same quota; what changes is how much you monitor.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> <code>-p</code> isn’t the same as running in the background</h3>
+<p class="text-neutral-300 text-sm">O <code>claude -p</code> keeps the terminal busy until it finishes. Letting the team run while you do something else is the <code>claude --bg</code>, from module 3.3. And the two don’t get mixed up: CHANGELOG 0.2.0 records that <code>--bg</code> doesn’t accept <code>-p</code>.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-purple-400">claude -p</div><p class="text-xs text-neutral-400 mt-1">one line, one response</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-purple-400">Repeatable</div><p class="text-xs text-neutral-400 mt-1">same phrase, every week</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-purple-400">~US$ 0,73</div><p class="text-xs text-neutral-400 mt-1">equivalent in quota</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">--bg</div><p class="text-xs text-neutral-400 mt-1">is module 3.3</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Use the team in your work</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t5-p1">To use it for real, change only the task. The R2 recipe includes two examples, one for each character in the course. What changes between them is what the reviewer checks.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🧾</div>
+<h3 class="font-semibold text-lg mb-2">Sônia — ERP totals</h3>
+<p class="text-neutral-300 text-sm mb-3">R2 example: "plan and create a summary of the CSV exported from the ERP in <code>export/</code>; the reviewer checks the totals".</p>
+<p class="text-xs text-neutral-400">To practice, use the <code>runtime/exemplos/erp-vendas.csv</code>. Its total is R$ 856,00, a calculation you can do by hand.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🩺</div>
+<h3 class="font-semibold text-lg mb-2">Clara — available times</h3>
+<p class="text-neutral-300 text-sm mb-3">R2 example: "list the week’s available time slots in the <code>agenda.csv</code>; the reviewer checks that no busy time slots appear".</p>
+<p class="text-xs text-neutral-400">To practice, use the <code>runtime/exemplos/agenda.csv</code>, with Dr. Ana and Dr. Bruno.</p>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: Sônia’s team, with a reviewer checking the total</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: monte resumo-vendas.md com o total por cliente do runtime/exemplos/erp-vendas.csv e o total geral. O revisor confere os totais somando direto do CSV.</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">For Clara, change the task:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: liste em horarios-livres.md os horários livres da runtime/exemplos/agenda.csv. O revisor confere se nenhum horário ocupado apareceu.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> the reviewer finishes with <code>APROVADO</code>. For Sônia, the grand total must be R$ 856,00 (10×18,50 + 25×5,20 + 40×5,20 + 6×18,50 + 12×18,50). For Clara, compare with the lines <code>livre</code> from the CSV.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Tell the reviewer what to check</h3>
+<p class="text-neutral-300 text-sm">"The reviewer checks it" on its own is vague. "The reviewer checks the totals by summing them directly from the CSV" becomes a criterion. The more concrete what they check is, the more the <code>APROVADO</code> applies.</p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> The executor stops before sending or deleting</h3>
+<p class="text-neutral-300 text-sm">Under the R2 policy, the executor changes project files (N3) and nothing else. If Clara’s task becomes "and send the list to the patients," it stops and returns the question: sending has an N2 ceiling in <code>POLITICA.md</code>.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-purple-400">Sônia</div><p class="text-xs text-neutral-400 mt-1">reviewer checks totals</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-purple-400">Clara</div><p class="text-xs text-neutral-400 mt-1">nothing busy</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-purple-400">R$ 856,00</div><p class="text-xs text-neutral-400 mt-1">count manually</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✋</div><div class="text-sm font-semibold text-purple-400">N3</div><p class="text-xs text-neutral-400 mt-1">modifies, doesn't send</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Switch models and create roles</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t6-p1">The roles are yours. The “Adjustments” section of R2 shows the two ways to make changes: switch a role’s model or create a new role.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p2">To change the model, edit the line <code>model:</code> from the role file. The accepted values are <code>haiku</code>, <code>sonnet</code>, <code>opus</code> or <code>inherit</code>, which uses the same model as your session.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 .claude/agents/reviewer.md frontmatter (from the kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">---
+name: revisor
+description: Confere o trabalho do executor rodando os critérios de pronto do plano. Use no fim do time de três papéis (runtime/receitas/R2). Não edita arquivos.
+model: haiku
+tools: Read, Bash, Grep, Glob
+---</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Where to make changes:</strong> if the reviewer lets errors in Sônia’s calculations through, switch <code>model: haiku</code> by <code>model: sonnet</code>. That's the "only escalate if it fails" rule from module 3.1.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Value of <code>model:</code></th><th class="px-4 py-3 font-semibold">Level in ROTEAMENTO.md</th><th class="px-4 py-3 font-semibold">When using it with the team</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>haiku</code></td><td class="px-4 py-3 text-neutral-300">smaller</td><td class="px-4 py-3 text-neutral-300">check simple criteria</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>sonnet</code></td><td class="px-4 py-3 text-neutral-300">executor (or lower)</td><td class="px-4 py-3 text-neutral-300">do the work; more attentive reviewer</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>opus</code></td><td class="px-4 py-3 text-neutral-300">top (or executor, with low effort)</td><td class="px-4 py-3 text-neutral-300">plan</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>inherit</code></td><td class="px-4 py-3 text-neutral-300">your session's</td><td class="px-4 py-3 text-neutral-300">when you've already chosen the model upon opening the <code>claude</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the second column links each value to the module 3.1 table. Note that <code>sonnet</code> appears on two levels there: routing is a guide, not a prison.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p3">To create a role, R2 says to copy a file from <code>.claude/agents/</code> and change the name, description, and instructions. You can ask Claude itself, which shows you the change before saving:</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: add a fourth role based on the reviewer</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Copy .claude/agents/revisor.md to .claude/agents/conferente-agenda.md. Change name, description, and instructions: have it check whether a list of available time slots matches the livre lines in runtime/exemplos/agenda.csv. Keep the same tools and model: haiku. Show the file before saving.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> the new file exists at <code>.claude/agents/</code>, the frontmatter has <code>name: conferente-agenda</code> and the list <code>tools</code> continues without <code>Write</code> e <code>Edit</code>.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-2#q1">
+<p class="font-medium mb-4">Quick test (optional): why doesn't the kit reviewer have <code>Write</code> nor <code>Edit</code>?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">To check without being able to secretly fix what it finds; the verdict stays honest.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Because haiku doesn't know how to edit files.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">To save quota.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Next level</h3>
+<p class="text-neutral-300 text-sm">R2 ends by pointing to the next step: each role in its own session, running in the background. That’s recipe R4, in module 3.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">model:</div><p class="text-xs text-neutral-400 mt-1">one line changes the level</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪞</div><div class="text-sm font-semibold text-purple-400">inherit</div><p class="text-xs text-neutral-400 mt-1">the session's</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📑</div><div class="text-sm font-semibold text-purple-400">Copy</div><p class="text-xs text-neutral-400 mt-1">new role</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">R4</div><p class="text-xs text-neutral-400 mt-1">background</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Three roles, three models</strong><span class="text-neutral-400"> — Opus plans, Sonnet builds, Haiku checks.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">The file gives instructions</strong><span class="text-neutral-400"> — <code>tools</code> the frontmatter determines who can make changes.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Through the screen or with <code>claude -p</code></strong><span class="text-neutral-400"> — same team, ends with APPROVED.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Reviewer with a concrete criterion</strong><span class="text-neutral-400"> — Sônia’s totals, Clara’s schedules.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">One-line adjustment</strong><span class="text-neutral-400"> — <code>model:</code> switches the level; copying creates a role.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.3 — Background team</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-3.html">Module 3.3 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-1">1. The three roles</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-2">2. Role files</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-3">3. Through the screen</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-4">4. With claude -p</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-5">5. In your work</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-6">6. Models and roles</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-3-2#q1', { answer: 0, explain: {
+          '0': 'Isso. O revisor roda os critérios com Bash, mas não pode editar. Se pudesse, poderia corrigir o erro em silêncio e responder APROVADO.',
+          '1': 'Não. Quem decide o que o papel pode fazer é a lista tools do arquivo, não o modelo.',
+          '2': 'Não é esse o motivo. As ferramentas liberadas não mudam o nível do modelo; o que economiza cota é a linha model: haiku.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

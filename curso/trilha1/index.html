@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>Trilha 1 · Descobrir | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Trilha 1 · Descobrir | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,619 +174,606 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="../trilha4/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="1">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
-      <div>
-        <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">TRILHA 1</span>
-        <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧭 Descobrir</h1>
-        <p class="text-lg text-neutral-400 max-w-3xl">Antes de ligar qualquer coisa, saiba o que existe. Entenda por que engenharia reversa não é produto, instale o kit, rode o diagnóstico e monte o mapa das ferramentas que seus agentes podem usar.</p>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~2h20</div><div class="text-xs text-neutral-400">Duração</div></div>
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nível</div></div>
-        </div>
-        <div data-inema-meter="trilha:1" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 1">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="mt-8 lg:mt-0 rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 overflow-hidden">
-        <svg viewBox="0 0 380 240" class="w-full h-auto" role="img" aria-label="Uma lupa sobre uma escada de sete degraus. Os degraus de cima, API, MCP e CLI, estão acesos em verde; os do meio em azul; o último, engenharia reversa, está em vermelho e marcado como laboratório.">
-          <defs>
-            <pattern id="t1h-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#34d399" opacity="0.12"/></pattern>
-            <filter id="t1h-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <rect x="0" y="0" width="380" height="240" fill="url(#t1h-grid)"/>
-          <g font-family="Inter,sans-serif" font-size="11">
-            <g filter="url(#t1h-glow)"><rect x="40" y="20" width="110" height="24" rx="6" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
-            <text x="95" y="36" text-anchor="middle" fill="#34d399" font-weight="600">1 · API</text>
-            <rect x="60" y="50" width="110" height="24" rx="6" fill="#0e2018" stroke="#34d399" stroke-width="1.8"/><text x="115" y="66" text-anchor="middle" fill="#a7f3d0">2 · MCP</text>
-            <rect x="80" y="80" width="110" height="24" rx="6" fill="#0e2018" stroke="#34d399" stroke-width="1.8"/><text x="135" y="96" text-anchor="middle" fill="#a7f3d0">3 · CLI</text>
-            <rect class="wf-a" x="100" y="110" width="110" height="24" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="155" y="126" text-anchor="middle" fill="#bae6fd">4 · SDK</text>
-            <rect class="wf-a" x="120" y="140" width="110" height="24" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="175" y="156" text-anchor="middle" fill="#bae6fd">5 · computador</text>
-            <rect class="wf-a" x="140" y="170" width="110" height="24" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/><text x="195" y="186" text-anchor="middle" fill="#bae6fd">6 · ponte local</text>
-            <rect x="160" y="200" width="110" height="24" rx="6" fill="#2a0f0f" stroke="#f87171" stroke-width="1.8" stroke-dasharray="4 3"/><text x="215" y="216" text-anchor="middle" fill="#fca5a5">7 · eng. reversa</text>
-          </g>
-          <circle cx="300" cy="80" r="40" fill="none" stroke="#34d399" stroke-width="3"/>
-          <line x1="329" y1="109" x2="360" y2="140" stroke="#34d399" stroke-width="5" stroke-linecap="round"/>
-          <text x="300" y="85" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">qual via?</text>
-          <text x="315" y="216" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="10">só laboratório</text>
-        </svg>
-      </div>
-    </div>
-  </header>
-
-  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="1">
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="#modulo-1-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🧭 Engenharia reversa não é produto</h3>
-          <p class="text-xs text-neutral-400">Técnica, não produto</p>
-        </a>
-        <a href="#modulo-1-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🩺 Instalar e diagnosticar</h3>
-          <p class="text-xs text-neutral-400">doctor diz PRONTO</p>
-        </a>
-        <a href="#modulo-1-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🪜 A escada das vias</h3>
-          <p class="text-xs text-neutral-400">A mais alta que existir</p>
-        </a>
-        <a href="#modulo-1-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🗺️ O mapa de capacidades</h3>
-          <p class="text-xs text-neutral-400">Sem linha, sem uso</p>
-        </a>
-      </div>
-    </section>
-
-    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
-
-    <!-- ===== MODULO 1.1 ===== -->
-    <div id="modulo-1-1" data-inema-module="1-1" data-inema-track="1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🧭 Engenharia reversa não é produto</h3>
-        <p class="text-neutral-400 text-sm">O que os vídeos de mods mostraram, por que a gambiarra só serve de descoberta e quais vias oficiais fazem o mesmo hoje.</p>
-        <div data-inema-meter="modulo:1-1" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 1.1">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🎬</span>
-            <div><span class="font-medium">Veja o que os vídeos de mods mostraram</span><span class="text-neutral-500 text-sm ml-2">- o fio improvisado</span></div>
-          </button>
-          <div id="t1-1-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Vídeos mostraram o Claude Code usando o uso do computador do app do Codex e várias sessões em paralelo, quase tudo por engenharia reversa.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber o que foi feito e como foi feito separa a ideia (boa) do caminho (frágil).</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Claude Code, Codex, mod, uso do computador, engenharia reversa.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">🔍</span>
-            <div><span class="font-medium">Separe descoberta de produto</span><span class="text-neutral-500 text-sm ml-2">- prova × caminho</span></div>
-          </button>
-          <div id="t2-1-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do curso: engenharia reversa prova que algo é possível; o sistema do dia a dia usa a via oficial.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O que depende de fio improvisado quebra na próxima atualização e só você sabe consertar.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Descoberta, produto, contrato, etiqueta de frágil.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🛣️</span>
-            <div><span class="font-medium">Conheça as vias oficiais de hoje</span><span class="text-neutral-500 text-sm ml-2">- o vídeo × o oficial</span></div>
-          </button>
-          <div id="t3-1-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A tabela de troca: codex exec, claude --bg e claude agents, plugins oficiais e permissões escritas no lugar dos truques.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada linha da tabela vira um módulo do curso que você roda na sua máquina.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Via oficial, CLI, sessão em segundo plano, plugin.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">📁</span>
-            <div><span class="font-medium">Entenda o que é o kit</span><span class="text-neutral-500 text-sm ml-2">- uma pasta, não um servidor</span></div>
-          </button>
-          <div id="t4-1-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O INEMA Agent Runtime: pasta runtime/ com quatro arquivos de regras, scripts, pontes, guarda e sete receitas testadas.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Funciona pela assinatura do Claude Code e do Codex, sem API paga e sem servidor para manter.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Kit copiável, assinatura, cota, API, receita.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🔄</span>
-            <div><span class="font-medium">Percorra o ciclo de sete etapas</span><span class="text-neutral-500 text-sm ml-2">- de descobrir a aprender</span></div>
-          </button>
-          <div id="t5-1-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Descobrir, conectar, rotear, executar, observar, verificar e aprender, com um arquivo do kit para cada etapa.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O ciclo é a ordem do curso e a ordem em que você liga agentes no trabalho.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ciclo, política, prova, comando → saída esperada.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🧑‍🤝‍🧑</span>
-            <div><span class="font-medium">Conheça a Clara, a Sônia e o mapa do curso</span><span class="text-neutral-500 text-sm ml-2">- agenda e ERP</span></div>
-          </button>
-          <div id="t6-1-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A dona de clínica com agenda em planilha e a contadora com ERP sem API, cujos dados vêm no próprio kit.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com os mesmos arquivos de exemplo, o que você roda bate com o que a aula mostra.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ERP, CSV, arquivos de exemplo, projeto final.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-1-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-1-1.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- ===== MODULO 1.2 ===== -->
-    <div id="modulo-1-2" data-inema-module="1-2" data-inema-track="1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🩺 Instalar e diagnosticar</h3>
-        <p class="text-neutral-400 text-sm">Do zero ao "PRONTO": pré-requisitos, clone do kit, o diagnóstico doctor.mjs e o primeiro pedido ao agente.</p>
-        <div data-inema-meter="modulo:1-2" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 1.2">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🧰</span>
-            <div><span class="font-medium">Confira o que você precisa ter</span><span class="text-neutral-500 text-sm ml-2">- Node e um agente logado</span></div>
-          </button>
-          <div id="t1-1-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Node 18 ou mais novo, Claude Code e/ou Codex logados pela assinatura, Linux ou Mac (Windows pelo WSL).</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem esses três itens nenhuma receita roda; com eles, todas rodam.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Terminal, Node, WSL, login pela assinatura.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">📥</span>
-            <div><span class="font-medium">Clone o kit na sua máquina</span><span class="text-neutral-500 text-sm ml-2">- git clone</span></div>
-          </button>
-          <div id="t2-1-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Baixar o repositório do kit para uma pasta sua com um comando.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A pasta clonada vira o seu projeto: regras, pontes e receitas já no lugar.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Git, repositório, clone, pasta do projeto.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🩺</span>
-            <div><span class="font-medium">Rode o diagnóstico</span><span class="text-neutral-500 text-sm ml-2">- doctor.mjs</span></div>
-          </button>
-          <div id="t3-1-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um script que confere Node, Claude Code, Codex e Ollama e termina com PRONTO ou FALTA.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ele só lê versões e status: não chama modelo nem gasta cota.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnóstico, saída 0, PRONTO, FALTA.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🔎</span>
-            <div><span class="font-medium">Leia cada linha do doctor</span><span class="text-neutral-500 text-sm ml-2">- ok, ausente, sem login</span></div>
-          </button>
-          <div id="t4-1-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O significado de cada estado e o comando que o próprio doctor sugere para resolver.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você conserta sozinho o que falta, sem adivinhar.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ok, ausente, sem login, velho, opcional.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🤝</span>
-            <div><span class="font-medium">Veja como os dois agentes leem as mesmas regras</span><span class="text-neutral-500 text-sm ml-2">- AGENTS.md e CLAUDE.md</span></div>
-          </button>
-          <div id="t5-1-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Codex lê o AGENTS.md; o CLAUDE.md do kit aponta para ele. As mesmas regras valem para os dois.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você escreve a regra uma vez e não precisa manter duas versões.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">AGENTS.md, CLAUDE.md, @AGENTS.md, .claude/settings.json.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">💬</span>
-            <div><span class="font-medium">Faça o primeiro pedido ao agente</span><span class="text-neutral-500 text-sm ml-2">- leia o LEIA-ME comigo</span></div>
-          </button>
-          <div id="t6-1-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Abrir o claude na pasta do kit e pedir que ele leia o LEIA-ME e ajude a preencher o CAPACIDADES.md.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o primeiro uso real: o agente lendo as regras do kit antes de agir.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sessão interativa, pasta confiável, primeiro prompt.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-1-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-1-2.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- ===== MODULO 1.3 ===== -->
-    <div id="modulo-1-3" data-inema-module="1-3" data-inema-track="1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🪜 A escada das vias</h3>
-        <p class="text-neutral-400 text-sm">Sete níveis, de API a engenharia reversa: como escolher a via mais estável e exigir teste antes de aceitar um "não dá".</p>
-        <div data-inema-meter="modulo:1-3" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 1.3">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🪜</span>
-            <div><span class="font-medium">Suba os sete degraus da escada</span><span class="text-neutral-500 text-sm ml-2">- API até engenharia reversa</span></div>
-          </button>
-          <div id="t1-1-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A tabela do LEIA-ME: API, MCP, CLI, SDK, uso do computador, ponte local e engenharia reversa, com exemplo e estabilidade.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a regra de decisão mais útil do kit e cabe numa página.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Via, nível, API, MCP, CLI, SDK, ponte local.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">⚖️</span>
-            <div><span class="font-medium">Entenda por que estabilidade manda</span><span class="text-neutral-500 text-sm ml-2">- alta, média, baixa</span></div>
-          </button>
-          <div id="t2-1-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada degrau tem uma estabilidade: o quanto ele continua funcionando quando o outro lado muda.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A via que quebra menos é a que custa menos manter, mesmo que dê mais trabalho no primeiro dia.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Estabilidade, manutenção, contrato, frágil.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🧪</span>
-            <div><span class="font-medium">Exija teste antes do "não dá"</span><span class="text-neutral-500 text-sm ml-2">- um comando por nível</span></div>
-          </button>
-          <div id="t3-1-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do LEIA-ME e do AGENTS.md: antes de concluir que é impossível, o agente testa cada nível com um comando.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitas vezes a via existe e só não estava documentada.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Impossível prematuro, teste concreto, evidência.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🧾</span>
-            <div><span class="font-medium">Suba a escada com o ERP da Sônia</span><span class="text-neutral-500 text-sm ml-2">- para no degrau 6</span></div>
-          </button>
-          <div id="t4-1-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O ERP sem API passa degrau por degrau até a exportação CSV, a ponte local.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o caso mais comum em escritório pequeno: sistema antigo que só exporta arquivo.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exportação, CSV, ponte local, só leitura.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🩺</span>
-            <div><span class="font-medium">Suba a escada com a agenda da Clara</span><span class="text-neutral-500 text-sm ml-2">- planilha vira arquivo</span></div>
-          </button>
-          <div id="t5-1-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A agenda em planilha também cai na ponte local; ler é tranquilo, escrever pede aprovação.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Mostra que a mesma via pode ter políticas diferentes para ler e para alterar.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Planilha, agenda.csv, ler × alterar, N2.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🎯</span>
-            <div><span class="font-medium">Suba a escada com o seu sistema</span><span class="text-neutral-500 text-sm ml-2">- prompt pronto</span></div>
-          </button>
-          <div id="t6-1-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um prompt para o agente percorrer a escada com você, testando cada nível no seu sistema.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você sai sabendo qual via usar no projeto final.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnóstico de via, evidência por nível, escolha.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-1-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-1-3.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- ===== MODULO 1.4 ===== -->
-    <div id="modulo-1-4" data-inema-module="1-4" data-inema-track="1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🗺️ O mapa de capacidades</h3>
-        <p class="text-neutral-400 text-sm">O CAPACIDADES.md: uma linha por sistema, com via, nível, como chamar, política e data do teste.</p>
-        <div data-inema-meter="modulo:1-4" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 1.4">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">📋</span>
-            <div><span class="font-medium">Leia as colunas do CAPACIDADES.md</span><span class="text-neutral-500 text-sm ml-2">- seis colunas</span></div>
-          </button>
-          <div id="t1-1-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Sistema, via, nível, como o agente chama, política e testado em.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada coluna responde uma pergunta que você faria antes de deixar alguém usar seu sistema.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Mapa de capacidades, via, política, data do teste.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">✅</span>
-            <div><span class="font-medium">Entenda as duas linhas que já vêm prontas</span><span class="text-neutral-500 text-sm ml-2">- Codex e Claude</span></div>
-          </button>
-          <div id="t2-1-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Codex CLI pela ponte codex-exec.sh e Claude Code em modo de planejamento, ambos com política de leitura.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">São o modelo de como uma linha boa fica escrita.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Nível 3, ler (N4), linha testada.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">📎</span>
-            <div><span class="font-medium">Use os exemplos para copiar</span><span class="text-neutral-500 text-sm ml-2">- estoque, ERP, agenda, site</span></div>
-          </button>
-          <div id="t3-1-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">As quatro linhas de exemplo do arquivo, todas marcadas como pendentes até o teste.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Começar de um exemplo parecido com o seu caso economiza a metade do trabalho.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pendente, ponte local, uso do computador, N2.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🤖</span>
-            <div><span class="font-medium">Preencha o mapa com o agente</span><span class="text-neutral-500 text-sm ml-2">- nível por nível</span></div>
-          </button>
-          <div id="t4-1-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O prompt do README para o agente preencher o mapa com você, sistema por sistema.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O agente conhece a escada; você conhece o seu trabalho. Juntos, o mapa sai em minutos.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Entrevista guiada, uma pergunta por vez, revisão humana.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🚫</span>
-            <div><span class="font-medium">Só deixe entrar linha testada</span><span class="text-neutral-500 text-sm ml-2">- sem linha, sem uso</span></div>
-          </button>
-          <div id="t5-1-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do arquivo: sistema sem linha não é usado, e linha sem teste fica pendente.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Impede o agente de inventar acesso a um sistema que ninguém conferiu.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Lista branca, teste, data, pendente.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">👀</span>
-            <div><span class="font-medium">Olhe o software antes de dizer impossível</span><span class="text-neutral-500 text-sm ml-2">- menus, exportações, ajuda</span></div>
-          </button>
-          <div id="t6-1-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Observar o que o programa já oferece (exportar, integrações, linha de comando) antes de pensar em atalhos.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Olhar é o lado bom da engenharia reversa: descobre a via sem depender de gambiarra.</p></div>
-              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Observar, exportação, integração, LIMITES.md.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-1-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-1-4.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <div class="flex flex-col sm:flex-row gap-4 mt-12">
-      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar ao início</a>
-      <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Próxima trilha: Conectar →</a>
-    </div>
-  </main>
-
-  <!-- MODAIS (iframe carrega a pagina do modulo) -->
-  <div id="modal-1-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-1-1-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.1</span><span id="modal-1-1-title" class="font-semibold">Engenharia reversa não é produto</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-1-1.html" title="Módulo 1.1" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-1-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-1-2-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.2</span><span id="modal-1-2-title" class="font-semibold">Instalar e diagnosticar</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-1-2.html" title="Módulo 1.2" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-1-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-1-3-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.3</span><span id="modal-1-3-title" class="font-semibold">A escada das vias</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-1-3.html" title="Módulo 1.3" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-1-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-1-4-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.4</span><span id="modal-1-4-title" class="font-semibold">O mapa de capacidades</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-1-4.html" title="Módulo 1.4" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha1/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha1/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha1/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">TRILHA 1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧭 Descobrir</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Antes de ligar qualquer coisa, saiba o que existe. Entenda por que engenharia reversa não é produto, instale o kit, rode o diagnóstico e monte o mapa das ferramentas que seus agentes podem usar.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~2h20</div><div class="text-xs text-neutral-400">Duração</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nível</div></div>
+</div>
+<div aria-label="Progresso da trilha 1" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="trilha:1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 24</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="mt-8 lg:mt-0 rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 overflow-hidden">
+<svg aria-label="Uma lupa sobre uma escada de sete degraus. Os degraus de cima, API, MCP e CLI, estão acesos em verde; os do meio em azul; o último, engenharia reversa, está em vermelho e marcado como laboratório." class="w-full h-auto" role="img" viewbox="0 0 380 240">
+<defs>
+<pattern height="28" id="t1h-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#34d399" opacity="0.12" r="1.2"></circle></pattern>
+<filter height="180%" id="t1h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#t1h-grid)" height="240" width="380" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="11">
+<g filter="url(#t1h-glow)"><rect fill="#0e2018" height="24" rx="6" stroke="#34d399" stroke-width="2" width="110" x="40" y="20"></rect></g>
+<text fill="#34d399" font-weight="600" text-anchor="middle" x="95" y="36">1 · API</text>
+<rect fill="#0e2018" height="24" rx="6" stroke="#34d399" stroke-width="1.8" width="110" x="60" y="50"></rect><text fill="#a7f3d0" text-anchor="middle" x="115" y="66">2 · MCP</text>
+<rect fill="#0e2018" height="24" rx="6" stroke="#34d399" stroke-width="1.8" width="110" x="80" y="80"></rect><text fill="#a7f3d0" text-anchor="middle" x="135" y="96">3 · CLI</text>
+<rect class="wf-a" fill="#0b1f2e" height="24" rx="6" stroke="#38bdf8" stroke-width="1.8" width="110" x="100" y="110"></rect><text fill="#bae6fd" text-anchor="middle" x="155" y="126">4 · SDK</text>
+<rect class="wf-a" fill="#0b1f2e" height="24" rx="6" stroke="#38bdf8" stroke-width="1.8" width="110" x="120" y="140"></rect><text fill="#bae6fd" text-anchor="middle" x="175" y="156">5 · computador</text>
+<rect class="wf-a" fill="#0b1f2e" height="24" rx="6" stroke="#38bdf8" stroke-width="1.8" width="110" x="140" y="170"></rect><text fill="#bae6fd" text-anchor="middle" x="195" y="186">6 · ponte local</text>
+<rect fill="#2a0f0f" height="24" rx="6" stroke="#f87171" stroke-dasharray="4 3" stroke-width="1.8" width="110" x="160" y="200"></rect><text fill="#fca5a5" text-anchor="middle" x="215" y="216">7 · eng. reversa</text>
+</g>
+<circle cx="300" cy="80" fill="none" r="40" stroke="#34d399" stroke-width="3"></circle>
+<line stroke="#34d399" stroke-linecap="round" stroke-width="5" x1="329" x2="360" y1="109" y2="140"></line>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="300" y="85">qual via?</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="315" y="216">só laboratório</text>
+</svg>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="1" id="conteudo">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-1">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🧭 Engenharia reversa não é produto</h3>
+<p class="text-xs text-neutral-400">Técnica, não produto</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-2">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🩺 Instalar e diagnosticar</h3>
+<p class="text-xs text-neutral-400">doctor diz PRONTO</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-3">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🪜 A escada das vias</h3>
+<p class="text-xs text-neutral-400">A mais alta que existir</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-4">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🗺️ O mapa de capacidades</h3>
+<p class="text-xs text-neutral-400">Sem linha, sem uso</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- ===== MODULO 1.1 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-1" data-inema-track="1" id="modulo-1-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧭 Engenharia reversa não é produto</h3>
+<p class="text-neutral-400 text-sm">O que os vídeos de mods mostraram, por que a gambiarra só serve de descoberta e quais vias oficiais fazem o mesmo hoje.</p>
+<div aria-label="Progresso do módulo 1.1" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎬</span>
+<div><span class="font-medium">Veja o que os vídeos de mods mostraram</span><span class="text-neutral-500 text-sm ml-2">- o fio improvisado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Vídeos mostraram o Claude Code usando o uso do computador do app do Codex e várias sessões em paralelo, quase tudo por engenharia reversa.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber o que foi feito e como foi feito separa a ideia (boa) do caminho (frágil).</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Claude Code, Codex, mod, uso do computador, engenharia reversa.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔍</span>
+<div><span class="font-medium">Separe descoberta de produto</span><span class="text-neutral-500 text-sm ml-2">- prova × caminho</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do curso: engenharia reversa prova que algo é possível; o sistema do dia a dia usa a via oficial.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O que depende de fio improvisado quebra na próxima atualização e só você sabe consertar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Descoberta, produto, contrato, etiqueta de frágil.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🛣️</span>
+<div><span class="font-medium">Conheça as vias oficiais de hoje</span><span class="text-neutral-500 text-sm ml-2">- o vídeo × o oficial</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A tabela de troca: codex exec, claude --bg e claude agents, plugins oficiais e permissões escritas no lugar dos truques.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada linha da tabela vira um módulo do curso que você roda na sua máquina.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Via oficial, CLI, sessão em segundo plano, plugin.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📁</span>
+<div><span class="font-medium">Entenda o que é o kit</span><span class="text-neutral-500 text-sm ml-2">- uma pasta, não um servidor</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O INEMA Agent Runtime: pasta runtime/ com quatro arquivos de regras, scripts, pontes, guarda e sete receitas testadas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Funciona pela assinatura do Claude Code e do Codex, sem API paga e sem servidor para manter.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Kit copiável, assinatura, cota, API, receita.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">Percorra o ciclo de sete etapas</span><span class="text-neutral-500 text-sm ml-2">- de descobrir a aprender</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Descobrir, conectar, rotear, executar, observar, verificar e aprender, com um arquivo do kit para cada etapa.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O ciclo é a ordem do curso e a ordem em que você liga agentes no trabalho.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ciclo, política, prova, comando → saída esperada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧑‍🤝‍🧑</span>
+<div><span class="font-medium">Conheça a Clara, a Sônia e o mapa do curso</span><span class="text-neutral-500 text-sm ml-2">- agenda e ERP</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A dona de clínica com agenda em planilha e a contadora com ERP sem API, cujos dados vêm no próprio kit.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com os mesmos arquivos de exemplo, o que você roda bate com o que a aula mostra.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ERP, CSV, arquivos de exemplo, projeto final.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-1')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-1.html">Ver Completo</a>
+</div>
+</div>
+<!-- ===== MODULO 1.2 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-2" data-inema-track="1" id="modulo-1-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🩺 Instalar e diagnosticar</h3>
+<p class="text-neutral-400 text-sm">Do zero ao "PRONTO": pré-requisitos, clone do kit, o diagnóstico doctor.mjs e o primeiro pedido ao agente.</p>
+<div aria-label="Progresso do módulo 1.2" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧰</span>
+<div><span class="font-medium">Confira o que você precisa ter</span><span class="text-neutral-500 text-sm ml-2">- Node e um agente logado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Node 18 ou mais novo, Claude Code e/ou Codex logados pela assinatura, Linux ou Mac (Windows pelo WSL).</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem esses três itens nenhuma receita roda; com eles, todas rodam.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Terminal, Node, WSL, login pela assinatura.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📥</span>
+<div><span class="font-medium">Clone o kit na sua máquina</span><span class="text-neutral-500 text-sm ml-2">- git clone</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Baixar o repositório do kit para uma pasta sua com um comando.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A pasta clonada vira o seu projeto: regras, pontes e receitas já no lugar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Git, repositório, clone, pasta do projeto.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🩺</span>
+<div><span class="font-medium">Rode o diagnóstico</span><span class="text-neutral-500 text-sm ml-2">- doctor.mjs</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um script que confere Node, Claude Code, Codex e Ollama e termina com PRONTO ou FALTA.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ele só lê versões e status: não chama modelo nem gasta cota.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnóstico, saída 0, PRONTO, FALTA.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔎</span>
+<div><span class="font-medium">Leia cada linha do doctor</span><span class="text-neutral-500 text-sm ml-2">- ok, ausente, sem login</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O significado de cada estado e o comando que o próprio doctor sugere para resolver.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você conserta sozinho o que falta, sem adivinhar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ok, ausente, sem login, velho, opcional.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🤝</span>
+<div><span class="font-medium">Veja como os dois agentes leem as mesmas regras</span><span class="text-neutral-500 text-sm ml-2">- AGENTS.md e CLAUDE.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O Codex lê o AGENTS.md; o CLAUDE.md do kit aponta para ele. As mesmas regras valem para os dois.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você escreve a regra uma vez e não precisa manter duas versões.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">AGENTS.md, CLAUDE.md, @AGENTS.md, .claude/settings.json.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">💬</span>
+<div><span class="font-medium">Faça o primeiro pedido ao agente</span><span class="text-neutral-500 text-sm ml-2">- leia o LEIA-ME comigo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Abrir o claude na pasta do kit e pedir que ele leia o LEIA-ME e ajude a preencher o CAPACIDADES.md.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o primeiro uso real: o agente lendo as regras do kit antes de agir.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sessão interativa, pasta confiável, primeiro prompt.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-2')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-2.html">Ver Completo</a>
+</div>
+</div>
+<!-- ===== MODULO 1.3 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-3" data-inema-track="1" id="modulo-1-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🪜 A escada das vias</h3>
+<p class="text-neutral-400 text-sm">Sete níveis, de API a engenharia reversa: como escolher a via mais estável e exigir teste antes de aceitar um "não dá".</p>
+<div aria-label="Progresso do módulo 1.3" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🪜</span>
+<div><span class="font-medium">Suba os sete degraus da escada</span><span class="text-neutral-500 text-sm ml-2">- API até engenharia reversa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A tabela do LEIA-ME: API, MCP, CLI, SDK, uso do computador, ponte local e engenharia reversa, com exemplo e estabilidade.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a regra de decisão mais útil do kit e cabe numa página.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Via, nível, API, MCP, CLI, SDK, ponte local.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">⚖️</span>
+<div><span class="font-medium">Entenda por que estabilidade manda</span><span class="text-neutral-500 text-sm ml-2">- alta, média, baixa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada degrau tem uma estabilidade: o quanto ele continua funcionando quando o outro lado muda.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A via que quebra menos é a que custa menos manter, mesmo que dê mais trabalho no primeiro dia.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Estabilidade, manutenção, contrato, frágil.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧪</span>
+<div><span class="font-medium">Exija teste antes do "não dá"</span><span class="text-neutral-500 text-sm ml-2">- um comando por nível</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do LEIA-ME e do AGENTS.md: antes de concluir que é impossível, o agente testa cada nível com um comando.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitas vezes a via existe e só não estava documentada.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Impossível prematuro, teste concreto, evidência.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧾</span>
+<div><span class="font-medium">Suba a escada com o ERP da Sônia</span><span class="text-neutral-500 text-sm ml-2">- para no degrau 6</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O ERP sem API passa degrau por degrau até a exportação CSV, a ponte local.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o caso mais comum em escritório pequeno: sistema antigo que só exporta arquivo.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exportação, CSV, ponte local, só leitura.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🩺</span>
+<div><span class="font-medium">Suba a escada com a agenda da Clara</span><span class="text-neutral-500 text-sm ml-2">- planilha vira arquivo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A agenda em planilha também cai na ponte local; ler é tranquilo, escrever pede aprovação.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Mostra que a mesma via pode ter políticas diferentes para ler e para alterar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Planilha, agenda.csv, ler × alterar, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🎯</span>
+<div><span class="font-medium">Suba a escada com o seu sistema</span><span class="text-neutral-500 text-sm ml-2">- prompt pronto</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um prompt para o agente percorrer a escada com você, testando cada nível no seu sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você sai sabendo qual via usar no projeto final.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnóstico de via, evidência por nível, escolha.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-3')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-3.html">Ver Completo</a>
+</div>
+</div>
+<!-- ===== MODULO 1.4 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-4" data-inema-track="1" id="modulo-1-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🗺️ O mapa de capacidades</h3>
+<p class="text-neutral-400 text-sm">O CAPACIDADES.md: uma linha por sistema, com via, nível, como chamar, política e data do teste.</p>
+<div aria-label="Progresso do módulo 1.4" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:1-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📋</span>
+<div><span class="font-medium">Leia as colunas do CAPACIDADES.md</span><span class="text-neutral-500 text-sm ml-2">- seis colunas</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Sistema, via, nível, como o agente chama, política e testado em.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada coluna responde uma pergunta que você faria antes de deixar alguém usar seu sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Mapa de capacidades, via, política, data do teste.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">✅</span>
+<div><span class="font-medium">Entenda as duas linhas que já vêm prontas</span><span class="text-neutral-500 text-sm ml-2">- Codex e Claude</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Codex CLI pela ponte codex-exec.sh e Claude Code em modo de planejamento, ambos com política de leitura.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">São o modelo de como uma linha boa fica escrita.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Nível 3, ler (N4), linha testada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📎</span>
+<div><span class="font-medium">Use os exemplos para copiar</span><span class="text-neutral-500 text-sm ml-2">- estoque, ERP, agenda, site</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">As quatro linhas de exemplo do arquivo, todas marcadas como pendentes até o teste.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Começar de um exemplo parecido com o seu caso economiza a metade do trabalho.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pendente, ponte local, uso do computador, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🤖</span>
+<div><span class="font-medium">Preencha o mapa com o agente</span><span class="text-neutral-500 text-sm ml-2">- nível por nível</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O prompt do README para o agente preencher o mapa com você, sistema por sistema.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O agente conhece a escada; você conhece o seu trabalho. Juntos, o mapa sai em minutos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Entrevista guiada, uma pergunta por vez, revisão humana.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚫</span>
+<div><span class="font-medium">Só deixe entrar linha testada</span><span class="text-neutral-500 text-sm ml-2">- sem linha, sem uso</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do arquivo: sistema sem linha não é usado, e linha sem teste fica pendente.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Impede o agente de inventar acesso a um sistema que ninguém conferiu.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Lista branca, teste, data, pendente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">👀</span>
+<div><span class="font-medium">Olhe o software antes de dizer impossível</span><span class="text-neutral-500 text-sm ml-2">- menus, exportações, ajuda</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Observar o que o programa já oferece (exportar, integrações, linha de comando) antes de pensar em atalhos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Olhar é o lado bom da engenharia reversa: descobre a via sem depender de gambiarra.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Observar, exportação, integração, LIMITES.md.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-4')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-4.html">Ver Completo</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../../index.html">← Voltar ao início</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/index.html">Próxima trilha: Conectar →</a>
+</div>
+</main>
+<!-- MODAIS (iframe carrega a pagina do modulo) -->
+<div aria-labelledby="modal-1-1-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-1" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.1</span><span class="font-semibold" id="modal-1-1-title">Engenharia reversa não é produto</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-1.html" title="Módulo 1.1"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-1-2-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-2" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.2</span><span class="font-semibold" id="modal-1-2-title">Instalar e diagnosticar</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-2.html" title="Módulo 1.2"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-1-3-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-3" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.3</span><span class="font-semibold" id="modal-1-3-title">A escada das vias</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-3.html" title="Módulo 1.3"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-1-4-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-4" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.4</span><span class="font-semibold" id="modal-1-4-title">O mapa de capacidades</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-1-4.html" title="Módulo 1.4"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -816,8 +800,8 @@
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
 </body>

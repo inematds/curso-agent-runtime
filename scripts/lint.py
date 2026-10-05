@@ -27,12 +27,12 @@ ref_manifest = None
 for p in paginas:
     txt = p.read_text(encoding='utf-8')
     rel = p.relative_to(RAIZ)
-    m = re.search(r'data-inema-manifest>\n\s*(.*?)\n', txt)
+    m = re.search(r'data-inema-manifest[^>]*>\s*(.*?)\s*</script>', txt, re.S)
     if not m: falha(rel, 'sem manifesto'); continue
     ref_manifest = ref_manifest or m.group(1)
     if m.group(1) != ref_manifest: falha(rel, 'manifesto difere')
     if 'https://inema.pro' not in txt: falha(rel, 'sem PRO')
-    if not re.search(r'text-sky-400[^"]*">INEMA.CLUB', txt): falha(rel, 'sem INEMA.CLUB')
+    if not re.search(r'<a [^>]*text-sky-400[^>]*>INEMA.CLUB</a>', txt): falha(rel, 'sem INEMA.CLUB')
     if txt.find('ANTI-FOUC') > txt.find('cdn.tailwindcss.com'): falha(rel, 'anti-FOUC fora de ordem')
     if re.search(r'justify-center space-x', txt): falha(rel, 'justify-center em botões')
     ids = re.findall(r'<(?:pattern|filter|marker|linearGradient|radialGradient)[^>]*\sid="([^"]+)"', txt)
@@ -58,7 +58,7 @@ for p in paginas:
         if 'data-inema-toc' not in txt: falha(rel, 'sem TOC')
     elif p.name == 'index.html' and 'trilha' in str(p.parent):
         tn = p.parent.name[-1]
-        mods = len(re.findall(r'<div id="modulo-\d-\d" data-inema-module', txt))
+        mods = len([d for d in re.findall(r'<div [^>]*data-inema-module="\d-\d"[^>]*>', txt) if 'id="modulo-' in d])
         vc = txt.count('>Ver Completo<'); tp = txt.count('class="topic-item"')
         print(f'{str(rel):34} modulos={mods} ver_completo={vc} topicos={tp} svg={txt.count(chr(114)+"ole=\"img\"")}')
         if '>Mapa da trilha<' not in txt: falha(rel, 'sem Mapa da trilha')

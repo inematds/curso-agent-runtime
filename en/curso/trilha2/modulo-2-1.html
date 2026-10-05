@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Claude uses Codex | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha2/modulo-2-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha2/modulo-2-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha2/modulo-2-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-1" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🤝 Claude uses Codex</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">The mods videos connected Claude to Codex with an improvised wire. Here you do the same through the official route: the command <code>codex exec</code>, wrapped in a bridge just a few lines long. It’s recipe R1 from the kit.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">R1</div><div class="text-xs text-neutral-400">Recipe</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 2.1 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:2-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="2-1" data-inema-track="2" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Understand the codex-exec bridge</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t1-p1">Codex has a headless mode: <code>codex exec</code>. You send a request, it works on it, and returns the final answer. That's a <strong class="text-blue-400">CLI</strong>, step 3 on the route ladder.</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t1-p2">The kit wraps that command in a short script: <code>runtime/pontes/codex-exec.sh</code>. É a <strong class="text-blue-400">bridge</strong>. It already chooses the model, applies the policy, and returns only the relevant text.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t1-p3">Claude remains the decision-maker. Codex becomes a colleague Claude consults, like asking for another team member’s opinion.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Four words from this module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Script</strong> — a text file with commands in sequence. You run the file, and it executes everything in order.</li>
+<li><strong>stdin</strong> (standard input) — the “pipe” through which a program receives text. The bridge sends your request to Codex through this pipe.</li>
+<li><strong>Sandbox</strong> — a sandbox: the enclosed space where Codex works. It determines whether it can only read or can also write files.</li>
+<li><strong>Output</strong> — what the program prints in the terminal. When there’s an error, it also returns a number (for example, “exit code 2”).</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Bridge flow. Claude Code runs the codex-exec.sh script, which checks the sandbox against the policy and sends the request to codex exec via stdin. Codex responds, and the bridge returns only the final text to Claude." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m21-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m21-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m21-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m21-grid)" height="250" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="70" rx="14" stroke="#6b7280" stroke-width="2" width="160" x="30" y="80"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="110" y="112">Claude Code</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="110" y="132">decides and asks</text>
+<line class="wf-flow" marker-end="url(#m21-arrow)" stroke="#38bdf8" stroke-width="2" x1="192" x2="285" y1="115" y2="115"></line>
+<g filter="url(#m21-glow)"><rect fill="#0f1b33" height="90" rx="14" stroke="#60a5fa" stroke-width="2" width="220" x="290" y="70"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="400" y="100">codex-exec.sh</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="400" y="120">check the sandbox (POLITICA)</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="400" y="138">request via stdin · timeout</text>
+<line class="wf-flow" marker-end="url(#m21-arrow)" stroke="#38bdf8" stroke-width="2" x1="512" x2="605" y1="115" y2="115"></line>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="160" x="610" y="80"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="690" y="112">codex exec</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="690" y="132">through the subscription</text>
+<path d="M690,152 C 690,215 110,215 110,152" fill="none" marker-end="url(#m21-arrow)" stroke="#60a5fa" stroke-dasharray="5 5" stroke-width="2"></path>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="400" y="232">returns only the final answer (the rest of the log is discarded)</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the blue box in the middle is the bridge. All the rules live in it: which sandbox applies, how long to wait, and what to return. The dashed arrow below is the response going back to Claude.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-blue-400">codex exec</div><p class="text-xs text-neutral-400 mt-1">the official method (CLI)</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌉</div><div class="text-sm font-semibold text-blue-400">Bridge</div><p class="text-xs text-neutral-400 mt-1">codex-exec.sh</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-blue-400">Sandbox</div><p class="text-xs text-neutral-400 mt-1">only reads, or reads and writes</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-blue-400">Subscription</div><p class="text-xs text-neutral-400 mt-1">uses quota, not API</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Test the bridge by itself</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t2-p1">Before putting Claude in the middle, test the bridge directly in the terminal. If it fails here, it’ll fail inside the agent too, and then it’s hard to tell who’s at fault.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t2-p2">The test is as simple as possible: ask Codex to respond with a single word. If the word comes back, the bridge, login, and quota are working.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Check your Codex login</h4><p class="text-neutral-300 text-sm">The doctor in module 1.2 has to show <code>codex ok</code> and "Logged in using ChatGPT". If it doesn't show up, run <code>codex login</code>.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Give the script execution permission</h4><p class="text-neutral-300 text-sm">O <code>chmod +x</code> marks the file as "ready to run". You only need to do this once.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ask for the PONG</h4><p class="text-neutral-300 text-sm">One sentence, one word back. It's proof that recipe R1 works.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: prove that the bridge communicates with Codex</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">chmod +x runtime/pontes/codex-exec.sh
+runtime/pontes/codex-exec.sh "Responda apenas PONG"</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.1.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">PONG</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> the only line printed is <code>PONG</code>. If you see <code>codex falhou; log:</code>, read the following lines and go to topic 6.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Why such a silly test</h3>
+<p class="text-neutral-300 text-sm">A one-word request uses almost no quota and gets a quick response. It helps distinguish a bridge problem (login, installation) from a request problem. Only after that should you ask for anything serious.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-blue-400">codex login</div><p class="text-xs text-neutral-400 mt-1">through the subscription</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-blue-400">chmod +x</div><p class="text-xs text-neutral-400 mt-1">can run</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏓</div><div class="text-sm font-semibold text-blue-400">PONG</div><p class="text-xs text-neutral-400 mt-1">the proof of R1</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-blue-400">Alone</div><p class="text-xs text-neutral-400 mt-1">before the agent</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Ask for a second opinion from inside Claude</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t3-p1">Now for real-world use. Open Claude and ask it to consult Codex. Claude runs the bridge, reads the response, and compares it with its own.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t3-p2">Why is this worth it? Rule 3 of the <code>ROTEAMENTO.md</code> responds: review by <strong class="text-blue-400">another</strong> one model catches errors the same model doesn’t see. Two different perspectives make mistakes in different places.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: Claude consults Codex and combines both opinions</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use runtime/pontes/codex-exec.sh to ask Codex to review the README.md file: what might confuse a beginner? Then compare its feedback with your opinion.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> Claude asks to run <code>runtime/pontes/codex-exec.sh</code> and, in its response, separates what Codex said from what it thinks.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Second opinion. The same README.md file goes to Claude and, through the bridge, to Codex. Both reviews meet in a comparison box, where Claude pulls together what they agree on and points out what only one of them noticed." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m21b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m21b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m21b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m21b-grid)" height="230" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="50" rx="12" stroke="#6b7280" stroke-width="2" width="150" x="30" y="90"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="105" y="120">📄 README.md</text>
+<line class="wf-flow" marker-end="url(#m21b-arrow)" stroke="#38bdf8" stroke-width="2" x1="182" x2="295" y1="105" y2="55"></line>
+<line class="wf-flow" marker-end="url(#m21b-arrow)" stroke="#38bdf8" stroke-width="2" x1="182" x2="295" y1="125" y2="175"></line>
+<rect class="wf-a" fill="#0b1f2e" height="55" rx="12" stroke="#38bdf8" stroke-width="2" width="180" x="300" y="25"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="390" y="50">Claude's reading</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="390" y="68">first opinion</text>
+<rect class="wf-a" fill="#0b1f2e" height="55" rx="12" stroke="#38bdf8" stroke-width="2" width="180" x="300" y="150"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="390" y="175">Codex's reading</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="390" y="193">via codex-exec.sh</text>
+<line marker-end="url(#m21b-arrow)" stroke="#60a5fa" stroke-width="2" x1="482" x2="575" y1="55" y2="105"></line>
+<line marker-end="url(#m21b-arrow)" stroke="#60a5fa" stroke-width="2" x1="482" x2="575" y1="175" y2="125"></line>
+<g filter="url(#m21b-glow)"><rect fill="#0f1b33" height="80" rx="14" stroke="#60a5fa" stroke-width="2" width="190" x="580" y="75"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="675" y="105">comparison</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="675" y="125">what both saw</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="675" y="142">and what only one saw</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the same file follows two independent paths. The value is in the box on the right: what only one of the two pointed out is exactly what you wouldn't have seen by asking just one model.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t3-p3">Clara can use the same idea with her data. She asks Claude: “Use <code>runtime/pontes/codex-exec.sh</code> to ask Codex to check whether <code>runtime/exemplos/agenda.csv</code> there are two appointments at the same time with the same provider. Then check it yourself too.”</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ It’s okay to ask for a second opinion</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Review text intended for a client or team</li>
+<li>✓ Check an account or an important spreadsheet</li>
+<li>✓ Before a decision that's hard to undo</li>
+<li>✓ When Claude seems too confident</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Not worth it</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Trivial task that a model can handle on its own</li>
+<li>✗ Every question, out of habit: uses quota on both sides</li>
+<li>✗ When you won’t read the comparison</li>
+<li>✗ To “break a tie” without looking at the evidence</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-blue-400">Another model</div><p class="text-xs text-neutral-400 mt-1">routing rule 3</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧭</div><div class="text-sm font-semibold text-blue-400">Claude decides</div><p class="text-xs text-neutral-400 mt-1">Codex gives its opinion</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-blue-400">Read-only</div><p class="text-xs text-neutral-400 mt-1">bridge pattern (N4)</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-blue-400">Compare</div><p class="text-xs text-neutral-400 mt-1">what only one saw</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Let Codex modify files</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t4-p1">By default, the bridge uses the sandbox <code>read-only</code>: Codex reads, but doesn't write anything. That's the "read" ceiling of the <code>POLITICA.md</code>, level N4.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t4-p2">When you want it to create or modify files, pass two more arguments: the folder and the sandbox <code>workspace-write</code>. This raises the action to "modify," level N3: it does it and notifies you.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Sandbox</th><th class="px-4 py-3 font-semibold">Codex can</th><th class="px-4 py-3 font-semibold">Action in POLITICA</th><th class="px-4 py-3 font-semibold">Level</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>read-only</code> (default)</td><td class="px-4 py-3 text-neutral-300">read files in the folder</td><td class="px-4 py-3 text-neutral-300">Read a file, page, or spreadsheet</td><td class="px-4 py-3 text-neutral-300">N4</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>workspace-write</code></td><td class="px-4 py-3 text-neutral-300">read and write inside the specified folder</td><td class="px-4 py-3 text-neutral-300">Create/modify project file</td><td class="px-4 py-3 text-neutral-300">N3</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> there are only two lines. Any other sandbox doesn’t cross the bridge, as you’ll see in the next topic.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: Codex creates a file in the current folder</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/pontes/codex-exec.sh "Crie notas.txt com a palavra OK" "$PWD" workspace-write
+cat notas.txt</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.1.0 (the <code>cat notas.txt</code>):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">OK</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> o <code>cat notas.txt</code> shows <code>OK</code>. O <code>"$PWD"</code> it’s the folder you’re in: Codex only writes inside it.</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Recording it is your decision, not the agent’s</h3>
+<p class="text-neutral-300 text-sm">The recipe is clear: modify files (N3) only if you ask. Don’t let Claude change the <code>read-only</code> by <code>workspace-write</code> "to speed things up". And point to the right folder: the <code>"$PWD"</code> from the project, never your entire personal folder.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-blue-400">read-only</div><p class="text-xs text-neutral-400 mt-1">default, N4</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✏️</div><div class="text-sm font-semibold text-blue-400">workspace-write</div><p class="text-xs text-neutral-400 mt-1">record, N3</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-blue-400">"$PWD"</div><p class="text-xs text-neutral-400 mt-1">the current folder</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📝</div><div class="text-sm font-semibold text-blue-400">notas.txt</div><p class="text-xs text-neutral-400 mt-1">the proof</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">See the policy reject the dangerous action</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t5-p1">Codex has a third sandbox, <code>danger-full-access</code>: full access to the machine. The bridge won't allow it. Before calling Codex, it checks the sandbox and stops immediately if it isn't one of the two allowed options.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t5-p2">This is the policy written in code, not in a polite request to the agent. Even if someone asks, the command never reaches Codex.</p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Bridge gatekeeper. Three requests arrive: read-only and workspace-write pass and continue to Codex. danger-full-access is blocked with the message sandbox refused by POLITICA and exit code 2." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m21c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m21c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m21c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m21c-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m21c-grid)" height="230" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect fill="#0b1f2e" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="30" y="25"></rect><text fill="#bae6fd" x="115" y="50">read-only</text>
+<rect fill="#0b1f2e" height="40" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="30" y="95"></rect><text fill="#bae6fd" x="115" y="120">workspace-write</text>
+<rect fill="#2a0f0f" height="40" rx="10" stroke="#f87171" stroke-width="2" width="170" x="30" y="165"></rect><text fill="#fca5a5" x="115" y="190">danger-full-access</text>
+</g>
+<line marker-end="url(#m21c-arrow)" stroke="#38bdf8" stroke-width="2" x1="202" x2="315" y1="45" y2="100"></line>
+<line marker-end="url(#m21c-arrow)" stroke="#38bdf8" stroke-width="2" x1="202" x2="315" y1="115" y2="115"></line>
+<line marker-end="url(#m21c-arrow-r)" stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="202" x2="315" y1="185" y2="135"></line>
+<g filter="url(#m21c-glow)"><rect fill="#0f1b33" height="70" rx="14" stroke="#60a5fa" stroke-width="2" width="160" x="320" y="80"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="400" y="110">gatekeeper</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="400" y="130">check the sandbox</text>
+<line class="wf-flow" marker-end="url(#m21c-arrow)" stroke="#38bdf8" stroke-width="2" x1="482" x2="590" y1="105" y2="65"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="170" x="595" y="35"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="680" y="65">continue to Codex</text>
+<line marker-end="url(#m21c-arrow-r)" stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="482" x2="590" y1="130" y2="165"></line>
+<rect fill="#2a0f0f" height="60" rx="12" stroke="#f87171" stroke-width="2" width="170" x="595" y="145"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="680" y="170">sandbox denied</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="680" y="188">via POLITICA · exit 2</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the gatekeeper comes before Codex. The blue arrows pass through; the red one returns with the message and exit code 2, without Codex ever being called.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objective: see the bridge refuse full access</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/pontes/codex-exec.sh "x" . danger-full-access</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.1.0 (the message, with exit code 2):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">sandbox recusado pela POLITICA</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">How to verify:</strong> the message appears immediately, without waiting for Codex, and no files change in the folder.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ The bridge accepts</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ <code>read-only</code>, when you don’t say anything</li>
+<li>✓ <code>workspace-write</code>, when you ask</li>
+<li>✓ Any folder you specify in the 2nd argument</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ The bridge refuses</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ <code>danger-full-access</code></li>
+<li>✗ Any sandbox name outside the list</li>
+<li>✗ Call without any request (it shows the “usage”)</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Rule that applies to every bridge</h3>
+<p class="text-neutral-300 text-sm">Put the limit inside the bridge, not just in the request text. The agent can forget an instruction; a line of code that refuses won’t. The “did it refuse?” test matters just as much as the “did it work?” test.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Adjust the model, timing, and common errors</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-1-t6-p1">The bridge has two settings, made by <strong class="text-blue-400">environment variable</strong>: a named value that you define in the terminal before the command, and that the script reads.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t6-p2">The model’s default is <code>gpt-6-luna</code>, the "lower" level of the <code>ROTEAMENTO.md</code>. Starting with the smallest saves quota. Only move up if the response isn't good enough.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Variable</th><th class="px-4 py-3 font-semibold">Default</th><th class="px-4 py-3 font-semibold">What for</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>CODEX_MODELO</code></td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-luna</code></td><td class="px-4 py-3 text-neutral-300">another level of the <code>ROTEAMENTO.md</code> (in Codex: <code>gpt-6-sol</code> executor, <code>gpt-6-astra</code> top and super)</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>CODEX_TIMEOUT</code></td><td class="px-4 py-3 text-neutral-300"><code>600</code></td><td class="px-4 py-3 text-neutral-300">seconds before giving up</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> model names change over time. The <code>ROTEAMENTO.md</code> asks you to check with <code>codex --help</code> and update the table.</p>
+<h3 class="text-lg font-semibold text-neutral-100 mb-4">Common errors ("If you get an error" section of R1)</h3>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">It gets stuck without responding</h4><p class="text-neutral-300 text-sm">The request needs to go through stdin with <code>-</code> at the end, otherwise Codex keeps waiting for more text. The bridge already does this; the problem comes up when someone calls <code>codex exec</code> directly, without the bridge.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1"><code>sandbox recusado pela POLITICA</code></h4><p class="text-neutral-300 text-sm">Only <code>read-only</code> e <code>workspace-write</code> are accepted. Check the 3rd argument.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">The test needs network access</h4><p class="text-neutral-300 text-sm">The Codex sandbox blocks the network, including the local network. If the test needs to start a server, add <code>-c sandbox_workspace_write.network_access=true</code> in the bridge and note it in <code>LIMITES.md</code>.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Take notes before you continue</h3>
+<p class="text-neutral-300 text-sm">The bridge already has a line in the <code>CAPACIDADES.md</code>: "Codex CLI · CLI · 3 · <code>runtime/pontes/codex-exec.sh</code> · read (N4)". If you changed the network sandbox, the record goes in the <code>LIMITES.md</code>, with a date. That way, no one finds out about the change only when something breaks.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-1#q1">
+<p class="font-medium mb-4">Quick test (optional): Clara wants Codex to only read the calendar and give an opinion. Which bridge call should she use?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Pass <code>danger-full-access</code> so Codex can see everything.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Pass <code>workspace-write</code>, just to be safe.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Pass only the request: the default is already <code>read-only</code>.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-blue-400">CODEX_MODELO</div><p class="text-xs text-neutral-400 mt-1">start with the smallest</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⏱️</div><div class="text-sm font-semibold text-blue-400">CODEX_TIMEOUT</div><p class="text-xs text-neutral-400 mt-1">600 seconds</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➖</div><div class="text-sm font-semibold text-blue-400">stdin with -</div><p class="text-xs text-neutral-400 mt-1">otherwise it freezes</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📒</div><div class="text-sm font-semibold text-blue-400">LIMITES.md</div><p class="text-xs text-neutral-400 mt-1">adjustment noted</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">codex exec is the official method</strong><span class="text-neutral-400"> — the codex-exec.sh bridge wraps it and applies the policy.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Test it by itself first</strong><span class="text-neutral-400"> — "Reply with only PONG" returns PONG.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Second opinion from another model</strong><span class="text-neutral-400"> — catches what a single model misses.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Reading is the default; writing requires a request</strong><span class="text-neutral-400"> — read-only (N4) and workspace-write (N3).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">The dangerous part never reaches Codex</strong><span class="text-neutral-400"> — danger-full-access exits with a refusal and exit code 2.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">2.2 — Your first MCP bridge</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-2.html">Module 2.2 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-1">1. The codex-exec bridge</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-2">2. PONG test</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-3">3. Second opinion</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-4">4. Edit files</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-5">5. The policy refusal</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-6">6. Fixes and errors</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-2-1#q1', { answer: 2, explain: {
+          '0': 'Não. A ponte recusa danger-full-access na hora ("sandbox recusado pela POLITICA", saída 2), e ler não exige acesso total.',
+          '1': 'Não. workspace-write deixa o Codex gravar (N3). Para só ler, isso é permissão a mais.',
+          '2': 'Isso. Sem o 3º argumento a ponte usa read-only: o Codex lê e opina, sem gravar nada (N4).'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

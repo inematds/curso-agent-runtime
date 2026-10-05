@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>The agent proposes; you approve | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/modulo-4-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/modulo-4-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/modulo-4-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-2" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📚 The agent proposes, you approve</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">The agent makes a mistake, learns, and wants to change how it works. Great, as long as the new rule only takes effect with your approval. This module shows the four places where the kit stores what it learns and how to review everything once a week.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Files</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 4.2 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:4-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="4-2" data-inema-track="4" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Understand why the agent doesn’t change its own rules</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t1-p1">An agent that rewrites its own rules may accidentally loosen exactly the rule that was holding it back. One line saying "you may pay small bills" and the module 4.1 policy no longer applies.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t1-p2">That's why the <code>AGENTS.md</code> from the kit says, explicitly: <strong class="text-amber-400">"You don’t change these rules. To propose a change, add a line to the 'Lessons' table in the <code>runtime/POLITICA.md</code>. The human approves."</strong></p>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? The four learning files</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Learning Table</strong> — at the end of the <code>runtime/POLITICA.md</code>. Where the agent writes its proposals.</li>
+<li><strong>Lessons</strong> — section <code>## Lessons</code> of the <code>AGENTS.md</code>. Only rules you've approved, one per line.</li>
+<li><strong>FALHAS.md</strong> — <code>runtime/FALHAS.md</code>. One line for each thing that broke.</li>
+<li><strong>LIMITES.md</strong> — <code>runtime/LIMITES.md</code>. One line for each thing the environment wouldn't let you do.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Three-step learning flow: the agent proposes an entry in the Aprendizado table, the human approves or rejects it, and the approved entry is added to the Lessons in AGENTS.md. An arrow back shows that the agent starts following the new rule. A crossed-out red arrow shows that the agent doesn’t write directly to Lessons." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m42-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m42-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m42-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m42-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m42-grid)" height="230" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="190" x="30" y="70"></rect>
+<text fill="#bae6fd" font-size="13" x="125" y="100">1 · agent proposes</text>
+<text fill="#7dd3fc" font-size="11" x="125" y="120">row in the Learning table</text>
+<line class="wf-flow" marker-end="url(#m42-arrow)" stroke="#38bdf8" stroke-width="2" x1="222" x2="296" y1="105" y2="105"></line>
+<g filter="url(#m42-glow)"><rect fill="#2a1d06" height="80" rx="14" stroke="#fbbf24" stroke-width="2" width="200" x="300" y="65"></rect></g>
+<text fill="#fbbf24" font-size="14" font-weight="600" x="400" y="98">2 · you decide</text>
+<text fill="#fde68a" font-size="11" x="400" y="120">approved or rejected</text>
+<line class="wf-flow" marker-end="url(#m42-arrow)" stroke="#38bdf8" stroke-width="2" x1="502" x2="576" y1="105" y2="105"></line>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="190" x="580" y="70"></rect>
+<text fill="#bae6fd" font-size="13" x="675" y="100">3 · incorporates</text>
+<text fill="#7dd3fc" font-size="11" x="675" y="120">## Lessons from AGENTS.md</text>
+<path d="M675,142 C 675,200 125,200 125,142" fill="none" marker-end="url(#m42-arrow)" stroke="#38bdf8" stroke-dasharray="4 6" stroke-width="1.5"></path>
+<text fill="#9ca3af" font-size="11" x="400" y="218">the agent starts following the approved rule</text>
+<path d="M125,68 C 125,20 675,20 675,68" fill="none" marker-end="url(#m42-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+<rect fill="#2a0f0f" height="26" rx="8" stroke="#f87171" stroke-width="1.5" width="160" x="320" y="10"></rect>
+<text fill="#fca5a5" font-size="11" x="400" y="28">prohibited shortcut</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the lower blue path always passes through the amber box, which is you. The upper red arc is the agent writing directly to Lessons without going through you. That's the shortcut that the <code>AGENTS.md</code> prohibits.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">✓ The agent can</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Add a row to the Learning table</li>
+<li>✓ Note the failure in <code>FALHAS.md</code></li>
+<li>✓ Note the block in <code>LIMITES.md</code></li>
+<li>✓ Suggest the lesson when you correct it</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ The agent can’t</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Mark its own proposal as approved</li>
+<li>✗ Write to Lessons without your approval</li>
+<li>✗ Raise an action’s limit in POLITICA</li>
+<li>✗ Delete a failure log entry that bothers you</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-semibold text-amber-400">Proposes</div><p class="text-xs text-neutral-400 mt-1">the agent</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👍</div><div class="text-sm font-semibold text-amber-400">Approves</div><p class="text-xs text-neutral-400 mt-1">you</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">Incorporates</div><p class="text-xs text-neutral-400 mt-1">becomes a Lesson</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔒</div><div class="text-sm font-semibold text-amber-400">Rules</div><p class="text-xs text-neutral-400 mt-1">only change with your yes</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Fill in the Learning table</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t2-p1">The table is at the end of the <code>runtime/POLITICA.md</code>, under the heading “Learning (propose → approve → incorporate)”. It’s empty in the kit: just the heading, waiting for the first proposal.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t2-p2">Each line has four columns. The second asks for <strong class="text-amber-400">evidence</strong>: "I thought it was better" doesn't count; "this happened on this day, with this result" does.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/POLITICA.md, Learning section (as provided in the kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">O agente **não muda as próprias regras**. Ele acrescenta uma linha aqui; você decide.
+
+| data | o que aconteceu (com evidência) | proposta (1 linha) | status: proposto / aprovado / recusado |
+|---|---|---|---|</pre>
+</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">date</th><th class="px-4 py-3 font-semibold">what happened (with evidence)</th><th class="px-4 py-3 font-semibold">proposal (1 line)</th><th class="px-4 py-3 font-semibold">status</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">example</td><td class="px-4 py-3 text-neutral-300">Clara asked for “available times tomorrow,” and the agent replied with today’s date; the response included times that were already booked</td><td class="px-4 py-3 text-neutral-300">Before checking the calendar, repeat the date in AAAA-MM-DD and wait for confirmation</td><td class="px-4 py-3 text-neutral-300">proposed</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">example</td><td class="px-4 py-3 text-neutral-300">In the distributor’s report, the agent wrote “can I issue the invoice?” instead of leaving the invoice ready for Sônia</td><td class="px-4 py-3 text-neutral-300">For payments, provide the finished text and a list of what to check; never offer to execute</td><td class="px-4 py-3 text-neutral-300">proposed</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the two lines are examples of what it would look like, written for this course; they don’t come with the kit. Notice that the proposal fits on one line and says what to do, not how to feel.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">proposed</h4><p class="text-neutral-300 text-sm">The agent wrote it. No one has decided yet. Nothing changes in its behavior.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">approved</h4><p class="text-neutral-300 text-sm">You changed the status. The proposal goes to Lessons (topic 3) and takes effect.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">rejected</h4><p class="text-neutral-300 text-sm">It stays in the table. That way, the agent won’t suggest the same thing again next week.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Don't delete the rejected item</h3>
+<p class="text-neutral-300 text-sm">The rejected line is memory. It shows the agent, and you three months from now, that the idea has already been considered and why it wasn’t included.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-amber-400">date</div><p class="text-xs text-neutral-400 mt-1">when it happened</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-amber-400">evidence</div><p class="text-xs text-neutral-400 mt-1">the fact, not the opinion</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-amber-400">proposal</div><p class="text-xs text-neutral-400 mt-1">one line</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-amber-400">status</div><p class="text-xs text-neutral-400 mt-1">proposed / approved / rejected</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Promote the approved item to Lessons</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t3-p1">A <code>POLITICA.md</code> close the section like this: "Approved → becomes a rule in <code>CLAUDE.md</code>/<code>AGENTS.md</code>". In the kit, the place is the section <strong class="text-amber-400"><code>## Lessons</code></strong> of the <code>AGENTS.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t3-p2">Why in the <code>AGENTS.md</code> and not in the <code>CLAUDE.md</code>? Because the <code>CLAUDE.md</code> from the kit starts by pulling the <code>AGENTS.md</code>. A rule written in one place applies to both Claude and Codex.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 AGENTS.md (end of file, as provided)</span></div>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap p-4">## Lessons
+
+Rules approved by the human, one per line:</pre>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">📄 CLAUDE.md (entire file, as provided)</span></div>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap p-4">@AGENTS.md
+
+## Self-learning
+
+When the human corrects you, or you notice a mistake you made: propose the lesson as a row in the “Learning” table in `runtime/POLITICA.md`. Once approved, it goes into `## Lessons` in `AGENTS.md`.</pre>
+</div>
+</div>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? What the <code>@AGENTS.md</code></h3>
+<p class="text-neutral-300 text-sm">In the <code>CLAUDE.md</code>, a line with <code>@</code> and a filename asks Claude Code to read that file alongside it. Codex reads the <code>AGENTS.md</code> directly. Result: both agents read the same Lessons.</p>
+</div>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="The approved line is taken from the Learning table in POLITICA.md and added to the Lessons in AGENTS.md. Two arrows lead from AGENTS.md: one to Codex, which reads the file directly, and another to CLAUDE.md, which pulls in AGENTS.md with the at-sign AGENTS.md line and passes it to Claude Code." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m42b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m42b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m42b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m42b-grid)" height="230" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="190" x="30" y="85"></rect>
+<text fill="#e5e7eb" font-size="13" x="125" y="111">POLITICA.md</text>
+<text fill="#9ca3af" font-size="11" x="125" y="130">"approved" row</text>
+<line class="wf-flow" marker-end="url(#m42b-arrow)" stroke="#38bdf8" stroke-width="2" x1="222" x2="296" y1="115" y2="115"></line>
+<g filter="url(#m42b-glow)"><rect fill="#2a1d06" height="70" rx="14" stroke="#fbbf24" stroke-width="2" width="190" x="300" y="80"></rect></g>
+<text fill="#fbbf24" font-size="14" font-weight="600" x="395" y="110">AGENTS.md</text>
+<text fill="#fde68a" font-size="11" x="395" y="130">## Lessons</text>
+<line class="wf-flow" marker-end="url(#m42b-arrow)" stroke="#38bdf8" stroke-width="2" x1="492" x2="576" y1="100" y2="55"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="580" y="30"></rect>
+<text fill="#bae6fd" font-size="13" x="675" y="60">Codex reads directly</text>
+<line class="wf-flow" marker-end="url(#m42b-arrow)" stroke="#38bdf8" stroke-width="2" x1="492" x2="576" y1="130" y2="175"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="580" y="150"></rect>
+<text fill="#bae6fd" font-size="13" x="675" y="172">CLAUDE.md → Claude</text>
+<text fill="#7dd3fc" font-size="11" x="675" y="189">by the @AGENTS.md line</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> everything goes through the amber box. You write the rule once in the <code>AGENTS.md</code>, and both blue arrows point to the same rule for both agents. There’s no "Claude-only" version that can get out of date.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="font-semibold text-amber-400 mb-2">Example of what it would look like (not included in the kit)</h3>
+<p class="text-neutral-300 text-sm mb-3">If Clara approves the first proposal in topic 2, the end of the <code>AGENTS.md</code> looks like this:</p>
+<pre class="font-mono text-xs text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">## Lessons
+
+Rules approved by the human, one per line:
+- Before checking the calendar, repeat the date in YYYY-MM-DD format and wait for confirmation.</pre>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Who writes the line in Lessons</h3>
+<p class="text-neutral-300 text-sm">It can be you, manually, or the agent, after your explicit request ("I approve line X; copy it to Lessons"). What matters is the order: first your yes, then the copy.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📌</div><div class="text-sm font-semibold text-amber-400">## Lessons</div><p class="text-xs text-neutral-400 mt-1">one rule per line</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-amber-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">Claude reads along</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤝</div><div class="text-sm font-semibold text-amber-400">Two agents</div><p class="text-xs text-neutral-400 mt-1">same rules</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-amber-400">Self-learning</div><p class="text-xs text-neutral-400 mt-1">corrected → proposes</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Record each failure on one line</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t4-p1">When something breaks and you fix it, the temptation is to move on. The <code>runtime/FALHAS.md</code> asks thirty seconds beforehand: <strong class="text-amber-400">one line</strong> with the date, what broke, the smallest fix, and whether the problem was with the prompt or infrastructure.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t4-p2">The kit already includes a real entry from when it was tested. It's the best example of the format:</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/FALHAS.md (as provided in the kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que quebrou | menor correção | prompt \| infra |
+|---|---|---|---|
+| 2026-10-05 | `doctor.mjs` dizia "codex sem login" com o Codex logado | ler stdout **e** stderr (`codex login status` responde no stderr) | infra |</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">What to look for:</strong> the fix wasn't "rewriting the doctor." It was also reading the command's other output. That's what "smallest fix" means.</div>
+</div>
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? stdout and stderr</h3>
+<p class="text-neutral-300 text-sm">Every terminal command has two text outputs: the normal one (<strong>stdout</strong>) and the warnings and errors one (<strong>stderr</strong>). On the screen, both appear together, but a program that reads only one of them misses the other. That’s what happened with <code>doctor.mjs</code>.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-amber-500/30">
+<h3 class="font-semibold text-amber-400 mb-3">prompt</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ The request led to the error</li>
+<li>✓ The model misunderstood</li>
+<li>✓ A limit was missing from the request</li>
+<li>✓ Typical fix: add one sentence to the instructions</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl p-6 border border-sky-500/30">
+<h3 class="font-semibold text-sky-400 mb-3">infrastructure</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Machine, network, login, software version</li>
+<li>✓ Script that reads from the wrong place</li>
+<li>✓ Service is down or slow</li>
+<li>✓ Typical fix: add a safeguard (time limit, retry, check)</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Why just one line</h3>
+<p class="text-neutral-300 text-sm">After about ten lines, the pattern emerges on its own: “half are login infrastructure issues,” “every prompt failure is data.” Long text hides the pattern. If you need details, write them in another file and link to it in the line.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📅</div><div class="text-sm font-semibold text-amber-400">date</div><p class="text-xs text-neutral-400 mt-1">when it broke</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💥</div><div class="text-sm font-semibold text-amber-400">what broke</div><p class="text-xs text-neutral-400 mt-1">the observed symptom</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩹</div><div class="text-sm font-semibold text-amber-400">smallest fix</div><p class="text-xs text-neutral-400 mt-1">the missing safeguard</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-amber-400">prompt | infra</div><p class="text-xs text-neutral-400 mt-1">or both</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Record what the environment blocked</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t5-p1">Not every problem is a failure. Sometimes nothing broke: the environment simply <strong class="text-amber-400">didn’t allow it</strong>. The sandbox blocked the network, the tool doesn't have the feature, the site requires a login. This goes in the <code>runtime/LIMITES.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t5-p2">In the kit, it comes with only the header. The last column, <strong>status</strong>, says whether the limit is still open or whether you’ve accepted living with it.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">📄 runtime/LIMITES.md (as provided in the kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que tentei | o que barrou | contorno | status |
+|---|---|---|---|---|</pre>
+</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-amber-400"><tr><th class="px-4 py-3 font-semibold">Situation</th><th class="px-4 py-3 font-semibold">Goes to</th><th class="px-4 py-3 font-semibold">Why</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">O <code>doctor.mjs</code> read only one output and got it wrong</td><td class="px-4 py-3 text-neutral-300"><code>FALHAS.md</code></td><td class="px-4 py-3 text-neutral-300">it was a defect, and it was fixed</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">The Codex sandbox blocks the network, including the local network</td><td class="px-4 py-3 text-neutral-300"><code>LIMITES.md</code></td><td class="px-4 py-3 text-neutral-300">is an environment rule; recipe R1 says to note</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">You used reverse engineering in a test</td><td class="px-4 py-3 text-neutral-300"><code>LIMITES.md</code></td><td class="px-4 py-3 text-neutral-300">the POLICY says: documented lab</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">You corrected the agent, and it learned</td><td class="px-4 py-3 text-neutral-300">Learning table</td><td class="px-4 py-3 text-neutral-300">it’s a rule change; it needs your approval</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the question that distinguishes them is "did it break, or was it blocked?" If it broke and you fixed it, FALHAS. If it was blocked, LIMITES. If the way of working changed, Aprendizado.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="font-semibold text-amber-400 mb-2">The example the kit itself provides</h3>
+<p class="text-neutral-300 text-sm mb-3">Recipe R1 warns: the Codex sandbox blocks network access. If a test needs to start a server, add the setting below to the bridge <strong>and note it in <code>LIMITES.md</code></strong>:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">-c sandbox_workspace_write.network_access=true</pre>
+<p class="text-neutral-400 text-xs mt-3">The line would record: what you tried (starting the test server), what blocked it (sandbox without network access), the workaround (this adjustment), and the status.</p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> A workaround isn’t a license</h3>
+<p class="text-neutral-300 text-sm">Opening the sandbox network is like loosening a fence. That's why it goes in a file you review. An undocumented workaround becomes, three months later, an open door no one remembers opening.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧱</div><div class="text-sm font-semibold text-amber-400">what blocked it</div><p class="text-xs text-neutral-400 mt-1">environment rule</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">↪️</div><div class="text-sm font-semibold text-amber-400">workaround</div><p class="text-xs text-neutral-400 mt-1">what you did</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-amber-400">status</div><p class="text-xs text-neutral-400 mt-1">open or accepted</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-amber-400">lab</div><p class="text-xs text-neutral-400 mt-1">also noted</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Do the weekly review with the agent</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t6-p1">The three files only help if someone reads them. Once a week, ask the agent to read everything and turn recurring themes into proposals. It does the tedious part. You do the part that matters: decide.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t6-p2">These are two requests. The first only generates proposals. The second, which you write after reading, approves whatever you want.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-amber-900/20 border-b border-amber-500/30"><span class="text-amber-400 font-semibold text-sm">🎯 Objective: the agent turns the week into proposals without approving anything</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> (or <code>codex</code>) in the project folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Read runtime/FALHAS.md, runtime/LIMITES.md, and the Aprendizado table in runtime/POLITICA.md. Look for recurring issues or ones that are still open. For each case, add a row to the Aprendizado table with the date, evidence, a one-line proposal, and a proposed status. Do not mark anything as approved, and do not change AGENTS.md or CLAUDE.md. At the end, list the rows you added.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-amber-400">How to verify:</strong> the new rows appear only in the Learning table, all with status <code>proposto</code>. The section <code>## Lessons</code> of the <code>AGENTS.md</code> stays the same.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-dark-700/40 border-b border-dark-600"><span class="text-neutral-300 font-semibold text-sm">✍️ After reading: your approval request (replace what's between &lt; &gt;)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Na tabela Aprendizado de runtime/POLITICA.md, mude para aprovado a linha &lt;data e proposta&gt; e para recusado a linha &lt;data e proposta&gt;. Copie só a proposta aprovada, em uma linha, para ## Lessons do AGENTS.md.</pre>
+</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">The agent reads and proposes</h4><p class="text-neutral-300 text-sm">First request. It cross-checks FALHAS, LIMITES, and the old proposals.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">You read every line</h4><p class="text-neutral-300 text-sm">Key question: does this rule loosen any POLITICA limit? If so, reject it.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">You approve or reject</h4><p class="text-neutral-300 text-sm">Second request, in your own words. Only what gets approved goes into Lessons.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Git records the change</h4><p class="text-neutral-300 text-sm">Since everything is a text file, each new rule stays in the history with a date. You can see when and why it was added.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-4-2#q1">
+<p class="font-medium mb-4">Quick test (optional): during review, the agent suggested "you can send reminders to patients without asking." What does Clara do?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Nothing: as the agent proposed, the rule already applies.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Refuse and leave the entry in the table: sending has an N2 limit, and the proposal would exceed it.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Delete the table row so the agent forgets the idea.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗓️</div><div class="text-sm font-semibold text-amber-400">Weekly</div><p class="text-xs text-neutral-400 mt-1">a fixed time</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📥</div><div class="text-sm font-semibold text-amber-400">Request 1</div><p class="text-xs text-neutral-400 mt-1">proposals only</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-amber-400">Request 2</div><p class="text-xs text-neutral-400 mt-1">your decision</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🕰️</div><div class="text-sm font-semibold text-amber-400">Git</div><p class="text-xs text-neutral-400 mt-1">rules history</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">The agent doesn't change its own rules</strong><span class="text-neutral-400"> — it proposes a line.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Learning Table</strong><span class="text-neutral-400"> — date, evidence, proposal, status.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">An approved lesson becomes a Lesson in AGENTS.md</strong><span class="text-neutral-400"> — and it applies to Claude and Codex.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">It failed: FALHAS. It was blocked: LIMITES.</strong><span class="text-neutral-400"> — one line each.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Weekly review in two requests</strong><span class="text-neutral-400"> — the agent proposes; you decide.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.3 — Guard and dashboard</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-3.html">Module 4.3 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-1">1. Rules don't change themselves</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-2">2. Learning table</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-3">3. Lessons</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-4">4. FALHAS.md</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-5">5. LIMITES.md</a></li>
+<li><a class="text-neutral-400 hover:text-amber-400" href="#topico-6">6. Weekly review</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-4-2#q1', { answer: 1, explain: {
+          '0': 'Não. Proposta não é regra: só vale depois que a Clara marca como aprovado e a linha entra nas Lessons.',
+          '1': 'Isso. Enviar tem teto N2 na POLITICA, e "sempre permitir" nunca passa do teto. A linha recusada fica como memória.',
+          '2': 'Não. A linha recusada fica na tabela, justamente para o agente não propor a mesma coisa de novo.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

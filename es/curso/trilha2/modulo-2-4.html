@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Navegador con política | INEMA Agent Runtime</title>
+<meta content="Curso gratuito de INEMA.CLUB: usa el kit INEMA Agent Runtime para que Claude Code y Codex descubran, conecten y usen las herramientas que ya tienes, de la forma más estable y con reglas claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descubrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Enrutar y ejecutar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Gobernar y aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Apariencia" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Apariencia</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fuente" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+<div aria-label="Tamaño del texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Ancho de línea" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Medio</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+<div aria-label="Entre líneas" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta de aprendizaje 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-4" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🌐 Navegador con política</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Hay sistemas que solo existen como sitios web: el portal del proveedor, el municipio, el banco. El agente puede operar el navegador, siempre que la regla esté escrita de antemano: leer sí, completar requiere autorización, pagar nunca.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Medio</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo 2.4" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:2-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="2-4" data-inema-track="2" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Usa el navegador solo como penúltimo recurso</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t1-p1">En la escalera del <code>runtime/LEIA-ME.md</code>, el navegador es el peldaño 5, <strong class="text-blue-400">uso de la computadora</strong>. Pero mira la columna de estabilidad: es el único marcado como <strong>descarga</strong>. Incluso el puente local, escalón 6, es de nivel medio.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t1-p2">Por eso la receta R5 empieza con una advertencia: usa el navegador solo cuando no exista API, MCP, CLI <strong>o exportación</strong>. Es la vía más frágil, porque el sitio cambia. Por debajo de esta, solo queda la ingeniería inversa, que es de laboratorio.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? Tres palabras de este módulo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Navegador para agentes</strong> — un programa de línea de comandos que abre páginas, lee texto, hace clic y completa campos; recibe órdenes del agente en lugar de usar el mouse.</li>
+<li><strong>Chromium</strong> — la base abierta de Google Chrome. El navegador para agentes usa una copia propia, separada de tu Chrome.</li>
+<li><strong>Selector</strong> — la «dirección» de un botón o campo dentro de la página. Cuando el sitio cambia el diseño, la dirección cambia y la automatización se pierde.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Barras de estabilidad de los siete peldaños de la escalera de vías. API, MCP y CLI tienen una barra alta. SDK y puente local tienen una barra media. El uso de la computadora, el navegador, destacado, tiene una barra baja. La ingeniería inversa tiene una barra mínima, en rojo, marcada como solo para laboratorio." class="w-full h-auto" role="img" viewbox="0 0 800 260">
+<defs>
+<pattern height="32" id="m24-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m24-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m24-grid)" height="260" width="800" x="0" y="0"></rect>
+<line stroke="#4b5563" stroke-width="1.5" x1="40" x2="770" y1="210" y2="210"></line>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<rect fill="#0b1f2e" height="160" rx="6" stroke="#38bdf8" stroke-width="1.8" width="70" x="60" y="50"></rect><text fill="#bae6fd" x="95" y="230">1 · API</text>
+<rect fill="#0b1f2e" height="160" rx="6" stroke="#38bdf8" stroke-width="1.8" width="70" x="160" y="50"></rect><text fill="#bae6fd" x="195" y="230">2 · MCP</text>
+<rect fill="#0b1f2e" height="160" rx="6" stroke="#38bdf8" stroke-width="1.8" width="70" x="260" y="50"></rect><text fill="#bae6fd" x="295" y="230">3 · CLI</text>
+<rect fill="#1f2937" height="100" rx="6" stroke="#6b7280" stroke-width="1.8" width="70" x="360" y="110"></rect><text fill="#e5e7eb" x="395" y="230">4 · SDK</text>
+<g filter="url(#m24-glow)"><rect fill="#0f1b33" height="50" rx="6" stroke="#60a5fa" stroke-width="2" width="70" x="460" y="160"></rect></g><text fill="#60a5fa" font-weight="600" x="495" y="230">5 · navegador</text>
+<rect fill="#1f2937" height="100" rx="6" stroke="#6b7280" stroke-width="1.8" width="70" x="560" y="110"></rect><text fill="#e5e7eb" x="595" y="230">6 · puente local</text>
+<rect fill="#2a0f0f" height="20" rx="6" stroke="#f87171" stroke-dasharray="4 3" stroke-width="1.8" width="70" x="660" y="190"></rect><text fill="#fca5a5" x="695" y="230">7 · ing. inversa</text>
+</g>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<text fill="#7dd3fc" x="195" y="38">alta</text>
+<text fill="#9ca3af" x="395" y="98">media</text>
+<text fill="#bfdbfe" x="495" y="148">descarga</text>
+<text fill="#9ca3af" x="595" y="98">media</text>
+<text fill="#fca5a5" x="695" y="178">laboratorio</text>
+</g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="495" y="252">penúltimo en estabilidad</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> la altura de la barra es la estabilidad que el <code>LEIA-ME.md</code> da a cada nivel. El número del nivel no indica el orden de preferencia: la barra del navegador (resaltada) está por debajo de la del puente local. Por eso es el penúltimo recurso.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Cuándo tiene sentido el navegador</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ El portal del proveedor no tiene API ni botón para exportar</li>
+<li>✓ La información aparece solo en una pantalla (tabla de precios, estado)</li>
+<li>✓ La tarea consiste en leer y copiar, no en decidir</li>
+<li>✓ Aceptas que algún día el sitio cambie y sea necesario hacer ajustes</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Cuándo buscar otra vía</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ El sistema exporta CSV (usa el puente, módulo 2.3)</li>
+<li>✗ Existe una API o un servidor MCP oficial</li>
+<li>✗ La tarea principal es enviar o pagar</li>
+<li>✗ El sitio exige que resuelvas el desafío «no soy un robot»</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖱️</div><div class="text-sm font-semibold text-blue-400">Nivel 5</div><p class="text-xs text-neutral-400 mt-1">uso de la computadora</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📉</div><div class="text-sm font-semibold text-blue-400">Baja</div><p class="text-xs text-neutral-400 mt-1">estabilidad en el LEIA-ME</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-blue-400">Exportación primero</div><p class="text-xs text-neutral-400 mt-1">gana el puente</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔄</div><div class="text-sm font-semibold text-blue-400">El sitio cambia</div><p class="text-xs text-neutral-400 mt-1">la automatización se pierde</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Instala el navegador para agentes</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t2-p1">La receta R5 usa el <strong class="text-blue-400">agent-browser</strong>, un navegador de línea de comandos creado para agentes. Se instala con <code>npm</code>, el mismo instalador que usaste para Claude Code y Codex en el módulo 1.2.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t2-p2">Son dos comandos: uno instala el programa y el otro descarga Chromium, que es lo que usa. El segundo tarda más porque es un navegador completo.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: tener agent-browser y su Chromium en la máquina</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">En la terminal (cualquier carpeta), un comando a la vez:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">npm i -g agent-browser
+agent-browser install</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado esperado (según la receta):</p>
+<p class="text-sm text-neutral-300">El primer comando instala el <code>agent-browser</code>; el segundo, «descarga Chromium, que es lo que usa». La receta no define una salida fija para la instalación: la prueba aparece en el tema 3.</p>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Cómo verificar:</strong> los dos comandos terminan sin mostrar un mensaje de error. Si el <code>npm</code> quejarte de los permisos es el mismo problema que resolviste al instalar Claude Code.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Opción</th><th class="px-4 py-3 font-semibold">Qué navegador usa</th><th class="px-4 py-3 font-semibold">Cuándo tiene sentido</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>agent-browser</code> (receta R5)</td><td class="px-4 py-3 text-neutral-300">un Chromium propio, limpio, sin tus sesiones iniciadas</td><td class="px-4 py-3 text-neutral-300">sitios públicos, pruebas, lectura de tablas</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Extensión «Claude in Chrome»</td><td class="px-4 py-3 text-neutral-300">tu navegador, con la sesión iniciada</td><td class="px-4 py-3 text-neutral-300">cuando el sitio requiere que inicies sesión (tema 6)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Qué revisar en la tabla:</strong> las dos opciones aparecen en R5, y las mismas reglas se aplican a ambas. La diferencia es de quién es el navegador y, por lo tanto, de quiénes son las cuentas abiertas en él.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Un navegador separado es una protección</h3>
+<p class="text-neutral-300 text-sm">El Chromium de agent-browser no tiene tu correo electrónico, tu banco ni tus contraseñas guardadas. Si el agente se confunde, se confunde en un navegador vacío. Empieza siempre por ahí.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-blue-400">npm i -g</div><p class="text-xs text-neutral-400 mt-1">instala el programa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⬇️</div><div class="text-sm font-semibold text-blue-400">install</div><p class="text-xs text-neutral-400 mt-1">descarga Chromium</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧼</div><div class="text-sm font-semibold text-blue-400">Navegador limpio</div><p class="text-xs text-neutral-400 mt-1">sin tus credenciales</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Claude in Chrome</div><p class="text-xs text-neutral-400 mt-1">la alternativa con sesión iniciada</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Prueba solo la lectura</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t3-p1">Antes de entregarle el navegador al agente, pruébalo tú mismo. Y hazlo de la forma más inofensiva posible: abre una página de ejemplo, lee el título y cierra. No se hace clic en nada ni se envía nada.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t3-p2">El sitio <code>example.com</code> existe exactamente para eso: es una página de demostración reservada para ejemplos, sin formulario ni botón de compra.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">open — abre la página</h4><p class="text-neutral-300 text-sm">El Chromium de agent-browser carga la dirección que le indicaste.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">get title — lee el título</h4><p class="text-neutral-300 text-sm">Pura lectura. Es el tipo de acción que la política deja que el agente haga por su cuenta (N4).</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">close — cerrar</h4><p class="text-neutral-300 text-sm">Cierra el navegador. No dejes una sesión abierta sin necesidad.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: demostrar que el navegador se abre y lee</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">En la terminal, un comando a la vez:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">agent-browser open https://example.com
+agent-browser get title
+agent-browser close</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado comprobado en CHANGELOG 0.2.0:</p>
+<p class="text-sm text-neutral-300"><code>agent-browser open https://example.com</code> + <code>get title</code> → <code>Example Domain</code>.</p>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Cómo verificar:</strong> o <code>get title</code> devuelve <code>Example Domain</code>. Esta es la Prueba de la receta R5.</div>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="El agente envía órdenes al agent-browser, resaltado, que opera un Chromium separado. Del Chromium salen cuatro tipos de acciones con colores de semáforo: leer, desplazarse y tomar una captura en azul, permitido; completar campos en gris, requiere aprobación previa; enviar y confirmar en rojo discontinuo, nunca por sí solo; pagar en rojo, nunca." class="w-full h-auto" role="img" viewbox="0 0 800 270">
+<defs>
+<pattern height="32" id="m24b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m24b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m24b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m24b-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m24b-grid)" height="270" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="130" x="20" y="105"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="85" y="131">🤖 agente</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="85" y="150">Claude o Codex</text>
+<line class="wf-flow" marker-end="url(#m24b-arrow)" stroke="#38bdf8" stroke-width="2" x1="152" x2="198" y1="135" y2="135"></line>
+<g filter="url(#m24b-glow)"><rect fill="#0f1b33" height="70" rx="14" stroke="#60a5fa" stroke-width="2" width="160" x="202" y="100"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="282" y="131">agent-browser</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="282" y="151">Chromium separado</text>
+<g stroke-width="2">
+<line class="wf-flow" marker-end="url(#m24b-arrow)" stroke="#38bdf8" x1="364" x2="470" y1="125" y2="45"></line>
+<line marker-end="url(#m24b-arrow)" stroke="#9ca3af" stroke-dasharray="6 4" x1="364" x2="470" y1="130" y2="105"></line>
+<line marker-end="url(#m24b-arrow-r)" stroke="#f87171" stroke-dasharray="4 4" x1="364" x2="470" y1="140" y2="165"></line>
+<line marker-end="url(#m24b-arrow-r)" stroke="#f87171" stroke-dasharray="2 5" x1="364" x2="470" y1="145" y2="225"></line>
+</g>
+<g font-family="Inter,sans-serif" font-size="12">
+<rect class="wf-a" fill="#0b1f2e" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="300" x="475" y="22"></rect>
+<text fill="#bae6fd" x="490" y="49">leer, desplazarse, tomar una captura → se puede (N4)</text>
+<rect fill="#1f2937" height="44" rx="10" stroke="#9ca3af" stroke-width="2" width="300" x="475" y="82"></rect>
+<text fill="#e5e7eb" x="490" y="109">rellenar → mostrar y esperar el OK (N2)</text>
+<rect fill="#2a0f0f" height="44" rx="10" stroke="#f87171" stroke-width="2" width="300" x="475" y="142"></rect>
+<text fill="#fca5a5" x="490" y="169">enviar, confirmar, borrar → nunca sin supervisión</text>
+<rect fill="#2a0f0f" height="44" rx="10" stroke="#f87171" stroke-width="2.5" width="300" x="475" y="202"></rect>
+<text fill="#fca5a5" x="490" y="229">pagar → nunca (N1: tú lo ejecutas)</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> solo la flecha azul de arriba es un camino libre. La gris discontinua pasa por ti primero. Las rojas no son caminos del agente: el agente prepara y se detiene. La prueba de este tema usa solo la flecha azul.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌐</div><div class="text-sm font-semibold text-blue-400">open</div><p class="text-xs text-neutral-400 mt-1">abre la página</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-blue-400">get title</div><p class="text-xs text-neutral-400 mt-1">lee el título</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚪</div><div class="text-sm font-semibold text-blue-400">close</div><p class="text-xs text-neutral-400 mt-1">cierra</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-blue-400">Example Domain</div><p class="text-xs text-neutral-400 mt-1">la prueba</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Pídele al agente que tenga un límite por escrito</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t4-p1">Con la prueba hecha, el agente puede usar el navegador. El secreto está en la solicitud: ya indica qué hacer <strong>y dónde parar</strong>. Sônia lo usa así para copiar la tabla de precios del portal de un proveedor que no exporta nada.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t4-p2">La política de la R5 tiene tres niveles, y la solicitud de abajo encaja por completo en el primero.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Acción en el sitio</th><th class="px-4 py-3 font-semibold">Nivel (R5)</th><th class="px-4 py-3 font-semibold">Qué hace el agente</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Leer página</td><td class="px-4 py-3 text-neutral-300">N4</td><td class="px-4 py-3 text-neutral-300">hazlo por tu cuenta, sin avisar</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Completar o enviar</td><td class="px-4 py-3 text-neutral-300">N2</td><td class="px-4 py-3 text-neutral-300">pide antes, cada vez</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Pagar</td><td class="px-4 py-3 text-neutral-300">N1</td><td class="px-4 py-3 text-neutral-300">nunca: prepara y tú ejecutas</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Qué revisar en la tabla:</strong> es el mismo límite por acción de <code>POLITICA.md</code> (leer N4, enviar N2, gastar dinero N1), aplicado al navegador.</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: que el agente lea una tabla de un sitio y la devuelva en CSV</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abre <code>claude</code> (o <code>codex</code>) en la carpeta del kit y pega la solicitud de la receta R5, reemplazando &lt;site&gt; por la dirección:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o agent-browser para abrir &lt;site&gt;, ler a tabela de preços e me devolver em CSV. Não clique em botões de envio ou compra: se precisar, pare e me pergunte.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Cómo verificar:</strong> compara dos o tres líneas del CSV con lo que ves en el sitio. Y lee los comandos que ejecutó el agente: solo <code>open</code>, lecturas y <code>close</code>, ningún clic para enviar o comprar.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Pedido con límites</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Indica el sitio y qué leer</li>
+<li>✓ Indica el formato de entrega (CSV)</li>
+<li>✓ Indica qué no hacer (envío, compra)</li>
+<li>✓ Indica qué hacer en caso de duda: detenerse y preguntar</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Pedido sin límites</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ "Resuelve esto en el portal por mí"</li>
+<li>✗ "Haz el pedido del mes al proveedor"</li>
+<li>✗ "Entra y actualiza el registro"</li>
+<li>✗ Ninguna fila indica dónde detenerse</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> "Detente y pregúntame" es la frase más útil del pedido</h3>
+<p class="text-neutral-300 text-sm">Los sitios tienen sorpresas: un aviso de cookies, un botón de «continuar» que en realidad confirma algo. Sin esta frase, el agente tiende a seguir adelante para terminar la tarea. Con ella, la sorpresa se convierte en una pregunta para ti.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📋</div><div class="text-sm font-semibold text-blue-400">Qué leer</div><p class="text-xs text-neutral-400 mt-1">tabla de precios</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📄</div><div class="text-sm font-semibold text-blue-400">Formato</div><p class="text-xs text-neutral-400 mt-1">CSV para usar después</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛑</div><div class="text-sm font-semibold text-blue-400">Dónde detenerse</div><p class="text-xs text-neutral-400 mt-1">envío y compra</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙋</div><div class="text-sm font-semibold text-blue-400">Ante la duda</div><p class="text-xs text-neutral-400 mt-1">te pregunta</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Pega las reglas del navegador en AGENTS.md</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t5-p1">Escribir el límite en cada pedido funciona, pero algún día lo olvidas. La solución es poner la regla en un lugar que el agente lea <strong>antes</strong> de cualquier solicitud: el <code>AGENTS.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t5-p2">Codex lee el <code>AGENTS.md</code> directamente, y el <code>CLAUDE.md</code> del kit apunta a él con <code>@AGENTS.md</code>. Una regla, dos agentes. La receta R5 incluye el bloque listo:</p>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">📄 Bloque de la receta R5 para AGENTS.md (real)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Navegador:
+- Leer, desplazarse, tomar capturas: puedes.
+- Completar un formulario: muéstrame lo que vas a completar y espera mi OK.
+- Enviar, confirmar, pagar, borrar: nunca lo hagas por tu cuenta.
+- Iniciar sesión: lo hago yo; no pidas ni guardes contraseñas.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Qué revisar:</strong> cuatro líneas, una por nivel de riesgo. Caben en una tarjeta de bolsillo y el agente las lee cada vez.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-blue-900/20 border-b border-blue-500/30"><span class="text-blue-400 font-semibold text-sm">🎯 Objetivo: que el bloque del navegador entre en AGENTS.md sin modificar el resto</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abre <code>claude</code> en la carpeta del kit y pega:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Copia al final de AGENTS.md el bloque "Navegador:" de la sección "Reglas para pegar en AGENTS.md" de runtime/receitas/R5-navegador-com-politica.md, sin cambiar ninguna otra línea. Muestra el fragmento nuevo antes de guardarlo.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-blue-400">Cómo verificar:</strong> abre el <code>AGENTS.md</code>. El bloque «Navegador:» aparece al final, con las cuatro líneas, y las reglas anteriores siguen iguales.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-blue-500/30">
+<h3 class="font-semibold text-blue-400 mb-3">✓ Regla en AGENTS.md</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Se aplica a todos los pedidos, incluso al que olvidaste limitar</li>
+<li>✓ Se aplica a Claude y a Codex</li>
+<li>✓ Queda en Git: puedes ver cuándo cambió</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Regla solo en la conversación</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Desaparece cuando termina la sesión</li>
+<li>✗ Cada agente se queda con una versión</li>
+<li>✗ Nadie recuerda lo que se acordó</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Registra también el sitio en el mapa</h3>
+<p class="text-neutral-300 text-sm">O <code>CAPACIDADES.md</code> ya incluye el ejemplo <code>Site do fornecedor | Uso do computador | 5 | navegador automatizado | enviar (N2) | pendente</code>. Después de probarlo con tu sitio, cambia «pendente» por la fecha, como en el módulo 2.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-blue-400">AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">leído antes de actuar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-blue-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">Claude lee lo mismo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">4️⃣</div><div class="text-sm font-semibold text-blue-400">Cuatro líneas</div><p class="text-xs text-neutral-400 mt-1">una por rango</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-blue-400">Línea en el mapa</div><p class="text-xs text-neutral-400 mt-1">sitio con fecha</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Recuerda que tú te encargas del inicio de sesión</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-4-t6-p1">La última línea del bloque es la más seria: <em>"Inicio de sesión: yo lo hago; tú no pides ni guardas la contraseña."</em> La contraseña no se pone en el chat, no se incluye en un archivo del proyecto ni se pasa de una herramienta a otra.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t6-p2">A <code>POLITICA.md</code> dice lo mismo de forma general: "Nunca pases una credencial de una herramienta a otra." En el navegador esto se aplica el doble, porque la página de inicio de sesión es exactamente donde la contraseña estaría a mano.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Navegador con sesión iniciada = tus cuentas abiertas</h3>
+<p class="text-neutral-300 text-sm">La extensión "Claude in Chrome" usa tu navegador, donde ya tienes la sesión iniciada. Todo lo que puedes hacer en él también está al alcance del agente: correo electrónico, banco, redes. La R5 advierte que se aplican las mismas reglas. Usa el navegador con la sesión iniciada solo para sitios que requieren tu acceso y mantén el bloque "Navegador:" en el <code>AGENTS.md</code>.</p>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">El agente llega a la pantalla de inicio de sesión</h4><p class="text-neutral-300 text-sm">Según la regla, se detiene y avisa. No intenta adivinar ni pide la contraseña por el chat.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Tú inicias sesión</h4><p class="text-neutral-300 text-sm">En tu navegador, con tus propias manos. Incluso el código que llega al celular.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">El agente vuelve a leer</h4><p class="text-neutral-300 text-sm">Con la sesión abierta, sigue dentro de los mismos límites: lee por su cuenta, pide que completes los datos, nunca envía ni paga.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Clara y el portal del seguro médico</h3>
+<p class="text-neutral-300 text-sm">Clara quiere comprobar en el sitio web del seguro qué autorizaciones se aprobaron. Inicia sesión con sus datos; el agente lee la lista y se la devuelve en CSV. Pedir que aprueben una autorización nueva ya es «enviar»: el agente prepara lo que va a completar y espera su OK.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-2-4#q1">
+<p class="font-medium mb-4">Prueba rápida (opcional): el agente está en el portal del proveedor y encuentra el botón «Confirmar pedido». ¿Qué indica la regla de la R5?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Detenerse y preguntar: confirmar y enviar nunca se hacen solos.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Hacer clic, ya que la tarea era hacer el pedido del mes.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Pedir la contraseña del portal para revisar la solicitud antes.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-blue-400">Inicio de sesión</div><p class="text-xs text-neutral-400 mt-1">tú haces</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🙅</div><div class="text-sm font-semibold text-blue-400">Contraseña</div><p class="text-xs text-neutral-400 mt-1">nunca en el chat</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚫</div><div class="text-sm font-semibold text-blue-400">Credencial</div><p class="text-xs text-neutral-400 mt-1">no pasa adelante</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-blue-400">Claude in Chrome</div><p class="text-xs text-neutral-400 mt-1">las mismas reglas</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">El navegador es el penúltimo recurso</strong><span class="text-neutral-400"> — estabilidad baja; primero, exportación.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">agent-browser con Chromium propio</strong><span class="text-neutral-400"> — navegador limpio, sin tus sesiones iniciadas.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Prueba solo de lectura</strong><span class="text-neutral-400"> — open, get title, close → Example Domain.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Leer está permitido; para completar, se pide permiso; pagar, nunca</strong><span class="text-neutral-400"> — en el pedido y en AGENTS.md.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Tú te encargas del inicio de sesión</strong><span class="text-neutral-400"> — el agente no pide ni guarda contraseñas.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próxima ruta:</h3>
+<p class="text-neutral-300">Ruta 3 — Enrutar y ejecutar (3.1 El modelo adecuado, la cuota rinde)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/index.html">Próxima ruta: Enrutar y ejecutar →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Sección 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-1">1. Penúltimo recurso</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-2">2. Instalar</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-3">3. Probar la lectura</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-4">4. Pedido con límite</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-5">5. Reglas en AGENTS.md</a></li>
+<li><a class="text-neutral-400 hover:text-blue-400" href="#topico-6">6. El inicio de sesión es tuyo</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit utilizado en el curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-2-4#q1', { answer: 0, explain: {
+          '0': 'Isso. Pela R5, enviar, confirmar, pagar e apagar nunca são feitos sozinhos. O agente prepara, para e pergunta.',
+          '1': 'Não. Confirmar pedido é enviar (N2) e, se envolve pagamento, N1. A tarefa não autoriza o clique: só o seu OK, a cada vez.',
+          '2': 'Não. Login é com você: o agente não pede nem guarda senha, e credencial não passa de uma ferramenta para outra.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ Curso "INEMA Agent Runtime — faça qualquer IA usar qualquer ferramenta" no fo
 - Regras, mapa congelado e lista de comandos permitidos: `context/SPEC.md`. Todo comando do curso tem de existir no kit e ter prova (CHANGELOG do kit).
 - As páginas PT são **montadas**: edite `context/corpos/*.html` e rode `python3 scripts/montar.py` e `python3 scripts/lint.py` (precisa `LINT OK`). Não edite `curso/**/*.html` nem `index.html` à mão (são sobrescritos).
 - Cabeça, nav e scripts comuns: `context/partes/` + `scripts/montar.py`. O manifesto sai do `TRILHAS` do montar.py.
+- Ordem ao mudar conteúdo: `montar.py` → `lint.py` → tradutor (ele também injeta o seletor PT/EN/ES e hreflang nas páginas PT, que o montar apaga). Depois da tradução, conferir nomes próprios: o tradutor já trocou `ponte-modelo` por "model bridge"/"puente-modelo" (corrigido no HTML e no cache `i18n/`).
 - EN/ES: `en/` e `es/`, gerados por `~/projetos/wifi/scripts/traduz-pagina-codex.py` (Codex pela assinatura, `gpt-6-luna`), cache em `i18n/`. Depois de mudar o PT, rodar de novo o tradutor (só reenvia texto novo).
 - Sem API externa sem autorização explícita.
 - Conta git: `inematds <inematds@gmail.com>`. Publicar = push; GitHub Pages serve da raiz (main).

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Reverse engineering is not a product | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha1/modulo-1-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha1/modulo-1-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha1/modulo-1-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Track 1</a><span>/</span>
+<span class="text-emerald-400">Module 1.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-1" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULE 1.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧭 Reverse engineering is not a product</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">The “mods” videos showed Claude using Codex through a hack. The hack showed what’s possible. This course teaches you to do the same through the official route, which won’t break in the next update.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Foundation</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 1.1 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:1-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="1-1" data-inema-track="1" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">See what the mod videos showed</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-1-t1-p1">Videos showing Claude Code “mods” circulated. In one of them, Claude started using the <strong class="text-emerald-400">computer use</strong> of the Codex app: you clicked, typed, and read the screen through another AI.</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-1-t1-p2">In another, several Claude sessions worked at the same time, each in a different role, with a dashboard showing who was leading and who had stalled. The nickname was "Threads".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t1-p3">Almost everything was done by <strong class="text-emerald-400">reverse engineering</strong>: look at the running application, find out how it communicates internally, and connect a wire there, without an invitation from the manufacturer.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Five words that come up all the time</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Claude Code</strong> — Claude running in your machine's terminal. It reads and creates files and runs commands in the folder where you open it.</li>
+<li><strong>Codex</strong> — OpenAI's equivalent tool, also in the terminal. The command <code>codex exec</code> sends a request and gets the response without opening the screen.</li>
+<li><strong>Agent</strong> — an AI equipped with tools that acts on its own: creates files, runs commands, opens websites.</li>
+<li><strong>Mod (plugin)</strong> — a package that adds things to Claude Code: a panel, a new command, a rule that runs before each action.</li>
+<li><strong>Reverse engineering</strong> — figuring out how a program works internally by observing it, without official documentation.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Diagram of what the videos did. Claude Code connects an improvised wire to the Codex app’s internal client, which in turn uses the computer. The improvised wire is marked in red with the warning: breaks on the next update." class="w-full h-auto" role="img" viewbox="0 0 800 260">
+<defs>
+<pattern height="32" id="m11-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m11-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m11-arrow-c" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m11-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m11-grid)" height="260" width="800" x="0" y="0"></rect>
+<g filter="url(#m11-glow)"><rect fill="#0e2018" height="70" rx="14" stroke="#34d399" stroke-width="2" width="150" x="40" y="95"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="115" y="127">Claude Code</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="115" y="147">in the terminal</text>
+<path d="M192,130 C 250,90 300,90 345,125" fill="none" marker-end="url(#m11-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2.5"></path>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="268" y="80">improvised thread</text>
+<rect fill="#1f2937" height="70" rx="14" stroke="#6b7280" stroke-width="2" width="170" x="350" y="95"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="435" y="127">internal client</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="435" y="147">from the Codex app</text>
+<line class="wf-flow" marker-end="url(#m11-arrow-c)" stroke="#38bdf8" stroke-width="2" x1="522" x2="600" y1="130" y2="130"></line>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="155" x="605" y="95"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="682" y="127">🖱️ computer use</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="682" y="147">clicks, types, reads the screen</text>
+<rect fill="#2a0f0f" height="36" rx="10" stroke="#f87171" stroke-width="1.8" width="420" x="190" y="200"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="400" y="223">no public contract: it breaks with the next app update</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> The blue section is what the manufacturer provides (the app using the computer). The red dashed section is the improvised connection someone built to access it. That connection disappears when the app updates.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎬</div><div class="text-sm font-semibold text-emerald-400">Mods</div><p class="text-xs text-neutral-400 mt-1">what the videos showed</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-emerald-400">Parallel sessions</div><p class="text-xs text-neutral-400 mt-1">the nickname "Threads"</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🖱️</div><div class="text-sm font-semibold text-emerald-400">Computer use</div><p class="text-xs text-neutral-400 mt-1">the AI operates the screen</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔧</div><div class="text-sm font-semibold text-emerald-400">Improvised bridge</div><p class="text-xs text-neutral-400 mt-1">reverse engineering</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Separate product discovery</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-1-t2-p1">Reverse engineering has value. It proves that something <strong>is possible</strong>, shows how the program communicates and shuts down the premature "it can’t be done."</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t2-p2">The problem starts when the discovery becomes part of your daily system. Then you depend on something the manufacturer could change tomorrow without notice. The rule for this course fits on one line: <strong class="text-emerald-400">reverse engineering is a discovery technique, not a product.</strong></p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ As a discovery tool (works)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Shows the idea works before you invest</li>
+<li>✓ Shows what data the program exchanges and where it goes</li>
+<li>✓ Prompts the right question: “Is there an official way to do this?”</li>
+<li>✓ Runs on a test machine, with the date recorded</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ As a product (doesn’t work)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Breaks with every app update</li>
+<li>✗ No one guarantees that the behavior stays the same</li>
+<li>✗ May violate the provider’s terms of use</li>
+<li>✗ You become the only one who knows how to fix it</li>
+</ul>
+</div>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Discovery timeline. First, reverse engineering in the lab proves it's possible. Then comes the question: is there an official way? If there is, it becomes the product. If not, it stays in the lab with a date and a warning that it's fragile." class="w-full h-auto" role="img" viewbox="0 0 800 220">
+<defs>
+<pattern height="32" id="m11b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m11b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m11b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"></path></marker>
+</defs>
+<rect fill="url(#m11b-grid)" height="220" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="170" x="30" y="80"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="115" y="106">🧪 lab</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="115" y="125">"it can be done"</text>
+<line marker-end="url(#m11b-arrow)" stroke="#34d399" stroke-width="2" x1="202" x2="268" y1="110" y2="110"></line>
+<g filter="url(#m11b-glow)"><rect fill="#0e2018" height="70" rx="14" stroke="#34d399" stroke-width="2" width="200" x="272" y="75"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="372" y="106">is there an official version?</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="372" y="126">API · MCP · CLI · plugin</text>
+<line class="wf-flow" stroke="#38bdf8" stroke-width="2" x1="474" x2="560" y1="95" y2="55"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="200" x="562" y="30"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="662" y="60">yes → becomes your system</text>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="474" x2="560" y1="125" y2="165"></line>
+<rect fill="#2a0f0f" height="50" rx="12" stroke="#f87171" stroke-width="2" width="200" x="562" y="140"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="662" y="163">no → stays in the lab</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="662" y="180">with a date and the "fragile" label</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> reverse engineering appears only in the first frame. What determines the path is the green box in the middle. In most cases in 2026, the answer is "yes," and your system follows the blue arrow.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Phrase to remember</h3>
+<p class="text-neutral-300 text-sm">When someone shows you an impressive trick, ask: "is this the way, or proof that a way exists?". Almost always, it's the latter.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔍</div><div class="text-sm font-semibold text-emerald-400">Discovery</div><p class="text-xs text-neutral-400 mt-1">proof that it's possible</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏭</div><div class="text-sm font-semibold text-emerald-400">Product</div><p class="text-xs text-neutral-400 mt-1">what you use every day</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-emerald-400">Contract</div><p class="text-xs text-neutral-400 mt-1">the method maintained by the manufacturer</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-emerald-400">Fragile</div><p class="text-xs text-neutral-400 mt-1">date label</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Learn about today’s official approaches</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-1-t3-p1">What the videos reverse-engineered was necessary when they were recorded. Today, most of it already has <strong class="text-emerald-400">through the official channel</strong>: a command or feature that the manufacturer documents and maintains.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t3-p2">The table shows the switch. The last column tells you which module in this course shows you how to do it with the kit.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">The video did</th><th class="px-4 py-3 font-semibold">Official method today</th><th class="px-4 py-3 font-semibold">In the course</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Claude calling Codex from inside the app</td><td class="px-4 py-3 text-neutral-300"><code>codex exec</code>, wrapped in the bridge <code>runtime/pontes/codex-exec.sh</code></td><td class="px-4 py-3 text-neutral-300">2.1</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">"Threads": multiple sessions in parallel</td><td class="px-4 py-3 text-neutral-300"><code>claude --bg</code> to release and <code>claude agents</code> to list</td><td class="px-4 py-3 text-neutral-300">3.3</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Panel and buttons inside Claude Code</td><td class="px-4 py-3 text-neutral-300">official Claude Code mods and plugins</td><td class="px-4 py-3 text-neutral-300">4.3</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Helper that approved permissions on its own</td><td class="px-4 py-3 text-neutral-300">permission rules in the <code>.claude/settings.json</code> and autonomy levels</td><td class="px-4 py-3 text-neutral-300">4.1</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">AI operating the screen</td><td class="px-4 py-3 text-neutral-300">browser for agents, with a written policy</td><td class="px-4 py-3 text-neutral-300">2.4</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> not one row in the middle column depends on "opening the app internally". They’re all commands or settings published by the vendor.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? What are "official route" and "CLI"</h3>
+<p class="text-neutral-300 text-sm"><strong>Official method</strong> it’s the route the manufacturer provides for other programs to communicate with its system, and that it commits to maintaining. <strong>CLI</strong> (command-line interface) is a program you use by typing commands in the terminal, such as <code>claude</code>, <code>codex</code> or <code>git</code>.</p>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Yesterday: only available internally</h4><p class="text-neutral-300 text-sm">Without an official command, the approach was to observe the app and connect a wire. Testing it made sense.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Today: the vendor published the approach</h4><p class="text-neutral-300 text-sm">Background sessions, plugins, screenless execution: it all became a documented feature.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Tomorrow: check again</h4><p class="text-neutral-300 text-sm">Command names change. That’s why the kit has a diagnostic (<code>doctor.mjs</code>) and each recipe has a test that you run on your machine.</p></div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-emerald-400">codex exec</div><p class="text-xs text-neutral-400 mt-1">Claude asks Codex</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-emerald-400">claude --bg</div><p class="text-xs text-neutral-400 mt-1">parallel sessions</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-emerald-400">Plugins</div><p class="text-xs text-neutral-400 mt-1">official mods</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-emerald-400">settings.json</div><p class="text-xs text-neutral-400 mt-1">written permissions</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Understand what the kit is</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-1-t4-p1">O <strong class="text-emerald-400">INEMA Agent Runtime</strong> is a kit you copy into your project. It helps Claude Code and Codex discover, connect to, and use the tools you already have, with clear rules about what they can do on their own.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t4-p2">It's not a platform or a server. It's a folder <code>runtime/</code> with four rules files, diagnostic and verification scripts, bridges, a guard, and seven tested recipes. It works through the <strong>subscription</strong> for Claude Code and/or Codex.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? A subscription isn't an API</h3>
+<p class="text-neutral-300 text-sm">A <strong>subscription</strong> is the monthly plan you already pay for to use Claude or ChatGPT. It has a <strong>quota</strong>: a usage limit per period. A <strong>API</strong> is another account, billed based on usage and designed for programmers. The kit runs only through the subscription: no paid API is required.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📁 What’s in the folder (kit README summary)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/LEIA-ME.md        the cycle and the ladder of paths
+runtime/CAPACIDADES.md    tools map and which path to use
+runtime/POLITICA.md       what the agent does on its own, asks before doing, or never does
+runtime/ROTEAMENTO.md     which model to use for which task (saves quota)
+runtime/scripts/          doctor · observar · verificar
+runtime/pontes/           codex-exec.sh · mcp-modelo/
+runtime/mods/             runtime-guarda · runtime-painel
+runtime/receitas/         R1 a R7, each with a Proof
+AGENTS.md · CLAUDE.md     Codex and Claude read the same rules
+.claude/                  applied policy, a team of 3 roles, guard enabled</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Where to see it:</strong> <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a>. In module 1.2, you clone and run it.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ The kit is</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Files you read, edit, and version</li>
+<li>✓ Same for Claude Code and Codex</li>
+<li>✓ Recipes with proof you can run</li>
+<li>✓ MIT License, open</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ The kit isn’t</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ A server running in the background</li>
+<li>✗ A web dashboard to subscribe</li>
+<li>✗ Depends on a paid API</li>
+<li>✗ A reverse-engineered shortcut</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Why files instead of an application</h3>
+<p class="text-neutral-300 text-sm">A text file the agent reads on its own, you can understand without programming, and Git tracks every change to. When a rule changes, you edit one line. No provider needs to be online for your kit to work.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-emerald-400">runtime/</div><p class="text-xs text-neutral-400 mt-1">the folder you copy</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📜</div><div class="text-sm font-semibold text-emerald-400">4 rules</div><p class="text-xs text-neutral-400 mt-1">README, CAPABILITIES, POLICY, ROUTING</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧪</div><div class="text-sm font-semibold text-emerald-400">7 recipes</div><p class="text-xs text-neutral-400 mt-1">each one with proof</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-emerald-400">Subscription</div><p class="text-xs text-neutral-400 mt-1">no paid API</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Go through the seven-step cycle</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-1-t5-p1">The file <code>runtime/LEIA-ME.md</code> organize everything into a cycle: <strong class="text-emerald-400">discover → connect → route → execute → observe → verify → learn</strong>. Each step has a file and a question.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t5-p2">And every action, at every stage, goes through the <code>POLITICA.md</code>: it says what the agent does on its own and what it asks first.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Seven-step cycle arranged in a ring: discover, connect, route, execute, observe, verify, and learn, returning to discover. Policy is at the center, connected to every step." class="w-full h-auto" role="img" viewbox="0 0 800 300">
+<defs>
+<pattern height="32" id="m11c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m11c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m11c-grid)" height="300" width="800" x="0" y="0"></rect>
+<ellipse cx="400" cy="150" fill="none" opacity="0.6" rx="300" ry="112" stroke="#34d399" stroke-dasharray="4 8" stroke-width="2"></ellipse>
+<g filter="url(#m11c-glow)"><rect fill="#0e2018" height="56" rx="14" stroke="#34d399" stroke-width="2" width="140" x="330" y="122"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="400" y="147">POLITICA.md</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="400" y="165">applies to all</text>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="340" y="22"></rect><text fill="#bae6fd" x="400" y="44">1 · discover</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="570" y="52"></rect><text fill="#bae6fd" x="630" y="74">2 · connect</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="640" y="134"></rect><text fill="#bae6fd" x="700" y="156">3 · route</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="560" y="214"></rect><text fill="#bae6fd" x="620" y="236">4 · execute</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="340" y="244"></rect><text fill="#bae6fd" x="400" y="266">5 · observe</text>
+<rect fill="#0b1f2e" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="120" y="214"></rect><text fill="#bae6fd" x="180" y="236">6 · verify</text>
+<rect fill="#0e2018" height="34" rx="10" stroke="#34d399" stroke-width="2" width="120" x="40" y="134"></rect><text fill="#a7f3d0" x="100" y="156">7 · learn</text>
+</g>
+<g opacity="0.45" stroke="#38bdf8" stroke-width="1.5">
+<line class="wf-flow" x1="400" x2="400" y1="56" y2="122"></line>
+<line class="wf-flow" x1="630" x2="470" y1="86" y2="135"></line>
+<line class="wf-flow" x1="640" x2="470" y1="151" y2="151"></line>
+<line class="wf-flow" x1="600" x2="470" y1="214" y2="170"></line>
+<line class="wf-flow" x1="400" x2="400" y1="244" y2="178"></line>
+<line class="wf-flow" x1="240" x2="330" y1="222" y2="170"></line>
+<line class="wf-flow" x1="160" x2="330" y1="151" y2="151"></line>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> The dashed ring shows the order of the steps, and "learn" (green) sends the cycle back to the beginning with better rules. The lines to the center show that no step escapes the policy.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Step</th><th class="px-4 py-3 font-semibold">Kit file</th><th class="px-4 py-3 font-semibold">Question</th><th class="px-4 py-3 font-semibold">Track</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Discover</td><td class="px-4 py-3 text-neutral-300"><code>CAPACIDADES.md</code></td><td class="px-4 py-3 text-neutral-300">What tools are available, and how does the agent access them?</td><td class="px-4 py-3 text-neutral-300">T1</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Connect</td><td class="px-4 py-3 text-neutral-300"><code>receitas/</code>, <code>pontes/</code></td><td class="px-4 py-3 text-neutral-300">How do I turn this approach into something the agent calls?</td><td class="px-4 py-3 text-neutral-300">T2</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Route</td><td class="px-4 py-3 text-neutral-300"><code>ROTEAMENTO.md</code></td><td class="px-4 py-3 text-neutral-300">Which model solves this for the lowest cost?</td><td class="px-4 py-3 text-neutral-300">T3</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Run</td><td class="px-4 py-3 text-neutral-300">R2 recipe</td><td class="px-4 py-3 text-neutral-300">One agent or a team?</td><td class="px-4 py-3 text-neutral-300">T3</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Observe / Verify</td><td class="px-4 py-3 text-neutral-300">"command → expected output" criterion</td><td class="px-4 py-3 text-neutral-300">How do I prove it worked?</td><td class="px-4 py-3 text-neutral-300">T3</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Learn</td><td class="px-4 py-3 text-neutral-300"><code>POLITICA.md</code> (Learning section)</td><td class="px-4 py-3 text-neutral-300">What should change? The agent proposes; you approve.</td><td class="px-4 py-3 text-neutral-300">T4</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the questions are the same ones you’d ask when hiring someone: what exists, how it gets there, who does it, how to check it, and what improves.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> What counts as “proof” in the kit</h3>
+<p class="text-neutral-300 text-sm">Every recipe ends with a <strong>Proof</strong>: a command and the text that must appear. Example from recipe R1: run the bridge with "Reply only PONG" and see <code>PONG</code>. If it doesn't appear, it didn't work, even if the agent says it did.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔄</div><div class="text-sm font-semibold text-emerald-400">Cycle</div><p class="text-xs text-neutral-400 mt-1">seven steps that repeat</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📄</div><div class="text-sm font-semibold text-emerald-400">One file</div><p class="text-xs text-neutral-400 mt-1">by stage</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">Proof</div><p class="text-xs text-neutral-400 mt-1">command → output</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚦</div><div class="text-sm font-semibold text-emerald-400">Policy</div><p class="text-xs text-neutral-400 mt-1">applies to all</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Meet Clara and Sônia, and see the course map</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t6-p1">Two people accompany you through the course. Their data is in the example files that already come with the kit, in <code>runtime/exemplos/</code>. This way, every command you run returns exactly what the lesson shows.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🩺</div>
+<h3 class="font-semibold text-lg mb-2">Clara, 47 — clinic owner</h3>
+<p class="text-neutral-300 text-sm mb-3">The clinic schedule is a spreadsheet. Dr. Ana and Dr. Bruno see patients there. Clara wants the agent to tell her which time slots are available without anyone having to open the spreadsheet.</p>
+<p class="text-xs text-neutral-400">File: <code>runtime/exemplos/agenda.csv</code></p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🧾</div>
+<h3 class="font-semibold text-lg mb-2">Sônia, 51 — accountant</h3>
+<p class="text-neutral-300 text-sm mb-3">Her client is a distributor whose ERP has no API: it only exports a sales CSV. Sônia wants the total per customer without putting a spreadsheet together by hand every month.</p>
+<p class="text-xs text-neutral-400">File: <code>runtime/exemplos/erp-vendas.csv</code></p>
+</div>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? ERP and CSV</h3>
+<p class="text-neutral-300 text-sm"><strong>ERP</strong> is the company management system (sales, inventory, invoices). <strong>CSV</strong> is a plain-text spreadsheet: each line is a record, and the columns are separated by commas. Almost every legacy system can "export CSV," and that's enough for the agent to read it.</p>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="A ladder of four tracks from left to right: T1 discover, T2 connect, T3 route and execute, T4 govern and learn. At the end, the final project: your bridge and your team." class="w-full h-auto" role="img" viewbox="0 0 800 200">
+<defs>
+<pattern height="32" id="m11d-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m11d-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m11d-grid)" height="200" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="12">
+<g filter="url(#m11d-glow)"><rect fill="#0e2018" height="50" rx="10" stroke="#34d399" stroke-width="2" width="150" x="30" y="130"></rect></g>
+<text fill="#34d399" font-weight="600" x="45" y="152">T1</text><text fill="#a7f3d0" x="45" y="169">discover</text>
+<rect fill="#0f1b33" height="80" rx="10" stroke="#60a5fa" stroke-width="2" width="150" x="190" y="100"></rect>
+<text fill="#60a5fa" font-weight="600" x="205" y="122">T2</text><text fill="#bfdbfe" x="205" y="139">connect</text>
+<rect fill="#1e1233" height="110" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="350" y="70"></rect>
+<text fill="#c084fc" font-weight="600" x="365" y="92">T3</text><text fill="#e9d5ff" x="365" y="109">route and execute</text>
+<rect fill="#2a1d06" height="140" rx="10" stroke="#fbbf24" stroke-width="2" width="150" x="510" y="40"></rect>
+<text fill="#fbbf24" font-weight="600" x="525" y="62">T4</text><text fill="#fde68a" x="525" y="79">govern and learn</text>
+<rect class="wf-a" fill="#0b1f2e" height="170" rx="10" stroke="#38bdf8" stroke-width="2" width="110" x="670" y="10"></rect>
+<text fill="#bae6fd" font-weight="600" text-anchor="middle" x="725" y="90">project</text><text fill="#bae6fd" text-anchor="middle" x="725" y="107">final</text>
+</g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="105" y="118">you are here</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> each step depends on the previous one. You only connect (T2) what you discovered (T1), only build a team (T3) with working bridges, and only give the agent more freedom (T4) with policies and a failure log.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-1-1#q1">
+<p class="font-medium mb-4">Quick test (optional): what role does reverse engineering play in this course?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">It’s the main way to connect Claude to Codex.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">It’s a discovery technique: it proves something is possible and leads to the question “is there an official route?”</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">It’s prohibited in any situation, even in a lab.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-emerald-400">Clara</div><p class="text-xs text-neutral-400 mt-1">spreadsheet calendar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-emerald-400">Sônia</div><p class="text-xs text-neutral-400 mt-1">ERP without an API</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪜</div><div class="text-sm font-semibold text-emerald-400">4 tracks</div><p class="text-xs text-neutral-400 mt-1">one depends on the other</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏁</div><div class="text-sm font-semibold text-emerald-400">Final project</div><p class="text-xs text-neutral-400 mt-1">your bridge and your team</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">The videos proved what’s possible</strong><span class="text-neutral-400"> — through an improvised wire.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Reverse engineering is discovery</strong><span class="text-neutral-400"> — not the everyday system.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Almost everything already has an official route</strong><span class="text-neutral-400"> — codex exec, claude --bg, plugins.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">The kit is a folder of files</strong><span class="text-neutral-400"> — through the subscription, with no paid API.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Seven stages, one policy</strong><span class="text-neutral-400"> — and every recipe has proof.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">1.2 — Install and troubleshoot</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-2.html">Module 1.2 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-1">1. The videos about mods</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Discovery × product</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Official routes</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-4">4. The kit</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-5">5. The cycle</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Clara, Sônia, and the map</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-1-1#q1', { answer: 1, explain: {
+          '0': 'Não. Para o Claude chamar o Codex existe a via oficial codex exec, que o kit embrulha na ponte codex-exec.sh (módulo 2.1).',
+          '1': 'Isso. Ela mostra que dá, e a pergunta seguinte é sempre: existe via oficial? Se existir, use a oficial.',
+          '2': 'Não é proibida: ela tem lugar no laboratório, numa máquina de teste, com data e etiqueta de frágil (módulo 4.4).'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

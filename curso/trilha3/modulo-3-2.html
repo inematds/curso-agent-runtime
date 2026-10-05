@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>Time de três papéis | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Time de três papéis | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,199 +174,188 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="../trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="../trilha4/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-purple-400">Início</a><span>/</span>
-      <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
-      <span class="text-purple-400">Módulo 3.2</span>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-2" data-inema-track="3">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">👥 Time de três papéis</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Um modelo forte planeja, um médio faz e um leve confere. Cada papel usa só o modelo de que precisa, e a cota rende. É a receita R2 do kit, com prova no CHANGELOG.</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">R2</div><div class="text-xs text-neutral-400">Receita</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
-      </div>
-      <div data-inema-meter="modulo:3-2" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 3.2">
-        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-      </div>
-    </div>
-  </header>
-
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
-  <main id="conteudo" class="min-w-0" data-inema-module="3-2" data-inema-track="3">
-
-    <!-- ===================== TOPICO 1 ===================== -->
-    <section id="topico-1" data-inema-topic="modulo-3-2#topico-1" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold flex-1">Conheça o planejador, o executor e o revisor</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m3-2-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">A receita R2 divide uma tarefa em três papéis. O <strong class="text-purple-400">planejador</strong> pensa e escreve o plano. O <strong class="text-purple-400">executor</strong> faz. O <strong class="text-purple-400">revisor</strong> confere se ficou pronto de verdade.</p>
-      <p data-inema-block="m3-2-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">É o roteamento do módulo 3.1 aplicado numa tarefa só: pensar usa modelo forte, fazer usa médio, conferir usa leve. Ninguém paga topo para tarefa de conferência.</p>
-
-      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Subagente e papel</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>Subagente</strong> — um ajudante que o Claude Code chama durante a conversa. Ele recebe uma parte do trabalho, faz com o modelo e as ferramentas dele e devolve o resultado. É um recurso oficial do Claude Code.</li>
-          <li><strong>Papel</strong> — o "cargo" do subagente: o que ele faz, que modelo usa e o que pode tocar. No kit, cada papel é um arquivo em <code>.claude/agents/</code>.</li>
-        </ul>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Papel</th><th class="px-4 py-3 font-semibold">Arquivo</th><th class="px-4 py-3 font-semibold">Modelo</th><th class="px-4 py-3 font-semibold">Faz</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">planejador</td><td class="px-4 py-3 text-neutral-300"><code>planejador.md</code></td><td class="px-4 py-3 text-neutral-300">opus</td><td class="px-4 py-3 text-neutral-300">plano curto com critério de pronto <code>comando → saída esperada</code></td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300"><code>executor.md</code></td><td class="px-4 py-3 text-neutral-300">sonnet</td><td class="px-4 py-3 text-neutral-300">executa o plano e mostra a prova</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">revisor</td><td class="px-4 py-3 text-neutral-300"><code>revisor.md</code></td><td class="px-4 py-3 text-neutral-300">haiku</td><td class="px-4 py-3 text-neutral-300">roda os critérios; responde APROVADO ou o que falta</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a coluna Modelo desce de nível da primeira para a última linha (topo, executor, menor no <code>ROTEAMENTO.md</code>). A tabela é a mesma da receita R2.</p>
-
-      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 240" class="w-full h-auto" role="img" aria-label="Linha de montagem do time. A tarefa entra no planejador, modelo opus, só lê, que devolve plano e critérios de pronto. O executor, modelo sonnet, altera arquivos e mostra a prova. O revisor, modelo haiku, só lê e roda os critérios. Se todos passam, sai APROVADO. Se não, volta com FALTA e a lista do que corrigir.">
-          <defs>
-            <pattern id="m32-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
-            <filter id="m32-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m32-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-            <marker id="m32-arrow-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="240" fill="url(#m32-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect x="20" y="75" width="100" height="56" rx="10" fill="#1f2937" stroke="#6b7280" stroke-width="2"/><text x="70" y="100" fill="#e5e7eb" font-size="13">tarefa</text><text x="70" y="117" fill="#9ca3af" font-size="10">sua frase</text>
-            <g filter="url(#m32-glow)"><rect x="160" y="65" width="160" height="76" rx="14" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
-            <text x="240" y="92" fill="#c084fc" font-weight="600" font-size="14">planejador</text><text x="240" y="110" fill="#e9d5ff" font-size="11">opus · só lê</text><text x="240" y="126" fill="#e9d5ff" font-size="10">plano + critérios</text>
-            <rect class="wf-a" x="360" y="65" width="160" height="76" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="440" y="92" fill="#bae6fd" font-weight="600" font-size="14">executor</text><text x="440" y="110" fill="#7dd3fc" font-size="11">sonnet · altera (N3)</text><text x="440" y="126" fill="#7dd3fc" font-size="10">faz e mostra a prova</text>
-            <rect class="wf-a" x="560" y="65" width="160" height="76" rx="14" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-            <text x="640" y="92" fill="#bae6fd" font-weight="600" font-size="14">revisor</text><text x="640" y="110" fill="#7dd3fc" font-size="11">haiku · só lê</text><text x="640" y="126" fill="#7dd3fc" font-size="10">roda os critérios</text>
-            <rect x="600" y="180" width="180" height="40" rx="10" fill="#1e1233" stroke="#c084fc" stroke-width="2"/><text x="690" y="205" fill="#e9d5ff" font-size="13" font-weight="600">APROVADO</text>
-            <rect x="330" y="180" width="200" height="40" rx="10" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/><text x="430" y="205" fill="#fca5a5" font-size="12">FALTA: lista do que corrigir</text>
-          </g>
-          <g stroke="#38bdf8" stroke-width="2">
-            <line class="wf-flow" x1="122" y1="103" x2="156" y2="103" marker-end="url(#m32-arrow)"/>
-            <line class="wf-flow" x1="322" y1="103" x2="356" y2="103" marker-end="url(#m32-arrow)"/>
-            <line class="wf-flow" x1="522" y1="103" x2="556" y2="103" marker-end="url(#m32-arrow)"/>
-            <line x1="660" y1="143" x2="680" y2="176" marker-end="url(#m32-arrow)"/>
-          </g>
-          <path d="M610,143 C 590,170 560,195 534,198" fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m32-arrow-r)"/>
-          <path d="M330,198 C 300,198 440,170 440,145" fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#m32-arrow-r)"/>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a tarefa anda da esquerda para a direita. Só o executor (azul) mexe em arquivos. O revisor fecha com <code>APROVADO</code>; se algo falhar, a linha vermelha tracejada devolve a lista do que corrigir ao executor.</p>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧠</div><div class="text-sm font-semibold text-purple-400">Planejador</div><p class="text-xs text-neutral-400 mt-1">opus, só lê</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-purple-400">Executor</div><p class="text-xs text-neutral-400 mt-1">sonnet, altera</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-purple-400">Revisor</div><p class="text-xs text-neutral-400 mt-1">haiku, só lê</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-purple-400">Subagentes</div><p class="text-xs text-neutral-400 mt-1">via oficial</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 2 ===================== -->
-    <section id="topico-2" data-inema-topic="modulo-3-2#topico-2" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold flex-1">Leia os arquivos dos papéis</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m3-2-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">Cada papel é um arquivo de texto curto. Em cima vem uma ficha entre linhas <code>---</code>; embaixo, as instruções em português. Este é o <code>.claude/agents/planejador.md</code>, inteiro:</p>
-
-      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 .claude/agents/planejador.md (do kit)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">---
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha3/modulo-3-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha3/modulo-3-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha3/modulo-3-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-3-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha3/modulo-3-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha3/modulo-3-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Trilha 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-2" data-inema-track="3">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">👥 Time de três papéis</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Um modelo forte planeja, um médio faz e um leve confere. Cada papel usa só o modelo de que precisa, e a cota rende. É a receita R2 do kit, com prova no CHANGELOG.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">R2</div><div class="text-xs text-neutral-400">Receita</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progresso do módulo 3.2" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:3-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="3-2" data-inema-track="3" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Conheça o planejador, o executor e o revisor</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t1-p1">A receita R2 divide uma tarefa em três papéis. O <strong class="text-purple-400">planejador</strong> pensa e escreve o plano. O <strong class="text-purple-400">executor</strong> faz. O <strong class="text-purple-400">revisor</strong> confere se ficou pronto de verdade.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t1-p2">É o roteamento do módulo 3.1 aplicado numa tarefa só: pensar usa modelo forte, fazer usa médio, conferir usa leve. Ninguém paga topo para tarefa de conferência.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Subagente e papel</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Subagente</strong> — um ajudante que o Claude Code chama durante a conversa. Ele recebe uma parte do trabalho, faz com o modelo e as ferramentas dele e devolve o resultado. É um recurso oficial do Claude Code.</li>
+<li><strong>Papel</strong> — o "cargo" do subagente: o que ele faz, que modelo usa e o que pode tocar. No kit, cada papel é um arquivo em <code>.claude/agents/</code>.</li>
+</ul>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Papel</th><th class="px-4 py-3 font-semibold">Arquivo</th><th class="px-4 py-3 font-semibold">Modelo</th><th class="px-4 py-3 font-semibold">Faz</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">planejador</td><td class="px-4 py-3 text-neutral-300"><code>planejador.md</code></td><td class="px-4 py-3 text-neutral-300">opus</td><td class="px-4 py-3 text-neutral-300">plano curto com critério de pronto <code>comando → saída esperada</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300"><code>executor.md</code></td><td class="px-4 py-3 text-neutral-300">sonnet</td><td class="px-4 py-3 text-neutral-300">executa o plano e mostra a prova</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">revisor</td><td class="px-4 py-3 text-neutral-300"><code>revisor.md</code></td><td class="px-4 py-3 text-neutral-300">haiku</td><td class="px-4 py-3 text-neutral-300">roda os critérios; responde APROVADO ou o que falta</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a coluna Modelo desce de nível da primeira para a última linha (topo, executor, menor no <code>ROTEAMENTO.md</code>). A tabela é a mesma da receita R2.</p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Linha de montagem do time. A tarefa entra no planejador, modelo opus, só lê, que devolve plano e critérios de pronto. O executor, modelo sonnet, altera arquivos e mostra a prova. O revisor, modelo haiku, só lê e roda os critérios. Se todos passam, sai APROVADO. Se não, volta com FALTA e a lista do que corrigir." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m32-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m32-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m32-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m32-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m32-grid)" height="240" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="56" rx="10" stroke="#6b7280" stroke-width="2" width="100" x="20" y="75"></rect><text fill="#e5e7eb" font-size="13" x="70" y="100">tarefa</text><text fill="#9ca3af" font-size="10" x="70" y="117">sua frase</text>
+<g filter="url(#m32-glow)"><rect fill="#1e1233" height="76" rx="14" stroke="#c084fc" stroke-width="2" width="160" x="160" y="65"></rect></g>
+<text fill="#c084fc" font-size="14" font-weight="600" x="240" y="92">planejador</text><text fill="#e9d5ff" font-size="11" x="240" y="110">opus · só lê</text><text fill="#e9d5ff" font-size="10" x="240" y="126">plano + critérios</text>
+<rect class="wf-a" fill="#0b1f2e" height="76" rx="14" stroke="#38bdf8" stroke-width="2" width="160" x="360" y="65"></rect>
+<text fill="#bae6fd" font-size="14" font-weight="600" x="440" y="92">executor</text><text fill="#7dd3fc" font-size="11" x="440" y="110">sonnet · altera (N3)</text><text fill="#7dd3fc" font-size="10" x="440" y="126">faz e mostra a prova</text>
+<rect class="wf-a" fill="#0b1f2e" height="76" rx="14" stroke="#38bdf8" stroke-width="2" width="160" x="560" y="65"></rect>
+<text fill="#bae6fd" font-size="14" font-weight="600" x="640" y="92">revisor</text><text fill="#7dd3fc" font-size="11" x="640" y="110">haiku · só lê</text><text fill="#7dd3fc" font-size="10" x="640" y="126">roda os critérios</text>
+<rect fill="#1e1233" height="40" rx="10" stroke="#c084fc" stroke-width="2" width="180" x="600" y="180"></rect><text fill="#e9d5ff" font-size="13" font-weight="600" x="690" y="205">APROVADO</text>
+<rect fill="#2a0f0f" height="40" rx="10" stroke="#f87171" stroke-width="2" width="200" x="330" y="180"></rect><text fill="#fca5a5" font-size="12" x="430" y="205">FALTA: lista do que corrigir</text>
+</g>
+<g stroke="#38bdf8" stroke-width="2">
+<line class="wf-flow" marker-end="url(#m32-arrow)" x1="122" x2="156" y1="103" y2="103"></line>
+<line class="wf-flow" marker-end="url(#m32-arrow)" x1="322" x2="356" y1="103" y2="103"></line>
+<line class="wf-flow" marker-end="url(#m32-arrow)" x1="522" x2="556" y1="103" y2="103"></line>
+<line marker-end="url(#m32-arrow)" x1="660" x2="680" y1="143" y2="176"></line>
+</g>
+<path d="M610,143 C 590,170 560,195 534,198" fill="none" marker-end="url(#m32-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+<path d="M330,198 C 300,198 440,170 440,145" fill="none" marker-end="url(#m32-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a tarefa anda da esquerda para a direita. Só o executor (azul) mexe em arquivos. O revisor fecha com <code>APROVADO</code>; se algo falhar, a linha vermelha tracejada devolve a lista do que corrigir ao executor.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧠</div><div class="text-sm font-semibold text-purple-400">Planejador</div><p class="text-xs text-neutral-400 mt-1">opus, só lê</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-purple-400">Executor</div><p class="text-xs text-neutral-400 mt-1">sonnet, altera</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-purple-400">Revisor</div><p class="text-xs text-neutral-400 mt-1">haiku, só lê</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧩</div><div class="text-sm font-semibold text-purple-400">Subagentes</div><p class="text-xs text-neutral-400 mt-1">via oficial</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Leia os arquivos dos papéis</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t2-p1">Cada papel é um arquivo de texto curto. Em cima vem uma ficha entre linhas <code>---</code>; embaixo, as instruções em português. Este é o <code>.claude/agents/planejador.md</code>, inteiro:</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 .claude/agents/planejador.md (do kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">---
 name: planejador
 description: Planeja uma tarefa antes de executar. Use no início do time de três papéis (runtime/receitas/R2). Não edita arquivos.
 model: opus
@@ -381,372 +367,339 @@ Devolva somente:
 1. Plano em no máximo 5 passos.
 2. Critérios de pronto, um por linha, no formato `comando → saída esperada`, que só passam se o trabalho for feito de verdade.
 3. Riscos pela runtime/POLITICA.md (ações que exigem pedir antes).</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Repare:</strong> a lista <code>tools</code> não tem <code>Write</code> nem <code>Edit</code>. O planejador não consegue alterar arquivo nem que queira.</div>
-      </div>
-
-      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Frontmatter e ferramentas</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>Frontmatter</strong> — a ficha no topo do arquivo, entre as duas linhas <code>---</code>. O Claude Code lê ali o nome, a descrição, o modelo e as ferramentas do papel.</li>
-          <li><strong>description</strong> — diz ao Claude quando chamar esse papel. Por isso cita a receita R2.</li>
-          <li><strong>tools</strong> — as ferramentas liberadas: <code>Read</code> (ler), <code>Grep</code>/<code>Glob</code> (procurar), <code>Write</code>/<code>Edit</code> (criar e alterar), <code>Bash</code> (rodar comandos).</li>
-        </ul>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Papel</th><th class="px-4 py-3 font-semibold"><code>tools:</code> no arquivo</th><th class="px-4 py-3 font-semibold">Instrução que segura o papel</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">planejador</td><td class="px-4 py-3 text-neutral-300"><code>Read, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"sem alterar nada"</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300"><code>Read, Write, Edit, Bash, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"não envie, não apague, não gaste crédito; se o plano pedir isso, pare e devolva a pergunta"</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">revisor</td><td class="px-4 py-3 text-neutral-300"><code>Read, Bash, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"Não altere arquivos." Termina com <code>APROVADO</code> ou <code>FALTA:</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> o revisor tem <code>Bash</code> para rodar os critérios, mas não tem <code>Write</code> nem <code>Edit</code>. Ele confere sem poder "consertar por baixo" o que achou.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
-          <h3 class="font-semibold text-purple-400 mb-3">✓ Papel bem escrito</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Ferramentas mínimas para o trabalho</li>
-            <li>✓ Saída com formato fixo (plano, OK/FALHA)</li>
-            <li>✓ Cita a <code>POLITICA.md</code></li>
-            <li>✓ Cabe numa tela</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ Papel mal escrito</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ Todas as ferramentas "por via das dúvidas"</li>
-            <li>✗ Revisor que pode editar o que revisa</li>
-            <li>✗ Resposta livre, sem veredito claro</li>
-            <li>✗ Modelo topo em tudo</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📇</div><div class="text-sm font-semibold text-purple-400">Frontmatter</div><p class="text-xs text-neutral-400 mt-1">a ficha do papel</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧰</div><div class="text-sm font-semibold text-purple-400">tools</div><p class="text-xs text-neutral-400 mt-1">o que pode tocar</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">model</div><p class="text-xs text-neutral-400 mt-1">nível do roteamento</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚦</div><div class="text-sm font-semibold text-purple-400">POLITICA</div><p class="text-xs text-neutral-400 mt-1">citada nas instruções</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 3 ===================== -->
-    <section id="topico-3" data-inema-topic="modulo-3-2#topico-3" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold flex-1">Rode o time pela tela do Claude</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m3-2-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">O jeito mais simples é conversar. Você abre o Claude Code na pasta do kit e pede o time pelo nome dos papéis. O Claude chama cada subagente na ordem.</p>
-      <p data-inema-block="m3-2-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">A tarefa de teste é de propósito boba: criar um arquivo com uma frase. Assim você vê o time funcionar sem se preocupar com o conteúdo.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: ver os três papéis trabalhando numa tarefa pequena</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole (prompt da receita R2):</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: crie saudacao.txt com a frase "Olá, comunidade INEMA".</pre>
-          <p class="text-sm text-neutral-400 mt-4 mb-3">Quando terminar, confira o arquivo no terminal:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">cat saudacao.txt</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado esperado (pela receita):</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">cat saudacao.txt mostra a frase e a resposta termina com APROVADO.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o arquivo tem a frase "Olá, comunidade INEMA" e a última palavra do revisor é <code>APROVADO</code>. Se vier <code>FALTA:</code>, leia a lista: é o que o executor deixou de fazer.</div>
-      </div>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Planejador devolve o plano</h4><p class="text-neutral-300 text-sm">Até 5 passos, os critérios de pronto no formato <code>comando → saída esperada</code> e os riscos pela política.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Executor faz e mostra a prova</h4><p class="text-neutral-300 text-sm">Cria o arquivo, roda o comando de prova de cada passo e lista o que criou ou alterou.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Revisor dá o veredito</h4><p class="text-neutral-300 text-sm">Uma linha por critério, OK ou FALHA com a saída, e no fim <code>APROVADO</code> ou <code>FALTA:</code>.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> O critério nasce antes do trabalho</h3>
-        <p class="text-neutral-300 text-sm">O planejador escreve o critério de pronto antes de o executor começar. Assim o revisor confere contra o que foi combinado, e não contra o que o executor diz que fez. É a mesma ideia de "prova" das receitas.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-purple-400">Pela tela</div><p class="text-xs text-neutral-400 mt-1">você acompanha</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📋</div><div class="text-sm font-semibold text-purple-400">Plano</div><p class="text-xs text-neutral-400 mt-1">até 5 passos</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">Critério</div><p class="text-xs text-neutral-400 mt-1">comando → saída</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏁</div><div class="text-sm font-semibold text-purple-400">APROVADO</div><p class="text-xs text-neutral-400 mt-1">ou FALTA:</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 4 ===================== -->
-    <section id="topico-4" data-inema-topic="modulo-3-2#topico-4" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold flex-1">Rode o time sem abrir a tela</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m3-2-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">O mesmo pedido cabe numa linha de terminal. Você não conversa: manda a tarefa, espera e lê a resposta final. Serve para repetir o time toda semana com a mesma frase.</p>
-
-      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O <code>-p</code> do Claude</h3>
-        <p class="text-neutral-300 text-sm"><code>claude -p "pedido"</code> roda o pedido uma vez e imprime a resposta, sem abrir a tela de conversa. O "p" vem de <em>print</em> (imprimir). É o que permite chamar o Claude de um script ou de outro agente.</p>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: rodar o time inteiro com um único comando</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude -p "Use o time (planejador, executor, revisor). Tarefa: crie saudacao.txt com a frase 'Olá, comunidade INEMA'. Termine com a resposta do revisor."</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.1.0:</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">modelos opus + sonnet + haiku usados; revisor APROVADO; saudacao.txt correto
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Repare:</strong> a lista <code>tools</code> não tem <code>Write</code> nem <code>Edit</code>. O planejador não consegue alterar arquivo nem que queira.</div>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Frontmatter e ferramentas</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Frontmatter</strong> — a ficha no topo do arquivo, entre as duas linhas <code>---</code>. O Claude Code lê ali o nome, a descrição, o modelo e as ferramentas do papel.</li>
+<li><strong>description</strong> — diz ao Claude quando chamar esse papel. Por isso cita a receita R2.</li>
+<li><strong>tools</strong> — as ferramentas liberadas: <code>Read</code> (ler), <code>Grep</code>/<code>Glob</code> (procurar), <code>Write</code>/<code>Edit</code> (criar e alterar), <code>Bash</code> (rodar comandos).</li>
+</ul>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Papel</th><th class="px-4 py-3 font-semibold"><code>tools:</code> no arquivo</th><th class="px-4 py-3 font-semibold">Instrução que segura o papel</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">planejador</td><td class="px-4 py-3 text-neutral-300"><code>Read, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"sem alterar nada"</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300"><code>Read, Write, Edit, Bash, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"não envie, não apague, não gaste crédito; se o plano pedir isso, pare e devolva a pergunta"</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">revisor</td><td class="px-4 py-3 text-neutral-300"><code>Read, Bash, Grep, Glob</code></td><td class="px-4 py-3 text-neutral-300">"Não altere arquivos." Termina com <code>APROVADO</code> ou <code>FALTA:</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> o revisor tem <code>Bash</code> para rodar os critérios, mas não tem <code>Write</code> nem <code>Edit</code>. Ele confere sem poder "consertar por baixo" o que achou.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+<h3 class="font-semibold text-purple-400 mb-3">✓ Papel bem escrito</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Ferramentas mínimas para o trabalho</li>
+<li>✓ Saída com formato fixo (plano, OK/FALHA)</li>
+<li>✓ Cita a <code>POLITICA.md</code></li>
+<li>✓ Cabe numa tela</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Papel mal escrito</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Todas as ferramentas "por via das dúvidas"</li>
+<li>✗ Revisor que pode editar o que revisa</li>
+<li>✗ Resposta livre, sem veredito claro</li>
+<li>✗ Modelo topo em tudo</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📇</div><div class="text-sm font-semibold text-purple-400">Frontmatter</div><p class="text-xs text-neutral-400 mt-1">a ficha do papel</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧰</div><div class="text-sm font-semibold text-purple-400">tools</div><p class="text-xs text-neutral-400 mt-1">o que pode tocar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">model</div><p class="text-xs text-neutral-400 mt-1">nível do roteamento</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚦</div><div class="text-sm font-semibold text-purple-400">POLITICA</div><p class="text-xs text-neutral-400 mt-1">citada nas instruções</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Rode o time pela tela do Claude</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t3-p1">O jeito mais simples é conversar. Você abre o Claude Code na pasta do kit e pede o time pelo nome dos papéis. O Claude chama cada subagente na ordem.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t3-p2">A tarefa de teste é de propósito boba: criar um arquivo com uma frase. Assim você vê o time funcionar sem se preocupar com o conteúdo.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: ver os três papéis trabalhando numa tarefa pequena</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole (prompt da receita R2):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: crie saudacao.txt com a frase "Olá, comunidade INEMA".</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">Quando terminar, confira o arquivo no terminal:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">cat saudacao.txt</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado esperado (pela receita):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">cat saudacao.txt mostra a frase e a resposta termina com APROVADO.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o arquivo tem a frase "Olá, comunidade INEMA" e a última palavra do revisor é <code>APROVADO</code>. Se vier <code>FALTA:</code>, leia a lista: é o que o executor deixou de fazer.</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Planejador devolve o plano</h4><p class="text-neutral-300 text-sm">Até 5 passos, os critérios de pronto no formato <code>comando → saída esperada</code> e os riscos pela política.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Executor faz e mostra a prova</h4><p class="text-neutral-300 text-sm">Cria o arquivo, roda o comando de prova de cada passo e lista o que criou ou alterou.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Revisor dá o veredito</h4><p class="text-neutral-300 text-sm">Uma linha por critério, OK ou FALHA com a saída, e no fim <code>APROVADO</code> ou <code>FALTA:</code>.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> O critério nasce antes do trabalho</h3>
+<p class="text-neutral-300 text-sm">O planejador escreve o critério de pronto antes de o executor começar. Assim o revisor confere contra o que foi combinado, e não contra o que o executor diz que fez. É a mesma ideia de "prova" das receitas.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-purple-400">Pela tela</div><p class="text-xs text-neutral-400 mt-1">você acompanha</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📋</div><div class="text-sm font-semibold text-purple-400">Plano</div><p class="text-xs text-neutral-400 mt-1">até 5 passos</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">Critério</div><p class="text-xs text-neutral-400 mt-1">comando → saída</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏁</div><div class="text-sm font-semibold text-purple-400">APROVADO</div><p class="text-xs text-neutral-400 mt-1">ou FALTA:</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Rode o time sem abrir a tela</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t4-p1">O mesmo pedido cabe numa linha de terminal. Você não conversa: manda a tarefa, espera e lê a resposta final. Serve para repetir o time toda semana com a mesma frase.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? O <code>-p</code> do Claude</h3>
+<p class="text-neutral-300 text-sm"><code>claude -p "pedido"</code> roda o pedido uma vez e imprime a resposta, sem abrir a tela de conversa. O "p" vem de <em>print</em> (imprimir). É o que permite chamar o Claude de um script ou de outro agente.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: rodar o time inteiro com um único comando</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude -p "Use o time (planejador, executor, revisor). Tarefa: crie saudacao.txt com a frase 'Olá, comunidade INEMA'. Termine com a resposta do revisor."</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado provado no CHANGELOG 0.1.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">modelos opus + sonnet + haiku usados; revisor APROVADO; saudacao.txt correto
 Custo da R2 em cota: equivalente a ~US$ 0,73 de API (não é cobrança na assinatura).</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> a resposta termina com a do revisor (<code>APROVADO</code>) e <code>cat saudacao.txt</code> mostra a frase.</div>
-      </div>
-
-      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 210" class="w-full h-auto" role="img" aria-label="Comparação entre os dois jeitos de rodar o time. À esquerda, pela tela: você conversa, vê cada papel e pode interromper. À direita, com claude -p: uma linha entra, os três papéis rodam dentro de uma caixa fechada e sai só a resposta final do revisor.">
-          <defs>
-            <pattern id="m32b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#c084fc" opacity="0.10"/></pattern>
-            <filter id="m32b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m32b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="210" fill="url(#m32b-grid)"/>
-          <g font-family="Inter,sans-serif" text-anchor="middle">
-            <rect x="30" y="30" width="330" height="150" rx="14" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-            <text x="195" y="56" fill="#e5e7eb" font-weight="600" font-size="14">💬 pela tela (claude)</text>
-            <rect x="50" y="78" width="90" height="34" rx="8" fill="#1e1233" stroke="#c084fc" stroke-width="1.5"/><text x="95" y="100" fill="#e9d5ff" font-size="11">planejador</text>
-            <rect x="150" y="78" width="90" height="34" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="195" y="100" fill="#bae6fd" font-size="11">executor</text>
-            <rect x="250" y="78" width="90" height="34" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="295" y="100" fill="#bae6fd" font-size="11">revisor</text>
-            <text x="195" y="145" fill="#9ca3af" font-size="11">você vê cada passo e pode interromper</text>
-            <text x="195" y="163" fill="#9ca3af" font-size="11">bom para aprender e para tarefas novas</text>
-            <rect x="420" y="88" width="80" height="34" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="460" y="110" fill="#bae6fd" font-size="11">1 linha</text>
-            <g filter="url(#m32b-glow)"><rect x="530" y="60" width="140" height="90" rx="14" fill="#1e1233" stroke="#c084fc" stroke-width="2"/></g>
-            <text x="600" y="98" fill="#c084fc" font-weight="600" font-size="13">claude -p</text><text x="600" y="117" fill="#e9d5ff" font-size="10">3 papéis lá dentro</text>
-            <rect class="wf-a" x="700" y="88" width="80" height="34" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="740" y="110" fill="#bae6fd" font-size="11">resposta</text>
-            <text x="600" y="185" fill="#9ca3af" font-size="11">bom para repetir a mesma tarefa</text>
-          </g>
-          <line class="wf-flow" x1="502" y1="105" x2="526" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m32b-arrow)"/>
-          <line class="wf-flow" x1="672" y1="105" x2="696" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#m32b-arrow)"/>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> à esquerda, os três papéis ficam à vista na conversa. À direita, eles rodam dentro da caixa roxa do <code>claude -p</code> e você só vê o que sai. Mesmo time, mesma cota; muda quanto você acompanha.</p>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> <code>-p</code> não é o mesmo que segundo plano</h3>
-        <p class="text-neutral-300 text-sm">O <code>claude -p</code> segura o terminal até acabar. Soltar o time para rodar enquanto você faz outra coisa é o <code>claude --bg</code>, do módulo 3.3. E os dois não se misturam: o CHANGELOG 0.2.0 registra que <code>--bg</code> não aceita <code>-p</code>.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-purple-400">claude -p</div><p class="text-xs text-neutral-400 mt-1">uma linha, uma resposta</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-purple-400">Repetível</div><p class="text-xs text-neutral-400 mt-1">mesma frase, toda semana</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-purple-400">~US$ 0,73</div><p class="text-xs text-neutral-400 mt-1">equivalente, em cota</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">--bg</div><p class="text-xs text-neutral-400 mt-1">é o módulo 3.3</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 5 ===================== -->
-    <section id="topico-5" data-inema-topic="modulo-3-2#topico-5" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold flex-1">Use o time no seu trabalho</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m3-2-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">Para usar de verdade, troque só a tarefa. A receita R2 traz dois exemplos, um para cada personagem do curso. O que muda de um para o outro é o que o revisor confere.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="text-3xl mb-3">🧾</div>
-          <h3 class="font-semibold text-lg mb-2">Sônia — totais do ERP</h3>
-          <p class="text-neutral-300 text-sm mb-3">Exemplo da R2: "planeje e monte um resumo do CSV exportado do ERP em <code>export/</code>; o revisor confere os totais".</p>
-          <p class="text-xs text-neutral-400">Para treinar, use o <code>runtime/exemplos/erp-vendas.csv</code>. O total dele é R$ 856,00, conta que você pode fazer à mão.</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="text-3xl mb-3">🩺</div>
-          <h3 class="font-semibold text-lg mb-2">Clara — horários livres</h3>
-          <p class="text-neutral-300 text-sm mb-3">Exemplo da R2: "liste os horários livres da semana na <code>agenda.csv</code>; o revisor confere se nenhum horário ocupado apareceu".</p>
-          <p class="text-xs text-neutral-400">Para treinar, use o <code>runtime/exemplos/agenda.csv</code>, com a Dra. Ana e o Dr. Bruno.</p>
-        </div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: o time da Sônia, com revisor conferindo o total</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: monte resumo-vendas.md com o total por cliente do runtime/exemplos/erp-vendas.csv e o total geral. O revisor confere os totais somando direto do CSV.</pre>
-          <p class="text-sm text-neutral-400 mt-4 mb-3">Para a Clara, troque a tarefa:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: liste em horarios-livres.md os horários livres da runtime/exemplos/agenda.csv. O revisor confere se nenhum horário ocupado apareceu.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o revisor termina com <code>APROVADO</code>. Na Sônia, o total geral tem de dar R$ 856,00 (10×18,50 + 25×5,20 + 40×5,20 + 6×18,50 + 12×18,50). Na Clara, compare com as linhas <code>livre</code> do CSV.</div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Diga ao revisor o que conferir</h3>
-        <p class="text-neutral-300 text-sm">"O revisor confere" sozinho é vago. "O revisor confere os totais somando direto do CSV" vira critério. Quanto mais concreto o que ele confere, mais o <code>APROVADO</code> vale.</p>
-      </div>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> O executor para antes de enviar ou apagar</h3>
-        <p class="text-neutral-300 text-sm">Pela política da R2, o executor altera arquivos do projeto (N3) e nada além. Se a tarefa da Clara virar "e mande a lista aos pacientes", ele para e devolve a pergunta: enviar tem teto N2 na <code>POLITICA.md</code>.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-purple-400">Sônia</div><p class="text-xs text-neutral-400 mt-1">revisor confere totais</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-purple-400">Clara</div><p class="text-xs text-neutral-400 mt-1">nada de ocupado</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-purple-400">R$ 856,00</div><p class="text-xs text-neutral-400 mt-1">conta à mão</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✋</div><div class="text-sm font-semibold text-purple-400">N3</div><p class="text-xs text-neutral-400 mt-1">altera, não envia</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 6 ===================== -->
-    <section id="topico-6" data-inema-topic="modulo-3-2#topico-6" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold flex-1">Troque modelos e crie papéis</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m3-2-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">Os papéis são seus. A seção "Ajustes" da R2 mostra os dois jeitos de mexer: trocar o modelo de um papel e criar um papel novo.</p>
-      <p data-inema-block="m3-2-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">Para trocar o modelo, edite a linha <code>model:</code> do arquivo do papel. Os valores aceitos são <code>haiku</code>, <code>sonnet</code>, <code>opus</code> ou <code>inherit</code>, que usa o mesmo modelo da sua sessão.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 Frontmatter do .claude/agents/revisor.md (do kit)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">---
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> a resposta termina com a do revisor (<code>APROVADO</code>) e <code>cat saudacao.txt</code> mostra a frase.</div>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Comparação entre os dois jeitos de rodar o time. À esquerda, pela tela: você conversa, vê cada papel e pode interromper. À direita, com claude -p: uma linha entra, os três papéis rodam dentro de uma caixa fechada e sai só a resposta final do revisor." class="w-full h-auto" role="img" viewbox="0 0 800 210">
+<defs>
+<pattern height="32" id="m32b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m32b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m32b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m32b-grid)" height="210" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="150" rx="14" stroke="#6b7280" stroke-width="2" width="330" x="30" y="30"></rect>
+<text fill="#e5e7eb" font-size="14" font-weight="600" x="195" y="56">💬 pela tela (claude)</text>
+<rect fill="#1e1233" height="34" rx="8" stroke="#c084fc" stroke-width="1.5" width="90" x="50" y="78"></rect><text fill="#e9d5ff" font-size="11" x="95" y="100">planejador</text>
+<rect fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="90" x="150" y="78"></rect><text fill="#bae6fd" font-size="11" x="195" y="100">executor</text>
+<rect fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="90" x="250" y="78"></rect><text fill="#bae6fd" font-size="11" x="295" y="100">revisor</text>
+<text fill="#9ca3af" font-size="11" x="195" y="145">você vê cada passo e pode interromper</text>
+<text fill="#9ca3af" font-size="11" x="195" y="163">bom para aprender e para tarefas novas</text>
+<rect fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="80" x="420" y="88"></rect><text fill="#bae6fd" font-size="11" x="460" y="110">1 linha</text>
+<g filter="url(#m32b-glow)"><rect fill="#1e1233" height="90" rx="14" stroke="#c084fc" stroke-width="2" width="140" x="530" y="60"></rect></g>
+<text fill="#c084fc" font-size="13" font-weight="600" x="600" y="98">claude -p</text><text fill="#e9d5ff" font-size="10" x="600" y="117">3 papéis lá dentro</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="8" stroke="#38bdf8" stroke-width="1.5" width="80" x="700" y="88"></rect><text fill="#bae6fd" font-size="11" x="740" y="110">resposta</text>
+<text fill="#9ca3af" font-size="11" x="600" y="185">bom para repetir a mesma tarefa</text>
+</g>
+<line class="wf-flow" marker-end="url(#m32b-arrow)" stroke="#38bdf8" stroke-width="2" x1="502" x2="526" y1="105" y2="105"></line>
+<line class="wf-flow" marker-end="url(#m32b-arrow)" stroke="#38bdf8" stroke-width="2" x1="672" x2="696" y1="105" y2="105"></line>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> à esquerda, os três papéis ficam à vista na conversa. À direita, eles rodam dentro da caixa roxa do <code>claude -p</code> e você só vê o que sai. Mesmo time, mesma cota; muda quanto você acompanha.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> <code>-p</code> não é o mesmo que segundo plano</h3>
+<p class="text-neutral-300 text-sm">O <code>claude -p</code> segura o terminal até acabar. Soltar o time para rodar enquanto você faz outra coisa é o <code>claude --bg</code>, do módulo 3.3. E os dois não se misturam: o CHANGELOG 0.2.0 registra que <code>--bg</code> não aceita <code>-p</code>.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-purple-400">claude -p</div><p class="text-xs text-neutral-400 mt-1">uma linha, uma resposta</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-purple-400">Repetível</div><p class="text-xs text-neutral-400 mt-1">mesma frase, toda semana</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-purple-400">~US$ 0,73</div><p class="text-xs text-neutral-400 mt-1">equivalente, em cota</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">--bg</div><p class="text-xs text-neutral-400 mt-1">é o módulo 3.3</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Use o time no seu trabalho</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t5-p1">Para usar de verdade, troque só a tarefa. A receita R2 traz dois exemplos, um para cada personagem do curso. O que muda de um para o outro é o que o revisor confere.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🧾</div>
+<h3 class="font-semibold text-lg mb-2">Sônia — totais do ERP</h3>
+<p class="text-neutral-300 text-sm mb-3">Exemplo da R2: "planeje e monte um resumo do CSV exportado do ERP em <code>export/</code>; o revisor confere os totais".</p>
+<p class="text-xs text-neutral-400">Para treinar, use o <code>runtime/exemplos/erp-vendas.csv</code>. O total dele é R$ 856,00, conta que você pode fazer à mão.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="text-3xl mb-3">🩺</div>
+<h3 class="font-semibold text-lg mb-2">Clara — horários livres</h3>
+<p class="text-neutral-300 text-sm mb-3">Exemplo da R2: "liste os horários livres da semana na <code>agenda.csv</code>; o revisor confere se nenhum horário ocupado apareceu".</p>
+<p class="text-xs text-neutral-400">Para treinar, use o <code>runtime/exemplos/agenda.csv</code>, com a Dra. Ana e o Dr. Bruno.</p>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: o time da Sônia, com revisor conferindo o total</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: monte resumo-vendas.md com o total por cliente do runtime/exemplos/erp-vendas.csv e o total geral. O revisor confere os totais somando direto do CSV.</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">Para a Clara, troque a tarefa:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use o time: o planejador planeja, o executor faz e o revisor confere. Tarefa: liste em horarios-livres.md os horários livres da runtime/exemplos/agenda.csv. O revisor confere se nenhum horário ocupado apareceu.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o revisor termina com <code>APROVADO</code>. Na Sônia, o total geral tem de dar R$ 856,00 (10×18,50 + 25×5,20 + 40×5,20 + 6×18,50 + 12×18,50). Na Clara, compare com as linhas <code>livre</code> do CSV.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Diga ao revisor o que conferir</h3>
+<p class="text-neutral-300 text-sm">"O revisor confere" sozinho é vago. "O revisor confere os totais somando direto do CSV" vira critério. Quanto mais concreto o que ele confere, mais o <code>APROVADO</code> vale.</p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> O executor para antes de enviar ou apagar</h3>
+<p class="text-neutral-300 text-sm">Pela política da R2, o executor altera arquivos do projeto (N3) e nada além. Se a tarefa da Clara virar "e mande a lista aos pacientes", ele para e devolve a pergunta: enviar tem teto N2 na <code>POLITICA.md</code>.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧾</div><div class="text-sm font-semibold text-purple-400">Sônia</div><p class="text-xs text-neutral-400 mt-1">revisor confere totais</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-purple-400">Clara</div><p class="text-xs text-neutral-400 mt-1">nada de ocupado</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-purple-400">R$ 856,00</div><p class="text-xs text-neutral-400 mt-1">conta à mão</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✋</div><div class="text-sm font-semibold text-purple-400">N3</div><p class="text-xs text-neutral-400 mt-1">altera, não envia</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Troque modelos e crie papéis</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-2-t6-p1">Os papéis são seus. A seção "Ajustes" da R2 mostra os dois jeitos de mexer: trocar o modelo de um papel e criar um papel novo.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p2">Para trocar o modelo, edite a linha <code>model:</code> do arquivo do papel. Os valores aceitos são <code>haiku</code>, <code>sonnet</code>, <code>opus</code> ou <code>inherit</code>, que usa o mesmo modelo da sua sessão.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 Frontmatter do .claude/agents/revisor.md (do kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">---
 name: revisor
 description: Confere o trabalho do executor rodando os critérios de pronto do plano. Use no fim do time de três papéis (runtime/receitas/R2). Não edita arquivos.
 model: haiku
 tools: Read, Bash, Grep, Glob
 ---</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Onde mexer:</strong> se o revisor deixar passar erro nas contas da Sônia, troque <code>model: haiku</code> por <code>model: sonnet</code>. É a regra "suba só se errar" do módulo 3.1.</div>
-      </div>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Valor de <code>model:</code></th><th class="px-4 py-3 font-semibold">Nível no ROTEAMENTO.md</th><th class="px-4 py-3 font-semibold">Quando usar no time</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>haiku</code></td><td class="px-4 py-3 text-neutral-300">menor</td><td class="px-4 py-3 text-neutral-300">conferir critérios simples</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>sonnet</code></td><td class="px-4 py-3 text-neutral-300">executor (ou menor)</td><td class="px-4 py-3 text-neutral-300">fazer o trabalho; revisor mais atento</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>opus</code></td><td class="px-4 py-3 text-neutral-300">topo (ou executor, com esforço baixo)</td><td class="px-4 py-3 text-neutral-300">planejar</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>inherit</code></td><td class="px-4 py-3 text-neutral-300">o da sua sessão</td><td class="px-4 py-3 text-neutral-300">quando você já escolheu o modelo ao abrir o <code>claude</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a segunda coluna liga cada valor à tabela do módulo 3.1. Note que <code>sonnet</code> aparece em dois níveis lá: o roteamento é um guia, não uma prisão.</p>
-
-      <p data-inema-block="m3-2-t6-p3" class="text-neutral-300 mb-6 leading-relaxed">Para criar um papel, a R2 manda copiar um arquivo de <code>.claude/agents/</code> e mudar nome, descrição e instruções. Dá para pedir ao próprio Claude, que mostra a mudança antes de salvar:</p>
-
-      <div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: um quarto papel, a partir do revisor</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Copie .claude/agents/revisor.md para .claude/agents/conferente-agenda.md. Mude name, description e instruções: ele confere se uma lista de horários livres bate com as linhas livre da runtime/exemplos/agenda.csv. Mantenha as mesmas tools e model: haiku. Mostre o arquivo antes de salvar.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o arquivo novo existe em <code>.claude/agents/</code>, o frontmatter tem <code>name: conferente-agenda</code> e a lista <code>tools</code> continua sem <code>Write</code> e <code>Edit</code>.</div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-2#q1">
-        <p class="font-medium mb-4">Teste rápido (opcional): por que o revisor do kit não tem <code>Write</code> nem <code>Edit</code>?</p>
-        <div class="space-y-2">
-          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Para conferir sem poder consertar por baixo o que achou; o veredito fica honesto.</button>
-          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Porque o haiku não sabe editar arquivos.</button>
-          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Para economizar cota.</button>
-        </div>
-        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Próximo nível</h3>
-        <p class="text-neutral-300 text-sm">A R2 termina apontando o passo seguinte: cada papel numa sessão própria, em segundo plano. É a receita R4, do módulo 3.3.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">model:</div><p class="text-xs text-neutral-400 mt-1">uma linha muda o nível</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪞</div><div class="text-sm font-semibold text-purple-400">inherit</div><p class="text-xs text-neutral-400 mt-1">o da sessão</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📑</div><div class="text-sm font-semibold text-purple-400">Copiar</div><p class="text-xs text-neutral-400 mt-1">papel novo</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">R4</div><p class="text-xs text-neutral-400 mt-1">segundo plano</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== RESUMO ===================== -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Três papéis, três modelos</strong><span class="text-neutral-400"> — opus planeja, sonnet faz, haiku confere.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">O arquivo manda</strong><span class="text-neutral-400"> — <code>tools</code> no frontmatter decide quem pode alterar.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Pela tela ou com <code>claude -p</code></strong><span class="text-neutral-400"> — mesmo time, termina com APROVADO.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Revisor com critério concreto</strong><span class="text-neutral-400"> — totais da Sônia, horários da Clara.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Ajuste em uma linha</strong><span class="text-neutral-400"> — <code>model:</code> troca o nível; copiar cria papel.</span></div></div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
-          <p class="text-neutral-300">3.3 — Time em segundo plano</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
-          <a href="modulo-3-3.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Módulo 3.3 →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <aside class="hidden lg:block">
-    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
-      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
-      <ol class="space-y-2 text-sm">
-        <li><a href="#topico-1" class="text-neutral-400 hover:text-purple-400">1. Os três papéis</a></li>
-        <li><a href="#topico-2" class="text-neutral-400 hover:text-purple-400">2. Arquivos dos papéis</a></li>
-        <li><a href="#topico-3" class="text-neutral-400 hover:text-purple-400">3. Pela tela</a></li>
-        <li><a href="#topico-4" class="text-neutral-400 hover:text-purple-400">4. Com claude -p</a></li>
-        <li><a href="#topico-5" class="text-neutral-400 hover:text-purple-400">5. No seu trabalho</a></li>
-        <li><a href="#topico-6" class="text-neutral-400 hover:text-purple-400">6. Modelos e papéis</a></li>
-      </ol>
-    </nav>
-  </aside>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Onde mexer:</strong> se o revisor deixar passar erro nas contas da Sônia, troque <code>model: haiku</code> por <code>model: sonnet</code>. É a regra "suba só se errar" do módulo 3.1.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Valor de <code>model:</code></th><th class="px-4 py-3 font-semibold">Nível no ROTEAMENTO.md</th><th class="px-4 py-3 font-semibold">Quando usar no time</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>haiku</code></td><td class="px-4 py-3 text-neutral-300">menor</td><td class="px-4 py-3 text-neutral-300">conferir critérios simples</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>sonnet</code></td><td class="px-4 py-3 text-neutral-300">executor (ou menor)</td><td class="px-4 py-3 text-neutral-300">fazer o trabalho; revisor mais atento</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>opus</code></td><td class="px-4 py-3 text-neutral-300">topo (ou executor, com esforço baixo)</td><td class="px-4 py-3 text-neutral-300">planejar</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100"><code>inherit</code></td><td class="px-4 py-3 text-neutral-300">o da sua sessão</td><td class="px-4 py-3 text-neutral-300">quando você já escolheu o modelo ao abrir o <code>claude</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> a segunda coluna liga cada valor à tabela do módulo 3.1. Note que <code>sonnet</code> aparece em dois níveis lá: o roteamento é um guia, não uma prisão.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p3">Para criar um papel, a R2 manda copiar um arquivo de <code>.claude/agents/</code> e mudar nome, descrição e instruções. Dá para pedir ao próprio Claude, que mostra a mudança antes de salvar:</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: um quarto papel, a partir do revisor</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Copie .claude/agents/revisor.md para .claude/agents/conferente-agenda.md. Mude name, description e instruções: ele confere se uma lista de horários livres bate com as linhas livre da runtime/exemplos/agenda.csv. Mantenha as mesmas tools e model: haiku. Mostre o arquivo antes de salvar.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Como verificar:</strong> o arquivo novo existe em <code>.claude/agents/</code>, o frontmatter tem <code>name: conferente-agenda</code> e a lista <code>tools</code> continua sem <code>Write</code> e <code>Edit</code>.</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-2#q1">
+<p class="font-medium mb-4">Teste rápido (opcional): por que o revisor do kit não tem <code>Write</code> nem <code>Edit</code>?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Para conferir sem poder consertar por baixo o que achou; o veredito fica honesto.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Porque o haiku não sabe editar arquivos.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Para economizar cota.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Próximo nível</h3>
+<p class="text-neutral-300 text-sm">A R2 termina apontando o passo seguinte: cada papel numa sessão própria, em segundo plano. É a receita R4, do módulo 3.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">model:</div><p class="text-xs text-neutral-400 mt-1">uma linha muda o nível</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🪞</div><div class="text-sm font-semibold text-purple-400">inherit</div><p class="text-xs text-neutral-400 mt-1">o da sessão</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📑</div><div class="text-sm font-semibold text-purple-400">Copiar</div><p class="text-xs text-neutral-400 mt-1">papel novo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧵</div><div class="text-sm font-semibold text-purple-400">R4</div><p class="text-xs text-neutral-400 mt-1">segundo plano</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Três papéis, três modelos</strong><span class="text-neutral-400"> — opus planeja, sonnet faz, haiku confere.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">O arquivo manda</strong><span class="text-neutral-400"> — <code>tools</code> no frontmatter decide quem pode alterar.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Pela tela ou com <code>claude -p</code></strong><span class="text-neutral-400"> — mesmo time, termina com APROVADO.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Revisor com critério concreto</strong><span class="text-neutral-400"> — totais da Sônia, horários da Clara.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Ajuste em uma linha</strong><span class="text-neutral-400"> — <code>model:</code> troca o nível; copiar cria papel.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.3 — Time em segundo plano</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-3.html">Módulo 3.3 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Seção 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-1">1. Os três papéis</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-2">2. Arquivos dos papéis</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-3">3. Pela tela</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-4">4. Com claude -p</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-5">5. No seu trabalho</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-6">6. Modelos e papéis</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -773,11 +726,11 @@ tools: Read, Bash, Grep, Glob
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
-  <script>
+<script>
     window.addEventListener('DOMContentLoaded', function () {
       if (window.INEMA && INEMA.registerCheck) {
 

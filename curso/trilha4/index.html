@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>Trilha 4 · Governar e aprender | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Trilha 4 · Governar e aprender | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,624 +174,611 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="../trilha1/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="4">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
-      <div>
-        <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRILHA 4</span>
-        <h1 class="text-3xl sm:text-4xl font-bold mb-4">🛡️ Governar e aprender</h1>
-        <p class="text-lg text-neutral-400 max-w-3xl">Agente solto precisa de regra escrita. Defina o que ele faz sozinho e o que pede antes, deixe que ele proponha regras novas só com o seu sim, ligue a guarda que pergunta antes do estrago e feche com o projeto final: sua ponte e seu time.</p>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~2h20</div><div class="text-xs text-neutral-400">Duração</div></div>
-          <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Projeto</div><div class="text-xs text-neutral-400">Nível</div></div>
-        </div>
-        <div data-inema-meter="trilha:4" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 4">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="mt-8 lg:mt-0 rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 overflow-hidden">
-        <svg viewBox="0 0 380 240" class="w-full h-auto" role="img" aria-label="Um escudo âmbar no centro com os níveis N0 a N4. À esquerda, o agente propõe uma regra; à direita, o humano aprova; abaixo, a regra aprovada entra nas Lessons. Uma faixa vermelha embaixo lembra: apagar e gastar nunca sozinho.">
-          <defs>
-            <pattern id="t4h-grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#fbbf24" opacity="0.12"/></pattern>
-            <filter id="t4h-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="t4h-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="380" height="240" fill="url(#t4h-grid)"/>
-          <g filter="url(#t4h-glow)"><path d="M190,20 L250,42 L250,100 C250,140 222,162 190,175 C158,162 130,140 130,100 L130,42 Z" fill="#2a1d06" stroke="#fbbf24" stroke-width="2.5"/></g>
-          <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
-            <text x="190" y="60" fill="#fbbf24" font-weight="600">POLITICA</text>
-            <text x="190" y="80" fill="#fde68a">N0 · N1 · N2</text>
-            <text x="190" y="97" fill="#fde68a">N3 · N4</text>
-            <text x="190" y="122" fill="#fde68a">prepara e pede</text>
-            <rect class="wf-a" x="12" y="60" width="96" height="40" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/>
-            <text x="60" y="78" fill="#bae6fd">agente</text><text x="60" y="93" fill="#7dd3fc">propõe</text>
-            <rect class="wf-a" x="272" y="60" width="96" height="40" rx="8" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.8"/>
-            <text x="320" y="78" fill="#bae6fd">você</text><text x="320" y="93" fill="#7dd3fc">aprova</text>
-            <rect x="140" y="186" width="100" height="22" rx="6" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/>
-            <text x="190" y="201" fill="#bae6fd">Lessons</text>
-            <rect x="40" y="214" width="300" height="20" rx="6" fill="#2a0f0f" stroke="#f87171" stroke-width="1.5"/>
-            <text x="190" y="228" fill="#fca5a5" font-size="10">apagar e gastar: nunca sozinho</text>
-          </g>
-          <line class="wf-flow" x1="110" y1="80" x2="128" y2="80" stroke="#38bdf8" stroke-width="2" marker-end="url(#t4h-arrow)"/>
-          <line class="wf-flow" x1="252" y1="80" x2="270" y2="80" stroke="#38bdf8" stroke-width="2" marker-end="url(#t4h-arrow)"/>
-          <line class="wf-flow" x1="320" y1="102" x2="242" y2="194" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#t4h-arrow)"/>
-        </svg>
-      </div>
-    </div>
-  </header>
-
-  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="4">
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="#modulo-4-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🚦 Política de autonomia</h3>
-          <p class="text-xs text-neutral-400">Prepara e pede</p>
-        </a>
-        <a href="#modulo-4-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">📚 O agente propõe, você aprova</h3>
-          <p class="text-xs text-neutral-400">Regra nova só com seu sim</p>
-        </a>
-        <a href="#modulo-4-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧱 Guarda e painel</h3>
-          <p class="text-xs text-neutral-400">Pergunta antes do estrago</p>
-        </a>
-        <a href="#modulo-4-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧪 Laboratório e projeto final</h3>
-          <p class="text-xs text-neutral-400">Sua ponte e seu time</p>
-        </a>
-      </div>
-    </section>
-
-    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
-
-    <!-- ===== MODULO 4.1 ===== -->
-    <div id="modulo-4-1" data-inema-module="4-1" data-inema-track="4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🚦 Política de autonomia</h3>
-        <p class="text-neutral-400 text-sm">A POLITICA.md: cinco níveis de autonomia, um teto para cada tipo de ação e como o Claude Code e o Codex aplicam as mesmas regras.</p>
-        <div data-inema-meter="modulo:4-1" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 4.1">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-4-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🎚️</span>
-            <div><span class="font-medium">Leia os cinco níveis de autonomia</span><span class="text-neutral-500 text-sm ml-2">- de N0 a N4</span></div>
-          </button>
-          <div id="t1-4-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">N0 só conversa, N1 prepara e o humano executa, N2 executa depois de pedir, N3 executa e avisa, N4 executa sem aviso.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a régua que diz quanto o agente pode fazer sem você. O padrão do kit é "prepara e pede".</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Autonomia, N0–N4, prepara e pede, impacto da ação.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-4-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">📏</span>
-            <div><span class="font-medium">Use o teto por tipo de ação</span><span class="text-neutral-500 text-sm ml-2">- ler, alterar, enviar, gastar</span></div>
-          </button>
-          <div id="t2-4-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A tabela da POLITICA.md: ler vai até N4, alterar arquivo até N3, comando no sistema e enviar até N2, gastar e apagar só N1.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quanto maior o impacto da ação, mais você participa. A tabela decide isso antes de o agente começar.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Teto, tipo de ação, enviar, gastar crédito, apagar com backup.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-4-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🔒</span>
-            <div><span class="font-medium">Entenda por que "sempre permitir" tem teto</span><span class="text-neutral-500 text-sm ml-2">- o clique não sobe o nível</span></div>
-          </button>
-          <div id="t3-4-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra da POLITICA.md: uma permissão "sempre permitir" nunca passa do teto da ação.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um clique apressado não pode transformar "enviar" ou "apagar" em ação automática.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sempre permitir, teto, permissão acumulada.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-4-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">⛔</span>
-            <div><span class="font-medium">Veja o bloqueio no Claude Code</span><span class="text-neutral-500 text-sm ml-2">- o settings.json</span></div>
-          </button>
-          <div id="t4-4-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O .claude/settings.json do kit nega rm -rf, git push --force, git push -f e git reset --hard.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">No CHANGELOG 0.1.0, até no modo que libera tudo, o touch rodou e o rm -rf foi negado.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Permissões, deny, acceptEdits, bloqueio escrito.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-4-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🧰</span>
-            <div><span class="font-medium">Aplique a política no Codex</span><span class="text-neutral-500 text-sm ml-2">- as opções -s</span></div>
-          </button>
-          <div id="t5-4-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">No Codex a política vira sandbox: read-only para ler, workspace-write para alterar, e sem auto-aprovação para o resto.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A ponte codex-exec.sh recusa danger-full-access: a mesma regra vale para os dois agentes.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sandbox, read-only, workspace-write, recusa pela POLITICA.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-4-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🤝</span>
-            <div><span class="font-medium">Siga as três regras de integração</span><span class="text-neutral-500 text-sm ml-2">- oficial, credencial, laboratório</span></div>
-          </button>
-          <div id="t6-4-1" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Só ferramentas oficiais pela assinatura, nunca passar credencial de uma ferramenta para outra, engenharia reversa só em laboratório.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">São as três linhas que protegem a sua conta e os seus dados ao ligar uma ferramenta na outra.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Assinatura, credencial, LIMITES.md, produção.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-1.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- ===== MODULO 4.2 ===== -->
-    <div id="modulo-4-2" data-inema-module="4-2" data-inema-track="4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">📚 O agente propõe, você aprova</h3>
-        <p class="text-neutral-400 text-sm">O ciclo de aprendizado do kit: a tabela Aprendizado, as Lessons do AGENTS.md, o FALHAS.md e o LIMITES.md, uma linha de cada vez.</p>
-        <div data-inema-meter="modulo:4-2" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 4.2">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-4-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🙅</span>
-            <div><span class="font-medium">Entenda por que o agente não muda as próprias regras</span><span class="text-neutral-500 text-sm ml-2">- quem aprova é você</span></div>
-          </button>
-          <div id="t1-4-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do AGENTS.md: o agente não muda as regras; para propor, acrescenta uma linha na tabela Aprendizado.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um agente que reescreve as próprias regras pode se dar mais liberdade do que você deu.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Propõe, aprova, incorpora; separação de papéis.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-4-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">📝</span>
-            <div><span class="font-medium">Preencha a tabela Aprendizado</span><span class="text-neutral-500 text-sm ml-2">- quatro colunas</span></div>
-          </button>
-          <div id="t2-4-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Data, o que aconteceu com evidência, proposta em uma linha e status: proposto, aprovado ou recusado.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Proposta com evidência você aprova em segundos; sem evidência, não dá para decidir.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Evidência, proposta de uma linha, status.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-4-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">⬆️</span>
-            <div><span class="font-medium">Promova o aprovado para as Lessons</span><span class="text-neutral-500 text-sm ml-2">- uma regra por linha</span></div>
-          </button>
-          <div id="t3-4-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que você aprovou vira regra na seção Lessons do AGENTS.md, que o Claude e o Codex leem.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A lição passa a valer nas próximas sessões, para os dois agentes, sem você repetir.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Lessons, AGENTS.md, CLAUDE.md, regra aprovada.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-4-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🩹</span>
-            <div><span class="font-medium">Anote cada falha em uma linha</span><span class="text-neutral-500 text-sm ml-2">- o FALHAS.md</span></div>
-          </button>
-          <div id="t4-4-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Data, o que quebrou, a menor correção e se foi prompt ou infra. Exemplo real do kit: o doctor lia só o stdout do Codex.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Depois de algumas linhas o padrão aparece, e você para de reconstruir o que só precisava de uma proteção.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Menor correção, prompt × infra, uma linha.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-4-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🚧</span>
-            <div><span class="font-medium">Anote o que o ambiente barrou</span><span class="text-neutral-500 text-sm ml-2">- o LIMITES.md</span></div>
-          </button>
-          <div id="t5-4-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Data, o que tentou, o que barrou, o contorno e o status. Bug vai no FALHAS.md; limite do ambiente vai aqui.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cota, permissão ou rede bloqueada não somem sozinhas: anotadas, viram uma lista para resolver.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Limite de ambiente, contorno, status aberto ou aceito.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-4-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🗓️</span>
-            <div><span class="font-medium">Faça a revisão da semana com o agente</span><span class="text-neutral-500 text-sm ml-2">- propostas na mesa</span></div>
-          </button>
-          <div id="t6-4-2" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Uma vez por semana, o agente lê FALHAS.md e LIMITES.md e propõe linhas na tabela Aprendizado; você aprova ou recusa.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o "aprender" do ciclo virando hábito, sem tirar de você a decisão.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Revisão semanal, padrão de falhas, aprovar ou recusar.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-2.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- ===== MODULO 4.3 ===== -->
-    <div id="modulo-4-3" data-inema-module="4-3" data-inema-track="4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🧱 Guarda e painel</h3>
-        <p class="text-neutral-400 text-sm">A receita R7: hooks oficiais que perguntam antes de pisar no trabalho de outra sessão ou de apagar demais, e o painel do time em segundo plano.</p>
-        <div data-inema-meter="modulo:4-3" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 4.3">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-4-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🧩</span>
-            <div><span class="font-medium">Entenda o que é um mod do Claude Code</span><span class="text-neutral-500 text-sm ml-2">- hooks e plugins</span></div>
-          </button>
-          <div id="t1-4-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mod é o apelido dos plugins oficiais. A guarda usa hooks PreToolUse e PostToolUse: a regra fica no script, a tela no mod.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os vídeos mostraram guardas de colisão e de raio de explosão; o kit faz o mesmo só com recursos oficiais.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Hook, plugin, mod, PreToolUse, PostToolUse, worktree.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-4-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">💥</span>
-            <div><span class="font-medium">Veja a guarda de colisão em ação</span><span class="text-neutral-500 text-sm ml-2">- duas sessões, um arquivo</span></div>
-          </button>
-          <div id="t2-4-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Antes de editar um arquivo que outra sessão mexeu, ou que mudou por fora nos últimos 30 min, a guarda pergunta: seguir, worktree ou cancelar.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Num projeto nosso, uma sessão esvaziou um arquivo que outra estava editando.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Colisão, toques.json, janela de 30 min, limite do Codex.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-4-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🧨</span>
-            <div><span class="font-medium">Prove o raio antes de apagar</span><span class="text-neutral-500 text-sm ml-2">- quantos arquivos, quanto espaço</span></div>
-          </button>
-          <div id="t3-4-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Antes de rm ou git clean, o raio conta os arquivos que seriam apagados, mostra o tamanho e pede confirmação.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A prova da R7 roda o script sozinho e mostra "permissionDecision":"ask" sem apagar nada.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Raio de explosão, só leitura do disco, backup.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-4-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🧳</span>
-            <div><span class="font-medium">Leve a guarda para outro projeto</span><span class="text-neutral-500 text-sm ml-2">- um jeito, não dois</span></div>
-          </button>
-          <div id="t4-4-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">claude --plugin-dir para uma sessão, ou o bloco hooks copiado para o settings do outro projeto.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A proteção vale onde os seus agentes trabalham, não só na pasta do kit.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">--plugin-dir, bloco hooks, caminho do kit.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-4-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">📊</span>
-            <div><span class="font-medium">Abra o painel do time</span><span class="text-neutral-500 text-sm ml-2">- /painel</span></div>
-          </button>
-          <div id="t5-4-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um mod opcional que mostra as sessões do claude --bg com os botões Atualizar e Parar.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Acompanhar e parar o time sem sair do Claude Code; só o seu clique para uma sessão.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Painel, plugin validate, plugin test, 1 pass.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-4-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">📖</span>
-            <div><span class="font-medium">Leia o código antes de instalar um mod</span><span class="text-neutral-500 text-sm ml-2">- mod tem as suas permissões</span></div>
-          </button>
-          <div id="t6-4-3" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mods rodam com as permissões do Claude Code. Antes de instalar um de terceiro, peça ao agente para ler e explicar, sem rodar.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O mesmo poder que protege pode estragar: ler o código é a única garantia.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">plugin.json, hooks.json, rede, credenciais.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-3.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- ===== MODULO 4.4 ===== -->
-    <div id="modulo-4-4" data-inema-module="4-4" data-inema-track="4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
-        <h3 class="text-2xl font-bold mb-2">🧪 Laboratório e projeto final</h3>
-        <p class="text-neutral-400 text-sm">O lugar certo da engenharia reversa e o projeto que fecha o curso: um sistema seu sem API vira ponte, um time trabalha nele e o verificar prova.</p>
-        <div data-inema-meter="modulo:4-4" class="mt-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 4.4">
-          <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-        </div>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t1-4-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">🪜</span>
-            <div><span class="font-medium">Volte à escada antes do laboratório</span><span class="text-neutral-500 text-sm ml-2">- seis testes antes do sétimo</span></div>
-          </button>
-          <div id="t1-4-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Antes de qualquer engenharia reversa, testar com um comando cada nível, de API até ponte local.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitas vezes a via existe e só não estava documentada.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Escada, evidência por nível, degrau 7.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t2-4-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">🧪</span>
-            <div><span class="font-medium">Trate engenharia reversa como laboratório</span><span class="text-neutral-500 text-sm ml-2">- frágil, com data</span></div>
-          </button>
-          <div id="t2-4-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Máquina de teste, uma linha em LIMITES.md, etiqueta "frágil" com data e nunca em produção.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O laboratório responde "por onde conversa?"; a resposta leva de volta a uma via oficial.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Máquina de teste, LIMITES.md, frágil, produção.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-4-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">🔐</span>
-            <div><span class="font-medium">Respeite termos de uso e credenciais</span><span class="text-neutral-500 text-sm ml-2">- cada login no seu lugar</span></div>
-          </button>
-          <div id="t3-4-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Só ferramentas oficiais pela assinatura e nunca passar credencial ou token de uma ferramenta para outra.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quem tem o token age como você; a ponte certa não carrega senha.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Credencial, token, termos de uso, login humano.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t4-4-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">🗺️</span>
-            <div><span class="font-medium">Escolha seu sistema e preencha o mapa</span><span class="text-neutral-500 text-sm ml-2">- uma linha testada</span></div>
-          </button>
-          <div id="t4-4-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um sistema seu sem API, uma linha no CAPACIDADES.md e a via mais alta que funcionar.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem linha no mapa, o agente não usa o sistema; é o primeiro passo do projeto final.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Projeto final, CAPACIDADES.md, via, pendente.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t5-4-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">🏗️</span>
-            <div><span class="font-medium">Construa a ponte e rode o time</span><span class="text-neutral-500 text-sm ml-2">- R3 ou R5, depois R2</span></div>
-          </button>
-          <div id="t5-4-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A ponte pela receita R3 (arquivo) ou R5 (site) e o time de três papéis trabalhando nela com política N2.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o curso inteiro aplicado ao seu trabalho: conectar, rotear e executar com regra.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ponte, selftest, Connected, planejador, executor, revisor, N2.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t6-4-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">🏁</span>
-            <div><span class="font-medium">Entregue com o verificar e uma lição aprovada</span><span class="text-neutral-500 text-sm ml-2">- todos OK</span></div>
-          </button>
-          <div id="t6-4-4" class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um goal com critérios comando → esperado, a saída do verificar.mjs com todos OK e uma linha aprovada na tabela Aprendizado.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pronto é prova, não palpite; e o ciclo só fecha quando o aprendizado vira regra.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Goal, verificar.mjs, checklist de entrega, Lessons.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-4.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <div class="flex flex-col sm:flex-row gap-4 mt-12">
-      <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha anterior: Rotear e executar</a>
-      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Voltar ao início →</a>
-    </div>
-  </main>
-
-  <!-- MODAIS (iframe carrega a pagina do modulo) -->
-  <div id="modal-4-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-4-1-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span id="modal-4-1-title" class="font-semibold">Política de autonomia</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-4-1.html" title="Módulo 4.1" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-4-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-4-2-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span id="modal-4-2-title" class="font-semibold">O agente propõe, você aprova</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-4-2.html" title="Módulo 4.2" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-4-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-4-3-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span id="modal-4-3-title" class="font-semibold">Guarda e painel</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-4-3.html" title="Módulo 4.3" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-4-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-labelledby="modal-4-4-title" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span id="modal-4-4-title" class="font-semibold">Laboratório e projeto final</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" aria-label="Fechar">&times;</button>
-      </div>
-      <iframe src="modulo-4-4.html" title="Módulo 4.4" loading="lazy" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRILHA 4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛡️ Governar e aprender</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Agente solto precisa de regra escrita. Defina o que ele faz sozinho e o que pede antes, deixe que ele proponha regras novas só com o seu sim, ligue a guarda que pergunta antes do estrago e feche com o projeto final: sua ponte e seu time.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">24</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~2h20</div><div class="text-xs text-neutral-400">Duração</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Projeto</div><div class="text-xs text-neutral-400">Nível</div></div>
+</div>
+<div aria-label="Progresso da trilha 4" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="trilha:4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 24</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="mt-8 lg:mt-0 rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 overflow-hidden">
+<svg aria-label="Um escudo âmbar no centro com os níveis N0 a N4. À esquerda, o agente propõe uma regra; à direita, o humano aprova; abaixo, a regra aprovada entra nas Lessons. Uma faixa vermelha embaixo lembra: apagar e gastar nunca sozinho." class="w-full h-auto" role="img" viewbox="0 0 380 240">
+<defs>
+<pattern height="28" id="t4h-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#fbbf24" opacity="0.12" r="1.2"></circle></pattern>
+<filter height="180%" id="t4h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="t4h-arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t4h-grid)" height="240" width="380" x="0" y="0"></rect>
+<g filter="url(#t4h-glow)"><path d="M190,20 L250,42 L250,100 C250,140 222,162 190,175 C158,162 130,140 130,100 L130,42 Z" fill="#2a1d06" stroke="#fbbf24" stroke-width="2.5"></path></g>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<text fill="#fbbf24" font-weight="600" x="190" y="60">POLITICA</text>
+<text fill="#fde68a" x="190" y="80">N0 · N1 · N2</text>
+<text fill="#fde68a" x="190" y="97">N3 · N4</text>
+<text fill="#fde68a" x="190" y="122">prepara e pede</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="12" y="60"></rect>
+<text fill="#bae6fd" x="60" y="78">agente</text><text fill="#7dd3fc" x="60" y="93">propõe</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="272" y="60"></rect>
+<text fill="#bae6fd" x="320" y="78">você</text><text fill="#7dd3fc" x="320" y="93">aprova</text>
+<rect fill="#0b1f2e" height="22" rx="6" stroke="#38bdf8" stroke-width="1.5" width="100" x="140" y="186"></rect>
+<text fill="#bae6fd" x="190" y="201">Lessons</text>
+<rect fill="#2a0f0f" height="20" rx="6" stroke="#f87171" stroke-width="1.5" width="300" x="40" y="214"></rect>
+<text fill="#fca5a5" font-size="10" x="190" y="228">apagar e gastar: nunca sozinho</text>
+</g>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="2" x1="110" x2="128" y1="80" y2="80"></line>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="2" x1="252" x2="270" y1="80" y2="80"></line>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="1.5" x1="320" x2="242" y1="102" y2="194"></line>
+</svg>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="4" id="conteudo">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-1">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🚦 Política de autonomia</h3>
+<p class="text-xs text-neutral-400">Prepara e pede</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-2">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">📚 O agente propõe, você aprova</h3>
+<p class="text-xs text-neutral-400">Regra nova só com seu sim</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-3">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧱 Guarda e painel</h3>
+<p class="text-xs text-neutral-400">Pergunta antes do estrago</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-4">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧪 Laboratório e projeto final</h3>
+<p class="text-xs text-neutral-400">Sua ponte e seu time</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- ===== MODULO 4.1 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-1" data-inema-track="4" id="modulo-4-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🚦 Política de autonomia</h3>
+<p class="text-neutral-400 text-sm">A POLITICA.md: cinco níveis de autonomia, um teto para cada tipo de ação e como o Claude Code e o Codex aplicam as mesmas regras.</p>
+<div aria-label="Progresso do módulo 4.1" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎚️</span>
+<div><span class="font-medium">Leia os cinco níveis de autonomia</span><span class="text-neutral-500 text-sm ml-2">- de N0 a N4</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">N0 só conversa, N1 prepara e o humano executa, N2 executa depois de pedir, N3 executa e avisa, N4 executa sem aviso.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a régua que diz quanto o agente pode fazer sem você. O padrão do kit é "prepara e pede".</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Autonomia, N0–N4, prepara e pede, impacto da ação.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📏</span>
+<div><span class="font-medium">Use o teto por tipo de ação</span><span class="text-neutral-500 text-sm ml-2">- ler, alterar, enviar, gastar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A tabela da POLITICA.md: ler vai até N4, alterar arquivo até N3, comando no sistema e enviar até N2, gastar e apagar só N1.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quanto maior o impacto da ação, mais você participa. A tabela decide isso antes de o agente começar.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Teto, tipo de ação, enviar, gastar crédito, apagar com backup.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔒</span>
+<div><span class="font-medium">Entenda por que "sempre permitir" tem teto</span><span class="text-neutral-500 text-sm ml-2">- o clique não sobe o nível</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra da POLITICA.md: uma permissão "sempre permitir" nunca passa do teto da ação.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um clique apressado não pode transformar "enviar" ou "apagar" em ação automática.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sempre permitir, teto, permissão acumulada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⛔</span>
+<div><span class="font-medium">Veja o bloqueio no Claude Code</span><span class="text-neutral-500 text-sm ml-2">- o settings.json</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O .claude/settings.json do kit nega rm -rf, git push --force, git push -f e git reset --hard.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">No CHANGELOG 0.1.0, até no modo que libera tudo, o touch rodou e o rm -rf foi negado.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Permissões, deny, acceptEdits, bloqueio escrito.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧰</span>
+<div><span class="font-medium">Aplique a política no Codex</span><span class="text-neutral-500 text-sm ml-2">- as opções -s</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">No Codex a política vira sandbox: read-only para ler, workspace-write para alterar, e sem auto-aprovação para o resto.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A ponte codex-exec.sh recusa danger-full-access: a mesma regra vale para os dois agentes.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sandbox, read-only, workspace-write, recusa pela POLITICA.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🤝</span>
+<div><span class="font-medium">Siga as três regras de integração</span><span class="text-neutral-500 text-sm ml-2">- oficial, credencial, laboratório</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Só ferramentas oficiais pela assinatura, nunca passar credencial de uma ferramenta para outra, engenharia reversa só em laboratório.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">São as três linhas que protegem a sua conta e os seus dados ao ligar uma ferramenta na outra.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Assinatura, credencial, LIMITES.md, produção.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-1')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-1.html">Ver Completo</a>
+</div>
+</div>
+<!-- ===== MODULO 4.2 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-2" data-inema-track="4" id="modulo-4-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">📚 O agente propõe, você aprova</h3>
+<p class="text-neutral-400 text-sm">O ciclo de aprendizado do kit: a tabela Aprendizado, as Lessons do AGENTS.md, o FALHAS.md e o LIMITES.md, uma linha de cada vez.</p>
+<div aria-label="Progresso do módulo 4.2" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🙅</span>
+<div><span class="font-medium">Entenda por que o agente não muda as próprias regras</span><span class="text-neutral-500 text-sm ml-2">- quem aprova é você</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A regra do AGENTS.md: o agente não muda as regras; para propor, acrescenta uma linha na tabela Aprendizado.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um agente que reescreve as próprias regras pode se dar mais liberdade do que você deu.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Propõe, aprova, incorpora; separação de papéis.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📝</span>
+<div><span class="font-medium">Preencha a tabela Aprendizado</span><span class="text-neutral-500 text-sm ml-2">- quatro colunas</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Data, o que aconteceu com evidência, proposta em uma linha e status: proposto, aprovado ou recusado.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Proposta com evidência você aprova em segundos; sem evidência, não dá para decidir.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Evidência, proposta de uma linha, status.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">⬆️</span>
+<div><span class="font-medium">Promova o aprovado para as Lessons</span><span class="text-neutral-500 text-sm ml-2">- uma regra por linha</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que você aprovou vira regra na seção Lessons do AGENTS.md, que o Claude e o Codex leem.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A lição passa a valer nas próximas sessões, para os dois agentes, sem você repetir.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Lessons, AGENTS.md, CLAUDE.md, regra aprovada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🩹</span>
+<div><span class="font-medium">Anote cada falha em uma linha</span><span class="text-neutral-500 text-sm ml-2">- o FALHAS.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Data, o que quebrou, a menor correção e se foi prompt ou infra. Exemplo real do kit: o doctor lia só o stdout do Codex.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Depois de algumas linhas o padrão aparece, e você para de reconstruir o que só precisava de uma proteção.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Menor correção, prompt × infra, uma linha.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚧</span>
+<div><span class="font-medium">Anote o que o ambiente barrou</span><span class="text-neutral-500 text-sm ml-2">- o LIMITES.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Data, o que tentou, o que barrou, o contorno e o status. Bug vai no FALHAS.md; limite do ambiente vai aqui.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cota, permissão ou rede bloqueada não somem sozinhas: anotadas, viram uma lista para resolver.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Limite de ambiente, contorno, status aberto ou aceito.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🗓️</span>
+<div><span class="font-medium">Faça a revisão da semana com o agente</span><span class="text-neutral-500 text-sm ml-2">- propostas na mesa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Uma vez por semana, o agente lê FALHAS.md e LIMITES.md e propõe linhas na tabela Aprendizado; você aprova ou recusa.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o "aprender" do ciclo virando hábito, sem tirar de você a decisão.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Revisão semanal, padrão de falhas, aprovar ou recusar.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-2')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-2.html">Ver Completo</a>
+</div>
+</div>
+<!-- ===== MODULO 4.3 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-3" data-inema-track="4" id="modulo-4-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧱 Guarda e painel</h3>
+<p class="text-neutral-400 text-sm">A receita R7: hooks oficiais que perguntam antes de pisar no trabalho de outra sessão ou de apagar demais, e o painel do time em segundo plano.</p>
+<div aria-label="Progresso do módulo 4.3" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧩</span>
+<div><span class="font-medium">Entenda o que é um mod do Claude Code</span><span class="text-neutral-500 text-sm ml-2">- hooks e plugins</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mod é o apelido dos plugins oficiais. A guarda usa hooks PreToolUse e PostToolUse: a regra fica no script, a tela no mod.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os vídeos mostraram guardas de colisão e de raio de explosão; o kit faz o mesmo só com recursos oficiais.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Hook, plugin, mod, PreToolUse, PostToolUse, worktree.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">💥</span>
+<div><span class="font-medium">Veja a guarda de colisão em ação</span><span class="text-neutral-500 text-sm ml-2">- duas sessões, um arquivo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Antes de editar um arquivo que outra sessão mexeu, ou que mudou por fora nos últimos 30 min, a guarda pergunta: seguir, worktree ou cancelar.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Num projeto nosso, uma sessão esvaziou um arquivo que outra estava editando.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Colisão, toques.json, janela de 30 min, limite do Codex.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧨</span>
+<div><span class="font-medium">Prove o raio antes de apagar</span><span class="text-neutral-500 text-sm ml-2">- quantos arquivos, quanto espaço</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Antes de rm ou git clean, o raio conta os arquivos que seriam apagados, mostra o tamanho e pede confirmação.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A prova da R7 roda o script sozinho e mostra "permissionDecision":"ask" sem apagar nada.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Raio de explosão, só leitura do disco, backup.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧳</span>
+<div><span class="font-medium">Leve a guarda para outro projeto</span><span class="text-neutral-500 text-sm ml-2">- um jeito, não dois</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">claude --plugin-dir para uma sessão, ou o bloco hooks copiado para o settings do outro projeto.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A proteção vale onde os seus agentes trabalham, não só na pasta do kit.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">--plugin-dir, bloco hooks, caminho do kit.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Abra o painel do time</span><span class="text-neutral-500 text-sm ml-2">- /painel</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um mod opcional que mostra as sessões do claude --bg com os botões Atualizar e Parar.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Acompanhar e parar o time sem sair do Claude Code; só o seu clique para uma sessão.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Painel, plugin validate, plugin test, 1 pass.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📖</span>
+<div><span class="font-medium">Leia o código antes de instalar um mod</span><span class="text-neutral-500 text-sm ml-2">- mod tem as suas permissões</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mods rodam com as permissões do Claude Code. Antes de instalar um de terceiro, peça ao agente para ler e explicar, sem rodar.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O mesmo poder que protege pode estragar: ler o código é a única garantia.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">plugin.json, hooks.json, rede, credenciais.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-3')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-3.html">Ver Completo</a>
+</div>
+</div>
+<!-- ===== MODULO 4.4 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-4" data-inema-track="4" id="modulo-4-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧪 Laboratório e projeto final</h3>
+<p class="text-neutral-400 text-sm">O lugar certo da engenharia reversa e o projeto que fecha o curso: um sistema seu sem API vira ponte, um time trabalha nele e o verificar prova.</p>
+<div aria-label="Progresso do módulo 4.4" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🪜</span>
+<div><span class="font-medium">Volte à escada antes do laboratório</span><span class="text-neutral-500 text-sm ml-2">- seis testes antes do sétimo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Antes de qualquer engenharia reversa, testar com um comando cada nível, de API até ponte local.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitas vezes a via existe e só não estava documentada.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Escada, evidência por nível, degrau 7.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🧪</span>
+<div><span class="font-medium">Trate engenharia reversa como laboratório</span><span class="text-neutral-500 text-sm ml-2">- frágil, com data</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Máquina de teste, uma linha em LIMITES.md, etiqueta "frágil" com data e nunca em produção.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O laboratório responde "por onde conversa?"; a resposta leva de volta a uma via oficial.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Máquina de teste, LIMITES.md, frágil, produção.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔐</span>
+<div><span class="font-medium">Respeite termos de uso e credenciais</span><span class="text-neutral-500 text-sm ml-2">- cada login no seu lugar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Só ferramentas oficiais pela assinatura e nunca passar credencial ou token de uma ferramenta para outra.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quem tem o token age como você; a ponte certa não carrega senha.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Credencial, token, termos de uso, login humano.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🗺️</span>
+<div><span class="font-medium">Escolha seu sistema e preencha o mapa</span><span class="text-neutral-500 text-sm ml-2">- uma linha testada</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um sistema seu sem API, uma linha no CAPACIDADES.md e a via mais alta que funcionar.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem linha no mapa, o agente não usa o sistema; é o primeiro passo do projeto final.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Projeto final, CAPACIDADES.md, via, pendente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🏗️</span>
+<div><span class="font-medium">Construa a ponte e rode o time</span><span class="text-neutral-500 text-sm ml-2">- R3 ou R5, depois R2</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A ponte pela receita R3 (arquivo) ou R5 (site) e o time de três papéis trabalhando nela com política N2.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o curso inteiro aplicado ao seu trabalho: conectar, rotear e executar com regra.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ponte, selftest, Connected, planejador, executor, revisor, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🏁</span>
+<div><span class="font-medium">Entregue com o verificar e uma lição aprovada</span><span class="text-neutral-500 text-sm ml-2">- todos OK</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Um goal com critérios comando → esperado, a saída do verificar.mjs com todos OK e uma linha aprovada na tabela Aprendizado.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pronto é prova, não palpite; e o ciclo só fecha quando o aprendizado vira regra.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Goal, verificar.mjs, checklist de entrega, Lessons.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-4')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-4.html">Ver Completo</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha3/index.html">← Trilha anterior: Rotear e executar</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../../index.html">Voltar ao início →</a>
+</div>
+</main>
+<!-- MODAIS (iframe carrega a pagina do modulo) -->
+<div aria-labelledby="modal-4-1-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-1" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold" id="modal-4-1-title">Política de autonomia</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-1.html" title="Módulo 4.1"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-2-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-2" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold" id="modal-4-2-title">O agente propõe, você aprova</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-2.html" title="Módulo 4.2"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-3-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-3" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold" id="modal-4-3-title">Guarda e painel</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-3.html" title="Módulo 4.3"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-4-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-4" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold" id="modal-4-4-title">Laboratório e projeto final</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-4.html" title="Módulo 4.4"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -821,8 +805,8 @@
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
 </body>

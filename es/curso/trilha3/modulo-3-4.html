@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Agente de larga duración con verificación | INEMA Agent Runtime</title>
+<meta content="Curso gratuito de INEMA.CLUB: usa el kit INEMA Agent Runtime para que Claude Code y Codex descubran, conecten y usen las herramientas que ya tienes, de la forma más estable y con reglas claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha3/modulo-3-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha3/modulo-3-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha3/modulo-3-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descubrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Enrutar y ejecutar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Gobernar y aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Apariencia" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Apariencia</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fuente" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+<div aria-label="Tamaño del texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Ancho de línea" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Medio</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+<div aria-label="Entre líneas" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta de aprendizaje 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-4" data-inema-track="3">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 Agente de larga duración con verificación</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">En tareas de varias horas, el agente suele decir "listo" antes de tiempo. La receta R6 reemplaza las suposiciones por pruebas: criterios escritos como comando → salida, verificados por un script, con puntos de control donde solo tú decides.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Medio</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo 3.4" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:3-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="3-4" data-inema-track="3" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Entiende por qué el agente cree que terminó</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t1-p1">Una tarea larga puede ser migrar hojas de cálculo, crear un sitio o revisar cien archivos. A mitad del camino, el agente pierde detalles y empieza a creer que ya terminó. Escribe "todo listo" con total convicción.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t1-p2">La receta R6 cambia las reglas del juego: el agente solo termina cuando los criterios <strong class="text-purple-400">prueban</strong> que terminó, y no cuando él cree. Quien da el veredicto es un script, el <code>runtime/scripts/verificar.mjs</code>.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? Cuatro palabras de este módulo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Goal</strong> — un archivo de texto con el resultado que quieres y la lista de criterios para darlo por terminado.</li>
+<li><strong>Criterio</strong> — una línea que dice «ejecuta este comando; la respuesta debe mostrar este texto». Respuesta sí o no.</li>
+<li><strong>Salida 0 / salida 1</strong> — todo comando termina con un número. 0 quiere decir "salió bien"; cualquier otro, "salió mal". Los scripts y agentes leen ese número.</li>
+<li><strong>Puerta humana</strong> — un punto del goal en el que el agente se detiene y espera tu aprobación.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Comparación. Arriba, en rojo, el agente dice que terminó y se detiene: es una suposición. Abajo, el agente trabaja, el verificador ejecuta los criterios y la tarea solo termina cuando todos dan OK; si alguno falla, vuelve al trabajo." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m34-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m34-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m34-arrow-r" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m34-grid)" height="250" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="50" rx="12" stroke="#6b7280" stroke-width="2" width="160" x="40" y="25"></rect>
+<text fill="#e5e7eb" font-size="13" x="120" y="55">el agente trabaja</text>
+<line marker-end="url(#m34-arrow-r)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2" x1="202" x2="300" y1="50" y2="50"></line>
+<rect fill="#2a0f0f" height="50" rx="12" stroke="#f87171" stroke-width="2" width="220" x="305" y="25"></rect>
+<text fill="#fca5a5" font-size="13" x="415" y="48">"creo que terminé"</text>
+<text fill="#fca5a5" font-size="10" x="415" y="65">suposición: detente aquí</text>
+<rect fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="40" y="150"></rect>
+<text fill="#bae6fd" font-size="13" x="120" y="180">el agente trabaja</text>
+<line class="wf-flow" marker-end="url(#m34-arrow)" stroke="#38bdf8" stroke-width="2" x1="202" x2="300" y1="175" y2="175"></line>
+<g filter="url(#m34-glow)"><rect fill="#1e1233" height="60" rx="14" stroke="#c084fc" stroke-width="2" width="220" x="305" y="145"></rect></g>
+<text fill="#c084fc" font-size="13" font-weight="600" x="415" y="171">verificar.mjs</text>
+<text fill="#e9d5ff" font-size="11" x="415" y="190">se ejecuta para cada criterio</text>
+<line class="wf-flow" marker-end="url(#m34-arrow)" stroke="#38bdf8" stroke-width="2" x1="527" x2="610" y1="175" y2="175"></line>
+<rect class="wf-a" fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="615" y="150"></rect>
+<text fill="#bae6fd" font-size="13" x="690" y="173">todos OK</text>
+<text fill="#7dd3fc" font-size="10" x="690" y="190">ahí sí, terminó</text>
+<path d="M415,207 C 415,240 120,240 120,203" fill="none" marker-end="url(#m34-arrow-r)" stroke="#f87171" stroke-dasharray="4 4" stroke-width="1.8"></path>
+<text fill="#fca5a5" font-size="11" x="268" y="236">FALLA: vuelve y corrige</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> arriba, el camino de la suposición: la tarea termina cuando el agente se convence. Abajo, el camino de la R6: entre el trabajo y el final está la caja morada, y la flecha discontinua devuelve al agente al trabajo cada vez que falla.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Listo por suposición</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ "Revisé todo y está excelente"</li>
+<li>✗ Nadie puede revisarlo después</li>
+<li>✗ Depende del humor del modelo en ese momento</li>
+<li>✗ Descubres el error solo al usarlo</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+<h3 class="font-semibold text-purple-400 mb-3">✓ Listo con pruebas</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ <code>4/4 critérios OK</code> y salida 0</li>
+<li>✓ Lo vuelves a ejecutar mañana y da el mismo resultado</li>
+<li>✓ Se aplica a Claude Code y a Codex</li>
+<li>✓ El error aparece con nombre y línea</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📄</div><div class="text-sm font-semibold text-purple-400">Goal</div><p class="text-xs text-neutral-400 mt-1">resultado + criterios</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">Criterio</div><p class="text-xs text-neutral-400 mt-1">comando → salida</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧮</div><div class="text-sm font-semibold text-purple-400">verificar</div><p class="text-xs text-neutral-400 mt-1">el juez de lo que está listo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🚧</div><div class="text-sm font-semibold text-purple-400">Puerta</div><p class="text-xs text-neutral-400 mt-1">solo con tu aprobación</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Escribe criterios comando → resultado</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t2-p1">Cada criterio es una línea de lista con dos fragmentos entre comillas invertidas: el comando y el texto que debe aparecer en la salida, separados por una flecha.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t2-p2">El kit incluye un goal listo, sobre el puente de la agenda de Clara y el resumen de ventas de Sônia. Este es el archivo completo, tal como está en el kit:</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 runtime/exemplos/goal-exemplo.md</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600"># Goal de exemplo — ponte da agenda
+
+## Resultado
+A ponte MCP lê a agenda e o resumo de vendas, e o kit continua saudável.
+
+## Critérios de pronto
+- [ ] `node runtime/pontes/mcp-modelo/server.mjs --selftest` → `tools: 2`
+- [ ] `node runtime/pontes/mcp-modelo/server.mjs --selftest` → `2026-10-06 09:00 · Dra. Ana`
+- [ ] `node runtime/pontes/mcp-modelo/server.mjs --selftest` → `TOTAL: R$ 856.00`
+- [ ] `node runtime/scripts/doctor.mjs` → `PRONTO`
+
+Rode da raiz do kit: `node runtime/scripts/verificar.mjs runtime/exemplos/goal-exemplo.md`</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Fíjate:</strong> el mismo comando aparece tres veces, cada vez con un texto esperado diferente. Un criterio verifica una sola cosa.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+<h3 class="font-semibold text-purple-400 mb-3">✓ Buen criterio</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Se puede verificar con un comando</li>
+<li>✓ La respuesta es sí o no</li>
+<li>✓ Es imposible avanzar sin hacer el trabajo</li>
+<li>✓ Ej.: el total de Sônia, <code>TOTAL: R$ 856.00</code>, verificado manualmente</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ No es un criterio</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ "Dejarlo bien"</li>
+<li>✗ "Revisar con cuidado"</li>
+<li>✗ Un texto que aparece incluso si el trabajo no está hecho</li>
+<li>✗ Algo que solo tú sabes responder al verlo</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Cómo decide el script</h3>
+<p class="text-neutral-300 text-sm">Desde el código del <code>verificar.mjs</code>, un criterio solo se cumple si ocurren ambas cosas: el comando termina con <strong>salida 0</strong> <em>e</em> la salida contiene el texto esperado. Un texto correcto con un comando roto no pasa.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">☑️</div><div class="text-sm font-semibold text-purple-400">- [ ]</div><p class="text-xs text-neutral-400 mt-1">línea de lista</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-purple-400">`comando`</div><p class="text-xs text-neutral-400 mt-1">entre acentos graves</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">➡️</div><div class="text-sm font-semibold text-purple-400">→</div><p class="text-xs text-neutral-400 mt-1">la flecha separa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔤</div><div class="text-sm font-semibold text-purple-400">`esperado`</div><p class="text-xs text-neutral-400 mt-1">texto de la salida</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Ejecuta el verificar en el goal de ejemplo</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t3-p1">Antes de entregarle el goal a un agente, ejecuta el verificador por tu cuenta. No llama a ningún modelo: solo ejecuta los comandos de los criterios. Puedes ejecutarlo cuantas veces quieras.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t3-p2">Ejecútalo siempre desde la raíz del kit, porque los comandos del goal usan rutas que empiezan en <code>runtime/</code>.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: demostrar el goal de ejemplo</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">En la terminal, en la raíz de la carpeta del kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/scripts/verificar.mjs runtime/exemplos/goal-exemplo.md</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Salida real (05/10/2026, Linux), salida 0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">OK     node runtime/pontes/mcp-modelo/server.mjs --selftest
+OK     node runtime/pontes/mcp-modelo/server.mjs --selftest
+OK     node runtime/pontes/mcp-modelo/server.mjs --selftest
+OK     node runtime/scripts/doctor.mjs
+
+4/4 critérios OK</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Cómo verificar:</strong> la última línea es <code>4/4 critérios OK</code>. Si aparece <code>FALHA</code> en doctor, vuelve al módulo 1.2; si es en selftest, al módulo 2.2.</div>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Línea de salida</th><th class="px-4 py-3 font-semibold">Criterio verificado</th><th class="px-4 py-3 font-semibold">De quién</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">1.ª OK</td><td class="px-4 py-3 text-neutral-300"><code>tools: 2</code>: el puente tiene las dos herramientas</td><td class="px-4 py-3 text-neutral-300">ponte-modelo</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">2.ª OK</td><td class="px-4 py-3 text-neutral-300"><code>2026-10-06 09:00 · Dra. Ana</code>: horario disponible leído</td><td class="px-4 py-3 text-neutral-300">agenda de Clara</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">3.ª OK</td><td class="px-4 py-3 text-neutral-300"><code>TOTAL: R$ 856.00</code>: suma de las ventas</td><td class="px-4 py-3 text-neutral-300">ERP de Sônia</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">4.ª OK</td><td class="px-4 py-3 text-neutral-300"><code>PRONTO</code>: el kit sigue funcionando bien</td><td class="px-4 py-3 text-neutral-300">doctor</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Qué revisar en la tabla:</strong> las tres primeras líneas de la salida muestran el mismo comando. Lo que diferencia a cada una es el texto esperado de cada criterio, que OK no repite.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> El total de Sônia se verificó a mano</h3>
+<p class="text-neutral-300 text-sm">10×18,50 + 25×5,20 + 40×5,20 + 6×18,50 + 12×18,50 = 185 + 130 + 208 + 111 + 222 = 856. Un criterio solo es válido si el valor esperado es correcto. Verifica el número una vez, con calma, antes de confiar en él para siempre.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📍</div><div class="text-sm font-semibold text-purple-400">Raíz del kit</div><p class="text-xs text-neutral-400 mt-1">dónde ejecutar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🆓</div><div class="text-sm font-semibold text-purple-400">Sin cuota</div><p class="text-xs text-neutral-400 mt-1">no llama al modelo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">4/4</div><div class="text-sm font-semibold text-purple-400">Conteo</div><p class="text-xs text-neutral-400 mt-1">la última línea</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">0️⃣</div><div class="text-sm font-semibold text-purple-400">Salida 0</div><p class="text-xs text-neutral-400 mt-1">todo pasó</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Incumple un criterio a propósito</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t4-p1">Un juez que siempre dice "OK" no sirve para nada. Antes de confiar en verificar, mira cómo rechaza algo. Trabaja en una <strong class="text-purple-400">copia</strong>, para que el goal de ejemplo siga intacto.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t4-p2">Es la misma prueba que hizo el kit en la evaluación de la versión 0.2.0.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Crea la copia</h4><p class="text-neutral-300 text-sm">Crea <code>meu-goal.md</code> en la raíz del kit con el mismo contenido que el <code>goal-exemplo.md</code>, con tu editor de texto o pidiéndoselo al agente.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Cambia un valor esperado</h4><p class="text-neutral-300 text-sm">En la copia, cambia el texto entre comillas invertidas después de una flecha. Por ejemplo, el total de Sônia de <code>R$ 856.00</code> para otro valor.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ejecuta el verificar en la copia</h4><p class="text-neutral-300 text-sm">Usa el comando del cuadro de abajo, el mismo que el prompt de R6 indica que el agente ejecute.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Deshacer el cambio</h4><p class="text-neutral-300 text-sm">Devuelve el valor correcto a la copia. Se convierte en el punto de partida de tu propio goal.</p></div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: ver que la verificación falle</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">En la terminal, en la raíz del kit, después de cambiar un valor esperado en <code>meu-goal.md</code>:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/scripts/verificar.mjs meu-goal.md</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Resultado comprobado en CHANGELOG 0.2.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">con un valor esperado incorrecto: FALLA, salida 1</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Cómo verificar:</strong> la línea del criterio que cambiaste empieza con <code>FALHA</code> en lugar de <code>OK</code>. Según el código del script, justo debajo de ella viene el texto <code>esperado:</code> y las últimas líneas de la salida real, para que puedas compararlas.</div>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Cómo evalúa el verificador cada línea del goal. Lee la línea, ejecuta el comando y hace dos preguntas: ¿terminó con código de salida cero? ¿La salida contiene el texto esperado? Dos respuestas afirmativas dan OK. Cualquier respuesta negativa da FALLO. Al final, si hubo algún fallo, el script termina con 1; si no, con 0." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m34b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m34b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m34b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m34b-grid)" height="240" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="130" x="20" y="85"></rect>
+<text fill="#e5e7eb" font-size="12" x="85" y="111">línea del goal</text>
+<text fill="#9ca3af" font-size="10" x="85" y="129">`cmd` → `texto`</text>
+<line class="wf-flow" marker-end="url(#m34b-arrow)" stroke="#38bdf8" stroke-width="2" x1="152" x2="198" y1="115" y2="115"></line>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="120" x="202" y="85"></rect>
+<text fill="#bae6fd" font-size="12" x="262" y="111">ejecuta el</text>
+<text fill="#bae6fd" font-size="12" x="262" y="128">comando</text>
+<line class="wf-flow" marker-end="url(#m34b-arrow)" stroke="#38bdf8" stroke-width="2" x1="324" x2="368" y1="115" y2="115"></line>
+<g filter="url(#m34b-glow)"><rect fill="#1e1233" height="90" rx="14" stroke="#c084fc" stroke-width="2" width="190" x="372" y="70"></rect></g>
+<text fill="#c084fc" font-size="12" font-weight="600" x="467" y="100">¿salida 0?</text>
+<text fill="#e9d5ff" font-size="11" x="467" y="120">e</text>
+<text fill="#c084fc" font-size="12" font-weight="600" x="467" y="140">¿contiene el texto?</text>
+<line marker-end="url(#m34b-arrow)" stroke="#38bdf8" stroke-width="2" x1="564" x2="620" y1="95" y2="60"></line>
+<rect fill="#0b1f2e" height="50" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="625" y="30"></rect>
+<text fill="#bae6fd" font-size="13" font-weight="600" x="700" y="53">sí y sí → OK</text>
+<text fill="#7dd3fc" font-size="10" x="700" y="70">todo OK: salida 0</text>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="564" x2="620" y1="135" y2="170"></line>
+<rect fill="#2a0f0f" height="50" rx="12" stroke="#f87171" stroke-width="2" width="150" x="625" y="150"></rect>
+<text fill="#fca5a5" font-size="13" font-weight="600" x="700" y="173">algún no → FALLO</text>
+<text fill="#fca5a5" font-size="10" x="700" y="190">cualquier falla: salida 1</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Cómo leer el diagrama:</strong> el diseño se repite para cada línea del goal. La caja morada contiene toda la regla del script. Basta con que una línea caiga a la derecha, abajo, para que el número de salida sea 1, y ese es el número que el agente lee para saber si puede detenerse.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📑</div><div class="text-sm font-semibold text-purple-400">Copia</div><p class="text-xs text-neutral-400 mt-1">meu-goal.md</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✏️</div><div class="text-sm font-semibold text-purple-400">Un valor</div><p class="text-xs text-neutral-400 mt-1">cambiado a propósito</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">❌</div><div class="text-sm font-semibold text-purple-400">FALLA</div><p class="text-xs text-neutral-400 mt-1">con lo esperado y el resultado</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">1️⃣</div><div class="text-sm font-semibold text-purple-400">Salida 1</div><p class="text-xs text-neutral-400 mt-1">el agente no se detiene</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Ejecuta el agente hasta que pase</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t5-p1">Con el goal escrito y el verificar probado, entrégale la tarea al agente. La solicitud de R6 indica tres cosas: cumple el goal, ejecuta el verificar después de cada etapa y detente solo cuando todo esté OK o ante un control humano.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t5-p2">Funciona en Claude Code y en Codex, porque el juez es el mismo script para ambos.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo aquí? Qué es <code>/goal</code></h3>
+<p class="text-neutral-300 text-sm">Las palabras que comienzan con una barra y se escriben dentro de la sesión son <strong>comandos del agente</strong>. O <code>/goal</code> le da al agente un objetivo que perseguir hasta el final, en varias etapas, en lugar de una sola respuesta.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objetivo: dejar que el agente trabaje hasta que pase la prueba</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abre <code>claude</code> (o <code>codex</code>) en la carpeta del kit y pega:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">/goal Cumple el goal en meu-goal.md. Después de cada etapa, ejecuta node runtime/scripts/verificar.mjs meu-goal.md. Detente solo cuando todo esté OK o en un punto de aprobación humana del goal.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Cómo verificar:</strong> cuando el agente diga que terminó, ejecuta la verificación por tu cuenta en el <code>meu-goal.md</code>. La última línea debe mostrar todos los criterios en OK. Si no los muestra, no terminaste.</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">El agente realiza una etapa</h4><p class="text-neutral-300 text-sm">Crea, corrige o ajusta lo que pide el goal.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ejecuta el verificar</h4><p class="text-neutral-300 text-sm">Lee las líneas OK y FALHA y el número de salida.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Salida 1: volver al paso 1</h4><p class="text-neutral-300 text-sm">La línea FALHA indica qué faltó, con el resultado esperado y el resultado real.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Salida 0 o bloqueo: detenerse</h4><p class="text-neutral-300 text-sm">Terminó de verdad o llegó a un punto en el que solo tú decides.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Sin pantalla, durante horas</h3>
+<p class="text-neutral-300 text-sm">En Linux, para ejecutar sin pantalla, con límites de tiempo y memoria, el kit indica el método completo de ejecución prolongada: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/execucao-longa" target="_blank">github.com/inematds/execucao-longa</a>. Empieza con la solicitud de arriba, mientras tú observas.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎯</div><div class="text-sm font-semibold text-purple-400">/goal</div><p class="text-xs text-neutral-400 mt-1">objetivo hasta el final</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔁</div><div class="text-sm font-semibold text-purple-400">Bucle</div><p class="text-xs text-neutral-400 mt-1">haz, verifica, corrige</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤝</div><div class="text-sm font-semibold text-purple-400">Claude o Codex</div><p class="text-xs text-neutral-400 mt-1">el mismo juez</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-purple-400">Tú verificas</div><p class="text-xs text-neutral-400 mt-1">la última ronda</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Coloca controles humanos y anota los fallos</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t6-p1">Un agente que funciona durante horas no puede decidir por sí solo qué es irreversible. La R6 exige puertas de aprobación humana escritas en el propio goal, para cuatro tipos de acción: <strong class="text-purple-400">gasto, envío, borrar y publicar</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t6-p2">Y pide un hábito: cuando algo se rompa, una línea en <code>FALHAS.md</code>; cuando el entorno lo impida, una línea en el <code>LIMITES.md</code>.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Puerta en el goal</th><th class="px-4 py-3 font-semibold">Límite en POLITICA</th><th class="px-4 py-3 font-semibold">Ejemplo</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Gasto</td><td class="px-4 py-3 text-neutral-300">N1: prepara, tú ejecutas</td><td class="px-4 py-3 text-neutral-300">contratar un servicio nuevo</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Envío</td><td class="px-4 py-3 text-neutral-300">N2: pide cada vez</td><td class="px-4 py-3 text-neutral-300">Que Clara envíe la confirmación al paciente</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Borrar</td><td class="px-4 py-3 text-neutral-300">N1 + copia de seguridad</td><td class="px-4 py-3 text-neutral-300">limpiar exportaciones antiguas del ERP</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Publicar</td><td class="px-4 py-3 text-neutral-300">N2 (es un envío: push, post)</td><td class="px-4 py-3 text-neutral-300">Que Sônia publique el informe para el cliente</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Qué revisar en la tabla:</strong> ninguna puerta pasa de N2. En un goal largo, escribe la frase de la puerta en el lugar exacto de la etapa, por ejemplo "antes de enviar, detente y pregúntame".</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">📄 runtime/FALHAS.md — la fila real del kit</span></div>
+<div class="p-5">
+<pre class="font-mono text-xs text-neutral-300 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">| data | o que quebrou | menor correção | prompt \| infra |
+|---|---|---|---|
+| 2026-10-05 | `doctor.mjs` dizia "codex sem login" com o Codex logado | ler stdout **e** stderr (`codex login status` responde no stderr) | infra |</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">Fíjate:</strong> Una línea, sin narrativa. La "corrección más pequeña" fue una protección sencilla, no una reescritura. Después de unas diez líneas, el patrón aparece por sí solo.</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Una puerta que no está escrita no existe</h3>
+<p class="text-neutral-300 text-sm">Si el goal no dice "detente antes de enviar", un agente que busca el OK puede tratar el envío como un paso más. Antes de poner en marcha un goal largo, revísalo buscando gastos, envíos, borrados y publicaciones. Cada uno necesita su propia frase de detención.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-4#q1">
+<p class="font-medium mb-4">Prueba rápida (opcional): ¿cuál de estas líneas es un criterio que el <code>verificar.mjs</code> ¿aceptas?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">- [ ] Dejar el resumen de ventas bien hecho y revisado</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">- [ ] `node runtime/pontes/mcp-modelo/server.mjs --selftest` → `TOTAL: R$ 856.00`</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">- [ ] El agente confirma que terminó</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-purple-400">Gasto</div><p class="text-xs text-neutral-400 mt-1">N1</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📤</div><div class="text-sm font-semibold text-purple-400">Envío</div><p class="text-xs text-neutral-400 mt-1">N2</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗑️</div><div class="text-sm font-semibold text-purple-400">Borrar</div><p class="text-xs text-neutral-400 mt-1">N1 + copia de seguridad</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📝</div><div class="text-sm font-semibold text-purple-400">FALLAS · LÍMITES</div><p class="text-xs text-neutral-400 mt-1">una línea cada uno</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Listo es evidencia, no una suposición</strong><span class="text-neutral-400"> — quien decide es verificar.mjs.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Criterio = comando → salida</strong><span class="text-neutral-400"> — sí o no, imposible aprobarlo sin hacer el trabajo.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">El goal de ejemplo obtiene 4/4</strong><span class="text-neutral-400"> — y un valor cambiado da FALLO y código de salida 1.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">/goal con verificar en cada etapa</strong><span class="text-neutral-400"> — en Claude Code o Codex.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Puertas escritas y fallas anotadas</strong><span class="text-neutral-400"> — gasto, envío, borrar, publicar; una línea por fallo.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próxima ruta:</h3>
+<p class="text-neutral-300">Ruta 4 — Gobernar y aprender (empieza en el 4.1, Política de autonomía)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="../trilha4/index.html">Próxima ruta: Gobernar y aprender →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Sección 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-1">1. Suposición × prueba</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-2">2. Criterios</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-3">3. Ejecutar la verificación</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-4">4. Romper a propósito</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-5">5. El agente hasta que pase</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-6">6. Puertas y fallas</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit utilizado en el curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-3-4#q1', { answer: 1, explain: {
+          '0': 'Não. "Deixar bom" não tem comando nem texto esperado: o script nem reconhece a linha, e ninguém consegue dizer sim ou não.',
+          '1': 'Isso. Comando e texto esperado entre crases, separados pela seta. Passa só se o comando sair com 0 e mostrar TOTAL: R$ 856.00.',
+          '2': 'Não. É o palpite que a R6 quer evitar: quem decide o pronto é a saída do verificar, não a palavra do agente.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

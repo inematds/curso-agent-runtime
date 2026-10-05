@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="agrt">
-  <title>Instalar e diagnosticar | INEMA Agent Runtime</title>
-  <meta name="description" content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras.">
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Instalar e diagnosticar | INEMA Agent Runtime</title>
+<meta content="Curso gratuito do INEMA.CLUB: use o kit INEMA Agent Runtime para fazer Claude Code e Codex descobrirem, conectarem e usarem as ferramentas que você já tem, pela via mais estável e com regras claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -53,21 +53,18 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
       primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
   {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
 
@@ -177,571 +174,530 @@
     main .flex-1 { min-width: 0; }
     .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg">Pular para o conteúdo</a>
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-1.5 sm:space-x-3">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔌</span>
-            <span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
-          </a>
-          <span class="text-neutral-600 hidden sm:inline">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-          <span class="text-neutral-600">-</span>
-          <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium">PRO</a>
-        </div>
-        <div class="flex items-center sm:space-x-1">
-          <a href="index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
-            <span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
-          </a>
-          <a href="../trilha4/index.html" class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
-            <span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
-          </a>
-          <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" title="Minha jornada">
-            <span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
-            <span class="inema-journey-badge" data-inema-journey-badge data-count="0"></span>
-          </button>
-          <div class="relative">
-            <button type="button" data-inema-appearance-toggle="#aparencia" aria-expanded="false" aria-controls="aparencia" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" title="Aparência">
-              <span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
-            </button>
-            <div id="aparencia" data-inema-appearance class="inema-appearance-pop">
-              <div class="inema-segment" aria-label="Tema">
-                <button type="button" data-inema-set-theme="inema-dark">Escuro</button>
-                <button type="button" data-inema-set-theme="claro">Claro</button>
-                <button type="button" data-inema-set-theme="sepia">Sépia</button>
-                <button type="button" data-inema-set-theme="foco">Foco</button>
-                <button type="button" data-inema-set-theme="contraste">Alto contraste</button>
-              </div>
-              <div class="inema-segment" aria-label="Fonte">
-                <button type="button" data-inema-set-font="inter">Inter</button>
-                <button type="button" data-inema-set-font="system">Sistema</button>
-                <button type="button" data-inema-set-font="leitura">Leitura</button>
-              </div>
-              <div class="inema-segment" aria-label="Tamanho do texto">
-                <button type="button" data-inema-set-fontscale="100">A</button>
-                <button type="button" data-inema-set-fontscale="112">A+</button>
-                <button type="button" data-inema-set-fontscale="125">A++</button>
-              </div>
-              <div class="inema-segment" aria-label="Largura da linha">
-                <button type="button" data-inema-set-linewidth="60">Estreito</button>
-                <button type="button" data-inema-set-linewidth="68">Médio</button>
-                <button type="button" data-inema-set-linewidth="75">Largo</button>
-              </div>
-              <div class="inema-segment" aria-label="Entrelinha">
-                <button type="button" data-inema-set-leading="1.45">Compacto</button>
-                <button type="button" data-inema-set-leading="1.7">Confortável</button>
-              </div>
-            </div>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" aria-label="Alternar tema claro/escuro">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-emerald-400">Início</a><span>/</span>
-      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a><span>/</span>
-      <span class="text-emerald-400">Módulo 1.2</span>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-2" data-inema-track="1">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.2</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🩺 Instalar e diagnosticar</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Do zero ao "PRONTO": o que ter na máquina, como trazer o kit para uma pasta sua, o diagnóstico que confere tudo sem gastar cota e o primeiro pedido ao agente.</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Nível</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
-      </div>
-      <div data-inema-meter="modulo:1-2" class="mt-6 max-w-2xl" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo 1.2">
-        <div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
-        <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
-      </div>
-    </div>
-  </header>
-
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
-  <main id="conteudo" class="min-w-0" data-inema-module="1-2" data-inema-track="1">
-
-    <!-- ===================== TOPICO 1 ===================== -->
-    <section id="topico-1" data-inema-topic="modulo-1-2#topico-1" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold flex-1">Confira o que você precisa ter</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m1-2-t1-p1" class="text-neutral-300 mb-4 leading-relaxed">A lista é curta. O README do kit pede três coisas: <strong class="text-emerald-400">Node 18 ou mais novo</strong>, o <strong class="text-emerald-400">Claude Code e/ou o Codex</strong> logados pela assinatura, e um computador com <strong>Linux ou Mac</strong>. No Windows, use o WSL.</p>
-      <p data-inema-block="m1-2-t1-p2" class="text-neutral-300 mb-6 leading-relaxed">Basta um dos dois agentes para começar. Com os dois, você aproveita todas as receitas, inclusive a R1, em que o Claude pede ajuda ao Codex.</p>
-
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Quatro termos deste módulo</h3>
-        <ul class="space-y-2 text-neutral-300 text-sm">
-          <li><strong>Terminal</strong> — a janela de texto onde você digita comandos e aperta Enter. No Mac, o app se chama Terminal; no Linux, também.</li>
-          <li><strong>Node</strong> — o programa que roda os scripts do kit (os arquivos <code>.mjs</code>). Também traz o <code>npm</code>, que instala ferramentas.</li>
-          <li><strong>WSL</strong> — o Linux que roda dentro do Windows. É por ele que quem usa Windows segue este curso.</li>
-          <li><strong>Login pela assinatura</strong> — entrar no Claude Code ou no Codex com a mesma conta do plano mensal. Nada de chave de API.</li>
-        </ul>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
-          <h3 class="font-semibold text-emerald-400 mb-3">✓ Você precisa</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Node 18 ou mais novo</li>
-            <li>✓ Claude Code ou Codex (ou os dois), logados</li>
-            <li>✓ Linux, Mac ou Windows com WSL</li>
-            <li>✓ Uma pasta onde o kit vai morar</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ Você não precisa</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ Chave de API paga</li>
-            <li>✗ Servidor, nuvem ou painel web</li>
-            <li>✗ Saber programar</li>
-            <li>✗ Ollama (é opcional: modelos locais grátis)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-emerald-400">Terminal</div><p class="text-xs text-neutral-400 mt-1">onde tudo acontece</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🟩</div><div class="text-sm font-semibold text-emerald-400">Node 18+</div><p class="text-xs text-neutral-400 mt-1">roda os scripts</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🐧</div><div class="text-sm font-semibold text-emerald-400">WSL</div><p class="text-xs text-neutral-400 mt-1">Linux no Windows</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-emerald-400">Assinatura</div><p class="text-xs text-neutral-400 mt-1">login, sem API</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 2 ===================== -->
-    <section id="topico-2" data-inema-topic="modulo-1-2#topico-2" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold flex-1">Clone o kit na sua máquina</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m1-2-t2-p1" class="text-neutral-300 mb-4 leading-relaxed">O kit mora no GitHub. Um comando copia tudo para uma pasta nova no seu computador. O nome <code>meu-projeto</code> é sugestão do README: troque pelo nome do seu trabalho, se quiser.</p>
-      <p data-inema-block="m1-2-t2-p2" class="text-neutral-300 mb-6 leading-relaxed">A pasta clonada <strong class="text-emerald-400">vira o seu projeto</strong>. As regras, as pontes e as receitas já chegam no lugar certo. Você não instala nada além disso.</p>
-
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Git, repositório e clone</h3>
-        <p class="text-neutral-300 text-sm"><strong>Git</strong> é o programa que guarda o histórico de mudanças de uma pasta. <strong>Repositório</strong> é essa pasta com histórico, publicada num site como o GitHub. <strong>Clonar</strong> é baixar uma cópia completa dela para o seu computador, pronta para usar e editar.</p>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: ter o kit numa pasta sua</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">No terminal, na pasta onde você guarda seus projetos (rode as duas linhas, uma de cada vez):</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">git clone https://github.com/inematds/inema-agent-runtime meu-projeto
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha1/modulo-1-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha1/modulo-1-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha1/modulo-1-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-1-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/modulo-1-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/modulo-1-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descobrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Rotear e executar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Governar e aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Aparência" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Aparência</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fonte" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+<div aria-label="Tamanho do texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Largura da linha" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+<div aria-label="Entrelinha" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Trilha 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-2" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🩺 Instalar e diagnosticar</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Do zero ao "PRONTO": o que ter na máquina, como trazer o kit para uma pasta sua, o diagnóstico que confere tudo sem gastar cota e o primeiro pedido ao agente.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Base</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progresso do módulo 1.2" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:1-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="1-2" data-inema-track="1" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Confira o que você precisa ter</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t1-p1">A lista é curta. O README do kit pede três coisas: <strong class="text-emerald-400">Node 18 ou mais novo</strong>, o <strong class="text-emerald-400">Claude Code e/ou o Codex</strong> logados pela assinatura, e um computador com <strong>Linux ou Mac</strong>. No Windows, use o WSL.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t1-p2">Basta um dos dois agentes para começar. Com os dois, você aproveita todas as receitas, inclusive a R1, em que o Claude pede ajuda ao Codex.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Quatro termos deste módulo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Terminal</strong> — a janela de texto onde você digita comandos e aperta Enter. No Mac, o app se chama Terminal; no Linux, também.</li>
+<li><strong>Node</strong> — o programa que roda os scripts do kit (os arquivos <code>.mjs</code>). Também traz o <code>npm</code>, que instala ferramentas.</li>
+<li><strong>WSL</strong> — o Linux que roda dentro do Windows. É por ele que quem usa Windows segue este curso.</li>
+<li><strong>Login pela assinatura</strong> — entrar no Claude Code ou no Codex com a mesma conta do plano mensal. Nada de chave de API.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ Você precisa</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Node 18 ou mais novo</li>
+<li>✓ Claude Code ou Codex (ou os dois), logados</li>
+<li>✓ Linux, Mac ou Windows com WSL</li>
+<li>✓ Uma pasta onde o kit vai morar</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ Você não precisa</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Chave de API paga</li>
+<li>✗ Servidor, nuvem ou painel web</li>
+<li>✗ Saber programar</li>
+<li>✗ Ollama (é opcional: modelos locais grátis)</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⌨️</div><div class="text-sm font-semibold text-emerald-400">Terminal</div><p class="text-xs text-neutral-400 mt-1">onde tudo acontece</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🟩</div><div class="text-sm font-semibold text-emerald-400">Node 18+</div><p class="text-xs text-neutral-400 mt-1">roda os scripts</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🐧</div><div class="text-sm font-semibold text-emerald-400">WSL</div><p class="text-xs text-neutral-400 mt-1">Linux no Windows</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-emerald-400">Assinatura</div><p class="text-xs text-neutral-400 mt-1">login, sem API</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Clone o kit na sua máquina</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t2-p1">O kit mora no GitHub. Um comando copia tudo para uma pasta nova no seu computador. O nome <code>meu-projeto</code> é sugestão do README: troque pelo nome do seu trabalho, se quiser.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t2-p2">A pasta clonada <strong class="text-emerald-400">vira o seu projeto</strong>. As regras, as pontes e as receitas já chegam no lugar certo. Você não instala nada além disso.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Git, repositório e clone</h3>
+<p class="text-neutral-300 text-sm"><strong>Git</strong> é o programa que guarda o histórico de mudanças de uma pasta. <strong>Repositório</strong> é essa pasta com histórico, publicada num site como o GitHub. <strong>Clonar</strong> é baixar uma cópia completa dela para o seu computador, pronta para usar e editar.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: ter o kit numa pasta sua</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">No terminal, na pasta onde você guarda seus projetos (rode as duas linhas, uma de cada vez):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">git clone https://github.com/inematds/inema-agent-runtime meu-projeto
 cd meu-projeto</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> abra a pasta <code>meu-projeto</code> no gerenciador de arquivos. Dentro dela têm de estar a pasta <code>runtime/</code> e os arquivos <code>README.md</code>, <code>AGENTS.md</code> e <code>CLAUDE.md</code>.</div>
-      </div>
-
-      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 240" class="w-full h-auto" role="img" aria-label="Diagrama do clone. À esquerda, o repositório inema-agent-runtime no GitHub. Uma seta marcada git clone leva até a pasta meu-projeto no seu computador, que contém runtime, AGENTS.md, CLAUDE.md e a pasta .claude.">
-          <defs>
-            <pattern id="m12-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/></pattern>
-            <filter id="m12-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m12-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="240" fill="url(#m12-grid)"/>
-          <rect x="40" y="80" width="200" height="80" rx="14" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-          <text x="140" y="113" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13">☁️ GitHub</text>
-          <text x="140" y="135" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">inematds/inema-agent-runtime</text>
-          <line class="wf-flow" x1="242" y1="120" x2="378" y2="120" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#m12-arrow)"/>
-          <text x="310" y="106" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="12">git clone</text>
-          <g filter="url(#m12-glow)"><rect x="385" y="30" width="370" height="180" rx="14" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
-          <text x="405" y="58" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="14">📁 meu-projeto (no seu computador)</text>
-          <g font-family="Inter,sans-serif" font-size="12">
-            <rect class="wf-a" x="405" y="75" width="160" height="34" rx="9" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="485" y="97" text-anchor="middle" fill="#bae6fd">runtime/</text>
-            <rect class="wf-a" x="575" y="75" width="160" height="34" rx="9" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="655" y="97" text-anchor="middle" fill="#bae6fd">.claude/</text>
-            <rect x="405" y="120" width="160" height="34" rx="9" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="485" y="142" text-anchor="middle" fill="#bae6fd">AGENTS.md</text>
-            <rect x="575" y="120" width="160" height="34" rx="9" fill="#0b1f2e" stroke="#38bdf8" stroke-width="1.5"/><text x="655" y="142" text-anchor="middle" fill="#bae6fd">CLAUDE.md</text>
-          </g>
-          <text x="570" y="188" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">regras, pontes e receitas já no lugar</text>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a caixa cinza é a cópia pública, que você não altera. A caixa verde é a sua cópia: tudo o que o curso pede para editar fica nela. O <code>cd</code> do comando é o passo de "entrar" nessa caixa.</p>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Todo comando do curso roda daqui</h3>
-        <p class="text-neutral-300 text-sm">Os caminhos das receitas começam em <code>runtime/…</code>. Eles só funcionam se o terminal estiver dentro da pasta do kit. Abriu um terminal novo? Entre de novo com <code>cd meu-projeto</code>.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗂️</div><div class="text-sm font-semibold text-emerald-400">Git</div><p class="text-xs text-neutral-400 mt-1">histórico da pasta</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">☁️</div><div class="text-sm font-semibold text-emerald-400">Repositório</div><p class="text-xs text-neutral-400 mt-1">a pasta publicada</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📥</div><div class="text-sm font-semibold text-emerald-400">Clone</div><p class="text-xs text-neutral-400 mt-1">cópia completa</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-emerald-400">meu-projeto</div><p class="text-xs text-neutral-400 mt-1">a pasta do kit</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 3 ===================== -->
-    <section id="topico-3" data-inema-topic="modulo-1-2#topico-3" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold flex-1">Rode o diagnóstico</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m1-2-t3-p1" class="text-neutral-300 mb-4 leading-relaxed">O <code>doctor.mjs</code> é o <strong class="text-emerald-400">diagnóstico</strong> do kit. Ele confere quatro programas (Node, Claude Code, Codex e Ollama) e termina com uma palavra: <strong>PRONTO</strong> ou <strong>FALTA</strong>.</p>
-      <p data-inema-block="m1-2-t3-p2" class="text-neutral-300 mb-6 leading-relaxed">Ele só pergunta a versão de cada programa e se o Codex está logado. Não chama modelo nenhum, então <strong>não gasta cota</strong>. Pode rodar quantas vezes quiser.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: saber o que está instalado e logado</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/scripts/doctor.mjs</pre>
-          <p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux):</p>
-          <pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node    ok        24.13.0
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> abra a pasta <code>meu-projeto</code> no gerenciador de arquivos. Dentro dela têm de estar a pasta <code>runtime/</code> e os arquivos <code>README.md</code>, <code>AGENTS.md</code> e <code>CLAUDE.md</code>.</div>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Diagrama do clone. À esquerda, o repositório inema-agent-runtime no GitHub. Uma seta marcada git clone leva até a pasta meu-projeto no seu computador, que contém runtime, AGENTS.md, CLAUDE.md e a pasta .claude." class="w-full h-auto" role="img" viewbox="0 0 800 240">
+<defs>
+<pattern height="32" id="m12-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m12-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m12-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12-grid)" height="240" width="800" x="0" y="0"></rect>
+<rect fill="#1f2937" height="80" rx="14" stroke="#6b7280" stroke-width="2" width="200" x="40" y="80"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="140" y="113">☁️ GitHub</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="140" y="135">inematds/inema-agent-runtime</text>
+<line class="wf-flow" marker-end="url(#m12-arrow)" stroke="#38bdf8" stroke-width="2.5" x1="242" x2="378" y1="120" y2="120"></line>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="310" y="106">git clone</text>
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="180" rx="14" stroke="#34d399" stroke-width="2" width="370" x="385" y="30"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" x="405" y="58">📁 meu-projeto (no seu computador)</text>
+<g font-family="Inter,sans-serif" font-size="12">
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="405" y="75"></rect><text fill="#bae6fd" text-anchor="middle" x="485" y="97">runtime/</text>
+<rect class="wf-a" fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="575" y="75"></rect><text fill="#bae6fd" text-anchor="middle" x="655" y="97">.claude/</text>
+<rect fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="405" y="120"></rect><text fill="#bae6fd" text-anchor="middle" x="485" y="142">AGENTS.md</text>
+<rect fill="#0b1f2e" height="34" rx="9" stroke="#38bdf8" stroke-width="1.5" width="160" x="575" y="120"></rect><text fill="#bae6fd" text-anchor="middle" x="655" y="142">CLAUDE.md</text>
+</g>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="570" y="188">regras, pontes e receitas já no lugar</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> a caixa cinza é a cópia pública, que você não altera. A caixa verde é a sua cópia: tudo o que o curso pede para editar fica nela. O <code>cd</code> do comando é o passo de "entrar" nessa caixa.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Todo comando do curso roda daqui</h3>
+<p class="text-neutral-300 text-sm">Os caminhos das receitas começam em <code>runtime/…</code>. Eles só funcionam se o terminal estiver dentro da pasta do kit. Abriu um terminal novo? Entre de novo com <code>cd meu-projeto</code>.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗂️</div><div class="text-sm font-semibold text-emerald-400">Git</div><p class="text-xs text-neutral-400 mt-1">histórico da pasta</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">☁️</div><div class="text-sm font-semibold text-emerald-400">Repositório</div><p class="text-xs text-neutral-400 mt-1">a pasta publicada</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📥</div><div class="text-sm font-semibold text-emerald-400">Clone</div><p class="text-xs text-neutral-400 mt-1">cópia completa</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📁</div><div class="text-sm font-semibold text-emerald-400">meu-projeto</div><p class="text-xs text-neutral-400 mt-1">a pasta do kit</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Rode o diagnóstico</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t3-p1">O <code>doctor.mjs</code> é o <strong class="text-emerald-400">diagnóstico</strong> do kit. Ele confere quatro programas (Node, Claude Code, Codex e Ollama) e termina com uma palavra: <strong>PRONTO</strong> ou <strong>FALTA</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t3-p2">Ele só pergunta a versão de cada programa e se o Codex está logado. Não chama modelo nenhum, então <strong>não gasta cota</strong>. Pode rodar quantas vezes quiser.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: saber o que está instalado e logado</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">No terminal, dentro da pasta do kit:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node runtime/scripts/doctor.mjs</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Saída real (05/10/2026, Linux):</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">node    ok        24.13.0
 claude  ok        2.1.289   login: abra `claude` uma vez; R2 usa ele
 codex   ok        0.159.2   Logged in using ChatGPT
 ollama  ok        0.33.2    opcional: modelos locais grátis
 
 PRONTO: siga para runtime/receitas/R1-claude-usa-codex.md</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> a última linha começa com <code>PRONTO</code>. Se aparecer <code>FALTA</code>, veja o tópico 4. As versões na sua máquina podem ser outras; o que importa é a segunda coluna.</div>
-      </div>
-
-      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 250" class="w-full h-auto" role="img" aria-label="Fluxo do diagnóstico. O doctor confere quatro itens: node, claude, codex e ollama. Os três primeiros decidem o resultado; o ollama é opcional. Se houver Node 18 ou mais e pelo menos um dos agentes, o resultado é PRONTO com saída 0. Senão, FALTA com saída 1.">
-          <defs>
-            <pattern id="m12b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/></pattern>
-            <filter id="m12b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m12b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="250" fill="url(#m12b-grid)"/>
-          <g filter="url(#m12b-glow)"><rect x="30" y="95" width="140" height="60" rx="14" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
-          <text x="100" y="122" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="14">doctor.mjs</text>
-          <text x="100" y="140" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">só lê versões</text>
-          <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
-            <rect class="wf-a" x="240" y="20" width="170" height="38" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="325" y="44" fill="#bae6fd">node · precisa 18+</text>
-            <rect class="wf-a" x="240" y="78" width="170" height="38" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="325" y="102" fill="#bae6fd">claude · instalado?</text>
-            <rect class="wf-a" x="240" y="136" width="170" height="38" rx="10" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/><text x="325" y="160" fill="#bae6fd">codex · logado?</text>
-            <rect x="240" y="194" width="170" height="38" rx="10" fill="#1f2937" stroke="#6b7280" stroke-width="2" stroke-dasharray="5 4"/><text x="325" y="218" fill="#9ca3af">ollama · opcional</text>
-          </g>
-          <g stroke="#38bdf8" stroke-width="1.5" opacity="0.6">
-            <line x1="170" y1="115" x2="240" y2="39"/><line x1="170" y1="120" x2="240" y2="97"/><line x1="170" y1="130" x2="240" y2="155"/><line x1="170" y1="135" x2="240" y2="213" stroke-dasharray="4 4"/>
-          </g>
-          <line class="wf-flow" x1="412" y1="97" x2="530" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#m12b-arrow)"/>
-          <line x1="412" y1="155" x2="530" y2="175" stroke="#f87171" stroke-width="2" stroke-dasharray="4 4"/>
-          <rect x="535" y="45" width="230" height="60" rx="12" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
-          <text x="650" y="71" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="13">PRONTO · saída 0</text>
-          <text x="650" y="90" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">Node 18+ e ao menos um agente</text>
-          <rect x="535" y="145" width="230" height="60" rx="12" fill="#2a0f0f" stroke="#f87171" stroke-width="2"/>
-          <text x="650" y="171" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-weight="600" font-size="13">FALTA · saída 1</text>
-          <text x="650" y="190" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="11">Node velho ou nenhum agente</text>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as caixas azuis decidem o resultado; a cinza tracejada (Ollama) só informa. Basta um agente para dar PRONTO: o Claude Code sozinho já serve, o Codex sozinho também.</p>
-
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? "Saída 0" e "saída 1"</h3>
-        <p class="text-neutral-300 text-sm">Todo comando, ao terminar, devolve um número para o sistema. <strong>Saída 0</strong> quer dizer "deu certo"; qualquer outro número quer dizer "algo faltou". Você não vê esse número na tela, mas os agentes e os scripts do kit leem. É assim que o agente sabe, sem adivinhar, se o diagnóstico passou.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-emerald-400">Diagnóstico</div><p class="text-xs text-neutral-400 mt-1">confere sem gastar</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">0️⃣</div><div class="text-sm font-semibold text-emerald-400">Saída 0</div><p class="text-xs text-neutral-400 mt-1">deu certo</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">PRONTO</div><p class="text-xs text-neutral-400 mt-1">siga para a R1</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⛔</div><div class="text-sm font-semibold text-emerald-400">FALTA</div><p class="text-xs text-neutral-400 mt-1">instale o que falta</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 4 ===================== -->
-    <section id="topico-4" data-inema-topic="modulo-1-2#topico-4" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold flex-1">Leia cada linha do doctor</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m1-2-t4-p1" class="text-neutral-300 mb-4 leading-relaxed">Cada linha tem quatro colunas: o programa, o <strong class="text-emerald-400">estado</strong>, a versão e uma nota. Quando algo falta, a nota já traz o comando que resolve. Você não precisa adivinhar.</p>
-      <p data-inema-block="m1-2-t4-p2" class="text-neutral-300 mb-6 leading-relaxed">A tabela abaixo junta todos os estados que o <code>doctor.mjs</code> pode mostrar e o que fazer em cada um.</p>
-
-      <div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
-        <table class="w-full text-sm text-left">
-          <thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Linha</th><th class="px-4 py-3 font-semibold">Estado</th><th class="px-4 py-3 font-semibold">Quer dizer</th><th class="px-4 py-3 font-semibold">O que fazer</th></tr></thead>
-          <tbody class="divide-y divide-dark-600">
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">node</td><td class="px-4 py-3 text-neutral-300"><code>velho</code></td><td class="px-4 py-3 text-neutral-300">versão abaixo da 18</td><td class="px-4 py-3 text-neutral-300">atualize o Node (a nota diz "precisa 18+")</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">claude</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">Claude Code não instalado</td><td class="px-4 py-3 text-neutral-300"><code>npm i -g @anthropic-ai/claude-code</code></td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">codex</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">Codex não instalado</td><td class="px-4 py-3 text-neutral-300"><code>npm i -g @openai/codex</code></td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">codex</td><td class="px-4 py-3 text-neutral-300"><code>sem login</code></td><td class="px-4 py-3 text-neutral-300">instalado, mas sem conta</td><td class="px-4 py-3 text-neutral-300"><code>codex login</code></td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">ollama</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">sem modelos locais</td><td class="px-4 py-3 text-neutral-300">nada: é opcional e não muda o PRONTO</td></tr>
-            <tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">qualquer</td><td class="px-4 py-3 text-neutral-300"><code>ok</code></td><td class="px-4 py-3 text-neutral-300">instalado (e, no Codex, logado)</td><td class="px-4 py-3 text-neutral-300">siga em frente</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> só a linha do Codex confere o login. A do Claude confere a instalação e lembra, na nota, de abrir o <code>claude</code> uma vez para entrar na conta.</p>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Leia a última linha</h4><p class="text-neutral-300 text-sm">PRONTO: pule para o tópico 5. FALTA: continue no passo 2.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ache a linha que não está "ok"</h4><p class="text-neutral-300 text-sm">Copie o comando da nota dessa linha e rode no terminal.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Rode o doctor de novo</h4><p class="text-neutral-300 text-sm">Repita até a última linha dizer PRONTO. Como ele não gasta cota, repetir é de graça.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Até o doctor já errou, e virou registro</h3>
-        <p class="text-neutral-300 text-sm">A primeira linha do <code>runtime/FALHAS.md</code> do kit conta um caso real: o doctor dizia "codex sem login" com o Codex logado. A causa: o Codex responde o status de login por um canal que o script não lia. A menor correção foi ler os dois canais. Uma linha, sem drama. Você vai fazer o mesmo no módulo 4.2.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">ok</div><p class="text-xs text-neutral-400 mt-1">está tudo certo</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-emerald-400">ausente</div><p class="text-xs text-neutral-400 mt-1">instale com npm</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-emerald-400">sem login</div><p class="text-xs text-neutral-400 mt-1">codex login</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🕰️</div><div class="text-sm font-semibold text-emerald-400">velho</div><p class="text-xs text-neutral-400 mt-1">Node abaixo da 18</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 5 ===================== -->
-    <section id="topico-5" data-inema-topic="modulo-1-2#topico-5" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold flex-1">Veja como os dois agentes leem as mesmas regras</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m1-2-t5-p1" class="text-neutral-300 mb-4 leading-relaxed">Cada agente procura, ao abrir, um arquivo de instruções com um nome diferente. O Codex lê o <code>AGENTS.md</code>. O Claude Code lê o <code>CLAUDE.md</code>.</p>
-      <p data-inema-block="m1-2-t5-p2" class="text-neutral-300 mb-6 leading-relaxed">O kit escreve as regras <strong class="text-emerald-400">uma vez só</strong>, no <code>AGENTS.md</code>. O <code>CLAUDE.md</code> começa com <code>@AGENTS.md</code>, que manda o Claude incluir aquele arquivo. Resultado: uma regra, dois leitores.</p>
-
-      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-        <svg viewBox="0 0 800 230" class="w-full h-auto" role="img" aria-label="Diagrama das regras compartilhadas. No centro, AGENTS.md com as regras. O Codex lê o AGENTS.md diretamente. O Claude Code lê o CLAUDE.md, que contém a linha @AGENTS.md e por isso puxa o mesmo arquivo. Abaixo, o .claude/settings.json aplica os bloqueios só no Claude Code.">
-          <defs>
-            <pattern id="m12c-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/></pattern>
-            <filter id="m12c-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <marker id="m12c-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="800" height="230" fill="url(#m12c-grid)"/>
-          <rect x="30" y="30" width="150" height="56" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-          <text x="105" y="63" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">Codex</text>
-          <rect x="620" y="30" width="150" height="56" rx="12" fill="#0b1f2e" stroke="#38bdf8" stroke-width="2"/>
-          <text x="695" y="63" text-anchor="middle" fill="#bae6fd" font-family="Inter,sans-serif" font-size="13">Claude Code</text>
-          <rect x="430" y="30" width="150" height="56" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2"/>
-          <text x="505" y="55" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13">CLAUDE.md</text>
-          <text x="505" y="73" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">@AGENTS.md</text>
-          <line class="wf-flow" x1="618" y1="58" x2="584" y2="58" stroke="#38bdf8" stroke-width="2" marker-end="url(#m12c-arrow)"/>
-          <g filter="url(#m12c-glow)"><rect x="235" y="110" width="210" height="64" rx="14" fill="#0e2018" stroke="#34d399" stroke-width="2"/></g>
-          <text x="340" y="138" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="14">AGENTS.md</text>
-          <text x="340" y="158" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">as regras, escritas uma vez</text>
-          <path class="wf-flow" d="M105,88 C 110,140 170,142 232,142" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#m12c-arrow)"/>
-          <path class="wf-flow" d="M505,88 C 500,140 480,142 448,142" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#m12c-arrow)"/>
-          <rect x="560" y="150" width="210" height="56" rx="12" fill="#1f2937" stroke="#6b7280" stroke-width="2" stroke-dasharray="5 4"/>
-          <text x="665" y="175" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">.claude/settings.json</text>
-          <text x="665" y="193" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">bloqueios, só no Claude Code</text>
-          <line x1="695" y1="88" x2="695" y2="148" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4 4"/>
-        </svg>
-      </div>
-      <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as duas setas azuis chegam na mesma caixa verde. Mudou uma regra no <code>AGENTS.md</code>? Os dois agentes passam a obedecer na próxima sessão. O <code>settings.json</code> fica de lado porque é coisa só do Claude Code.</p>
-
-      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 O CLAUDE.md inteiro (conteúdo real do kit)</span></div>
-        <div class="p-5">
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">@AGENTS.md
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> a última linha começa com <code>PRONTO</code>. Se aparecer <code>FALTA</code>, veja o tópico 4. As versões na sua máquina podem ser outras; o que importa é a segunda coluna.</div>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Fluxo do diagnóstico. O doctor confere quatro itens: node, claude, codex e ollama. Os três primeiros decidem o resultado; o ollama é opcional. Se houver Node 18 ou mais e pelo menos um dos agentes, o resultado é PRONTO com saída 0. Senão, FALTA com saída 1." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m12b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m12b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m12b-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12b-grid)" height="250" width="800" x="0" y="0"></rect>
+<g filter="url(#m12b-glow)"><rect fill="#0e2018" height="60" rx="14" stroke="#34d399" stroke-width="2" width="140" x="30" y="95"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="100" y="122">doctor.mjs</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="100" y="140">só lê versões</text>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="240" y="20"></rect><text fill="#bae6fd" x="325" y="44">node · precisa 18+</text>
+<rect class="wf-a" fill="#0b1f2e" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="240" y="78"></rect><text fill="#bae6fd" x="325" y="102">claude · instalado?</text>
+<rect class="wf-a" fill="#0b1f2e" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="240" y="136"></rect><text fill="#bae6fd" x="325" y="160">codex · logado?</text>
+<rect fill="#1f2937" height="38" rx="10" stroke="#6b7280" stroke-dasharray="5 4" stroke-width="2" width="170" x="240" y="194"></rect><text fill="#9ca3af" x="325" y="218">ollama · opcional</text>
+</g>
+<g opacity="0.6" stroke="#38bdf8" stroke-width="1.5">
+<line x1="170" x2="240" y1="115" y2="39"></line><line x1="170" x2="240" y1="120" y2="97"></line><line x1="170" x2="240" y1="130" y2="155"></line><line stroke-dasharray="4 4" x1="170" x2="240" y1="135" y2="213"></line>
+</g>
+<line class="wf-flow" marker-end="url(#m12b-arrow)" stroke="#38bdf8" stroke-width="2" x1="412" x2="530" y1="97" y2="75"></line>
+<line stroke="#f87171" stroke-dasharray="4 4" stroke-width="2" x1="412" x2="530" y1="155" y2="175"></line>
+<rect fill="#0e2018" height="60" rx="12" stroke="#34d399" stroke-width="2" width="230" x="535" y="45"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="650" y="71">PRONTO · saída 0</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="650" y="90">Node 18+ e ao menos um agente</text>
+<rect fill="#2a0f0f" height="60" rx="12" stroke="#f87171" stroke-width="2" width="230" x="535" y="145"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="650" y="171">FALTA · saída 1</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="650" y="190">Node velho ou nenhum agente</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as caixas azuis decidem o resultado; a cinza tracejada (Ollama) só informa. Basta um agente para dar PRONTO: o Claude Code sozinho já serve, o Codex sozinho também.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? "Saída 0" e "saída 1"</h3>
+<p class="text-neutral-300 text-sm">Todo comando, ao terminar, devolve um número para o sistema. <strong>Saída 0</strong> quer dizer "deu certo"; qualquer outro número quer dizer "algo faltou". Você não vê esse número na tela, mas os agentes e os scripts do kit leem. É assim que o agente sabe, sem adivinhar, se o diagnóstico passou.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🩺</div><div class="text-sm font-semibold text-emerald-400">Diagnóstico</div><p class="text-xs text-neutral-400 mt-1">confere sem gastar</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">0️⃣</div><div class="text-sm font-semibold text-emerald-400">Saída 0</div><p class="text-xs text-neutral-400 mt-1">deu certo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">PRONTO</div><p class="text-xs text-neutral-400 mt-1">siga para a R1</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⛔</div><div class="text-sm font-semibold text-emerald-400">FALTA</div><p class="text-xs text-neutral-400 mt-1">instale o que falta</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Leia cada linha do doctor</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t4-p1">Cada linha tem quatro colunas: o programa, o <strong class="text-emerald-400">estado</strong>, a versão e uma nota. Quando algo falta, a nota já traz o comando que resolve. Você não precisa adivinhar.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t4-p2">A tabela abaixo junta todos os estados que o <code>doctor.mjs</code> pode mostrar e o que fazer em cada um.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Linha</th><th class="px-4 py-3 font-semibold">Estado</th><th class="px-4 py-3 font-semibold">Quer dizer</th><th class="px-4 py-3 font-semibold">O que fazer</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">node</td><td class="px-4 py-3 text-neutral-300"><code>velho</code></td><td class="px-4 py-3 text-neutral-300">versão abaixo da 18</td><td class="px-4 py-3 text-neutral-300">atualize o Node (a nota diz "precisa 18+")</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">claude</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">Claude Code não instalado</td><td class="px-4 py-3 text-neutral-300"><code>npm i -g @anthropic-ai/claude-code</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">codex</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">Codex não instalado</td><td class="px-4 py-3 text-neutral-300"><code>npm i -g @openai/codex</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">codex</td><td class="px-4 py-3 text-neutral-300"><code>sem login</code></td><td class="px-4 py-3 text-neutral-300">instalado, mas sem conta</td><td class="px-4 py-3 text-neutral-300"><code>codex login</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">ollama</td><td class="px-4 py-3 text-neutral-300"><code>ausente</code></td><td class="px-4 py-3 text-neutral-300">sem modelos locais</td><td class="px-4 py-3 text-neutral-300">nada: é opcional e não muda o PRONTO</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">qualquer</td><td class="px-4 py-3 text-neutral-300"><code>ok</code></td><td class="px-4 py-3 text-neutral-300">instalado (e, no Codex, logado)</td><td class="px-4 py-3 text-neutral-300">siga em frente</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar na tabela:</strong> só a linha do Codex confere o login. A do Claude confere a instalação e lembra, na nota, de abrir o <code>claude</code> uma vez para entrar na conta.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Leia a última linha</h4><p class="text-neutral-300 text-sm">PRONTO: pule para o tópico 5. FALTA: continue no passo 2.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ache a linha que não está "ok"</h4><p class="text-neutral-300 text-sm">Copie o comando da nota dessa linha e rode no terminal.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Rode o doctor de novo</h4><p class="text-neutral-300 text-sm">Repita até a última linha dizer PRONTO. Como ele não gasta cota, repetir é de graça.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Até o doctor já errou, e virou registro</h3>
+<p class="text-neutral-300 text-sm">A primeira linha do <code>runtime/FALHAS.md</code> do kit conta um caso real: o doctor dizia "codex sem login" com o Codex logado. A causa: o Codex responde o status de login por um canal que o script não lia. A menor correção foi ler os dois canais. Uma linha, sem drama. Você vai fazer o mesmo no módulo 4.2.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-emerald-400">ok</div><p class="text-xs text-neutral-400 mt-1">está tudo certo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-emerald-400">ausente</div><p class="text-xs text-neutral-400 mt-1">instale com npm</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔑</div><div class="text-sm font-semibold text-emerald-400">sem login</div><p class="text-xs text-neutral-400 mt-1">codex login</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🕰️</div><div class="text-sm font-semibold text-emerald-400">velho</div><p class="text-xs text-neutral-400 mt-1">Node abaixo da 18</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Veja como os dois agentes leem as mesmas regras</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t5-p1">Cada agente procura, ao abrir, um arquivo de instruções com um nome diferente. O Codex lê o <code>AGENTS.md</code>. O Claude Code lê o <code>CLAUDE.md</code>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t5-p2">O kit escreve as regras <strong class="text-emerald-400">uma vez só</strong>, no <code>AGENTS.md</code>. O <code>CLAUDE.md</code> começa com <code>@AGENTS.md</code>, que manda o Claude incluir aquele arquivo. Resultado: uma regra, dois leitores.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Diagrama das regras compartilhadas. No centro, AGENTS.md com as regras. O Codex lê o AGENTS.md diretamente. O Claude Code lê o CLAUDE.md, que contém a linha @AGENTS.md e por isso puxa o mesmo arquivo. Abaixo, o .claude/settings.json aplica os bloqueios só no Claude Code." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m12c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m12c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m12c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12c-grid)" height="230" width="800" x="0" y="0"></rect>
+<rect fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="30" y="30"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="105" y="63">Codex</text>
+<rect fill="#0b1f2e" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="620" y="30"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="695" y="63">Claude Code</text>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-width="2" width="150" x="430" y="30"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="505" y="55">CLAUDE.md</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="505" y="73">@AGENTS.md</text>
+<line class="wf-flow" marker-end="url(#m12c-arrow)" stroke="#38bdf8" stroke-width="2" x1="618" x2="584" y1="58" y2="58"></line>
+<g filter="url(#m12c-glow)"><rect fill="#0e2018" height="64" rx="14" stroke="#34d399" stroke-width="2" width="210" x="235" y="110"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="340" y="138">AGENTS.md</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="340" y="158">as regras, escritas uma vez</text>
+<path class="wf-flow" d="M105,88 C 110,140 170,142 232,142" fill="none" marker-end="url(#m12c-arrow)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="wf-flow" d="M505,88 C 500,140 480,142 448,142" fill="none" marker-end="url(#m12c-arrow)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#1f2937" height="56" rx="12" stroke="#6b7280" stroke-dasharray="5 4" stroke-width="2" width="210" x="560" y="150"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="665" y="175">.claude/settings.json</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="665" y="193">bloqueios, só no Claude Code</text>
+<line stroke="#6b7280" stroke-dasharray="4 4" stroke-width="1.5" x1="695" x2="695" y1="88" y2="148"></line>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler o desenho:</strong> as duas setas azuis chegam na mesma caixa verde. Mudou uma regra no <code>AGENTS.md</code>? Os dois agentes passam a obedecer na próxima sessão. O <code>settings.json</code> fica de lado porque é coisa só do Claude Code.</p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">📄 O CLAUDE.md inteiro (conteúdo real do kit)</span></div>
+<div class="p-5">
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">@AGENTS.md
 
 ## Self-learning
 
 Quando o humano corrigir você, ou você notar um erro seu: proponha a lição como uma linha na tabela "Aprendizado" de `runtime/POLITICA.md`. Depois de aprovada, ela entra em `## Lessons` do `AGENTS.md`.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Repare:</strong> a primeira linha puxa o <code>AGENTS.md</code>. O resto é a regra de aprender sem mudar as próprias regras, que você vê no módulo 4.2.</div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
-          <h3 class="font-semibold text-emerald-400 mb-3">✓ O AGENTS.md manda o agente</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✓ Ler a <code>POLITICA.md</code> antes de agir</li>
-            <li>✓ Só usar sistemas listados no <code>CAPACIDADES.md</code></li>
-            <li>✓ Usar o menor modelo que resolve (<code>ROTEAMENTO.md</code>)</li>
-            <li>✓ Subir a escada de vias antes de dizer "impossível"</li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
-          <h3 class="font-semibold text-red-400 mb-3">✗ O settings.json bloqueia no Claude Code</h3>
-          <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>✗ <code>rm -rf</code></li>
-            <li>✗ <code>git push --force</code> e <code>git push -f</code></li>
-            <li>✗ <code>git reset --hard</code></li>
-            <li>✗ servidor MCP fora da lista (só <code>ponte-modelo</code> está liberado)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A guarda já vem ligada</h3>
-        <p class="text-neutral-300 text-sm">O mesmo <code>.claude/settings.json</code> liga a guarda do kit: antes de editar um arquivo que outra sessão mexeu, ou de apagar arquivos, o Claude Code pergunta. Você não precisa configurar nada agora. Os detalhes estão no módulo 4.3.</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📘</div><div class="text-sm font-semibold text-emerald-400">AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">regras para os dois</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📗</div><div class="text-sm font-semibold text-emerald-400">CLAUDE.md</div><p class="text-xs text-neutral-400 mt-1">aponta para o AGENTS</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-emerald-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">inclui o outro arquivo</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-emerald-400">settings.json</div><p class="text-xs text-neutral-400 mt-1">bloqueios e guarda</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== TOPICO 6 ===================== -->
-    <section id="topico-6" data-inema-topic="modulo-1-2#topico-6" class="mb-16">
-      <div class="flex flex-wrap items-center gap-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold flex-1">Faça o primeiro pedido ao agente</h2>
-        <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
-      </div>
-      <p data-inema-block="m1-2-t6-p1" class="text-neutral-300 mb-4 leading-relaxed">Com o PRONTO na tela, abra o agente <strong>dentro da pasta do kit</strong>: digite <code>claude</code> (ou <code>codex</code>) e aperte Enter. Ele abre uma conversa no próprio terminal.</p>
-      <p data-inema-block="m1-2-t6-p2" class="text-neutral-300 mb-6 leading-relaxed">O primeiro pedido é o que o README sugere: o agente lê as regras do kit antes de fazer qualquer coisa e começa, com você, o mapa das suas ferramentas.</p>
-
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Sessão interativa e pasta confiável</h3>
-        <p class="text-neutral-300 text-sm"><strong>Sessão interativa</strong> é a conversa que abre quando você digita <code>claude</code>: você escreve, ele responde e age, até você sair. <strong>Pasta confiável</strong> é a pasta que você autorizou o Claude Code a usar. Na primeira vez ele pergunta se você confia na pasta: escolha "Yes, I trust this folder". Leia a opção marcada antes de apertar Enter; o CHANGELOG 0.2.0 do kit registra que, para as sessões em segundo plano (<code>claude --bg</code>), esse aviso abre com "No, exit" selecionado.</p>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
-        <div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: o agente ler as regras do kit e começar o mapa com você</span></div>
-        <div class="p-5">
-          <p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
-          <pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/LEIA-ME.md e me ajude a preencher o CAPACIDADES.md para o meu trabalho.</pre>
-        </div>
-        <div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> o agente mostra que abriu o <code>runtime/LEIA-ME.md</code> e começa a perguntar sobre os sistemas do seu trabalho. Se ele sair escrevendo no <code>CAPACIDADES.md</code> sem perguntar nada, pare e peça para ir sistema por sistema (módulo 1.4).</div>
-      </div>
-
-      <div class="space-y-5 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ele lê as regras</h4><p class="text-neutral-300 text-sm">O <code>CLAUDE.md</code> (e por ele o <code>AGENTS.md</code>) entra sozinho. O pedido acrescenta o <code>LEIA-ME.md</code>, com o ciclo e a escada.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Você conta o seu trabalho</h4><p class="text-neutral-300 text-sm">A Clara falaria da planilha da agenda. A Sônia, do ERP que só exporta CSV. Diga os seus sistemas com as suas palavras.</p></div>
-        </div>
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ainda não aceite nada</h4><p class="text-neutral-300 text-sm">Por enquanto é conversa. Nos módulos 1.3 e 1.4 você aprende o que uma linha boa do mapa precisa ter antes de aprovar.</p></div>
-        </div>
-      </div>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Abra sempre na pasta do kit</h3>
-        <p class="text-neutral-300 text-sm">Aberto em outra pasta, o agente não acha o <code>CLAUDE.md</code>, o <code>AGENTS.md</code> nem o <code>.claude/settings.json</code>. Ele funciona, mas sem as regras e sem os bloqueios do kit. Antes de digitar <code>claude</code>, confira se o terminal está dentro de <code>meu-projeto</code>.</p>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-1-2#q1">
-        <p class="font-medium mb-4">Teste rápido (opcional): o doctor terminou com <code>FALTA</code>. Qual é o próximo passo?</p>
-        <div class="space-y-2">
-          <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Abrir o claude mesmo assim e pedir que ele resolva.</button>
-          <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Achar a linha que não está "ok", rodar o comando da nota dela e rodar o doctor de novo.</button>
-          <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Instalar o Ollama, porque sem ele nada funciona.</button>
-        </div>
-        <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-emerald-400">Sessão</div><p class="text-xs text-neutral-400 mt-1">conversa no terminal</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔓</div><div class="text-sm font-semibold text-emerald-400">Pasta confiável</div><p class="text-xs text-neutral-400 mt-1">"Yes, I trust"</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-emerald-400">LEIA-ME</div><p class="text-xs text-neutral-400 mt-1">lido antes de agir</p></div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-emerald-400">CAPACIDADES</div><p class="text-xs text-neutral-400 mt-1">o mapa começa</p></div>
-      </div>
-      <div class="flex justify-start mt-6">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-          <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ===================== RESUMO ===================== -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Três requisitos</strong><span class="text-neutral-400"> — Node 18+, um agente logado, Linux/Mac ou WSL.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Um clone vira o projeto</strong><span class="text-neutral-400"> — tudo roda de dentro da pasta.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">O doctor não gasta cota</strong><span class="text-neutral-400"> — termina com PRONTO ou FALTA.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Cada linha traz o conserto</strong><span class="text-neutral-400"> — rode a nota e repita o doctor.</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Uma regra, dois agentes</strong><span class="text-neutral-400"> — o CLAUDE.md puxa o AGENTS.md.</span></div></div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
-          <p class="text-neutral-300">1.3 — A escada das vias</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para a trilha</a>
-          <a href="modulo-1-3.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Módulo 1.3 →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <aside class="hidden lg:block">
-    <nav data-inema-toc aria-label="Índice da página" class="sticky top-24">
-      <p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter>Seção 1 de 6</span></p>
-      <ol class="space-y-2 text-sm">
-        <li><a href="#topico-1" class="text-neutral-400 hover:text-emerald-400">1. O que ter</a></li>
-        <li><a href="#topico-2" class="text-neutral-400 hover:text-emerald-400">2. Clone do kit</a></li>
-        <li><a href="#topico-3" class="text-neutral-400 hover:text-emerald-400">3. O diagnóstico</a></li>
-        <li><a href="#topico-4" class="text-neutral-400 hover:text-emerald-400">4. Linhas do doctor</a></li>
-        <li><a href="#topico-5" class="text-neutral-400 hover:text-emerald-400">5. AGENTS e CLAUDE</a></li>
-        <li><a href="#topico-6" class="text-neutral-400 hover:text-emerald-400">6. Primeiro pedido</a></li>
-      </ol>
-    </nav>
-  </aside>
-  </div>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>INEMA Agent Runtime · 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> - <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a></p>
-      <p class="mt-2 text-xs">Kit usado no curso: <a href="https://github.com/inematds/inema-agent-runtime" target="_blank" class="text-sky-400 hover:text-sky-300">github.com/inematds/inema-agent-runtime</a></p>
-    </div>
-  </footer>
-
-  <script>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Repare:</strong> a primeira linha puxa o <code>AGENTS.md</code>. O resto é a regra de aprender sem mudar as próprias regras, que você vê no módulo 4.2.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-emerald-500/30">
+<h3 class="font-semibold text-emerald-400 mb-3">✓ O AGENTS.md manda o agente</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Ler a <code>POLITICA.md</code> antes de agir</li>
+<li>✓ Só usar sistemas listados no <code>CAPACIDADES.md</code></li>
+<li>✓ Usar o menor modelo que resolve (<code>ROTEAMENTO.md</code>)</li>
+<li>✓ Subir a escada de vias antes de dizer "impossível"</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ O settings.json bloqueia no Claude Code</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ <code>rm -rf</code></li>
+<li>✗ <code>git push --force</code> e <code>git push -f</code></li>
+<li>✗ <code>git reset --hard</code></li>
+<li>✗ servidor MCP fora da lista (só <code>ponte-modelo</code> está liberado)</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A guarda já vem ligada</h3>
+<p class="text-neutral-300 text-sm">O mesmo <code>.claude/settings.json</code> liga a guarda do kit: antes de editar um arquivo que outra sessão mexeu, ou de apagar arquivos, o Claude Code pergunta. Você não precisa configurar nada agora. Os detalhes estão no módulo 4.3.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📘</div><div class="text-sm font-semibold text-emerald-400">AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">regras para os dois</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📗</div><div class="text-sm font-semibold text-emerald-400">CLAUDE.md</div><p class="text-xs text-neutral-400 mt-1">aponta para o AGENTS</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔗</div><div class="text-sm font-semibold text-emerald-400">@AGENTS.md</div><p class="text-xs text-neutral-400 mt-1">inclui o outro arquivo</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚙️</div><div class="text-sm font-semibold text-emerald-400">settings.json</div><p class="text-xs text-neutral-400 mt-1">bloqueios e guarda</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Faça o primeiro pedido ao agente</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m1-2-t6-p1">Com o PRONTO na tela, abra o agente <strong>dentro da pasta do kit</strong>: digite <code>claude</code> (ou <code>codex</code>) e aperte Enter. Ele abre uma conversa no próprio terminal.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t6-p2">O primeiro pedido é o que o README sugere: o agente lê as regras do kit antes de fazer qualquer coisa e começa, com você, o mapa das suas ferramentas.</p>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? Sessão interativa e pasta confiável</h3>
+<p class="text-neutral-300 text-sm"><strong>Sessão interativa</strong> é a conversa que abre quando você digita <code>claude</code>: você escreve, ele responde e age, até você sair. <strong>Pasta confiável</strong> é a pasta que você autorizou o Claude Code a usar. Na primeira vez ele pergunta se você confia na pasta: escolha "Yes, I trust this folder". Leia a opção marcada antes de apertar Enter; o CHANGELOG 0.2.0 do kit registra que, para as sessões em segundo plano (<code>claude --bg</code>), esse aviso abre com "No, exit" selecionado.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-emerald-900/20 border-b border-emerald-500/30"><span class="text-emerald-400 font-semibold text-sm">🎯 Objetivo: o agente ler as regras do kit e começar o mapa com você</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Abra <code>claude</code> na pasta do kit e cole:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Leia runtime/LEIA-ME.md e me ajude a preencher o CAPACIDADES.md para o meu trabalho.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-emerald-400">Como verificar:</strong> o agente mostra que abriu o <code>runtime/LEIA-ME.md</code> e começa a perguntar sobre os sistemas do seu trabalho. Se ele sair escrevendo no <code>CAPACIDADES.md</code> sem perguntar nada, pare e peça para ir sistema por sistema (módulo 1.4).</div>
+</div>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ele lê as regras</h4><p class="text-neutral-300 text-sm">O <code>CLAUDE.md</code> (e por ele o <code>AGENTS.md</code>) entra sozinho. O pedido acrescenta o <code>LEIA-ME.md</code>, com o ciclo e a escada.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Você conta o seu trabalho</h4><p class="text-neutral-300 text-sm">A Clara falaria da planilha da agenda. A Sônia, do ERP que só exporta CSV. Diga os seus sistemas com as suas palavras.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Ainda não aceite nada</h4><p class="text-neutral-300 text-sm">Por enquanto é conversa. Nos módulos 1.3 e 1.4 você aprende o que uma linha boa do mapa precisa ter antes de aprovar.</p></div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> Abra sempre na pasta do kit</h3>
+<p class="text-neutral-300 text-sm">Aberto em outra pasta, o agente não acha o <code>CLAUDE.md</code>, o <code>AGENTS.md</code> nem o <code>.claude/settings.json</code>. Ele funciona, mas sem as regras e sem os bloqueios do kit. Antes de digitar <code>claude</code>, confira se o terminal está dentro de <code>meu-projeto</code>.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-1-2#q1">
+<p class="font-medium mb-4">Teste rápido (opcional): o doctor terminou com <code>FALTA</code>. Qual é o próximo passo?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Abrir o claude mesmo assim e pedir que ele resolva.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Achar a linha que não está "ok", rodar o comando da nota dela e rodar o doctor de novo.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Instalar o Ollama, porque sem ele nada funciona.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💬</div><div class="text-sm font-semibold text-emerald-400">Sessão</div><p class="text-xs text-neutral-400 mt-1">conversa no terminal</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔓</div><div class="text-sm font-semibold text-emerald-400">Pasta confiável</div><p class="text-xs text-neutral-400 mt-1">"Yes, I trust"</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-emerald-400">LEIA-ME</div><p class="text-xs text-neutral-400 mt-1">lido antes de agir</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🗺️</div><div class="text-sm font-semibold text-emerald-400">CAPACIDADES</div><p class="text-xs text-neutral-400 mt-1">o mapa começa</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Três requisitos</strong><span class="text-neutral-400"> — Node 18+, um agente logado, Linux/Mac ou WSL.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Um clone vira o projeto</strong><span class="text-neutral-400"> — tudo roda de dentro da pasta.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">O doctor não gasta cota</strong><span class="text-neutral-400"> — termina com PRONTO ou FALTA.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Cada linha traz o conserto</strong><span class="text-neutral-400"> — rode a nota e repita o doctor.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Uma regra, dois agentes</strong><span class="text-neutral-400"> — o CLAUDE.md puxa o AGENTS.md.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">1.3 — A escada das vias</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-3.html">Módulo 1.3 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Seção 1 de 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-1">1. O que ter</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Clone do kit</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-3">3. O diagnóstico</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Linhas do doctor</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-5">5. AGENTS e CLAUDE</a></li>
+<li><a class="text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Primeiro pedido</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit usado no curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -768,11 +724,11 @@ Quando o humano corrigir você, ou você notar um erro seu: proponha a lição c
     function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
   </script>
-  <script>
+<script>
     window.addEventListener('DOMContentLoaded', function () {
       if (window.INEMA && INEMA.registerCheck) {
 

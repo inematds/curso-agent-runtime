@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Right model, make your quota go further | INEMA Agent Runtime</title>
+<meta content="Free course from INEMA.CLUB: use the INEMA Agent Runtime kit to have Claude Code and Codex discover, connect to, and use the tools you already have, through the most stable approach and with clear rules." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha3/modulo-3-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha3/modulo-3-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha3/modulo-3-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Discover</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Connect</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Route and execute</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Govern and learn</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Appearance" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Appearance</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Theme" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Sure</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+<div aria-label="Source" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+<div aria-label="Text size" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Line width" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+<div aria-label="Subtext" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+</div>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a><span>/</span>
+<span class="text-purple-400">Module 3.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-1" data-inema-track="3">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎚️ Right model, make your quota go further</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Always using the strongest model is like asking the company director to check a stamp. It works, but it uses up your quota. The <code>ROTEAMENTO.md</code> from the kit says which model to call for each type of task.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Base</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Foundation</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div aria-label="Module 3.1 progress" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="modulo:3-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+<main class="min-w-0" data-inema-module="3-1" data-inema-track="3" id="conteudo">
+<!-- ===================== TOPICO 1 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-1" id="topico-1">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold flex-1">Understand why quota isn’t dollars</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t1-p1">The kit runs through <strong class="text-purple-400">subscription</strong> for Claude Code and Codex. You pay for the monthly plan, period. You don’t get billed per call.</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t1-p2">But the subscription has a usage limit per period: the <strong class="text-purple-400">quota</strong>. Each request to the agent uses up a bit of it. When it runs out, you wait for the period to roll over.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t1-p3">The first line of the <code>runtime/ROTEAMENTO.md</code> summarizes the module: "Don't always use the most powerful model. Each call uses up some of your subscription quota."</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Three words from this module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Quota</strong> — the usage limit on your subscription for a given period. It’s not money: it’s how much more you can ask for before you have to wait.</li>
+<li><strong>Model</strong> — the AI's "head" that responds. Claude Code has several (<code>opus</code>, <code>sonnet</code>, <code>haiku</code>…), Codex too. The more powerful ones think better and use more of your quota.</li>
+<li><strong>API equivalent</strong> — how much the same task would cost if billed by API usage. It’s a benchmark for comparison, even if you don’t pay that amount.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="A subscription quota bar being used up by requests. Requests to the smaller model take up short blocks; requests to the stronger model take up long blocks. At the end of the bar, the warning: quota used up, wait for the period to roll over." class="w-full h-auto" role="img" viewbox="0 0 800 230">
+<defs>
+<pattern height="32" id="m31-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m31-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m31-grid)" height="230" width="800" x="0" y="0"></rect>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" x="40" y="45">Period quota (your subscription)</text>
+<g filter="url(#m31-glow)"><rect fill="#1e1233" height="56" rx="12" stroke="#c084fc" stroke-width="2" width="720" x="40" y="62"></rect></g>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="6" stroke="#38bdf8" stroke-width="1.5" width="40" x="48" y="70"></rect><text fill="#bae6fd" x="68" y="94">m</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="6" stroke="#38bdf8" stroke-width="1.5" width="40" x="94" y="70"></rect><text fill="#bae6fd" x="114" y="94">m</text>
+<rect fill="#1e1233" height="40" rx="6" stroke="#c084fc" stroke-width="1.5" width="90" x="140" y="70"></rect><text fill="#e9d5ff" x="185" y="94">executor</text>
+<rect fill="#0b1f2e" height="40" rx="6" stroke="#38bdf8" stroke-width="1.5" width="40" x="236" y="70"></rect><text fill="#bae6fd" x="256" y="94">m</text>
+<rect fill="#2a0f0f" height="40" rx="6" stroke="#f87171" stroke-width="1.5" width="250" x="282" y="70"></rect><text fill="#fca5a5" x="407" y="94">super for a simple task</text>
+<rect fill="#2a0f0f" height="40" rx="6" stroke="#f87171" stroke-width="1.5" width="214" x="538" y="70"></rect><text fill="#fca5a5" x="645" y="94">super again…</text>
+</g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="40" y="150">m = smaller model: short block · executor: medium block · super: long block</text>
+<rect fill="#2a0f0f" height="40" rx="10" stroke="#f87171" stroke-width="1.8" width="300" x="460" y="168"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="610" y="193">quota ran out: wait for the period to roll over</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the purple bar is the quota. The short blue blocks are requests to the smaller model; the long red ones are the stronger model used unnecessarily. Two unnecessary calls to the top tier use more than several correctly routed tasks. The sizes are illustrative, not measurements.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+<h3 class="font-semibold text-purple-400 mb-3">✓ Quota (what you have)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Comes with the subscription you already pay for</li>
+<li>✓ It ends, but comes back in the next period</li>
+<li>✓ Gets better results when each task uses the right model</li>
+<li>✓ It’s what the entire kit uses</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ API dollars (what you don’t need)</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Separate account, billed per use</li>
+<li>✗ No refunds: what you spent, you paid</li>
+<li>✗ No kit recipe depends on it</li>
+<li>✗ In the course, it appears only as a benchmark</li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> A real number to give you an idea</h3>
+<p class="text-neutral-300 text-sm">The kit's CHANGELOG records that the three-role team (module 3.2), creating a one-sentence file, spent the equivalent of <strong>~US$ 0,73 of API costs</strong>. With a subscription, this is quota, not a charge. But it shows that even a tiny task has a cost when it calls large models.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💳</div><div class="text-sm font-semibold text-purple-400">Subscription</div><p class="text-xs text-neutral-400 mt-1">monthly plan</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⏳</div><div class="text-sm font-semibold text-purple-400">Quota</div><p class="text-xs text-neutral-400 mt-1">limit per period</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📏</div><div class="text-sm font-semibold text-purple-400">Equivalent</div><p class="text-xs text-neutral-400 mt-1">benchmark, not a bill</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🎚️</div><div class="text-sm font-semibold text-purple-400">Routing</div><p class="text-xs text-neutral-400 mt-1">model by task</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 2 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-2" id="topico-2">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold flex-1">Read the four model levels</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t2-p1">The kit doesn’t use standalone model names. It uses <strong class="text-purple-400">model level</strong>: super, top, executor, and smaller. Each level says <em>when</em> to use and point to the model in Claude Code, Codex, and on your computer.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t2-p2">This is the table from <code>runtime/ROTEAMENTO.md</code>, copied from the kit:</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Level</th><th class="px-4 py-3 font-semibold">When</th><th class="px-4 py-3 font-semibold">Claude Code</th><th class="px-4 py-3 font-semibold">Codex</th><th class="px-4 py-3 font-semibold">Local (free, Ollama)</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">super</td><td class="px-4 py-3 text-neutral-300">rare: difficult problem, major decision</td><td class="px-4 py-3 text-neutral-300"><code>fable</code> · high effort</td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-astra</code> · high</td><td class="px-4 py-3 text-neutral-300">—</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">top</td><td class="px-4 py-3 text-neutral-300">plan, decide, review the hard parts</td><td class="px-4 py-3 text-neutral-300"><code>opus</code> · medium</td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-astra</code> · medium</td><td class="px-4 py-3 text-neutral-300"><code>qwen3.8:27b</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">executor</td><td class="px-4 py-3 text-neutral-300">do everyday work</td><td class="px-4 py-3 text-neutral-300"><code>opus</code> · low / <code>sonnet</code></td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-sol</code> · low</td><td class="px-4 py-3 text-neutral-300"><code>qwen3.8:27b</code></td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">smaller</td><td class="px-4 py-3 text-neutral-300">triage, format, check</td><td class="px-4 py-3 text-neutral-300"><code>haiku</code> / <code>sonnet</code></td><td class="px-4 py-3 text-neutral-300"><code>gpt-6-luna</code></td><td class="px-4 py-3 text-neutral-300"><code>llama3.2</code></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> the "When" column is the one you use day to day. The three on the right only tell you which name to type in each tool. Note that <code>gpt-6-luna</code>, the bridge’s default in module 2.1, is the lower level.</p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🆕</span> New here? "Effort" and "Local"</h3>
+<p class="text-neutral-300 text-sm"><strong>Effort</strong> is how much the model thinks before responding (low, medium, high). The same model with high effort thinks more and uses more quota. <strong>Local</strong> is a model that runs on your own computer through Ollama: it uses no quota, but depends on your machine being powerful enough. The doctor shows whether you have Ollama (line <code>ollama</code>, marked as optional).</p>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="A ladder of four model tiers. At the bottom, the smallest model, for triage, formatting, and checking, is the widest and most-used rung. Above it, the executor for day-to-day work. Next, the top model for planning and reviewing difficult work. At the top, the super model, a narrow rung for rare cases." class="w-full h-auto" role="img" viewbox="0 0 800 250">
+<defs>
+<pattern height="32" id="m31b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m31b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+</defs>
+<rect fill="url(#m31b-grid)" height="250" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="12">
+<rect fill="#2a0f0f" height="42" rx="10" stroke="#f87171" stroke-width="2" width="160" x="320" y="20"></rect>
+<text fill="#fca5a5" font-weight="600" text-anchor="middle" x="400" y="38">super</text><text fill="#fca5a5" font-size="10" text-anchor="middle" x="400" y="54">rare</text>
+<rect fill="#1f2937" height="42" rx="10" stroke="#6b7280" stroke-width="2" width="300" x="250" y="72"></rect>
+<text fill="#e5e7eb" font-weight="600" text-anchor="middle" x="400" y="90">top</text><text fill="#9ca3af" font-size="10" text-anchor="middle" x="400" y="106">plan, decide, review the hard parts</text>
+<rect class="wf-a" fill="#0b1f2e" height="42" rx="10" stroke="#38bdf8" stroke-width="2" width="460" x="170" y="124"></rect>
+<text fill="#bae6fd" font-weight="600" text-anchor="middle" x="400" y="142">executor</text><text fill="#7dd3fc" font-size="10" text-anchor="middle" x="400" y="158">the day-to-day work</text>
+<g filter="url(#m31b-glow)"><rect fill="#1e1233" height="48" rx="12" stroke="#c084fc" stroke-width="2" width="640" x="80" y="176"></rect></g>
+<text fill="#c084fc" font-size="14" font-weight="600" text-anchor="middle" x="400" y="197">smaller</text><text fill="#e9d5ff" font-size="11" text-anchor="middle" x="400" y="214">triage, format, check — start here</text>
+</g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="end" x="740" y="40">more quota per call ↑</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="end" x="740" y="240">most used ↓</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the width of a step represents how often it should appear in your day. The smallest one (purple, glowing) is the broad foundation. The super model, red and narrow, is an exception: if it appears all the time, something is wrong with the routing.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔺</div><div class="text-sm font-semibold text-purple-400">super</div><p class="text-xs text-neutral-400 mt-1">big decision</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🧠</div><div class="text-sm font-semibold text-purple-400">top</div><p class="text-xs text-neutral-400 mt-1">plan and review</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🛠️</div><div class="text-sm font-semibold text-purple-400">executor</div><p class="text-xs text-neutral-400 mt-1">do</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔎</div><div class="text-sm font-semibold text-purple-400">smaller</div><p class="text-xs text-neutral-400 mt-1">triage and check</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 3 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-3" id="topico-3">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold flex-1">Start with the smallest thing that solves it</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t3-p1">Routing rule 1: <strong class="text-purple-400">"Start with the smallest option that works; move up only if it fails."</strong> O <code>AGENTS.md</code> from the kit repeats this for both agents: "use the smallest model that gets the job done".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t3-p2">In practice, you move up one level at a time, and only for a reason: the lower level got something wrong, let something through, or couldn’t handle the size.</p>
+<div class="space-y-5 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Smallest fix: format and check</h4><p class="text-neutral-300 text-sm">Clara wants the list of available times formatted as a message. That’s formatting: a lower level.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Did it fail? Executor</h4><p class="text-neutral-300 text-sm">Sônia asks for the total per client from the ERP CSV. If the smaller model gets the sum wrong, move up to the executor. She checks the correct total by hand (module 2.3).</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Decision? Top</h4><p class="text-neutral-300 text-sm">"How do I connect the ERP without an API to the agent?" involves planning and decision-making. That’s where the top tier pays off.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-neutral-100 mb-1">Very: only if the top gets stuck</h4><p class="text-neutral-300 text-sm">A truly difficult problem, a big decision. Rare, as the table says.</p></div>
+</div>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t3-p3">The Codex bridge is set up this way from the start: without you saying anything, it uses <code>gpt-6-luna</code>, the lower level. To move up, you change the variable <code>CODEX_MODELO</code> only for that call.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: call Codex at the lower level and learn how to step up</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, from inside the kit folder (module 2.1 bridge, already with <code>chmod +x</code>):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">runtime/pontes/codex-exec.sh "Responda apenas PONG"</pre>
+<p class="text-xs text-neutral-500 mt-4 mb-2">Result confirmed in CHANGELOG 0.1.0:</p>
+<pre class="font-mono text-xs text-neutral-400 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">PONG</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">To raise Codex to executor level for this call only, put the variable in front:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">CODEX_MODELO=gpt-6-sol runtime/pontes/codex-exec.sh "Responda apenas PONG"</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> the first call returns <code>PONG</code> using the standard <code>gpt-6-luna</code>. The variable applies only to the line where it appears; the next call goes back to the lowest level.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Move up with a written reason</h3>
+<p class="text-neutral-300 text-sm">When you move up a level, write down why in one line ("the kid got the total for Padaria Lua wrong"). After a few weeks, these lines show which tasks should start at a higher level.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⬇️</div><div class="text-sm font-semibold text-purple-400">Start at the bottom</div><p class="text-xs text-neutral-400 mt-1">rule 1</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⬆️</div><div class="text-sm font-semibold text-purple-400">Move up if it goes wrong</div><p class="text-xs text-neutral-400 mt-1">one step at a time</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🌙</div><div class="text-sm font-semibold text-purple-400">gpt-6-luna</div><p class="text-xs text-neutral-400 mt-1">bridge pattern</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🔧</div><div class="text-sm font-semibold text-purple-400">CODEX_MODELO</div><p class="text-xs text-neutral-400 mt-1">switches to a call</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 4 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-4" id="topico-4">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold flex-1">Ask another model to review it</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t4-p1">Rule 3: <strong class="text-purple-400">"Review by another model (e.g., Claude does it, Codex reviews — recipe R1) catches errors the same model doesn’t see."</strong></p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t4-p2">It’s the same idea as asking a colleague to reread your writing. The person who wrote it tends to read what they meant to write, not what’s actually there. A model from another company has different blind spots.</p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Cross-review flow. Claude does the work and sends it to Codex through the codex-exec bridge. Codex reviews it in read-only mode. The review goes back to Claude, which compares it with its own opinion and gives you a combined response." class="w-full h-auto" role="img" viewbox="0 0 800 220">
+<defs>
+<pattern height="32" id="m31c-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m31c-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m31c-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+<marker id="m31c-arrow-p" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"></path></marker>
+</defs>
+<rect fill="url(#m31c-grid)" height="220" width="800" x="0" y="0"></rect>
+<g filter="url(#m31c-glow)"><rect fill="#1e1233" height="70" rx="14" stroke="#c084fc" stroke-width="2" width="170" x="40" y="70"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="125" y="100">Claude does</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="125" y="120">the work</text>
+<line class="wf-flow" marker-end="url(#m31c-arrow)" stroke="#38bdf8" stroke-width="2" x1="212" x2="318" y1="95" y2="95"></line>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="265" y="82">codex-exec.sh</text>
+<rect class="wf-a" fill="#0b1f2e" height="70" rx="14" stroke="#38bdf8" stroke-width="2" width="170" x="322" y="70"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="407" y="100">Codex reviews</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="407" y="120">read-only (N4)</text>
+<path d="M407,142 C 407,190 125,190 125,145" fill="none" marker-end="url(#m31c-arrow-p)" stroke="#c084fc" stroke-dasharray="5 5" stroke-width="2"></path>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="266" y="200">the review comes back</text>
+<line marker-end="url(#m31c-arrow-p)" stroke="#c084fc" stroke-width="2" x1="494" x2="590" y1="105" y2="105"></line>
+<rect fill="#1f2937" height="70" rx="14" stroke="#6b7280" stroke-width="2" width="170" x="595" y="70"></rect>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="680" y="100">you receive</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="680" y="120">the two opinions</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the blue arrow is the bridge from module 2.1 carrying the request to Codex. The dashed purple curve is the review coming back. Codex only reads: Claude decides what stays, and you have the final say.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: get a second opinion from another model without leaving Claude</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">Open <code>claude</code> in the kit folder and paste (R1 recipe prompt):</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Use runtime/pontes/codex-exec.sh to ask Codex to review the README.md file: what might confuse a beginner? Then compare its feedback with your opinion.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> Claude asks to run the bridge, shows what Codex replied, and then separates where the two agree and disagree.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl p-6 border border-purple-500/30">
+<h3 class="font-semibold text-purple-400 mb-3">✓ Review by another model</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✓ Different blind spots cancel each other out</li>
+<li>✓ The reviewer can be a lower-tier model</li>
+<li>✓ Disagreement becomes a question for you</li>
+<li>✓ Already included in the kit’s bridge</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl p-6 border border-red-500/30">
+<h3 class="font-semibold text-red-400 mb-3">✗ The same model reviewing itself</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>✗ Tends to agree with what it just did</li>
+<li>✗ Repeats the same reading error</li>
+<li>✗ Gives a false sense of being “verified”</li>
+<li>✗ Uses up quota without adding a fresh perspective</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👀</div><div class="text-sm font-semibold text-purple-400">Another perspective</div><p class="text-xs text-neutral-400 mt-1">rule 3</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🤝</div><div class="text-sm font-semibold text-purple-400">R1 recipe</div><p class="text-xs text-neutral-400 mt-1">Claude does it, Codex reviews</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📖</div><div class="text-sm font-semibold text-purple-400">Read-only</div><p class="text-xs text-neutral-400 mt-1">bridge pattern</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">⚖️</div><div class="text-sm font-semibold text-purple-400">You decide</div><p class="text-xs text-neutral-400 mt-1">in disagreements</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 5 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-5" id="topico-5">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold flex-1">Build a team only when it’s worth it</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t5-p1">Rule 2: <strong class="text-purple-400">"Use a team of agents only when the work is worth more than the cost of assembling the team."</strong> A team (module 3.2) calls several models, and each one reads the task and the project from scratch.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t5-p2">The kit's own example shows the cost: the team created a one-sentence file and spent the equivalent of ~US$ 0,73 in API costs. It was great as a test. For writing one sentence in day-to-day work, a single agent would be enough.</p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700/60 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Task</th><th class="px-4 py-3 font-semibold">Is one agent enough?</th><th class="px-4 py-3 font-semibold">Is a team worth it?</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Schedule Clara’s free time</td><td class="px-4 py-3 text-neutral-300">Yes, lower level</td><td class="px-4 py-3 text-neutral-300">No</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Answer a question about the POLICY</td><td class="px-4 py-3 text-neutral-300">Yes</td><td class="px-4 py-3 text-neutral-300">No</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Sônia’s monthly ERP summary, with verified totals</td><td class="px-4 py-3 text-neutral-300">Risky: no one checks</td><td class="px-4 py-3 text-neutral-300">Yes: plan, do, and check</td></tr>
+<tr class="bg-dark-800"><td class="px-4 py-3 text-neutral-100">Build a client system bridge</td><td class="px-4 py-3 text-neutral-300">Risky</td><td class="px-4 py-3 text-neutral-300">Yes</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">What to look for in the table:</strong> A team makes sense when mistakes are costly and someone needs to review the work. If the task fits in one sentence and mistakes are immediately visible, one agent is enough.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">⚠️</span> An agent inside an agent costs more than it seems</h3>
+<p class="text-neutral-300 text-sm">Rule 4, copied from the kit: "An agent call from within another agent carries the project's instructions and tools. For simple bridges, use a lightweight folder or <code>--bare</code> from Claude." In other words, each internal call rereads the folder’s rules. In a crowded folder, that multiplies the cost.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Quick question</h3>
+<p class="text-neutral-300 text-sm">Before assembling a team, ask: "if the agent gets this wrong, will I notice right away?" If you will, use a single agent. If you won’t, the team’s reviewer is worth the quota.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👤</div><div class="text-sm font-semibold text-purple-400">One agent</div><p class="text-xs text-neutral-400 mt-1">short task</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">👥</div><div class="text-sm font-semibold text-purple-400">Team</div><p class="text-xs text-neutral-400 mt-1">work greater than the cost</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📦</div><div class="text-sm font-semibold text-purple-400">Lean folder</div><p class="text-xs text-neutral-400 mt-1">less to reread</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">💸</div><div class="text-sm font-semibold text-purple-400">~US$ 0,73</div><p class="text-xs text-neutral-400 mt-1">R2 equivalent</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== TOPICO 6 ===================== -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-6" id="topico-6">
+<div class="flex flex-wrap items-center gap-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold flex-1">Keep the table up to date</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-1-t6-p1">The last line of the <code>ROTEAMENTO.md</code> warns: "Model names change. Check with <code>claude --help</code> e <code>codex --help</code> and update this table."</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t6-p2">The <strong class="text-purple-400">levels</strong> stay. What changes is the name inside each cell. That's why the recipes say "lower level" rather than a fixed name.</p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 bg-purple-900/20 border-b border-purple-500/30"><span class="text-purple-400 font-semibold text-sm">🎯 Objective: see which models your tools support today</span></div>
+<div class="p-5">
+<p class="text-sm text-neutral-400 mb-3">In the terminal, one command at a time:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">claude --help
+codex --help</pre>
+<p class="text-sm text-neutral-400 mt-4 mb-3">Or let the agent compare. Open <code>claude</code> in the kit folder and paste:</p>
+<pre class="font-mono text-sm text-neutral-200 whitespace-pre-wrap bg-dark-900/60 rounded-lg p-4 border border-dark-600">Rode claude --help e codex --help, compare com a tabela de runtime/ROTEAMENTO.md e me diga quais nomes de modelo mudaram. Não edite o arquivo: proponha a mudança numa linha da tabela Aprendizado da runtime/POLITICA.md.</pre>
+</div>
+<div class="px-5 py-3 bg-dark-700/40 border-t border-dark-600 text-neutral-300 text-sm"><strong class="text-purple-400">How to verify:</strong> in the help, look for the model option (the one that chooses the model for the call). If the agent proposed something, the row appears in the Learning table with the status "proposed", and the <code>ROTEAMENTO.md</code> stays the same until you approve.</div>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Table maintenance cycle. First, check with claude --help and codex --help. Then, the agent proposes renaming an entry in the Aprendizado table. You approve. Only then is ROTEAMENTO.md updated. The levels stay the same." class="w-full h-auto" role="img" viewbox="0 0 800 200">
+<defs>
+<pattern height="32" id="m31d-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#c084fc" opacity="0.10" r="1.3"></circle></pattern>
+<filter height="180%" id="m31d-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m31d-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m31d-grid)" height="200" width="800" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="12" text-anchor="middle">
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="30" y="60"></rect><text fill="#bae6fd" font-weight="600" x="110" y="86">1 · check</text><text fill="#7dd3fc" font-size="10" x="110" y="104">--help for both CLIs</text>
+<rect class="wf-a" fill="#0b1f2e" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="225" y="60"></rect><text fill="#bae6fd" font-weight="600" x="305" y="86">2 · propose</text><text fill="#7dd3fc" font-size="10" x="305" y="104">row in Learning</text>
+<g filter="url(#m31d-glow)"><rect fill="#1e1233" height="60" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="420" y="60"></rect></g><text fill="#c084fc" font-weight="600" x="500" y="86">3 · you approve</text><text fill="#e9d5ff" font-size="10" x="500" y="104">yes or no</text>
+<rect fill="#1f2937" height="60" rx="12" stroke="#6b7280" stroke-width="2" width="160" x="615" y="60"></rect><text fill="#e5e7eb" font-weight="600" x="695" y="86">4 · update</text><text fill="#9ca3af" font-size="10" x="695" y="104">ROTEAMENTO.md</text>
+</g>
+<g stroke="#38bdf8" stroke-width="2">
+<line class="wf-flow" marker-end="url(#m31d-arrow)" x1="192" x2="221" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m31d-arrow)" x1="387" x2="416" y1="90" y2="90"></line>
+<line class="wf-flow" marker-end="url(#m31d-arrow)" x1="582" x2="611" y1="90" y2="90"></line>
+</g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="400" y="160">the four levels don't change; only the name inside each cell</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">How to read the diagram:</strong> the glowing purple box is you. The agent checks and proposes, but doesn't change the rules file on its own. It's the "propose → approve → incorporate" of the <code>POLITICA.md</code>, which you’ll examine in depth in module 4.2.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6" data-inema-check="modulo-3-1#q1">
+<p class="font-medium mb-4">Quick test (optional): Sônia only wants to format the total by customer that she has already checked as a table. Which level should she use?</p>
+<div class="space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Very, because it’s client data and has to be perfect.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">A team of three roles, just to be safe.</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Smallest fix: formatting is exactly its job; escalate only if it fails.</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">❓</div><div class="text-sm font-semibold text-purple-400">--help</div><p class="text-xs text-neutral-400 mt-1">source of the current name</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">🏷️</div><div class="text-sm font-semibold text-purple-400">Fixed level</div><p class="text-xs text-neutral-400 mt-1">name changes</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">📝</div><div class="text-sm font-semibold text-purple-400">Learning</div><p class="text-xs text-neutral-400 mt-1">agent proposes</p></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-2xl mb-1">✅</div><div class="text-sm font-semibold text-purple-400">You approve</div><p class="text-xs text-neutral-400 mt-1">and only then changes</p></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ===================== RESUMO ===================== -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🎓</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Quota isn’t dollars</strong><span class="text-neutral-400"> — it's the subscription limit, and each call uses some of it.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Four levels</strong><span class="text-neutral-400"> — super, top, executor, and lowest, with the name on each tool.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Start with the smallest</strong><span class="text-neutral-400"> — and push with <code>CODEX_MODELO</code> only if it makes a mistake.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Review by another model</strong><span class="text-neutral-400"> — Claude does it, Codex reviews.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Team only when it’s worth it</strong><span class="text-neutral-400"> — and the table is checked against <code>--help</code>.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.2 — Three-role team</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to the track</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-2.html">Module 3.2 →</a>
+</div>
+</div>
+</section>
+</main>
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3"><span data-inema-section-counter="">Section 1 of 6</span></p>
+<ol class="space-y-2 text-sm">
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-1">1. Quota × dollar</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-2">2. The four levels</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-3">3. Start with the smallest</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-4">4. Cross-review</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-5">5. When to build a team</a></li>
+<li><a class="text-neutral-400 hover:text-purple-400" href="#topico-6">6. Updated table</a></li>
+</ol>
+</nav>
+</aside>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit used in the course: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.INEMA && INEMA.registerCheck) {
+
+        INEMA.registerCheck('modulo-3-1#q1', { answer: 2, explain: {
+          '0': 'Não. O super é para problema difícil e decisão grande. Formatar uma tabela já conferida não é isso, e gastaria cota à toa.',
+          '1': 'Não. Time só compensa quando o trabalho é maior que o custo de montá-lo. Aqui o resultado aparece na hora e a Sônia confere de olho.',
+          '2': 'Isso. Formatar e checar é o nível menor. Se ele errar, sobe um degrau.'
+        } });
+      }
+    });
+  </script>
+</body>
+</html>

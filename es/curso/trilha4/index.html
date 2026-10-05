@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="agrt" name="inema-course"/>
+<title>Ruta 4 · Gobernar y aprender | INEMA Agent Runtime</title>
+<meta content="Curso gratuito de INEMA.CLUB: usa el kit INEMA Agent Runtime para que Claude Code y Codex descubran, conecten y usen las herramientas que ya tienes, de la forma más estable y con reglas claras." name="description"/>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style; var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+        : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: {
+      primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em TODA pagina, identico) -->
+<script data-inema-manifest="" type="application/json">
+  {"course":"agrt","tracks":[{"n":"1","title":"Descobrir","modules":[{"id":"1-1","title":"Engenharia reversa não é produto","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Instalar e diagnosticar","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"A escada das vias","topics":6,"href":"curso/trilha1/modulo-1-3.html"},{"id":"1-4","title":"O mapa de capacidades","topics":6,"href":"curso/trilha1/modulo-1-4.html"}]},{"n":"2","title":"Conectar","modules":[{"id":"2-1","title":"Claude usa o Codex","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Sua primeira ponte MCP","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"A ponte do seu sistema","topics":6,"href":"curso/trilha2/modulo-2-3.html"},{"id":"2-4","title":"Navegador com política","topics":6,"href":"curso/trilha2/modulo-2-4.html"}]},{"n":"3","title":"Rotear e executar","modules":[{"id":"3-1","title":"Modelo certo, cota rende","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Time de três papéis","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Time em segundo plano","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Agente longo com verificação","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Governar e aprender","modules":[{"id":"4-1","title":"Política de autonomia","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"O agente propõe, você aprova","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Guarda e painel","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Laboratório e projeto final","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-200 { color: #1f2937; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #6b7280; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 5 trilhas (emerald, blue, purple, amber, teal) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.07); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.22); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.06); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Alvos de ancora abaixo do nav sticky */
+    [data-inema-topic], [id^="modulo-"], [id^="topico-"] { scroll-margin-top: 72px; }
+
+    /* SVG light mode + animacao */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+      .wf-flow { stroke-dasharray: 6 6; animation: wf-dash 1.2s linear infinite; }
+    }
+
+    /* Topicos expansiveis */
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    /* Popover de aparência ancorado à direita e fora do layout quando fechado (sem transbordo) */
+    .inema-appearance-pop { right: 0; }
+    main code, main pre { overflow-wrap: anywhere; }
+    main .flex-1 { min-width: 0; }
+    .inema-appearance-pop:not([data-open="true"]) { visibility: hidden; display: none; }
+  </style>
+<link href="https://inematds.github.io/curso-agent-runtime/curso/trilha4/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/en/curso/trilha4/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-agent-runtime/es/curso/trilha4/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha4/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="./" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-black focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-1.5 sm:space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔌</span>
+<span class="font-bold text-lg hidden lg:inline">Agent Runtime</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center sm:space-x-1">
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="xl:hidden">T1</span><span class="hidden xl:inline">Descubrir</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="xl:hidden">T2</span><span class="hidden xl:inline">Conectar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="xl:hidden">T3</span><span class="hidden xl:inline">Enrutar y ejecutar</span>
+</a>
+<a class="px-1.5 sm:px-2.5 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="xl:hidden">T4</span><span class="hidden xl:inline">Gobernar y aprender</span>
+</a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-sm text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden md:inline">Recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<div class="relative">
+<button aria-controls="aparencia" aria-expanded="false" class="p-2 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#aparencia" title="Apariencia" type="button">
+<span aria-hidden="true" class="text-sm font-semibold">Aa</span><span class="sr-only">Apariencia</span>
+</button>
+<div class="inema-appearance-pop" data-inema-appearance="" id="aparencia">
+<div aria-label="Tema" class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+<div aria-label="Fuente" class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+<div aria-label="Tamaño del texto" class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+<div aria-label="Ancho de línea" class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Medio</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+<div aria-label="Entre líneas" class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+</div>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-10 lg:items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">RUTA 4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛡️ Gobernar y aprender</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Un agente sin restricciones necesita reglas por escrito. Define qué hace por su cuenta y qué debe consultar antes; deja que proponga reglas nuevas solo si le das el sí, activa la guarda que pregunta antes de causar daños y termina con el proyecto final: tu puente y tu equipo.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">24</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~2h20</div><div class="text-xs text-neutral-400">Duración</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Proyecto</div><div class="text-xs text-neutral-400">Nivel</div></div>
+</div>
+<div aria-label="Progreso de la ruta 4" aria-valuemax="100" aria-valuemin="0" class="mt-6 max-w-2xl" data-inema-meter="trilha:4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 24</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="mt-8 lg:mt-0 rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 overflow-hidden">
+<svg aria-label="Un escudo ámbar en el centro con los niveles N0 a N4. A la izquierda, el agente propone una regla; a la derecha, la persona la aprueba; abajo, la regla aprobada se agrega a Lessons. Una franja roja en la parte inferior recuerda: borrar y gastar, nunca a solas." class="w-full h-auto" role="img" viewbox="0 0 380 240">
+<defs>
+<pattern height="28" id="t4h-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#fbbf24" opacity="0.12" r="1.2"></circle></pattern>
+<filter height="180%" id="t4h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="t4h-arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t4h-grid)" height="240" width="380" x="0" y="0"></rect>
+<g filter="url(#t4h-glow)"><path d="M190,20 L250,42 L250,100 C250,140 222,162 190,175 C158,162 130,140 130,100 L130,42 Z" fill="#2a1d06" stroke="#fbbf24" stroke-width="2.5"></path></g>
+<g font-family="Inter,sans-serif" font-size="11" text-anchor="middle">
+<text fill="#fbbf24" font-weight="600" x="190" y="60">POLÍTICA</text>
+<text fill="#fde68a" x="190" y="80">N0 · N1 · N2</text>
+<text fill="#fde68a" x="190" y="97">N3 · N4</text>
+<text fill="#fde68a" x="190" y="122">prepara y solicita</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="12" y="60"></rect>
+<text fill="#bae6fd" x="60" y="78">agente</text><text fill="#7dd3fc" x="60" y="93">propone</text>
+<rect class="wf-a" fill="#0b1f2e" height="40" rx="8" stroke="#38bdf8" stroke-width="1.8" width="96" x="272" y="60"></rect>
+<text fill="#bae6fd" x="320" y="78">tú</text><text fill="#7dd3fc" x="320" y="93">aprueba</text>
+<rect fill="#0b1f2e" height="22" rx="6" stroke="#38bdf8" stroke-width="1.5" width="100" x="140" y="186"></rect>
+<text fill="#bae6fd" x="190" y="201">Lessons</text>
+<rect fill="#2a0f0f" height="20" rx="6" stroke="#f87171" stroke-width="1.5" width="300" x="40" y="214"></rect>
+<text fill="#fca5a5" font-size="10" x="190" y="228">borrar y gastar: nunca sin supervisión</text>
+</g>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="2" x1="110" x2="128" y1="80" y2="80"></line>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="2" x1="252" x2="270" y1="80" y2="80"></line>
+<line class="wf-flow" marker-end="url(#t4h-arrow)" stroke="#38bdf8" stroke-width="1.5" x1="320" x2="242" y1="102" y2="194"></line>
+</svg>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-track="4" id="conteudo">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa de la ruta de aprendizaje</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-1">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🚦 Política de autonomía</h3>
+<p class="text-xs text-neutral-400">Prepara y solicita</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-2">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">📚 El agente propone, tú apruebas</h3>
+<p class="text-xs text-neutral-400">Regla nueva solo con tu aprobación</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-3">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧱 Guardia y panel</h3>
+<p class="text-xs text-neutral-400">Pregunta antes del daño</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-4">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold text-sm">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🧪 Laboratorio y proyecto final</h3>
+<p class="text-xs text-neutral-400">Tu puente y tu equipo</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- ===== MODULO 4.1 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-1" data-inema-track="4" id="modulo-4-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.1</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🚦 Política de autonomía</h3>
+<p class="text-neutral-400 text-sm">POLITICA.md: cinco niveles de autonomía, un límite para cada tipo de acción y cómo Claude Code y Codex aplican las mismas reglas.</p>
+<div aria-label="Progreso del módulo 4.1" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-1" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎚️</span>
+<div><span class="font-medium">Lee los cinco niveles de autonomía</span><span class="text-neutral-500 text-sm ml-2">- de N0 a N4</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">N0 solo conversa, N1 prepara y tú ejecutas, N2 ejecuta después de pedir permiso, N3 ejecuta y avisa, N4 ejecuta sin avisar.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es la vara que indica cuánto puede hacer el agente sin ti. El estándar del kit es «prepara y pide».</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Autonomía, N0–N4, prepara y pide, impacto de la acción.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📏</span>
+<div><span class="font-medium">Usa el límite por tipo de acción</span><span class="text-neutral-500 text-sm ml-2">- leer, modificar, enviar, gastar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La tabla de POLITICA.md: leer llega hasta N4, modificar archivos hasta N3, ejecutar comandos en el sistema y enviar hasta N2, gastar y borrar solo N1.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Cuanto mayor sea el impacto de la acción, más participas. La tabla lo decide antes de que el agente empiece.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Límite, tipo de acción, enviar, gastar crédito, borrar con respaldo.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔒</span>
+<div><span class="font-medium">Entiende por qué "permitir siempre" tiene un límite</span><span class="text-neutral-500 text-sm ml-2">- el clic no sube de nivel</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La regla de POLITICA.md: un permiso de "permitir siempre" nunca supera el límite de la acción.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Un clic apresurado no puede convertir "enviar" o "borrar" en una acción automática.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Permitir siempre, límite, permiso acumulado.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⛔</span>
+<div><span class="font-medium">Mira el bloqueo en Claude Code</span><span class="text-neutral-500 text-sm ml-2">- el settings.json</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El .claude/settings.json del kit bloquea rm -rf, git push --force, git push -f y git reset --hard.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">En el CHANGELOG 0.1.0, incluso en el modo que lo permite todo, touch se ejecutó y rm -rf fue denegado.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Permisos, deny, acceptEdits, bloqueo escrito.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧰</span>
+<div><span class="font-medium">Aplica la política en Codex</span><span class="text-neutral-500 text-sm ml-2">- las opciones -s</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">En Codex, la política se convierte en un sandbox: read-only para leer, workspace-write para modificar y sin aprobación automática para lo demás.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El puente codex-exec.sh rechaza danger-full-access: la misma regla se aplica a ambos agentes.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Sandbox, read-only, workspace-write, rechazo por la POLÍTICA.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🤝</span>
+<div><span class="font-medium">Sigue las tres reglas de integración</span><span class="text-neutral-500 text-sm ml-2">- oficial, credencial, laboratorio</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Solo herramientas oficiales con la suscripción, nunca compartas credenciales de una herramienta con otra y haz ingeniería inversa solo en un laboratorio.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Son las tres líneas que protegen tu cuenta y tus datos al conectar una herramienta con otra.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Suscripción, credencial, LIMITES.md, producción.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-1')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-1.html">Ver completo</a>
+</div>
+</div>
+<!-- ===== MODULO 4.2 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-2" data-inema-track="4" id="modulo-4-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.2</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">📚 El agente propone, tú apruebas</h3>
+<p class="text-neutral-400 text-sm">El ciclo de aprendizaje del kit: la tabla Aprendizaje, las Lessons de AGENTS.md, el FALHAS.md y el LIMITES.md, una línea a la vez.</p>
+<div aria-label="Progreso del módulo 4.2" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-2" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🙅</span>
+<div><span class="font-medium">Entiende por qué el agente no cambia sus propias reglas</span><span class="text-neutral-500 text-sm ml-2">- quien aprueba eres tú</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La regla de AGENTS.md: el agente no cambia las reglas; para proponer algo, añade una línea a la tabla Aprendizaje.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Un agente que reescribe sus propias reglas puede darse más libertad de la que tú le diste.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Propone, aprueba, incorpora; separación de roles.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📝</span>
+<div><span class="font-medium">Completa la tabla de Aprendizaje</span><span class="text-neutral-500 text-sm ml-2">- cuatro columnas</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Fecha, lo que ocurrió con evidencia, propuesta en una línea y estado: propuesto, aprobado o rechazado.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Una propuesta con evidencia la apruebas en segundos; sin evidencia, no puedes decidir.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Evidencia, propuesta de una línea, estado.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">⬆️</span>
+<div><span class="font-medium">Promueve lo aprobado a las Lessons</span><span class="text-neutral-500 text-sm ml-2">- una regla por línea</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Lo que apruebas se convierte en una regla en la sección Lessons del AGENTS.md, que leen Claude y Codex.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La lección se aplicará en las próximas sesiones, para ambos agentes, sin que tengas que repetirla.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Lessons, AGENTS.md, CLAUDE.md, regla aprobada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🩹</span>
+<div><span class="font-medium">Anota cada falla en una línea</span><span class="text-neutral-500 text-sm ml-2">- el FALHAS.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Fecha, lo que falló, la corrección mínima y si fue un problema del prompt o de infraestructura. Ejemplo real del kit: el doctor solo leía el stdout de Codex.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Después de algunas líneas, el patrón aparece y dejas de reconstruir lo que solo necesitaba una protección.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Corrección mínima, prompt × infraestructura, una línea.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚧</span>
+<div><span class="font-medium">Anota lo que el entorno bloqueó</span><span class="text-neutral-500 text-sm ml-2">- el LIMITES.md</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Fecha, lo que intentaste, lo que lo bloqueó, la alternativa y el estado. Los errores van en FALHAS.md; los límites del entorno, aquí.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La cuota, los permisos o la red bloqueada no se resuelven solos: al anotarlos, se convierten en una lista de pendientes.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Límite del entorno, alternativa, estado abierto o aceptado.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🗓️</span>
+<div><span class="font-medium">Haz la revisión de la semana con el agente</span><span class="text-neutral-500 text-sm ml-2">- propuestas sobre la mesa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Una vez por semana, el agente lee FALHAS.md y LIMITES.md y propone líneas para la tabla Aprendizaje; tú las apruebas o las rechazas.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es el «aprender» del ciclo convertido en hábito, sin quitarte la decisión.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Revisión semanal, patrón de fallas, aprobar o rechazar.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-2')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-2.html">Ver completo</a>
+</div>
+</div>
+<!-- ===== MODULO 4.3 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-3" data-inema-track="4" id="modulo-4-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.3</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧱 Guardia y panel</h3>
+<p class="text-neutral-400 text-sm">La receta R7: hooks oficiales que preguntan antes de interferir con el trabajo de otra sesión o borrar demasiado, y el panel del equipo en segundo plano.</p>
+<div aria-label="Progreso del módulo 4.3" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-3" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧩</span>
+<div><span class="font-medium">Entiende qué es un mod de Claude Code</span><span class="text-neutral-500 text-sm ml-2">- hooks y plugins</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Mod es el apodo de los plugins oficiales. La protección usa hooks PreToolUse y PostToolUse: la regla está en el script y la interfaz en el mod.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Los videos mostraron guardas de colisión y de radio de explosión; el kit hace lo mismo solo con recursos oficiales.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Hook, plugin, mod, PreToolUse, PostToolUse, worktree.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">💥</span>
+<div><span class="font-medium">Mira la protección contra colisiones en acción</span><span class="text-neutral-500 text-sm ml-2">- dos sesiones, un archivo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Antes de editar un archivo que otra sesión modificó, o que cambió externamente en los últimos 30 min, la protección pregunta: continuar, worktree o cancelar.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">En uno de nuestros proyectos, una sesión vació un archivo que otra estaba editando.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Colisión, toques.json, ventana de 30 min, límite de Codex.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧨</span>
+<div><span class="font-medium">Prueba el alcance antes de borrar</span><span class="text-neutral-500 text-sm ml-2">- cuántos archivos, cuánto espacio</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Antes de rm o git clean, el detector cuenta los archivos que se borrarían, muestra el tamaño y pide confirmación.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La prueba de la R7 ejecuta el script por sí solo y muestra "permissionDecision":"ask" sin borrar nada.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Radio de impacto, solo lectura del disco, copia de seguridad.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧳</span>
+<div><span class="font-medium">Lleva la protección a otro proyecto</span><span class="text-neutral-500 text-sm ml-2">- una forma, no dos</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">claude --plugin-dir para una sesión, o el bloque hooks copiado en la configuración del otro proyecto.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La protección se aplica donde trabajan tus agentes, no solo en la carpeta del kit.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">--plugin-dir, bloque hooks, ruta del kit.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📊</span>
+<div><span class="font-medium">Abre el panel del equipo</span><span class="text-neutral-500 text-sm ml-2">- /painel</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Un mod opcional que muestra las sesiones de claude --bg con los botones Actualizar y Detener.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Supervisar y detener al equipo sin salir de Claude Code; solo tu clic para una sesión.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Panel, plugin validate, plugin test, 1 pass.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📖</span>
+<div><span class="font-medium">Lee el código antes de instalar un mod</span><span class="text-neutral-500 text-sm ml-2">- mod tiene sus permisos</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Los mods se ejecutan con los permisos de Claude Code. Antes de instalar uno de terceros, pídele al agente que lo lea y lo explique, sin ejecutarlo.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El mismo poder que protege puede causar daños: leer el código es la única garantía.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">plugin.json, hooks.json, red, credenciales.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-3')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-3.html">Ver completo</a>
+</div>
+</div>
+<!-- ===== MODULO 4.4 ===== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="4-4" data-inema-track="4" id="modulo-4-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-amber-400 font-bold">4.4</span><span class="text-xs text-neutral-500">~35 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧪 Laboratorio y proyecto final</h3>
+<p class="text-neutral-400 text-sm">El lugar adecuado para la ingeniería inversa y el proyecto que cierra el curso: un sistema tuyo sin API se convierte en un puente, un equipo trabaja en él y el verificar lo comprueba.</p>
+<div aria-label="Progreso del módulo 4.4" aria-valuemax="100" aria-valuemin="0" class="mt-4" data-inema-meter="modulo:4-4" role="progressbar">
+<div class="flex justify-between text-xs text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🪜</span>
+<div><span class="font-medium">Vuelve a la escalera antes del laboratorio</span><span class="text-neutral-500 text-sm ml-2">- seis pruebas antes de la séptima</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Antes de cualquier ingeniería inversa, prueba cada nivel con un comando, desde la API hasta la conexión local.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Muchas veces la vía existe, pero simplemente no estaba documentada.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Escalera, evidencia por nivel, peldaño 7.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🧪</span>
+<div><span class="font-medium">Trata la ingeniería inversa como un laboratorio</span><span class="text-neutral-500 text-sm ml-2">- frágil, con fecha</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Máquina de prueba, una línea en LIMITES.md, etiqueta "frágil" con fecha y nunca en producción.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El laboratorio responde «¿por dónde se comunica?»: la respuesta te lleva de vuelta a una vía oficial.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Máquina de prueba, LIMITES.md, frágil, producción.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔐</span>
+<div><span class="font-medium">Respeta los términos de uso y las credenciales</span><span class="text-neutral-500 text-sm ml-2">- cada inicio de sesión en su lugar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Solo herramientas oficiales con la suscripción y nunca compartas credenciales o tokens de una herramienta con otra.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Quien tiene el token actúa como tú; el puente adecuado no carga contraseñas.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Credencial, token, términos de uso, inicio de sesión humano.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t4-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🗺️</span>
+<div><span class="font-medium">Elige tu sistema y completa el mapa</span><span class="text-neutral-500 text-sm ml-2">- una línea probada</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t4-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Un sistema propio sin API, una línea en CAPACIDADES.md y la vía más alta que funcione.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Sin una línea en el mapa, el agente no usa el sistema; es el primer paso del proyecto final.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Proyecto final, CAPACIDADES.md, vía, pendiente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t5-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🏗️</span>
+<div><span class="font-medium">Construye el puente y ejecuta el equipo</span><span class="text-neutral-500 text-sm ml-2">- R3 o R5, después R2</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t5-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El puente mediante la receta R3 (archivo) o R5 (sitio) y el equipo de tres roles que trabaja en ella con la política N2.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es todo el curso aplicado a tu trabajo: conectar, enrutar y ejecutar con reglas.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Puente, selftest, Connected, planificador, ejecutor, revisor, N2.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t6-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🏁</span>
+<div><span class="font-medium">Entrega el trabajo con la verificación y una lección aprobada</span><span class="text-neutral-500 text-sm ml-2">- todos OK</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t6-4-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Un goal con criterios comando → esperado, la salida de verificar.mjs con todos OK y una línea aprobada en la tabla Aprendizaje.</p></div>
+<div><span class="text-amber-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Listo es evidencia, no una suposición; y el ciclo solo se cierra cuando el aprendizaje se convierte en regla.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Goal, verificar.mjs, checklist de entrega, Lessons.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-4')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-4.html">Ver completo</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha3/index.html">← Ruta anterior: Enrutar y ejecutar</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../../index.html">Volver al inicio →</a>
+</div>
+</main>
+<!-- MODAIS (iframe carrega a pagina do modulo) -->
+<div aria-labelledby="modal-4-1-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-1" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold" id="modal-4-1-title">Política de autonomía</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-1.html" title="Módulo 4.1"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-2-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-2" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold" id="modal-4-2-title">El agente propone, tú apruebas</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-2.html" title="Módulo 4.2"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-3-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-3" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold" id="modal-4-3-title">Protección y panel</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-3.html" title="Módulo 4.3"></iframe>
+</div>
+</div>
+<div aria-labelledby="modal-4-4-title" aria-modal="true" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-4" onclick="if(event.target === this) closeModal()" role="dialog">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold" id="modal-4-4-title">Laboratorio y proyecto final</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-4-4.html" title="Módulo 4.4"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>INEMA Agent Runtime · 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a></p>
+<p class="mt-2 text-xs">Kit utilizado en el curso: <a class="text-sky-400 hover:text-sky-300" href="https://github.com/inematds/inema-agent-runtime" target="_blank">github.com/inematds/inema-agent-runtime</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const _html = document.documentElement;
+    if (!_html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); }
+    else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      if (window.INEMA && INEMA.setPref) { INEMA.setPref('theme', _html.classList.contains('dark') ? 'claro' : 'inema-dark'); }
+      else { _html.classList.toggle('dark'); }
+      themeToggleDarkIcon.classList.toggle('hidden', _html.classList.contains('dark'));
+      themeToggleLightIcon.classList.toggle('hidden', !_html.classList.contains('dark'));
+      try { localStorage.setItem('theme', _html.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {}
+    });
+    function toggleTopic(button) {
+      const item = button.closest('.topic-item');
+      const exp = item.querySelector('.topic-explanation');
+      const card = button.closest('[id^="modulo-"]') || document;
+      card.querySelectorAll('.topic-explanation.active').forEach(e => { if (e !== exp) { e.classList.remove('active'); const b = e.parentElement.querySelector('[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); } });
+      exp.classList.toggle('active');
+      button.setAttribute('aria-expanded', exp.classList.contains('active') ? 'true' : 'false');
+    }
+    let _lastModalTrigger = null;
+    function openModal(id){ const m=document.getElementById(id); if(m){ _lastModalTrigger=document.activeElement; m.classList.remove('hidden'); document.body.style.overflow='hidden'; const c=m.querySelector('button'); if(c) c.focus(); } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; if(_lastModalTrigger){ _lastModalTrigger.focus(); _lastModalTrigger=null; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>
