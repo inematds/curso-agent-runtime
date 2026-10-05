@@ -16,3 +16,9 @@ Projeto final: **sua ponte e seu time** — um sistema sem API do seu trabalho, 
 Formato `formato-curso-v2` (HTML + Tailwind CDN + JS, sem build). Progresso, dúvidas e notas ficam só no navegador.
 
 Manutenção: edite `context/corpos/`, rode `python3 scripts/montar.py` e `python3 scripts/lint.py`.
+
+## Mais no INEMA.CLUB
+
+- [Ficha deste curso](https://www.inema.club/cursos/312-inema-agent-runtime-faca-qualquer-ia-usar-qualquer-ferramenta/)
+- [Guia: como aprender inteligência artificial](https://www.inema.club/aprender-inteligencia-artificial/)
+- [Todos os cursos](https://www.inema.club/cursos/)
